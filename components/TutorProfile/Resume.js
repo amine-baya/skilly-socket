@@ -1,38 +1,66 @@
-import { useState } from 'react'
+import moment from 'moment';
+import { useEffect, useState } from 'react';
+import { getLocalStorage } from '../../utils/cookies';
 
 function Resume() {
+  const [user_data, set_user_data] = useState(null)
+
+  useEffect(() => {
+    getUserData()
+  }, [])
+
+  const getUserData = () => {
+    const user = getLocalStorage('user')
+    set_user_data(user)
+  }
+
   return (
     <div className="  font-poppins md:bg-white">
-      <Mobile />
-      <Desktop />
+      {
+        user_data
+          ?
+          <>
+            <Mobile user_data={user_data} />
+            <Desktop user_data={user_data} />
+          </>
+          :
+          null
+      }
+
     </div>
   )
 }
 export default Resume
 
-function Mobile() {
+function Mobile({ user_data }) {
   const [education, setEducation] = useState(true)
   //   const [resume, setResume] = useState('education')
 
-  console.log(education)
   return (
     // md:hidden
     <div className=" my-10 mx-auto px-6  sm:w-[376px] md:hidden  ">
-      <ResumeTitle />
+      <ResumeTitle user_data={user_data} />
       <select
         // value={}
-        // onChange={() => setEducation(!education)}
+        onChange={() => setEducation(!education)}
         className="mt-6 w-full rounded-lg border-2 bg-white py-2 px-4 text-sm text-[#9A9A9A] outline-none"
       >
-        <option onSelect={() => setEducation(true)} value="education">
+        <option value="education">
           Education
         </option>
-        <option onSelect={() => setEducation(false)} value="Certification">
+        <option value="Certification">
           Certification
         </option>
       </select>
-      <Education />
-      <Certifications />
+      {
+        education
+          ? <Education user_data={user_data} />
+          : <Certifications user_data={user_data} />
+
+
+      }
+
+
     </div>
   )
 }
@@ -47,7 +75,7 @@ function ResumeTitle() {
     </section>
   )
 }
-function Desktop() {
+function Desktop({ user_data }) {
   const [education, setEducation] = useState(true)
   // const [certification, setCertification] = useState(false)
   const activeLink =
@@ -60,17 +88,26 @@ function Desktop() {
       <section className="flex justify-center gap-4   ">
         <div className="mr-16 mt-4 space-y-10 font-medium capitalize text-[#5F5F5F] ">
           <div className="text-2xl ">Duration</div>
-          {education ? (
-            <>
-              <div className="text-lg">2020 — 2020</div>
-              <div className="text-lg">test edu</div>
-            </>
-          ) : (
-            <>
-              <div className="text-lg">2020 — 2020</div>
-              <div className="text-lg text-blue-300">test cerft</div>
-            </>
-          )}
+          {
+            education
+              ?
+              user_data.education_certificates && user_data.education_certificates.map(function (dd) {
+                return (
+                  <>
+                    <div className="text-lg">{moment(dd.year_of_study.from).format("YYYY")} - {moment(dd.year_of_study.to).format("YYYY")}</div>
+                    <div className="text-lg">{dd.university}</div>
+                  </>
+                )
+              })
+              : user_data.teaching_certificates.map(function (dd) {
+                return (
+                  <>
+                    <div className="text-lg">{moment(dd.year_of_study.from).format("YYYY")} - {moment(dd.year_of_study.to).format("YYYY")}</div>
+                    <div className="text-lg">{dd.certificate_title}</div>
+                  </>
+                )
+              })
+          }
         </div>
         <div className="h-56 w-[1px] rounded-full bg-[#DADADA] " />
         <div className="ml-20 w-96 space-y-10">
@@ -88,15 +125,22 @@ function Desktop() {
               Certifications
             </span>
           </div>
-          {education ? (
-            <div className="text-lg text-[#787878] ">
-              Teaching English as a foreign language tefl education
-            </div>
-          ) : (
-            <div className="text-lg text-[#787878] ">
-              Teaching English as a foreign language tefl Certification
-            </div>
-          )}
+          {education ?
+            user_data.education_certificates && user_data.education_certificates.map(function (dd) {
+              return (
+                <div className="text-lg text-[#787878] ">
+                  {dd.university}, {dd.degree}, {dd.specialization}
+                </div>
+              )
+            }) : (
+              user_data.teaching_certificates.map(function (dd) {
+                return (
+                  <div className="text-lg text-[#787878] ">
+                    {dd.certificate_title}, {dd.description}, {dd.issued_by}
+                  </div>
+                )
+              })
+            )}
         </div>
       </section>
     </div>
@@ -112,45 +156,64 @@ function SmallLine() {
   )
 }
 
-function Education() {
+function Education({ user_data }) {
   return (
     <div className=" my-4  w-80 space-y-4 px-4 font-poppins text-sm font-medium  capitalize ">
       <h2 className="text-[#251f1f]">Education</h2>
       <section className="space-y-2">
-        <h2 className=" text-[#5F5F5F]">2020 — 2020</h2>
-        <p className="text-[#787878]">
-          Teaching English as a foreign Language TEFL
-        </p>
+        {
+          user_data.education_certificates && user_data.education_certificates.map(function (dd) {
+            return (
+              <>
+                <h2 className=" text-[#5F5F5F]">{moment(dd.year_of_study.from).format("YYYY")} - {moment(dd.year_of_study.to).format("YYYY")}</h2>
+                <p className="text-[#787878]">
+                  {dd.university}, {dd.degree}, {dd.specialization}
+                </p>
+                <hr />
+              </>
+            )
+          })
+        }
+
       </section>
-      <hr />
+      {/* <hr />
       <section className="space-y-2">
         <h2 className=" text-[#5F5F5F]">2020 — 2020</h2>
         <p className="text-[#787878]">
           Teaching English as a foreign Language TEFL
         </p>
-      </section>
+      </section> */}
     </div>
   )
 }
 
-function Certifications() {
+function Certifications({ user_data }) {
   return (
-    <div className=" my-4 hidden  w-80 space-y-4 px-4 font-poppins text-sm font-medium  capitalize ">
+    <div className=" my-4  w-80 space-y-4 px-4 font-poppins text-sm font-medium  capitalize ">
       <h2 className="text-[#251f1f]">Certifications</h2>
 
       <section className="space-y-2">
-        <h2 className=" text-[#5F5F5F]">2020 — 2020</h2>
-        <p className="text-[#787878]">
-          Teaching English as a foreign Language TEFL
-        </p>
+        {
+          user_data.teaching_certificates.map(function (dd) {
+            return (
+              <>
+                <h2 className=" text-[#5F5F5F]">{moment(dd.year_of_study.from).format("YYYY")} - {moment(dd.year_of_study.to).format("YYYY")}</h2>
+                <p className="text-[#787878]">
+                  {dd.certificate_title}, {dd.description}, {dd.issued_by}
+                </p>
+                <hr />
+              </>
+            )
+          })
+        }
       </section>
-      <hr />
+      {/* <hr />
       <section className="space-y-2">
         <h2 className=" text-[#5F5F5F]">2020 — 2020</h2>
         <p className="text-[#787878]">
           Teaching English as a foreign Language TEFL
         </p>
-      </section>
+      </section> */}
     </div>
   )
 }

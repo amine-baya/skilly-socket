@@ -18,3 +18,10 @@ export const ROLE_NAME = {
   TUTOR: 'TUTOR',
   STUDENT: 'STUDENT',
 }
+
+export const SUBJECTS = {
+  1: "English",
+  2: "Maths",
+  3: "Hindi",
+  4: "Physics"
+}

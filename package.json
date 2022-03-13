@@ -10,6 +10,8 @@
         "axios": "^0.26.1",
         "cookies-next": "^2.0.4",
         "formik": "^2.2.9",
+        "moment": "^2.29.1",
+        "moment-timezone": "^0.5.34",
         "next": "latest",
         "react": "^17.0.2",
         "react-click-outside-hook": "^1.1.1",

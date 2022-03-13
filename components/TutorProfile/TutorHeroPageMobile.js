@@ -1,37 +1,58 @@
 import React from 'react'
 import Image from 'next/image'
+import { useEffect, useState } from 'react';
 import { FiMessageCircle } from 'react-icons/fi'
+import { SUBJECTS } from '../../utils/constants';
+import { getLocalStorage } from '../../utils/cookies';
 
 function TutorHeroPageMobile() {
+  const [user_data, set_user_data] = useState(null)
+
+  useEffect(() => {
+    getUserData()
+  }, [])
+
+  const getUserData = () => {
+    const user = getLocalStorage('user')
+    set_user_data(user)
+  }
   return (
     <div className="relative flex h-64 items-center justify-center  md:hidden ">
-      <BackgroundFullImg />
-      <div className="tutor-gradient -z-10" />
-      <AndrewSmith />
-      <ProfileImgAndQualifications />
+      {
+        user_data
+          ?
+          <>
+            <BackgroundFullImg user_data={user_data} />
+            <div className="tutor-gradient -z-10" />
+            <AndrewSmith user_data={user_data} />
+            <ProfileImgAndQualifications user_data={user_data} />
+          </>
+          :
+          null
+      }
     </div>
   )
 }
 
 export default TutorHeroPageMobile
-function BackgroundFullImg() {
+function BackgroundFullImg({ user_data }) {
   return (
     <div className="absolute top-0 -z-30  h-full  w-full ">
       <Image
         priority
-        src="/Images/TutorProfile/tutor-hero-background.png"
+        src={`https://akbh.s3.ap-south-1.amazonaws.com/skillshare/user/profile_img/${user_data.background_pic}`}
         layout="fill"
         objectFit="cover"
       />
     </div>
   )
 }
-function AndrewSmith() {
+function AndrewSmith({ user_data }) {
   return (
     <div className="-mt-20 space-y-4 text-center font-bold capitalize text-white ">
-      <div className=" -ml-8 text-sm tracking-[0.175em]">hello i'm</div>
+      <div className=" -ml-8 text-sm tracking-[0.175em]">{user_data.headline}</div>
       <h1 className=" flex gap-[17px] text-3xl">
-        <span> Andrew Smith</span>
+        <span> {user_data.name}</span>
         <div className="inline-block h-[21px] w-[21px]">
           <Image
             src={'/Images/TutorProfile/svg/right-ok.svg'}
@@ -51,20 +72,20 @@ function AndrewSmith() {
   )
 }
 
-function ProfileImgAndQualifications() {
+function ProfileImgAndQualifications({ user_data }) {
   return (
     <div className="mx absolute -bottom-20 mx-16 flex items-center justify-center gap-2">
-      <ProfileImg />
+      <ProfileImg profile_img={user_data.profile_img} />
       <div className="w-52  capitalize">
         <p className="mt-2 mb-5 text-sm font-[600] tracking-[.065em] text-white">
-          Qualified TEFL tutor and accent coach with
+          {user_data.teaching_experience}
         </p>
-        <TutorDescription />
+        <TutorDescription user_data={user_data} />
       </div>
     </div>
   )
 }
-function TutorDescription() {
+function TutorDescription({ user_data }) {
   return (
     <div className="ml-[7px] space-y-1  text-xs font-[500] tracking-[0.065em] text-[#616161]  ">
       <div className="flex gap-[10px]  ">
@@ -76,13 +97,17 @@ function TutorDescription() {
             width={16}
           />
         </div>
-        <span>Teaches English language</span>
+        <span>Teaches {user_data.subject_taught_id.map(function (elem) {
+          return SUBJECTS[elem];
+        }).join(", ")} language</span>
       </div>
       <div className="flex gap-[10px]">
         <div className="   ml-[-4px]  mr-[5px] flex justify-center">
           <FiMessageCircle className="text-sm" />
         </div>
-        <span>Speaks English Native </span>
+        <span>Speaks {user_data.language_spoken.map(function (elem) {
+          return elem.language;
+        }).join(", ")} </span>
       </div>
       <div className="flex gap-[10px]  ">
         <div className="ml-[-2px] mr-[4px] flex justify-center">
@@ -97,12 +122,12 @@ function TutorDescription() {
     </div>
   )
 }
-function ProfileImg() {
+function ProfileImg({ profile_img }) {
   return (
     <div>
       <div className="relative h-36 w-32 overflow-hidden rounded-lg bg-gradient-to-r from-[#FC4D6D] to-[#FDA02F] p-2">
         <Image
-          src={'/Images/TutorProfile/tutor-Mobile-img.png'}
+          src={`https://akbh.s3.ap-south-1.amazonaws.com/skillshare/user/profile_img/${profile_img}`}
           objectFit="contain"
           layout="fill"
         />
