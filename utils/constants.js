@@ -12,7 +12,9 @@ export const updateUserAbout = '/user/tutor/profile/update/about'
 export const updateUserProfilePic = '/user/tutor/profile/update/profile-pic'
 export const updateUserDescription = '/user/tutor/profile/update/description'
 export const updateUserVideoDesc =
-  '/user/tutor/profile/update/video-introduction'
+  '/user/tutor/profile/update/video-introduction';
+export const updateUserAvailability =
+  '/user/tutor/profile/update/availability';
 
 export const ROLE_NAME = {
   TUTOR: 'TUTOR',
