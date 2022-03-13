@@ -1,5 +1,6 @@
-export const baseUrl = 'http://localhost:5100';
-export const typesenseUrl = "http://13.126.181.164:3020/typesense/api/";
+// export const baseUrl = 'http://localhost:5100';
+export const baseUrl = 'http://13.126.181.164:5100'
+export const typesenseUrl = 'http://13.126.181.164:3020/typesense/api/'
 export const baseUrlProfilePic =
   'https://akbh.s3.ap-south-1.amazonaws.com/skillshare/user/profile_img/'
 
@@ -13,13 +14,12 @@ export const updateUserAbout = '/user/tutor/profile/update/about'
 export const updateUserProfilePic = '/user/tutor/profile/update/profile-pic'
 export const updateUserDescription = '/user/tutor/profile/update/description'
 export const updateUserVideoDesc =
-  '/user/tutor/profile/update/video-introduction';
-export const updateUserAvailability =
-  '/user/tutor/profile/update/availability';
+  '/user/tutor/profile/update/video-introduction'
+export const updateUserAvailability = '/user/tutor/profile/update/availability'
 export const updateUserEducation =
-  '/user/tutor/profile/update/education-certificate';
+  '/user/tutor/profile/update/education-certificate'
 export const updateUserCertificate =
-  '/user/tutor/profile/update/teaching-certificate';
+  '/user/tutor/profile/update/teaching-certificate'
 
 export const ROLE_NAME = {
   TUTOR: 'TUTOR',
@@ -27,19 +27,19 @@ export const ROLE_NAME = {
 }
 
 export const SUBJECTS = {
-  1: "English",
-  2: "Maths",
-  3: "Hindi",
-  4: "Physics"
+  1: 'English',
+  2: 'Maths',
+  3: 'Hindi',
+  4: 'Physics',
 }
 
 export const LANGUAGES = {
-  1: "English",
-  2: "Hindi"
+  1: 'English',
+  2: 'Hindi',
 }
 
 export const LanguageLevel = {
-  1: "Native / Bilingual Proficiency",
-  2: "Limited Working Proficiency",
-  3: "Full Professional Proficiency"
+  1: 'Native / Bilingual Proficiency',
+  2: 'Limited Working Proficiency',
+  3: 'Full Professional Proficiency',
 }
