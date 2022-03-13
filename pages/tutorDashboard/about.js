@@ -54,19 +54,19 @@ function About() {
         initialValues={
           user_data
             ? {
-              name: user_data.name,
-              email: user_data.email,
-              language_spoken: user_data.language_spoken,
-              country: user_data.country,
-              subject_taught_id: user_data.subject_taught_id,
-              hourly_rate: user_data.hourly_rate,
-              teaching_experience_id: user_data.teaching_experience_id,
-              current_situation_id: user_data.current_situation_id,
-              country_code: user_data.country_code,
-              number: user_data.number,
-              eighteen_plus: user_data.eighteen_plus,
-              background_pic_title: user_data.background_pic_title,
-            }
+                name: user_data.name,
+                email: user_data.email,
+                language_spoken: user_data.language_spoken,
+                country: user_data.country,
+                subject_taught_id: user_data.subject_taught_id,
+                hourly_rate: user_data.hourly_rate,
+                teaching_experience_id: user_data.teaching_experience_id,
+                current_situation_id: user_data.current_situation_id,
+                country_code: user_data.country_code,
+                number: user_data.number,
+                eighteen_plus: user_data.eighteen_plus,
+                background_pic_title: user_data.background_pic_title,
+              }
             : {}
         }
         onSubmit={async (values) => {
@@ -88,7 +88,12 @@ function About() {
                 <CountryCode />
                 <Number />
                 <Age />
-                <BackgroundImage background_pic={background_img ? background_img : user_data.background_pic} handleChange={(e) => handleChange(e)} />
+                <BackgroundImage
+                  background_pic={
+                    background_img ? background_img : user_data.background_pic
+                  }
+                  handleChange={(e) => handleChange(e)}
+                />
                 <BackgroundImageTitle />
               </div>
               <button type="submit">
@@ -161,55 +166,73 @@ const LanguageAndLevel = ({ values }) => {
     <div className="grid grid-cols-2 gap-3">
       {/* language */}
       <div className="tutors-input-n-label-style">
-        <label htmlFor="" className="tutor-dashboard-label-style">
-          language spoken
-        </label>
         {/* <input
         type="text"
         placeholder="english"
         className="tutor-dashboard-input-style"
       /> */}
         <FieldArray
-          name={"language_spoken"}
+          name={'language_spoken'}
           render={(arrayHelpers) => (
             <div>
               {values?.language_spoken && values?.language_spoken.length > 0 ? (
                 values?.language_spoken.map((language, index) => {
                   return (
-                    <div key={index}>
-                      <Field
-                        as="select"
-                        id={`language_spoken.${index}.language_id`}
-                        name={`language_spoken.${index}.language_id`}
-                        className="cursor-pointer rounded-lg border-2 bg-white py-3 px-2 font-roboto text-[#9E9E9E] outline-none md:w-96 "
-                      >
-                        <option value={1}>English </option>
-                        <option value={2}>Hindi </option>
-                        <option value={3}>Marathi </option>
-                      </Field>
-
-                      <Field
-                        as="select"
-                        id={`language_spoken.${index}.language_level_id`}
-                        name={`language_spoken.${index}.language_level_id`}
-                        className="cursor-pointer rounded-lg border-2 bg-white py-3 px-2 font-roboto text-[#9E9E9E] outline-none md:w-96 "
-                      >
-                        <option value={1}>C1</option>
-                        <option value={2}>C2</option>
-                        <option value={3}>C3</option>
-                      </Field>
-                      <button
-                        type="button"
-                        onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
-                      >
-                        -
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
-                      >
-                        +
-                      </button>
+                    <div key={index} className="flex flex-row">
+                      <div className="tutors-input-n-label-style flex flex-col">
+                        <label
+                          htmlFor=""
+                          className="tutor-dashboard-label-style"
+                        >
+                          language spoken
+                        </label>
+                        <Field
+                          as="select"
+                          id={`language_spoken.${index}.language_id`}
+                          name={`language_spoken.${index}.language_id`}
+                          className="cursor-pointer rounded-lg border-2 bg-white py-3 px-2 font-roboto text-[#9E9E9E] outline-none md:w-96 "
+                        >
+                          <option value={1}>English </option>
+                          <option value={2}>Hindi </option>
+                          <option value={3}>Marathi </option>
+                        </Field>
+                      </div>
+                      <div className="tutors-input-n-label-style flex flex-col">
+                        <label
+                          htmlFor=" "
+                          className="tutor-dashboard-label-style"
+                        >
+                          level
+                        </label>
+                        <Field
+                          as="select"
+                          id={`language_spoken.${index}.language_level_id`}
+                          name={`language_spoken.${index}.language_level_id`}
+                          className="cursor-pointer rounded-lg border-2 bg-white py-3 px-2 font-roboto text-[#9E9E9E] outline-none md:w-96 "
+                        >
+                          <option value={1}>C1</option>
+                          <option value={2}>C2</option>
+                          <option value={3}>C3</option>
+                        </Field>
+                      </div>
+                      {index === 0 ? (
+                        <>
+                          <button
+                            type="button"
+                            onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                          >
+                            -
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
+                          >
+                            +
+                          </button>{' '}
+                        </>
+                      ) : (
+                        ''
+                      )}
                     </div>
                   )
                 })
@@ -377,43 +400,41 @@ const Age = () => (
   </div>
 )
 
-
 const BackgroundImage = (props) => (
   <div className="flex w-full flex-col gap-4 bg-[#F2F2F2] p-5 md:px-16">
     <div className="text-lg capitalize">
       upload your background image to increase the credibility of your profile
     </div>
     <div className="flex items-center gap-2">
-      <input type="file"
+      <input
+        type="file"
         className="rounded-lg border-[1px] border-[#FC4D6D]  py-3 px-6 text-sm font-medium  capitalize"
         onChange={(e) => props.handleChange(e.target.files[0])}
       />
       {/* <div className="rounded-lg border-[1px] border-[#FC4D6D]  py-3 px-6 text-sm font-medium  capitalize">
         upload a photo
       </div> */}
-
     </div>
     <div className="text-xs">
       <div className="">JPG or PNG format</div>
       <div>Maximum size - 2MB.</div>
     </div>
-    {
-      props.background_pic
-        ?
-        <section className="flex gap-2">
-          <div className="h-[106px] w-[106px] bg-blue-300">
-            <img src={`https://akbh.s3.ap-south-1.amazonaws.com/skillshare/user/profile_img/${props.background_pic}`} alt="img" />
-          </div>
-          {/* <div className="h-[106px] w-[106px] bg-blue-300">
+    {props.background_pic ? (
+      <section className="flex gap-2">
+        <div className="h-[106px] w-[106px] bg-blue-300">
+          <img
+            src={`https://akbh.s3.ap-south-1.amazonaws.com/skillshare/user/profile_img/${props.background_pic}`}
+            alt="img"
+          />
+        </div>
+        {/* <div className="h-[106px] w-[106px] bg-blue-300">
                     <img src="" alt="img" />
                   </div>
                   <div className="h-[106px] w-[106px] bg-blue-300">
                     <img src="" alt="img" />
                   </div> */}
-        </section>
-        :
-        null
-    }
+      </section>
+    ) : null}
   </div>
 )
 
