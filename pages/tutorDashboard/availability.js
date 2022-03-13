@@ -5,7 +5,7 @@ import Link from 'next/dist/client/link'
 import moment from 'moment';
 import momentTz from 'moment-timezone';
 import { getLocalStorage, updateUser } from '../../utils/cookies';
-import { FieldArray, Form, Formik } from 'formik';
+import { Field, FieldArray, Form, Formik } from 'formik';
 import Router from 'next/router'
 import NextAndBackBtn from '../../components/TutorDashboardRegistration/NextAndBackBtn';
 import { updateUserAvailability } from '../../utils/constants';
@@ -220,19 +220,17 @@ const Days = (props) => {
                   props.values?.availability[dayParam].map(function (avail, index) {
                     return (
                       <div className="flex items-center gap-2">
-                        <input
+                        <Field
                           type="time"
                           id={`availability.${dayParam}.${index}.from`}
-                          name={`availability.${dayParam}${index}.from`}
-                          value={avail.from}
+                          name={`availability.${dayParam}.${index}.from`}
                           className="w-36 rounded-lg border-2 bg-white py-2 px-4 text-[#A8A2A2] outline-none"
                         />
                         <span>To</span>
-                        <input
+                        <Field
                           type="time"
-                          id={`availability.${dayParam}${index}.to`}
-                          name={`availability.${dayParam}${index}.to`}
-                          value={avail.to}
+                          id={`availability.${dayParam}.${index}.to`}
+                          name={`availability.${dayParam}.${index}.to`}
                           className="w-36 rounded-lg border-2 bg-white py-2 px-4 text-[#A8A2A2] outline-none"
                         />
                         {

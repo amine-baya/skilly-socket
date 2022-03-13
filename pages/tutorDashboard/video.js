@@ -34,64 +34,60 @@ function Video() {
       <PageTitle />
       <hr />
       <Formik
-        initialValues={
-          user_data
-            ? {
-                video_link: user_data.video_link,
-              }
-            : {}
-        }
+        initialValues={{ video_link: user_data.video_link }}
         onSubmit={async (values) => {
           handleSubmit(values)
         }}
         enableReinitialize
-      >
-        <Form>
-          <main className="mb-8 flex flex-col gap-5 p-5   font-roboto text-[#545454] md:px-16">
-            <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2">
-              <div className="flex flex-col gap-5">
-                <h2 className="text-xl font-medium capitalize">
-                  record your video
-                </h2>
-                <p className="text-sm capitalize text-[#545454] md:w-[28.25rem] ">
-                  now interoduce yourself to students! you can watch and
-                  re-record your intro before you submit it.
-                </p>
-                <div className="h-60 w-full overflow-hidden rounded-md bg-gray-200 md:w-[28.25rem] ">
-                  <img src="" alt="img" />
-                </div>
-                <StartRecordingBtn />
-                <section className="capitalize">
-                  <h3 className="text-lg font-medium ">
-                    or paste a link to your video
-                  </h3>
-                  <p className="text-sm">
-                    learn how to upload videos to
-                    <span className="text-[#42ADE2]">capitalize</span> or
-                    <span className="text-[#42ADE2]"> vimeo</span>
+        render={({ values }) => (
+          <Form>
+            <main className="mb-8 flex flex-col gap-5 p-5   font-roboto text-[#545454] md:px-16">
+              <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2">
+                <div className="flex flex-col gap-5">
+                  <h2 className="text-xl font-medium capitalize">
+                    record your video
+                  </h2>
+                  <p className="text-sm capitalize text-[#545454] md:w-[28.25rem] ">
+                    now interoduce yourself to students! you can watch and
+                    re-record your intro before you submit it.
                   </p>
-                </section>
-                <input
-                  type="text"
-                  placeholder="www.youtube.com/watch?sjvcscksb"
-                  className="tutor-dashboard-input-style"
-                />
+                  <div className="h-60 w-full overflow-hidden rounded-md bg-gray-200 md:w-[28.25rem] ">
+                    <img src={`http://img.youtube.com/vi/${values.video_link}/0.jpg`} alt="img" />
+                  </div>
+                  <StartRecordingBtn />
+                  <section className="capitalize">
+                    <h3 className="text-lg font-medium ">
+                      or paste a link to your video
+                    </h3>
+                    <p className="text-sm">
+                      learn how to upload videos to
+                      <span className="text-[#42ADE2]">capitalize</span> or
+                      <span className="text-[#42ADE2]"> vimeo</span>
+                    </p>
+                  </section>
+                  <Field
+                    type="text"
+                    placeholder="sjvcscksb"
+                    className="tutor-dashboard-input-style"
+                    name="video_link"
+                  />
+                </div>
+                <div>
+                  <h2 className="text-xl font-medium capitalize">
+                    make a great first impression
+                  </h2>
+                  <BlueTick />
+                </div>
               </div>
-              <div>
-                <h2 className="text-xl font-medium capitalize">
-                  make a great first impression
-                </h2>
-                <BlueTick />
-              </div>
-            </div>
-            <NextAndBackBtn
-              nextButtonType="submit"
-              onNextClick={() => {}}
-              onBackClick={() => Router.push('description')}
-            />
-          </main>
-        </Form>
-      </Formik>
+              <NextAndBackBtn
+                nextButtonType="submit"
+                onNextClick={() => { }}
+                onBackClick={() => Router.push('description')}
+              />
+            </main>
+          </Form>
+        )}
+      />
     </div>
   )
 }
