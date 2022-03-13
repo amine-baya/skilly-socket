@@ -20,7 +20,9 @@ const Login = (props) => {
       switch (login_response.data.role_name) {
         case ROLE_NAME.TUTOR:
           authenticate(login_response.data, () =>
-            Router.push('/tutorDashboard')
+            // Router.push('/tutorDashboard')
+            // window.location.href="/tutorDashboard"
+            window.location = "/tutorDashboard"
           )
           break
         default:

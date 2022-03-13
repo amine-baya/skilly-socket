@@ -7,7 +7,7 @@
 }
 
 .tutor-dashboard-input-style {
-    @apply rounded-xl border-[1px] py-3 px-5 capitalize outline-none tracking-wider border-gray-300
+    @apply rounded-xl border-[1px] py-3 px-5 outline-none tracking-wider border-gray-300
 }
 
 @screen md {

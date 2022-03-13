@@ -8,6 +8,7 @@ import { updateUserAbout } from '../../utils/constants'
 
 function About() {
   const [user_data, set_user_data] = useState({})
+  const [background_img, set_background_img] = useState()
 
   useEffect(() => {
     getUserData()
@@ -24,6 +25,15 @@ function About() {
       updateUser({ ...data }, () => {
         Router.push('photo')
       })
+    }
+  }
+
+  const handleChange = async (acceptedFiles) => {
+    let data = new FormData()
+    data.append('profile_pic', acceptedFiles, acceptedFiles.name)
+    const response = await Server.post(uploadUserBackgroundPic, data)
+    if (response.success) {
+      set_background_img(response.data.file_name)
     }
   }
 
@@ -44,18 +54,19 @@ function About() {
         initialValues={
           user_data
             ? {
-                name: user_data.name,
-                email: user_data.email,
-                language_spoken: user_data.language_spoken,
-                country: user_data.country,
-                subject_taught_id: user_data.subject_taught_id,
-                hourly_rate: user_data.hourly_rate,
-                teaching_experience_id: user_data.teaching_experience_id,
-                current_situation_id: user_data.current_situation_id,
-                country_code: user_data.country_code,
-                number: user_data.number,
-                eighteen_plus: user_data.eighteen_plus,
-              }
+              name: user_data.name,
+              email: user_data.email,
+              language_spoken: user_data.language_spoken,
+              country: user_data.country,
+              subject_taught_id: user_data.subject_taught_id,
+              hourly_rate: user_data.hourly_rate,
+              teaching_experience_id: user_data.teaching_experience_id,
+              current_situation_id: user_data.current_situation_id,
+              country_code: user_data.country_code,
+              number: user_data.number,
+              eighteen_plus: user_data.eighteen_plus,
+              background_pic_title: user_data.background_pic_title,
+            }
             : {}
         }
         onSubmit={async (values) => {
@@ -77,6 +88,8 @@ function About() {
                 <CountryCode />
                 <Number />
                 <Age />
+                <BackgroundImage background_pic={background_img ? background_img : user_data.background_pic} handleChange={(e) => handleChange(e)} />
+                <BackgroundImageTitle />
               </div>
               <button type="submit">
                 <a className="tutor-dashboard-btn   md:inline-flex  ">next</a>
@@ -157,7 +170,7 @@ const LanguageAndLevel = ({ values }) => {
         className="tutor-dashboard-input-style"
       /> */}
         <FieldArray
-          name="friends"
+          name={"language_spoken"}
           render={(arrayHelpers) => (
             <div>
               {values?.language_spoken && values?.language_spoken.length > 0 ? (
@@ -360,6 +373,62 @@ const Age = () => (
         className=" h-6 w-6 border-2 border-gray-300 bg-blue-200 "
       />
       <span className="capitalize">i confirm i'm over 18</span>
+    </div>
+  </div>
+)
+
+
+const BackgroundImage = (props) => (
+  <div className="flex w-full flex-col gap-4 bg-[#F2F2F2] p-5 md:px-16">
+    <div className="text-lg capitalize">
+      upload your background image to increase the credibility of your profile
+    </div>
+    <div className="flex items-center gap-2">
+      <input type="file"
+        className="rounded-lg border-[1px] border-[#FC4D6D]  py-3 px-6 text-sm font-medium  capitalize"
+        onChange={(e) => props.handleChange(e.target.files[0])}
+      />
+      {/* <div className="rounded-lg border-[1px] border-[#FC4D6D]  py-3 px-6 text-sm font-medium  capitalize">
+        upload a photo
+      </div> */}
+
+    </div>
+    <div className="text-xs">
+      <div className="">JPG or PNG format</div>
+      <div>Maximum size - 2MB.</div>
+    </div>
+    {
+      props.background_pic
+        ?
+        <section className="flex gap-2">
+          <div className="h-[106px] w-[106px] bg-blue-300">
+            <img src={`https://akbh.s3.ap-south-1.amazonaws.com/skillshare/user/profile_img/${props.background_pic}`} alt="img" />
+          </div>
+          {/* <div className="h-[106px] w-[106px] bg-blue-300">
+                    <img src="" alt="img" />
+                  </div>
+                  <div className="h-[106px] w-[106px] bg-blue-300">
+                    <img src="" alt="img" />
+                  </div> */}
+        </section>
+        :
+        null
+    }
+  </div>
+)
+
+const BackgroundImageTitle = () => (
+  <div className="space-y-2">
+    <label htmlFor="" className="tutor-dashboard-label-style">
+      Background Image Title
+    </label>
+    <div className="flex items-center gap-2 overflow-hidden rounded-xl border-2 bg-white px-2 ">
+      <Field
+        className="border-none py-3 px-2 text-[#545454]  outline-none  "
+        type="text"
+        id="background_pic_title"
+        name="background_pic_title"
+      />
     </div>
   </div>
 )

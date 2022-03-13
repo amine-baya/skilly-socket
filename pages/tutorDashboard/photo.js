@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Router from 'next/router'
 import Dropzone from 'react-dropzone'
 import Image from 'next/image'
@@ -10,10 +10,22 @@ import {
   updateUserProfilePic,
   uploadUserProfilePic,
 } from '../../utils/constants'
-import { updateUser } from '../../utils/cookies'
+import { getLocalStorage, updateUser } from '../../utils/cookies'
 
 function ProfilePhoto() {
-  const [profile_img, set_profile_img] = useState('')
+  const [profile_img, set_profile_img] = useState('');
+
+  const [user_data, set_user_data] = useState({})
+
+  useEffect(() => {
+    getUserData()
+  }, [])
+
+  const getUserData = () => {
+    const user = getLocalStorage('user')
+    set_user_data(user)
+  }
+
   const handleDrop = async (acceptedFiles) => {
     let data = new FormData()
     data.append('profile_pic', acceptedFiles[0], acceptedFiles[0].name)
@@ -79,17 +91,24 @@ function ProfilePhoto() {
             <h3 className="text-[22px]  font-medium capitalize text-[#545454]">
               Tips for an amazing photo
             </h3>
-            <section className="flex gap-2">
-              <div className="h-[106px] w-[106px] bg-blue-300">
-                <img src="" alt="img" />
-              </div>
-              <div className="h-[106px] w-[106px] bg-blue-300">
-                <img src="" alt="img" />
-              </div>
-              <div className="h-[106px] w-[106px] bg-blue-300">
-                <img src="" alt="img" />
-              </div>
-            </section>
+            {
+              profile_img || user_data.profile_img
+                ?
+                <section className="flex gap-2">
+                  <div className="h-[106px] w-[106px] bg-blue-300">
+                    <img src={`https://akbh.s3.ap-south-1.amazonaws.com/skillshare/user/profile_img/${profile_img ? profile_img : user_data.profile_img}`} alt="img" />
+                  </div>
+                  {/* <div className="h-[106px] w-[106px] bg-blue-300">
+                    <img src="" alt="img" />
+                  </div>
+                  <div className="h-[106px] w-[106px] bg-blue-300">
+                    <img src="" alt="img" />
+                  </div> */}
+                </section>
+                :
+                null
+            }
+
             <section className="flex flex-col gap-4">
               <BlueTickLine data="smile and look at the camera" />
               <BlueTickLine data=" your photo is centered and upright" />
