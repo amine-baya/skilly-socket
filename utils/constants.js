@@ -10,6 +10,8 @@ export const uploadUserProfilePic = '/user/update/profile-pic'
 export const updateUserAbout = '/user/tutor/profile/update/about'
 export const updateUserProfilePic = '/user/tutor/profile/update/profile-pic'
 export const updateUserDescription = '/user/tutor/profile/update/description'
+export const updateUserVideoDesc =
+  '/user/tutor/profile/update/video-introduction'
 
 export const ROLE_NAME = {
   TUTOR: 'TUTOR',

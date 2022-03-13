@@ -1,56 +1,97 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Router from 'next/router'
+import { Formik, Field, Form } from 'formik'
 import Link from 'next/dist/client/link'
 import Image from 'next/image'
 import NextAndBackBtn from '../../components/TutorDashboardRegistration/NextAndBackBtn'
 import BlueTickLine from '../../components/TutorDashboardRegistration/BlueTick'
+import { getLocalStorage, updateUser } from '../../utils/cookies'
+import Server from '../../utils/Server'
+import { updateUserVideoDesc } from '../../utils/constants'
 function Video() {
+  const [user_data, set_user_data] = useState({})
+
+  useEffect(() => {
+    getUserData()
+  }, [])
+
+  const getUserData = () => {
+    const user = getLocalStorage('user')
+    set_user_data(user)
+  }
+
+  const handleSubmit = async (data) => {
+    const user_update = await Server.put(updateUserVideoDesc, data)
+    if (user_update.success) {
+      updateUser({ ...data }, () => {
+        Router.push('availability')
+      })
+    }
+  }
+
   return (
     <div>
       <PageTitle />
       <hr />
-      <main className="mb-8 flex flex-col gap-5 p-5   font-roboto text-[#545454] md:px-16">
-        <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2">
-          <div className="flex flex-col gap-5">
-            <h2 className="text-xl font-medium capitalize">
-              record your video
-            </h2>
-            <p className="text-sm capitalize text-[#545454] md:w-[28.25rem] ">
-              now interoduce yourself to students! you can watch and re-record
-              your intro before you submit it.
-            </p>
-            <div className="h-60 w-full overflow-hidden rounded-md bg-gray-200 md:w-[28.25rem] ">
-              <img src="" alt="img" />
+      <Formik
+        initialValues={
+          user_data
+            ? {
+                video_link: user_data.video_link,
+              }
+            : {}
+        }
+        onSubmit={async (values) => {
+          handleSubmit(values)
+        }}
+        enableReinitialize
+      >
+        <Form>
+          <main className="mb-8 flex flex-col gap-5 p-5   font-roboto text-[#545454] md:px-16">
+            <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2">
+              <div className="flex flex-col gap-5">
+                <h2 className="text-xl font-medium capitalize">
+                  record your video
+                </h2>
+                <p className="text-sm capitalize text-[#545454] md:w-[28.25rem] ">
+                  now interoduce yourself to students! you can watch and
+                  re-record your intro before you submit it.
+                </p>
+                <div className="h-60 w-full overflow-hidden rounded-md bg-gray-200 md:w-[28.25rem] ">
+                  <img src="" alt="img" />
+                </div>
+                <StartRecordingBtn />
+                <section className="capitalize">
+                  <h3 className="text-lg font-medium ">
+                    or paste a link to your video
+                  </h3>
+                  <p className="text-sm">
+                    learn how to upload videos to
+                    <span className="text-[#42ADE2]">capitalize</span> or
+                    <span className="text-[#42ADE2]"> vimeo</span>
+                  </p>
+                </section>
+                <input
+                  type="text"
+                  placeholder="www.youtube.com/watch?sjvcscksb"
+                  className="tutor-dashboard-input-style"
+                />
+              </div>
+              <div>
+                <h2 className="text-xl font-medium capitalize">
+                  make a great first impression
+                </h2>
+                <BlueTick />
+              </div>
             </div>
-            <StartRecordingBtn />
-            <section className="capitalize">
-              <h3 className="text-lg font-medium ">
-                or paste a link to your video
-              </h3>
-              <p className="text-sm">
-                learn how to upload videos to
-                <span className="text-[#42ADE2]">capitalize</span> or
-                <span className="text-[#42ADE2]"> vimeo</span>
-              </p>
-            </section>
-            <input
-              type="text"
-              placeholder="www.youtube.com/watch?sjvcscksb"
-              className="tutor-dashboard-input-style"
+            <NextAndBackBtn
+              nextButtonType="submit"
+              onNextClick={() => {}}
+              onBackClick={() => Router.push('description')}
             />
-          </div>
-          <div>
-            <h2 className="text-xl font-medium capitalize">
-              make a great first impression
-            </h2>
-            <BlueTick />
-          </div>
-        </div>
-        <NextAndBackBtn
-          onNextClick={() => Router.push('availability')}
-          onBackClick={() => Router.push('description')}
-        />
-      </main>
+          </main>
+        </Form>
+      </Formik>
     </div>
   )
 }
