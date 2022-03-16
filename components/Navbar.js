@@ -1,10 +1,14 @@
 import Link from 'next/link'
 import GradientBtn from './HomePage/GradientBtn'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useClickOutside } from 'react-click-outside-hook'
 import { RiCloseCircleLine } from 'react-icons/ri'
+import { getLocalStorage, setLocalStorage, signout } from '../utils/cookies'
+import { getCookie } from 'cookies-next'
+
 function Navbar() {
+  const [user_data, set_user_data] = useState(null)
   let [menu, setMenu] = useState(false)
   let [search, setSearch] = useState(false)
   let [showSuggetions, setShowSuggetions] = useState(false)
@@ -12,6 +16,11 @@ function Navbar() {
   function toggleMenu() {
     setMenu(!menu)
   }
+
+  useEffect(() => {
+    const user = getLocalStorage('user');
+    set_user_data(user)
+  }, []);
 
   // console.log(search, menu)
   const pageLinksHoverBorder = `relative hover:text-black  md:after:h-1 md:after:mt-[-1rem] md:after:bg-[#FC4D6D] after:rounded-full hover:after:absolute after:left-0 md:after:top-11  ease-in-out after:duration-800 after:w-[2rem] `
@@ -26,10 +35,15 @@ function Navbar() {
     },
     { name: 'process', link: '/', css: '' },
     { name: 'steps', link: '/', css: '' },
-    { name: 'login', link: '/', css: 'md:hidden' },
+    { name: 'login', link: '/auth/login', css: 'md:hidden' },
     { name: 'reviews', link: '/', css: '!pb-6 ' },
   ]
 
+  const logout = () => {
+    signout(() => {
+      window.location = '/tutorDashboard'
+    });
+  }
   return (
     <>
       {/*    fixed*/}
@@ -50,9 +64,8 @@ function Navbar() {
             {/* </div> */}
             {/* <Logo height="34" width="134" /> */}
             <div
-              className={`mx-auto hidden  items-center    justify-center gap-2  ${
-                showSearchOnLg ? 'lg:flex ' : 'hidden'
-              }`}
+              className={`mx-auto hidden  items-center    justify-center gap-2  ${showSearchOnLg ? 'lg:flex ' : 'hidden'
+                }`}
             >
               <NavSearchBox />
               {/* <SearchBox searchCss={'bg-red-400 '} /> */}
@@ -65,13 +78,34 @@ function Navbar() {
             </div>
             <LargeScreenMenuLinks />
             <div className=" flex   items-center gap-12">
-              <Login loginCss={'hidden md:flex'} />
-              <GradientBtn
-                urlLink={'/'}
-                btnName="Sign in"
-                btnCss="text-sm   md:text-lg md:px-6  !mx-0 !px-6 !py-3  "
-              />
+              {
+                getCookie("token")
+                  ?
+                  <>
+                    <a
+                      onClick={(e) => { e.preventDefault(); logout() }}
+                      className={`whitespace-nowrap  text-[18px]   font-[600] `}
+                    >
+                      Logout
+                    </a>
+                    <GradientBtn
+                      urlLink={'/tutorDashboard'}
+                      btnName="Dashboard"
+                      btnCss="text-sm   md:text-lg md:px-6  !mx-0 !px-6 !py-3  "
+                    />
+                  </>
+                  :
+                  <>
+                    <Login loginCss={'hidden md:flex'} />
+                    <GradientBtn
+                      urlLink={'/auth/signup'}
+                      btnName="Sign Up"
+                      btnCss="text-sm   md:text-lg md:px-6  !mx-0 !px-6 !py-3  "
+                    />
+                  </>
+              }
             </div>
+
           </div>
         </div>
         <MainSearch />
@@ -105,11 +139,9 @@ function Navbar() {
             <Link href={'/'}>
               <a
                 key={index}
-                className={` ${
-                  links.name == 'home' ? 'text-black after:absolute' : ''
-                }   font-monts text-base font-semibold  ${
-                  links.name ? pageLinksHoverBorder : ''
-                }  ${links.name === 'search' ? 'hidden' : ''}`}
+                className={` ${links.name == 'home' ? 'text-black after:absolute' : ''
+                  }   font-monts text-base font-semibold  ${links.name ? pageLinksHoverBorder : ''
+                  }  ${links.name === 'search' ? 'hidden' : ''}`}
               >
                 {links.name}
               </a>
@@ -123,9 +155,8 @@ function Navbar() {
     return (
       <div
         onClick={onClick}
-        className={` hover:bg-gray-200  ${
-          menu ? 'bg-gray-200' : ''
-        } relative flex items-center rounded-2xl ${menuCss}  cursor-pointer   p-2`}
+        className={` hover:bg-gray-200  ${menu ? 'bg-gray-200' : ''
+          } relative flex items-center rounded-2xl ${menuCss}  cursor-pointer   p-2`}
       >
         <Image
           src="/Images/Navbar/svg/menu.svg"
@@ -143,14 +174,13 @@ function Navbar() {
 
     return (
       <div
-        className={`  ${
-          search ? 'flex' : 'hidden'
-        }     search-transition absolute   inset-x-0 top-[8rem] !z-50  mx-6 flex justify-center md:mx-auto md:hidden   `}
+        className={`  ${search ? 'flex' : 'hidden'
+          }     search-transition absolute   inset-x-0 top-[8rem] !z-50  mx-6 flex justify-center md:mx-auto md:hidden   `}
       >
         <div
           ref={suggetions}
           className=" flex   flex-col items-center  rounded-xl bg-white shadow-md "
-          // onClick={}
+        // onClick={}
         >
           <div className="   mx-4 mt-4  flex  h-10 items-center justify-center gap-3  rounded-full pb-4">
             <SearchBox
@@ -160,9 +190,8 @@ function Navbar() {
             />
           </div>
           <div
-            className={`${
-              showSuggetions && !hasClickedOutsideSearch ? 'flex' : 'hidden'
-            }     z-50 flex   w-[calc(100%-10%)] flex-col items-center  gap-4  pb-4 `}
+            className={`${showSuggetions && !hasClickedOutsideSearch ? 'flex' : 'hidden'
+              }     z-50 flex   w-[calc(100%-10%)] flex-col items-center  gap-4  pb-4 `}
           >
             {Array.from(Array(5), (_, index) => index + 1).map((index, arr) => (
               <div key={index} className=" flex flex-col items-center ">
@@ -181,9 +210,8 @@ function Navbar() {
                   </Link>
                 </div>
                 <div
-                  className={`mx-8 h-[2px] w-full bg-gray-200  ${
-                    arr.length === arr.length ? 'hidden' : ''
-                  }`}
+                  className={`mx-8 h-[2px] w-full bg-gray-200  ${arr.length === arr.length ? 'hidden' : ''
+                    }`}
                 />
               </div>
             ))}
@@ -207,9 +235,8 @@ function Navbar() {
     return (
       <div
         ref={ref}
-        className={`  ${css} menu-transition z-50    shadow-md   ${
-          menu && !hasClickedOutside ? 'flex' : 'hidden'
-        } items-center-center    absolute top-[5rem] left-0 w-52 flex-col  gap-4 rounded-br-2xl bg-white font-monts text-sm   font-semibold capitalize  text-gray-400 `}
+        className={`  ${css} menu-transition z-50    shadow-md   ${menu && !hasClickedOutside ? 'flex' : 'hidden'
+          } items-center-center    absolute top-[5rem] left-0 w-52 flex-col  gap-4 rounded-br-2xl bg-white font-monts text-sm   font-semibold capitalize  text-gray-400 `}
       >
         <NavLinks />
       </div>
@@ -223,24 +250,21 @@ function Navbar() {
           <div key={index} className=" -mt-4">
             <Link href={'/'}>
               <a
-                className={`${
-                  links.icon === 'searchIcon' ? 'hidden' : ''
-                }   ml-8  mb-4 flex pt-4 transition delay-100   ease-in-out hover:text-gray-500  ${
-                  links.css ? links.css : ''
-                } ${links.css ? links.css : ''}`}
+                className={`${links.icon === 'searchIcon' ? 'hidden' : ''
+                  }   ml-8  mb-4 flex pt-4 transition delay-100   ease-in-out hover:text-gray-500  ${links.css ? links.css : ''
+                  } ${links.css ? links.css : ''}`}
                 onClick={
                   links.name === 'search'
                     ? () => {
-                        setSearch(true)
-                        setMenu(false)
-                      }
+                      setSearch(true)
+                      setMenu(false)
+                    }
                     : ''
                 }
               >
                 <div
-                  className={`mr-2 mt-[2px] ${
-                    links.search ? 'block' : 'hidden'
-                  }`}
+                  className={`mr-2 mt-[2px] ${links.search ? 'block' : 'hidden'
+                    }`}
                 >
                   <Image
                     priority
@@ -250,20 +274,18 @@ function Navbar() {
                   />
                 </div>
                 <span
-                  className={`${
-                    links.name === 'home'
-                      ? 'hover:text-pink-500 cursor-pointer text-[#FC4D6D]'
-                      : ''
-                  }`}
+                  className={`${links.name === 'home'
+                    ? 'hover:text-pink-500 cursor-pointer text-[#FC4D6D]'
+                    : ''
+                    }`}
                 >
                   {links.name}
                 </span>
               </a>
             </Link>
             <div
-              className={`mx-6 h-[1px] w-40 rounded-full bg-gray-200 md:${
-                links.name == 'login' ? 'hidden' : 'md:flex'
-              } ${links.icon == 'searchIcon' ? 'hidden ' : ''} `}
+              className={`mx-6 h-[1px] w-40 rounded-full bg-gray-200 md:${links.name == 'login' ? 'hidden' : 'md:flex'
+                } ${links.icon == 'searchIcon' ? 'hidden ' : ''} `}
             />
           </div>
         ))}
@@ -274,7 +296,7 @@ function Navbar() {
   function Login({ loginCss }) {
     return (
       <>
-        <Link href={'/'}>
+        <Link href={'/auth/login'}>
           <a
             className={`whitespace-nowrap  text-[18px]   font-[600] ${loginCss}`}
           >

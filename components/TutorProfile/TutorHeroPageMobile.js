@@ -97,7 +97,7 @@ function TutorDescription({ user_data }) {
             width={16}
           />
         </div>
-        <span>Teaches {user_data.subject_taught_id.map(function (elem) {
+        <span>Teaches {user_data?.subject_taught_id?.map(function (elem) {
           return SUBJECTS[elem];
         }).join(", ")} language</span>
       </div>
@@ -117,7 +117,7 @@ function TutorDescription({ user_data }) {
             width={13.33}
           />
         </div>
-        <span>207 lessons</span>
+        <span>0 lessons</span>
       </div>
     </div>
   )

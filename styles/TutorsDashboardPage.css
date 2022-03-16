@@ -30,3 +30,6 @@
     background-color: #fafafa;
     color: #bdbdbd;
 }
+.align-self-center {
+    align-self: center;
+}

@@ -141,7 +141,7 @@ const Certificate = ({ index }) => (
 const Description = ({ index }) => (
   <div className="tutors-input-n-label-style   ">
     <label htmlFor="" className=" tutor-dashboard-label-style  ">
-      Description
+      Short Description
     </label>
     <Field
       id={`teaching_certificates.${index}.description`}

@@ -4,10 +4,15 @@ import AuthButton from '../Utils/Buttons/AuthButton'
 import NavLink from 'next/link'
 import Server from '../../utils/Server'
 import { ROLE_NAME } from '../../utils/constants'
-import { authenticate } from '../../utils/cookies'
+import { authenticate, removeLocalStorage } from '../../utils/cookies'
 import Router from 'next/router'
+import { useEffect } from 'react'
 
 const Login = (props) => {
+  // useEffect(() => {
+  //   removeLocalStorage('user')
+  // }, [])
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     const email = e.target.email.value
@@ -19,10 +24,12 @@ const Login = (props) => {
     if (login_response.success) {
       switch (login_response.data.role_name) {
         case ROLE_NAME.TUTOR:
-          authenticate(login_response.data, () =>
-            // Router.push('/tutorDashboard')
-            // window.location.href="/tutorDashboard"
-            window.location = "/tutorDashboard"
+          authenticate(
+            login_response.data,
+            () =>
+              // Router.push('/tutorDashboard')
+              // window.location.href="/tutorDashboard"
+              setTimeout((window.location = '/tutorDashboard/about'), 2000)
           )
           break
         default:

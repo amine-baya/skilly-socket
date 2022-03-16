@@ -5,7 +5,7 @@ const SearchBox = ({ onSearch }) => {
       <input
         type="text"
         id="skill"
-        placeholder="SEARCH A SKILL"
+        placeholder="SEARCH Tutor"
         className="w-[325px] rounded-3xl border-2 py-1 px-4 tracking-widest"
         onKeyUp={(e) => onSearch(e.target.value)}
       />

@@ -38,7 +38,7 @@ function Mobile({ user_data }) {
       <Title />
       <select className="mb-6 w-full max-w-[373px] rounded-md border-2 bg-white py-2 px-4 text-sm text-gray-400 outline-none ">
         {
-          user_data.subject_taught_id.map(function (dd) {
+          user_data?.subject_taught_id.map(function (dd) {
             return (
               <option>{SUBJECTS[dd]}</option>
             )

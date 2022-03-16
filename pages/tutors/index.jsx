@@ -182,7 +182,7 @@ function CourseCart({
           <span>
             {tutorData.language_spoken
               .map(function (elem) {
-                console.log(elem, "elem");
+                console.log(elem, 'elem')
                 return (
                   LANGUAGES[elem.language_id] +
                   '(' +
@@ -199,9 +199,9 @@ function CourseCart({
   function ActiveFinishedRatingBox({ space }) {
     return (
       <div className={`flex   ${space} justify-between gap-2  font-bold `}>
-        <TransparentBox title={'Active '} title2={'Students'} num="3" />
-        <TransparentBox title={'Session '} title2={'finished'} num="45" />
-        <TransparentBox title={'4.5'} title2={'Rating'} img={true} num="172" />
+        <TransparentBox title={'Active '} title2={'Students'} num="0" />
+        <TransparentBox title={'Session '} title2={'finished'} num="0" />
+        <TransparentBox title={'0.0'} title2={'Rating'} img={true} num="0" />
       </div>
     )
     function TransparentBox({ title, num, title2, img }) {
@@ -229,7 +229,7 @@ function CourseCart({
       )
     }
   }
-  function Description({description}) {
+  function Description({ description }) {
     return (
       <div className={` px-4 font-monts text-xs capitalize text-[#606060]   `}>
         <span className="font-bold">Brief :</span> {description}

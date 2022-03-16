@@ -20,6 +20,7 @@ function About() {
   }
 
   const handleSubmit = async (data) => {
+    data.background_pic = background_img;
     const user_update = await Server.put(updateUserAbout, data)
     if (user_update.success) {
       updateUser({ ...data }, () => {
@@ -86,13 +87,13 @@ function About() {
                 <Subject />
                 <HourlyRate />
                 <TeachingExperienceDesc />
-                <CurrentSituationDesc />
-                <CountryCode />
-                <Number />
+                {/* <CurrentSituationDesc /> */}
+                {/* <CountryCode />
+                <Number /> */}
                 <Age />
                 <BackgroundImage
                   background_pic={
-                    background_img ? background_img : user_data.background_pic
+                    background_img ? background_img : user_data?.background_pic
                   }
                   handleChange={(e) => handleChange(e)}
                 />
@@ -157,6 +158,7 @@ const Country = () => (
       name="country"
       className=" cursor-pointer rounded-lg border-2 bg-white py-3 px-2 font-roboto text-[#9E9E9E] outline-none md:w-96 "
     >
+      <option value="">Select </option>
       <option value="America">America </option>
       <option value="Pakistan">Pakistan </option>
       <option value="India">India </option>
@@ -165,7 +167,7 @@ const Country = () => (
 )
 const LanguageAndLevel = ({ values }) => {
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid gap-3">
       {/* language */}
       <div className="tutors-input-n-label-style">
         {/* <input
@@ -180,62 +182,59 @@ const LanguageAndLevel = ({ values }) => {
               {values?.language_spoken && values?.language_spoken.length > 0 ? (
                 values?.language_spoken.map((language, index) => {
                   return (
-                    <div key={index} className="flex flex-row">
-                      <div className="tutors-input-n-label-style flex flex-col">
-                        <label
-                          htmlFor=""
-                          className="tutor-dashboard-label-style"
-                        >
-                          language spoken
-                        </label>
-                        <Field
-                          as="select"
-                          id={`language_spoken.${index}.language_id`}
-                          name={`language_spoken.${index}.language_id`}
-                          className="cursor-pointer rounded-lg border-2 bg-white py-3 px-2 font-roboto text-[#9E9E9E] outline-none md:w-96 "
-                        >
-                          <option value={1}>English </option>
-                          <option value={2}>Hindi </option>
-                          <option value={3}>Marathi </option>
-                        </Field>
-                      </div>
-                      <div className="tutors-input-n-label-style flex flex-col">
-                        <label
-                          htmlFor=" "
-                          className="tutor-dashboard-label-style"
-                        >
-                          level
-                        </label>
-                        <Field
-                          as="select"
-                          id={`language_spoken.${index}.language_level_id`}
-                          name={`language_spoken.${index}.language_level_id`}
-                          className="cursor-pointer rounded-lg border-2 bg-white py-3 px-2 font-roboto text-[#9E9E9E] outline-none md:w-96 "
-                        >
-                          <option value={1}>Native / Bilingual Proficiency</option>
-                          <option value={2}>Limited Working Proficiency</option>
-                          <option value={3}>Full Professional Proficiency</option>
-                        </Field>
-                      </div>
-                      {index === 0 ? (
-                        <>
-                          <button
-                            type="button"
-                            onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                    <>
+                      <div key={index} className="flex flex-row">
+                        <div className="tutors-input-n-label-style flex flex-col">
+                          <label
+                            htmlFor=""
+                            className="tutor-dashboard-label-style"
                           >
-                            -
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
+                            language spoken
+                          </label>
+                          <Field
+                            as="select"
+                            id={`language_spoken.${index}.language_id`}
+                            name={`language_spoken.${index}.language_id`}
+                            className="cursor-pointer rounded-lg border-2 bg-white py-3 px-2 font-roboto text-[#9E9E9E] outline-none md:w-96 "
                           >
-                            +
-                          </button>{' '}
-                        </>
-                      ) : (
-                        ''
-                      )}
-                    </div>
+                            <option value={""}>Select </option>
+                            <option value={1}>English </option>
+                            <option value={2}>Hindi </option>
+                            <option value={3}>Marathi </option>
+                          </Field>
+                        </div>
+                        <div className="tutors-input-n-label-style flex flex-col">
+                          <label
+                            htmlFor=" "
+                            className="tutor-dashboard-label-style"
+                          >
+                            level
+                          </label>
+                          <Field
+                            as="select"
+                            id={`language_spoken.${index}.language_level_id`}
+                            name={`language_spoken.${index}.language_level_id`}
+                            className="cursor-pointer rounded-lg border-2 bg-white py-3 px-2 font-roboto text-[#9E9E9E] outline-none md:w-96 "
+                          >
+                            <option value={""}>Select</option>
+                            <option value={1}>Native / Bilingual Proficiency</option>
+                            <option value={2}>Limited Working Proficiency</option>
+                            <option value={3}>Full Professional Proficiency</option>
+                          </Field>
+                        </div>
+                        {
+                          index
+                            ?
+                            <a className="" href="/" onClick={(e) => { e.preventDefault(); arrayHelpers.remove(index) }} >
+                              -
+                            </a>
+                            :
+                            <a className="" href="/" onClick={(e) => { e.preventDefault(); arrayHelpers.insert(index, '') }} >
+                              +
+                            </a>
+                        }
+                      </div>
+                    </>
                   )
                 })
               ) : (
@@ -388,9 +387,9 @@ const Number = () => (
 
 const Age = () => (
   <div className="space-y-2">
-    <label htmlFor="" className="tutor-dashboard-label-style">
+    {/* <label htmlFor="" className="tutor-dashboard-label-style">
       age
-    </label>
+    </label> */}
     <div className="flex items-center gap-3">
       <Field
         type="checkbox"

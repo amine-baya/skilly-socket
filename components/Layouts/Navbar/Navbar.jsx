@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import SearchBox from './Searchbox'
 import NavbarButton from '../../Utils/Buttons/NavbarButton'
+import Link from 'next/link'
 
 const Navbar = () => {
   return (
@@ -25,11 +26,13 @@ const Navbar = () => {
           <span className="h-[3px] w-[20px] bg-black"></span>
           <span className="h-[3px] w-[26px] bg-black"></span>
         </div>
-        <div className="hidden px-4 sm:block">
-          <span className="text-xl font-bold">Log In</span>
-        </div>
+        <Link href={"/auth/login"}>
+          <div className="hidden px-4 sm:block">
+            <span className="text-xl font-bold">Log In</span>
+          </div>
+        </Link>
         <div className="px-1 sm:px-4">
-          <NavbarButton type="button" label="Sign In" />
+          <NavbarButton type="button" label="Sign Up" />
         </div>
       </div>
     </div>

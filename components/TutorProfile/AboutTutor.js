@@ -97,7 +97,7 @@ function Video(props) {
           {/* <div className="relative order-2 flex items-center justify-center   overflow-hidden   rounded-xl  md:order-1 md:h-[486px] md:w-[430px]    "> */}
           <Image
             priority
-            src={`https://akbh.s3.ap-south-1.amazonaws.com/skillshare/user/profile_img/SS-20220306-1646584633963.jpeg`}
+            src={`http://img.youtube.com/vi/${props.user_data.video_link}/0.jpg`}
             layout="fill"
             objectFit="cover"
           />
