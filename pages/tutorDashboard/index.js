@@ -25,6 +25,9 @@ const tutorDashboard = () => {
           tutor_details: undefined,
           tutor_profile: undefined,
         })
+        if (!user.data.profile_update) {
+          Router.push('about')
+        }
       } else {
         Router.push('/auth/login')
       }
