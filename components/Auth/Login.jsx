@@ -29,7 +29,7 @@ const Login = (props) => {
             () =>
               // Router.push('/tutorDashboard')
               // window.location.href="/tutorDashboard"
-              setTimeout((window.location = '/tutorDashboard/about'), 2000)
+              setTimeout((window.location = '/tutorDashboard'), 2000)
           )
           break
         default:
@@ -92,7 +92,7 @@ const Login = (props) => {
           </div>
         </div>
 
-        <div className="relative min-h-[70vh] sm:basis-[50%]">
+        <div className="relative min-h-[70vh] sm:basis-[50%]" style={{zIndex: 1000}}>
           <div
             className="absolute
             flex
