@@ -25,7 +25,7 @@ const tutorDashboard = () => {
           tutor_details: undefined,
           tutor_profile: undefined,
         })
-        if (!user.data.profile_update) {
+        if (!user.data.tutor_details.profile_update) {
           Router.push('/tutorDashboard/about')
         }
       } else {
