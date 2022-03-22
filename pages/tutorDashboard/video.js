@@ -143,7 +143,7 @@ function Video() {
               save
             </button>
           </div>
-          <hr />
+        
         </Form>
       </Formik>
     </div>

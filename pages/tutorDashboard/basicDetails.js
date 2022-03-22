@@ -4,7 +4,7 @@ import { RiAddFill, RiDeleteBinLine } from 'react-icons/ri'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 
 import { IoMdClose } from 'react-icons/io'
-import { Field, FieldArray, Form, Formik } from 'formik'
+import { Form, Formik, Field, FieldArray } from 'formik'
 
 const languageOptions = [
   { value: 'Tamil', label: 'Tamil' },
@@ -15,7 +15,7 @@ const languageOptions = [
 function basicDetails() {
   const [languageData, setLanguageData] = useState([])
   const [addLanguageData, setAddLanguageData] = useState([])
-  // const [formskillValue, setFormskillValue] = useState('')
+
 
   useEffect(() => {
     setLanguageData(languageOptions)
@@ -45,9 +45,7 @@ function basicDetails() {
         initialValues={initialValues}
         onSubmit={onSubmit}
         enableReinitialize
-        // validateOnChange={false}
-        // validateOnBlur={false}
-        // validateOnMount
+       
       >
         {(formik) => {
           console.log('Formik props', formik)
@@ -163,7 +161,7 @@ function basicDetails() {
                                   </label>
                                   <Field
                                     as="select"
-                                    name={`teach[${index}]`}
+                                    name={`phNumber.${index}.teach`}
                                     className="rounded-[10px]  border-2 border-[#C1C1C1] p-2"
                                   >
                                     <option>Math</option>
@@ -179,7 +177,7 @@ function basicDetails() {
                                   <Field
                                     as="select"
                                     className="rounded-[10px] border-2 border-[#C1C1C1] p-2 "
-                                    name={`fee[${index}]`}
+                                    name={`phNumber.${index}.fee`}
                                   >
                                     <option>750</option>
                                     <option>514</option>
@@ -230,7 +228,7 @@ function basicDetails() {
                                 </p>
                                 <Field
                                   as="select"
-                                  name={`QualificationType[${index}]`}
+                                  name={`Qualification.${index}.Type`}
                                   className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
                                 >
                                   <option>experience</option>
@@ -244,7 +242,7 @@ function basicDetails() {
                                 </p>
                                 <Field
                                   type="text"
-                                  name={`QualificationTitle[${index}]`}
+                                  name={`Qualification.${index}.title`}
                                   className=" w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
                                 />
                               </div>
@@ -255,7 +253,7 @@ function basicDetails() {
                                 <div className="flex gap-1.5">
                                   <Field
                                     as="select"
-                                    name={`QualificationDurationFrom[${index}]`}
+                                    name={`Qualification.${index}.durationFrom`}
                                     className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
                                   >
                                     <option>From</option>
@@ -264,7 +262,7 @@ function basicDetails() {
                                   </Field>
                                   <Field
                                     as="select"
-                                    name={`QualificationDurationTo[${index}]`}
+                                    name={`Qualification.${index}.durationTo`}
                                     className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
                                   >
                                     <option>To</option>
