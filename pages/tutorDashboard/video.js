@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Router from 'next/router'
 import { Formik, Field, Form } from 'formik'
-import Link from 'next/dist/client/link'
 import Image from 'next/image'
-import NextAndBackBtn from '../../components/TutorDashboardRegistration/NextAndBackBtn'
-import BlueTickLine from '../../components/TutorDashboardRegistration/BlueTick'
+import { BsCameraVideo } from 'react-icons/bs'
+import { FiCheckCircle } from 'react-icons/fi'
+import VidImg from '../../public/Images/vidImg.png'
 import { getLocalStorage, updateUser } from '../../utils/cookies'
 import Server from '../../utils/Server'
 import { updateUserVideoDesc } from '../../utils/constants'
@@ -20,142 +20,134 @@ function Video() {
     set_user_data(user)
   }
 
-  const handleSubmit = async (data) => {
+  const onSubmit = async (data) => {
     const user_update = await Server.put(updateUserVideoDesc, data)
     if (user_update.success) {
       updateUser({ ...data }, () => {
-        Router.push('availability')
+        Router.push('availabidivty')
       })
     }
   }
 
   return (
-    <div>
-      <PageTitle />
-      <hr />
-      <Formik
-        initialValues={{ video_link: user_data.video_link }}
-        onSubmit={async (values) => {
-          handleSubmit(values)
-        }}
-        enableReinitialize
-        render={({ values }) => (
-          <Form>
-            <main className="mb-8 flex flex-col gap-5 p-5   font-roboto text-[#545454] md:px-16">
-              <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2">
-                <div className="flex flex-col gap-5">
-                  <h2 className="text-xl font-medium capitalize">
-                    record your video
-                  </h2>
-                  <p className="text-sm capitalize text-[#545454] md:w-[28.25rem] ">
-                    now interoduce yourself to students! you can watch and
-                    re-record your intro before you submit it.
-                  </p>
-                  <div className="h-60 w-full overflow-hidden rounded-md bg-gray-200 md:w-[28.25rem] ">
-                    <img src={`http://img.youtube.com/vi/${values.video_link}/0.jpg`} alt="img" />
+    <div className="font-bold">
+      <div
+        id="heading"
+        className="col-span-12  px-5  py-5 text-3xl font-semibold text-[#3d3d3d] xl:px-20"
+      >
+        Video Introduction
+      </div>
+      <hr className="text-[#E2E2E2]" />
+      <div className="my-10 px-5  text-[#545454]  xl:px-20 ">
+        <p className="py-3 text-2xl">Record Your Video</p>
+        <p className="">
+          Now Interoduce Yourself To Students! You Can Watch And Re-Record Your
+          Intro Before You Submit It.
+        </p>
+      </div>
+      <Formik initialValues={{ video_divnk: '' }} onSubmit={onSubmit}>
+        <Form>
+          <div className="grid grid-cols-12 px-5  xl:px-20">
+            <div className="col-span-12 md:col-span-7">
+              <div className="py-3">
+                <Image src={VidImg} alt="sdf" className="w-full"></Image>
+              </div>
+
+              <button className="flex gap-2.5 rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-3 py-1 text-lg font-medium text-white">
+                <BsCameraVideo className=" my-auto  text-2xl" />
+                Start Recording
+              </button>
+
+              <div className="my-6 text-[#545454]">
+                <p className=" mb-2.5  text-xl font-medium">
+                  or paste a divnk to your video
+                </p>
+                <p className=" font-normal">
+                  Learn How To Upload Videos To{' '}
+                  <a className="text-[#1180BE]">Youtube</a> or{' '}
+                  <a className="text-[#1180BE]">Vimeo</a>
+                </p>
+              </div>
+              <Field
+                type="text"
+                placeholder="www.youtube.com/watch?sjvcscksb"
+                className="mb-6 w-full rounded-xl border border-gray-300 py-3 px-5 tracking-wider outline-none md:mb-0 lg:w-4/5"
+                name="video_divnk"
+              />
+            </div>
+
+            <div className="col-span-12 md:col-span-5 md:px-6 xl:px-12 2xl:px-[70px]">
+              <p className="text-xl font-medium">Tips for a great video</p>
+
+              <div className="font-normal  ">
+                <p className="my-5 text-sm font-medium ">Technical</p>
+                <div className="grid grid-cols-10 gap-y-2.5 text-[#838383]">
+                  <FiCheckCircle className="b-colo" />
+                  <div className="col-span-9">Record in horizontal mode</div>
+
+                  <FiCheckCircle className="b-colo " />
+                  <div className="col-span-9">
+                    Position the camera at the eye levelx
                   </div>
-                  <StartRecordingBtn />
-                  <section className="capitalize">
-                    <h3 className="text-lg font-medium ">
-                      or paste a link to your video
-                    </h3>
-                    <p className="text-sm">
-                      learn how to upload videos to
-                      <span className="text-[#42ADE2]">capitalize</span> or
-                      <span className="text-[#42ADE2]"> vimeo</span>
-                    </p>
-                  </section>
-                  <Field
-                    type="text"
-                    placeholder="sjvcscksb"
-                    className="tutor-dashboard-input-style"
-                    name="video_link"
-                  />
+
+                  <FiCheckCircle className="b-colo" />
+                  <div className="col-span-9">
+                    Keep video between 30 seconds and 2 minutes
+                  </div>
+
+                  <FiCheckCircle className="b-colo " />
+                  <div className="col-span-9">
+                    Use nuteral divghting and background
+                  </div>
+
+                  <FiCheckCircle className="b-colo inline h-auto w-auto  " />
+                  <div className="col-span-9">
+                    Your face and eyes are fully visible &#40;except for
+                    redivgious reasons&#41;
+                  </div>
+
+                  <FiCheckCircle className="b-colo " />
+                  <div className="col-span-9">
+                    Avoid logos or contact information
+                  </div>
+
+                  <FiCheckCircle className="b-colo " />
+                  <div className="col-span-9">
+                    You are the only person in the photo
+                  </div>
                 </div>
-                <div>
-                  <h2 className="text-xl font-medium capitalize">
-                    make a great first impression
-                  </h2>
-                  <BlueTick />
+
+                <p className="my-5 text-sm font-medium">Content</p>
+                <div className="grid grid-cols-10 gap-2.5 text-[#838383]">
+                  <FiCheckCircle className="b-colo " />
+                  <div className="col-span-9">Greet Your Students Warmly</div>
+                  <FiCheckCircle className="b-colo " /> 
+                  <div className=" col-span-9"> Highlight Any Teaching Certification</div>
+                  <FiCheckCircle className="b-colo " />
+                  <div className=" col-span-9">
+                    Present Your Tutoring Experience
+                  </div>
+                  <FiCheckCircle className="b-colo " />
+                  <div className="col-span-9">
+                    Invite Students To Book A Trial Session
+                  </div>
+                  <BsCameraVideo className="my-auto  b-colo  text-xl" />
+                  <div className=" b-colo col-span-9">
+                    <div>Example</div>
+                  </div>
                 </div>
               </div>
-              <NextAndBackBtn
-                nextButtonType="submit"
-                onNextClick={() => { }}
-                onBackClick={() => Router.push('description')}
-              />
-            </main>
-          </Form>
-        )}
-      />
+            </div>
+
+            <button className="col-span-6 mt-12 w-auto rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-3 py-1 text-lg font-medium text-white md:col-span-2 md:mt-0 md:w-full ">
+              save
+            </button>
+          </div>
+          <hr />
+        </Form>
+      </Formik>
     </div>
   )
 }
 
 export default Video
-
-const BlueTick = () => (
-  <div>
-    <p className=" mb-2  text-sm font-medium capitalize"> technical</p>
-    <div className="flex flex-col gap-4">
-      <BlueTickLine data="record in horizontal mode" />
-      <BlueTickLine data=" position the camera at the eye level" />
-      <BlueTickLine data="use nuteral lighting and background" />
-      <BlueTickLine data="avoid logos or contact information" />
-      <BlueTickLine data="you are the only person in the photo" />
-      <p className=" -mb-2  text-sm font-medium capitalize"> technical</p>
-
-      <BlueTickLine data="greet your students warmly" />
-      <BlueTickLine data="highlight any teaching certification" />
-      <BlueTickLine data="present your tutoring experience" />
-      <BlueTickLine data="invite students to book a trial session" />
-      <Example />
-    </div>
-  </div>
-)
-
-const Example = () => {
-  return (
-    <Link href="#">
-      <a className="flex items-center gap-2 self-start rounded-lg   ">
-        <div className="relative h-[14px] w-[22px]">
-          <Image
-            src="/Images/TutorsDashboard/video-blue.svg"
-            alt=""
-            layout="fill"
-            objectFit="cover"
-            className=""
-          />
-        </div>
-        <span className=" capitalize  text-[#1180BE]">example</span>
-      </a>
-    </Link>
-  )
-}
-const PageTitle = () => {
-  return (
-    <div className="px-5 pt-3 pb-4 font-poppins text-2xl font-semibold capitalize text-[#5E5252] md:px-16">
-      video introduction
-    </div>
-  )
-}
-
-const StartRecordingBtn = () => {
-  return (
-    <Link href="#">
-      <a className="flex items-center gap-2 self-start rounded-lg bg-[#FC4D6D] py-2 px-5">
-        <div className="relative h-[14px] w-[22px]">
-          <Image
-            src="/Images/TutorsDashboard/video.svg"
-            alt=""
-            layout="fill"
-            objectFit="cover"
-          />
-        </div>
-        <span className="font-medium capitalize text-white">
-          start recording
-        </span>
-      </a>
-    </Link>
-  )
-}
