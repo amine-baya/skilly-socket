@@ -91,7 +91,15 @@ function Video() {
           <div className="grid grid-cols-12 px-5  xl:px-20">
             <div className="col-span-12 md:col-span-7">
               <div className="py-3">
-                { videoLink === '' ? (
+                {startVideo === true ? (
+                  <video
+                    height="244px"
+                    width="452px"
+                    muted
+                    autoPlay
+                    className="app__videoFeed"
+                  ></video>
+                ) :  videoLink === '' ? (
                   <div className="h-[244px] w-full bg-gray-200 md:w-[452px]"></div>
                 ) : (
                   <iframe
@@ -114,7 +122,7 @@ function Video() {
                   Start Recording
                 </button>
                 <label className=" col-span-6 w-auto  cursor-pointer rounded-lg   border border-[#FC4D6D] bg-white px-3 py-1 text-lg font-medium text-[#FC4D6D]">
-                  Upload Picture
+                  Upload Video
                   <input
                     type="file"
                     className="hidden"
@@ -128,7 +136,7 @@ function Video() {
 
               <div className="my-6 text-[#545454]">
                 <p className=" mb-2.5  text-xl font-medium">
-                  or Paste a Link to your video
+                  Or Paste a Link to your video
                 </p>
                 <p className=" font-normal">
                   Learn How To Upload Videos To{' '}
