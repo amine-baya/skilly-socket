@@ -48,7 +48,7 @@ function basicDetails() {
        
       >
         {(formik) => {
-          console.log('Formik props', formik)
+      
           return (
             <Form>
               <div className="container mx-auto p-4">

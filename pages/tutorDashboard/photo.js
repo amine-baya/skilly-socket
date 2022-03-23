@@ -15,6 +15,7 @@ import { getLocalStorage, updateUser } from '../../utils/cookies'
 
 function ProfilePhoto() {
   const [profile_img, set_profile_img] = useState('')
+  const [image, setImage] = useState({ preview: '', raw: '' })
 
   const [user_data, set_user_data] = useState({})
 
@@ -34,6 +35,17 @@ function ProfilePhoto() {
     if (response.success) {
       set_profile_img(response.data.file_name)
     }
+  }
+  const photoHandleChange = (e) => {
+    console.log('e', e.target.value)
+    if (e.target.files.length) {
+      setImage({
+        preview: URL.createObjectURL(e.target.files[0]),
+        raw: e.target.files[0],
+      })
+    }
+  
+
   }
   const handleSubmit = async () => {
     if (!profile_img) {
@@ -69,7 +81,7 @@ function ProfilePhoto() {
           <div className="col-span-12 space-y-8 md:col-span-6">
             <div className="flex gap-2.5 ">
               <label className="h-auto rounded-lg border border-[#FC4D6D] bg-white px-[21px] py-2.5 text-sm">
-                <input type="file" name="" id="" className="hidden" />
+                <input type="file" name="" id="" className="hidden" onChange={(e)=> photoHandleChange(e)} />
                 Upload A Photo
               </label>
               <div className=" text-xs">
