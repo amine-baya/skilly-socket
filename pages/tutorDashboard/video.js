@@ -25,18 +25,21 @@ function Video() {
     set_user_data(user)
   }
   const videoHandleChange = (e) => {
-   console.log("e",e.target.value)
     if (e.target.files.length) {
+      console.log("e",e.target.files[0])
+      
       setImage({
         preview: URL.createObjectURL(e.target.files[0]),
         raw: e.target.files[0],
       })
-      console.log(image.preview)
     }
-    setVideoLink(image.preview)
+    console.log(image.preview)
    
-    setStartVideo(false)
+    // setStartVideo(false)
   }
+  setTimeout(() => {
+   setVideoLink(image.preview)
+  }, 1000);
   const WebcamCapture = () => {
     setStartVideo(!startVideo)
 

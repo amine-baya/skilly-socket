@@ -80,10 +80,28 @@ function ProfilePhoto() {
         <div className="grid grid-cols-12 px-5 text-[#545454]  xl:px-20 ">
           <div className="col-span-12 space-y-8 md:col-span-6">
             <div className="flex gap-2.5 ">
-              <label className="h-auto rounded-lg border border-[#FC4D6D] bg-white px-[21px] py-2.5 text-sm">
-                <input type="file" name="" id="" className="hidden" onChange={(e)=> photoHandleChange(e)} />
-                Upload A Photo
-              </label>
+              {/* <label className="h-auto rounded-lg border border-[#FC4D6D] bg-white px-[21px] py-2.5 text-sm">
+                <input type="file" name="" id="" className="hidden" onChange={(e)=> photoHandleChange(e)} /> */}
+                <Dropzone
+              className="hidden"
+                onDrop={handleDrop}
+                accept="image/*"
+                minSize={1024}
+                maxSize={3072000}
+              >
+                {({ getRootProps, getInputProps }) => (
+                  <div
+                    {...getRootProps({ className: 'h-auto rounded-lg border border-[#FC4D6D] bg-white px-[21px] py-2.5 text-sm' })}
+                  >
+                    <input {...getInputProps()} />
+                    <p className=" capitalize  ">
+                    Upload A Photo
+                    </p>
+                  </div>
+                )}
+              </Dropzone>
+                {/* Upload A Photo */}
+              {/* </label> */}
               <div className=" text-xs">
                 <p>JPG or PNG format</p>
                 <p>Maximum size - 2MB.</p>
@@ -91,6 +109,7 @@ function ProfilePhoto() {
             </div>
             <div className=" mb-20 flex">
               <Dropzone
+              className="hidden"
                 onDrop={handleDrop}
                 accept="image/*"
                 minSize={1024}

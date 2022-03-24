@@ -4,7 +4,7 @@ import { RiAddFill, RiDeleteBinLine } from 'react-icons/ri'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 
 import { IoMdClose } from 'react-icons/io'
-import { Form, Formik, Field, FieldArray } from 'formik'
+import { Form, Formik, Field, FieldArray, ErrorMessage } from 'formik'
 
 const languageOptions = [
   { value: 'Tamil', label: 'Tamil' },
@@ -16,13 +16,18 @@ function basicDetails() {
   const [languageData, setLanguageData] = useState([])
   const [addLanguageData, setAddLanguageData] = useState([])
 
-
   useEffect(() => {
     setLanguageData(languageOptions)
   }, [])
   const initialValues = {
     phNumbers: [''],
     qualification: [''],
+    friends: [
+      {
+        name: '',
+        email: '',
+      },
+    ],
   }
   const onSubmit = () => {}
 
@@ -45,10 +50,9 @@ function basicDetails() {
         initialValues={initialValues}
         onSubmit={onSubmit}
         enableReinitialize
-       
       >
         {(formik) => {
-      
+          console.log('first', formik)
           return (
             <Form>
               <div className="container mx-auto p-4">
@@ -114,7 +118,7 @@ function basicDetails() {
                       }}
                     >
                       <option>Option</option>
-                      {languageData.length &&
+                      {languageData?.length &&
                         languageData?.map((item, index) => {
                           return (
                             <option key={index} value={item.value}>
@@ -147,7 +151,7 @@ function basicDetails() {
                         const { push, remove, form } = fieldArrayProps
                         const { values } = form
                         const { phNumbers } = values
-
+                        console.log('remove', remove)
                         return (
                           <>
                             {phNumbers.map((phNumber, index) => (
@@ -193,9 +197,7 @@ function basicDetails() {
                                   </button>
                                   <button
                                     type="button"
-                                    onClick={
-                                      index > 0 ? () => remove(index) : ''
-                                    }
+                                    onClick={() => remove(index)}
                                   >
                                     <RiDeleteBinLine className="text-xl" />
                                   </button>
@@ -206,6 +208,62 @@ function basicDetails() {
                         )
                       }}
                     </FieldArray>
+                    {/* <FieldArray name="phNumbers">
+                      {({ insert, remove, push }) => (
+                        <div>
+                          {formik.values?.friends?.length > 0 &&
+                            formik.values.friends.map((phNumber, index) => (
+                              <div className="mb-9 grid grid-cols-12 gap-y-9 gap-x-4 md:gap-9" key={index}>
+                                <div className="grid-col-1 col-span-6  grid   gap-y-2  md:grid-cols-2 ">
+                                  <label className="self-center font-semibold">
+                                    I will like to teach..
+                                  </label>
+                                  <Field
+                                    as="select"
+                                    name={`phNumber.${index}.teach`}
+                                    className="rounded-[10px]  border-2 border-[#C1C1C1] p-2"
+                                  >
+                                    <option>Math</option>
+                                    <option>sfgsf</option>
+                                    <option>sdfgsd</option>
+                                  </Field>
+                                </div>
+                                <div className="col-span-6 grid grid-cols-1 gap-y-2 md:col-span-5  md:grid-cols-2">
+                                  <label className=" self-center font-semibold ">
+                                    My fee per hour
+                                  </label>
+
+                                  <Field
+                                    as="select"
+                                    className="rounded-[10px] border-2 border-[#C1C1C1] p-2 "
+                                    name={`phNumber.${index}.fee`}
+                                  >
+                                    <option>750</option>
+                                    <option>514</option>
+                                    <option>651</option>
+                                  </Field>
+                                </div>
+                                <div className="col">
+                                  <button
+                                    type="button"
+                                    className=" col-span-3 col-start-10 flex justify-between md:col-span-1 "
+                                    onClick={() => push({ fee: '', teach: '' })}
+                                  >
+                                    <RiAddFill className="text-2xl" />
+                                  </button>
+                                </div>
+                              </div>
+                            ))}
+                          <button
+                            type="button"
+                            className="secondary"
+                            onClick={() => remove(index)}
+                          >
+                            <RiDeleteBinLine className="text-xl" />
+                          </button>
+                        </div>
+                      )}
+                    </FieldArray> */}
                   </div>
                 </div>
                 <FieldArray name="qualification">
@@ -294,20 +352,74 @@ function basicDetails() {
                     )
                   }}
                 </FieldArray>
-             
-               <div className="text-right my-9">
 
-               <button className="rounded-lg bg-[#FC4D6D] py-2.5 px-4 text-white sm:w-auto w-full ">
-              
-                 Save and Next
-               </button>
-               </div>
-             </div>
-         
-            
+                <div className="my-9 text-right">
+                  <button className="w-full rounded-lg bg-[#FC4D6D] py-2.5 px-4 text-white sm:w-auto ">
+                    Save and Next
+                  </button>
+                </div>
+              </div>
             </Form>
           )
         }}
+      </Formik>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={async (values) => {
+          await new Promise((r) => setTimeout(r, 500))
+          alert(JSON.stringify(values, null, 2))
+        }}
+      >
+        {({ values }) => (
+          <Form>
+            <FieldArray name="friends">
+              {({ insert, remove, push }) => (
+                <div>
+                  {values.friends?.length > 0 &&
+                    values.friends.map((friend, index) => (
+                      <div className="row" key={index}>
+                        <div className="col">
+                          <label htmlFor={`friends.${index}.name`}>Name</label>
+                          <Field
+                            name={`friends.${index}.name`}
+                            placeholder="Jane Doe"
+                            type="text"
+                          />
+                        </div>
+                        <div className="col">
+                          <label htmlFor={`friends.${index}.email`}>
+                            Email
+                          </label>
+                          <Field
+                            name={`friends.${index}.email`}
+                            placeholder="jane@acme.com"
+                            type="email"
+                          />
+                        </div>
+                        <div className="col">
+                          <button
+                            type="button"
+                            className="secondary"
+                            onClick={() => remove(index)}
+                          >
+                            X
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  <button
+                    type="button"
+                    className="secondary"
+                    onClick={() => push({ name: '', email: '' })}
+                  >
+                    Add Friend
+                  </button>
+                </div>
+              )}
+            </FieldArray>
+            <button type="submit">Invite</button>
+          </Form>
+        )}
       </Formik>
     </>
   )
