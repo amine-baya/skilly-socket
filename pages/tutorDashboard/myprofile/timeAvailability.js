@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { Field, FieldArray, Form, Formik } from 'formik'
-import FormikControl from '../../components/Utils/FormikComponents/FormikControl'
-import TimeAvailabilityCard from '../../components/Utils/FormikComponents/TimeAvailabilityCard'
+import FormikControl from '../../../components/Utils/FormikComponents/FormikControl'
+import TimeAvailabilityCard from '../../../components/Utils/FormikComponents/TimeAvailabilityCard'
 
 function timeAvailability() {
   const initialValues = {

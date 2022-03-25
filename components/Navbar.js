@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import GradientBtn from './HomePage/GradientBtn'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useClickOutside } from 'react-click-outside-hook'
 import { RiCloseCircleLine } from 'react-icons/ri'
 import { getLocalStorage, setLocalStorage, signout } from '../utils/cookies'
@@ -43,6 +43,7 @@ function Navbar() {
     signout(() => {
       window.location = '/tutorDashboard'
     });
+
   }
   return (
     <>
@@ -89,6 +90,7 @@ function Navbar() {
                       Logout
                     </a>
                     <GradientBtn
+                      
                       urlLink={'/tutorDashboard'}
                       btnName="Dashboard"
                       btnCss="text-sm   md:text-lg md:px-6  !mx-0 !px-6 !py-3  "

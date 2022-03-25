@@ -51,7 +51,7 @@ function basicDetails() {
           console.log('Formik props', formik)
           return (
             <Form>
-              <div className="container mx-auto p-4">
+              <div className="container mx-auto ml-10 p-4">
                 <h1 className="text-3xl font-semibold">Welcome Yash Mehta</h1>
                 <p>
                   Just <span className="font-semibold">2 minutes </span>

@@ -4,10 +4,10 @@ import { Formik, Field, Form } from 'formik'
 import Image from 'next/image'
 import { BsCameraVideo } from 'react-icons/bs'
 import { FiCheckCircle } from 'react-icons/fi'
-import VidImg from '../../public/Images/vidImg.png'
-import { getLocalStorage, updateUser } from '../../utils/cookies'
-import Server from '../../utils/Server'
-import { updateUserVideoDesc } from '../../utils/constants'
+import VidImg from '../../../public/Images/vidImg.png'
+import { getLocalStorage, updateUser } from '../../../utils/cookies'
+import Server from '../../../utils/Server'
+import { updateUserVideoDesc } from '../../../utils/constants'
 function Video() {
   const [user_data, set_user_data] = useState({})
 
