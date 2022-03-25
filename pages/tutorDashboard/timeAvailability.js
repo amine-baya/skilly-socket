@@ -6,13 +6,42 @@ import TimeAvailabilityCard from '../../components/Utils/FormikComponents/TimeAv
 
 function timeAvailability() {
   const initialValues = {
- 
-    MondayName: [''],
-    TuesdayName: [''],
-    WednesdayName: [''],
-    ThursdayName: [''],
-    FridayName: [''],
-    SaturdayName: [''],
+    MondayName: [
+      {
+        from: '',
+        to: '',
+      },
+    ],
+    TuesdayName: [
+      {
+        from: '',
+        to: '',
+      },
+    ],
+    WednesdayName: [
+      {
+        from: '',
+        to: '',
+      },
+    ],
+    ThursdayName: [
+      {
+        from: '',
+        to: '',
+      },
+    ],
+    FridayName: [
+      {
+        from: '',
+        to: '',
+      },
+    ],
+    SaturdayName: [
+      {
+        from: '',
+        to: '',
+      },
+    ],
   }
   const onSubmit = () => {}
   return (
@@ -27,7 +56,6 @@ function timeAvailability() {
         enableReinitialize
       >
         {(formik) => {
-          
           return (
             <Form>
               <div className="container mx-auto p-4">
@@ -65,7 +93,6 @@ function timeAvailability() {
                     weekName="Monday"
                     name="MondayName"
                   />
-                  
                   <FormikControl
                     control="timeAvailabilityCard"
                     weekName="Tuesday"

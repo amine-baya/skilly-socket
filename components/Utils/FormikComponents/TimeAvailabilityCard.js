@@ -9,7 +9,80 @@ import { RiAddFill, RiDeleteBinLine } from 'react-icons/ri'
 import Image from 'next/image'
 
 function TimeAvailabilityCard({ weekName, name }) {
-  const [indexValue, setIndexValue] = useState('')
+  const [indexValue, setIndexValue] = useState(0)
+
+  const timeHandler = (value) => {
+    console.log('time', value)
+
+    if (
+      value === '7:00 AM' ||  value ===
+      '7:30 AM' ||  value ===
+      '8:00 AM' ||  value ===
+      '9:00 AM' ||  value ===
+      '8:30 AM' ||  value ===
+      '9:30 AM' || value ===
+      '10:00 AM' || value ===
+      '10:30 AM' || value ===
+      '11:00 AM' || value ===
+      '11:30 AM' || value ===
+      '5:00 AM' || value ===
+      '5:30 AM' || value ===
+      '6:00 AM' || value ===
+      '6:30 AM'
+    ) {
+      console.log('morning')
+      setIndexValue(0)
+    } else if (
+      value === '12:00 PM' ||value ===
+      '12:30 PM' ||value ===
+      '1:00 PM' ||value ===
+      '1:30 PM' ||value ===
+      '2:30 PM' ||value ===
+      '3:30 PM' ||value ===
+      '3:00 PM' ||value ===
+      '2:00 PM' ||value ===
+      '4:00 PM' ||value ===
+      '4:30 PM'
+    ) {
+      console.log('afternoon')
+
+      setIndexValue(1)
+    } else if (
+      value === '5:00 PM' ||value ===
+      '5:30 PM' ||value ===
+      '6:00 PM' ||value ===
+      '6:30 PM' ||value ===
+      '7:30 PM' ||value ===
+      '8:30 PM' ||value ===
+      '7:00 PM' ||value ===
+      '8:00 PM' ||value ===
+      '9:00 PM' ||value ===
+      '9:30 PM' ||value ===
+      '10:30 PM' ||value ===
+      '10:00 PM'
+    ) {
+      console.log('evening')
+
+      setIndexValue(2)
+    } else if (
+      value === '11:00 PM' ||
+      '11:30 PM' ||
+      '12:00 AM' ||
+      '12:30 AM' ||
+      '1:30 AM' ||
+      '2:30 AM' ||
+      '1:00 AM' ||
+      '2:00 AM' ||
+      '3:00 AM' ||
+      '3:30 AM' ||
+      '4:00 AM' ||
+      '4:30 AM'
+    ) {
+      console.log('night')
+
+      setIndexValue(3)
+    }
+  }
   return (
     <>
       <div className="grid grid-cols-2 gap-10 bg-[#F2F2F2]  p-6">
@@ -36,27 +109,26 @@ function TimeAvailabilityCard({ weekName, name }) {
         {/* </div> */}
 
         <FieldArray name={name} className="col-span-2">
-          {(fieldArrayProps) => {
-            const { push, remove, form } = fieldArrayProps
-            const { values } = form
-            const cardName = values[name]
-
+          {({ push, remove, form }) => {
+            const cardName = form.values[name]
+          
             return (
               <>
-                {cardName.map((timeAvailable, index) => (
+                {cardName.map((cardName, index) => (
                   <div>
-                    {index === 0 ? (
+                    {indexValue === 0 ? (
                       <WiDayHaze className="text-3xl text-[#7D7D7D]" />
-                    ) : index === 1 ? (
+                    ) : indexValue === 1 ? (
                       <BsSun className="mb-1 text-2xl text-[#7D7D7D]" />
-                    ) : index === 2 ? (
+                    ) : indexValue === 2 ? (
                       <BsCloudMoon className="mb-1 text-2xl text-[#7D7D7D]" />
-                    ) : (
-                      <div className="h-7 w-7">
-                        <Image src={nightIcon} alt="" />
-                      </div>
-                    )}
-               
+                    ) : 
+                      indexValue ===3 ? (
+                        <div className="h-7 w-7">
+                          <Image src={nightIcon} alt="" />
+                        </div>
+                      ) :  <WiDayHaze className="text-3xl text-[#7D7D7D]" />
+                    }
 
                     <div className="flex flex-col gap-4 md:flex-row">
                       <div className=" w-full">
@@ -64,13 +136,27 @@ function TimeAvailabilityCard({ weekName, name }) {
                           as="select"
                           name={`${cardName}.${index}.from`}
                           className=" w-full rounded-[10px] border border-[#C1C1C1] p-3 "
+                          onChange={(e) => timeHandler(e.target.value)}
                         >
-                          <option>7:00 AM </option>
-                          <option>7:30 AM </option>
-                          <option>8:00 AM </option>
-                          <option>8:30 AM </option>
-                          <option>9:00 AM </option>
-                          <option>9:30 AM </option>
+                          <option value="5:00 AM">5:00 AM</option>
+                          <option value="5:30 AM">5:30 AM</option>
+                          <option value="6:00 AM">6:00 AM</option>
+                          <option value="6:30 AM">6:30 AM</option>
+                          <option value="7:00 AM">7:00 AM</option>
+                          <option value="7:30 AM">7:30 AM</option>
+                          <option value="12:00 PM">12:00 PM</option>
+                          <option value="1:30 PM">1:30 PM</option>
+                          <option value="2:00 PM">2:00 PM</option>
+                          <option value="3:30 PM">3:30 PM</option>
+                          <option value="5:00 PM">5:00 PM</option>
+                          <option value="5:30 PM">5:30 PM</option>
+                          <option value="6:00 PM">6:00 PM</option>
+                          <option value="6:30 PM">6:30 PM</option>
+                          <option value="7:00 PM">7:00 PM</option>
+                          <option value="12:00 AM">12:00 AM</option>
+                          <option value="1:30 AM">1:30 AM</option>
+                          <option value="2:00 AM">2:00 AM</option>
+                          <option value="3:30 AM">3:30 AM</option>
                         </Field>
                       </div>
                       <label className="my-auto font-bold">To</label>
@@ -91,7 +177,7 @@ function TimeAvailabilityCard({ weekName, name }) {
                       <button type="button">
                         <RiDeleteBinLine
                           className="text-xl"
-                          onClick={index > 0 ? () => remove(index) : ''}
+                          onClick={() => remove(index)}
                         />
                       </button>
                     </div>
@@ -99,11 +185,7 @@ function TimeAvailabilityCard({ weekName, name }) {
                 ))}
                 <button
                   type="button"
-                  onClick={
-                    // indexValue<=2 ?
-                    () => push('')
-                    //  : null
-                  }
+                  onClick={() => push({ from: '', to: '' })}
                   className="order-4 col-span-2 flex gap-x-2 font-bold  text-[#2294CD] md:order-none md:col-span-1 md:mx-auto "
                 >
                   <IoMdAddCircleOutline className="my-auto text-xl" />
