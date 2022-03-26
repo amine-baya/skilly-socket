@@ -51,7 +51,7 @@ function basicDetails() {
           console.log('Formik props', formik)
           return (
             <Form className='bg-white sm:ml-[30px] sm:mt-[34px] sm:mb-[30px] sm:rounded-2xl '>
-              <div className="container mx-auto sm:ml-10 p-4">
+              <div className="container mx-auto sm:ml-10 sm:p-4">
                 <h1 className="text-3xl font-semibold">Welcome Yash Mehta</h1>
                 <p>
                   Just <span className="font-semibold">2 minutes </span>
@@ -60,7 +60,7 @@ function basicDetails() {
                 </p>
               </div>
               <hr />
-              <div className="container mx-auto p-4">
+              <div className="container mx-auto sm:p-4">
                 <div className=" grid grid-cols-2  gap-4 md:gap-9 ">
                   <div className=" col-span-2 grid  grid-cols-1  gap-y-2   md:col-span-1  md:grid-cols-2">
                     <label className="self-center font-semibold ">
@@ -218,7 +218,7 @@ function basicDetails() {
                       <>
                         {qualification.map((qualification, index) => (
                           <>
-                            <div className="mt-9 grid grid-cols-12 gap-5 bg-[#F2F2F2] p-4 md:gap-x-8 md:p-[26px]">
+                            <div className="mt-9 grid grid-cols-12 gap-5 sm:bg-[#F2F2F2] sm:p-4 md:gap-x-8 md:p-[26px]">
                               <div
                                 className="col-span-6 md:col-span-3"
                                 key={index}
