@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 function SideBar () {
     const router = useRouter();
     return (
-     <div className="mt-9 p-7">
+     <div className="mt-9 p-7 hidden md:block">
          <nav>
              <ul>
               <li className={`block text-xl text-center justify-center font-semibold pb-9  font-roboto w-32 ${router.pathname === "/tutorDashboard/myprofile/basicDetails" ? "text-pink" : "text-[#878787]"} `}>

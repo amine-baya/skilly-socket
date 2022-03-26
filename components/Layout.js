@@ -1,22 +1,20 @@
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 
-const SideBar= dynamic(()=> import('./Sidebar'))
-const RightSidebar= dynamic(()=> import('./RightSidebar'))
+const SideBar = dynamic(() => import('./Sidebar'))
+const RightSidebar = dynamic(() => import('./RightSidebar'))
 const Navbar = dynamic(() => import('./Navbar'))
 function Layout({ children }) {
   const { route } = useRouter()
   return (
-    <>
-      <div>
-        <Navbar />
-        <div className={`flex ${route.split('/')[1] === 'tutorDashboard' && 'bg-[#FFF2E3]'} `}>
-          { route.split('/')[1] === 'tutorDashboard' && <SideBar/>}
-          <main className='flex-grow'>{children}</main>
-          { route.split('/')[2] === 'myprofile' && <RightSidebar/>}
-        </div>
+    <div>
+      <Navbar />
+      <div className={`flex ${route.split('/')[1] === 'tutorDashboard' && 'bg-[#FFF2E3]'} `}>
+        {route.split('/')[1] === 'tutorDashboard' && <SideBar />}
+        <main className='flex-grow'>{children}</main>
+        {route.split('/')[2] === 'myprofile' && <RightSidebar />}
       </div>
-    </>
+    </div>
   )
 }
 
