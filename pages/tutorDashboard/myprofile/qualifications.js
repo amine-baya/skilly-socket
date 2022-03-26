@@ -27,7 +27,7 @@ const Qualifications = () => {
   const onSubmit = (e) => {console.log('e', e)}
   
   return (
-    <div className=' bg-white ml-[30px] mt-[34px] mb-[30px] rounded-2xl '>
+    <div className=' bg-white sm:ml-[30px] sm:mt-[34px] sm:mb-[30px] sm:rounded-2xl '>
         <h1 className='text-3xl mt-3 ml-12  font-semibold text-[#3d3d3d] xl:px-20'>Qualifications</h1>
         <p className='border-b mt-7'></p>
         <div className='bg-[ #F2F2F2]'>
@@ -42,7 +42,7 @@ const Qualifications = () => {
           console.log('Formik props', formik)
           return (
             <Form>
-              <div className="container mx-auto p-4">
+              <div className="className=xs:mx-0 xs:p-0 xs:m-0 sm:container sm:mx-auto sm:p-4">
                 
                 <FieldArray name="qualification">
                   {(fieldArrayProps) => {
@@ -53,13 +53,13 @@ const Qualifications = () => {
                     return (
                       <>
                         {qualification.map((qualification, index) => (
-                          <>
-                            <div className="mt-9 grid grid-cols-12 gap-5 bg-[#F2F2F2] p-4 md:gap-x-8 md:p-[26px]">
+                          <div>
+                            <div className="mt-9 grid grid-cols-12 gap-5 sm:bg-[#F2F2F2] p-4 md:gap-x-8 md:p-[26px]">
                               <div
                                 className="col-span-6 md:col-span-3"
                                 key={index}
                               >
-                                <p className="mb-5 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold ">
+                                <p className="mb-5 xs:text-[13px] sm:text-[16px] sm:overflow-hidden sm:overflow-ellipsis sm:whitespace-nowrap font-semibold ">
                                   Qualification Type
                                 </p>
                                 <Field
@@ -73,7 +73,7 @@ const Qualifications = () => {
                                 </Field>
                               </div>
                               <div className="order-2 col-span-10 md:order-none md:col-span-5">
-                                <p className="mb-5 font-semibold  ">
+                                <p className="mb-5 font-semibold xs:text-[13px] sm:text-[16px] ">
                                   Qualification Title
                                 </p>
                                 <Field
@@ -83,7 +83,7 @@ const Qualifications = () => {
                                 />
                               </div>
                               <div className="col-span-6 md:col-span-3">
-                                <p className="mb-5 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold">
+                                <p className=" xs:text-[13px] sm:text-[16px] mb-5 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold">
                                   Qualification Duration
                                 </p>
                                 <div className="flex gap-1.5">
@@ -117,7 +117,7 @@ const Qualifications = () => {
                                 </button>
                               </div>
                               <div className="order-2 col-span-11 md:order-none ">
-                                <p className="mb-5 font-semibold  ">
+                                <p className="mb-5 font-semibold xs:text-[13px] sm:text-[16px] ">
                                  Degree Issuing Institute
                                 </p>
                                 <Field
@@ -140,7 +140,7 @@ const Qualifications = () => {
 
 
                             </div>
-                          </>
+                          </div>
                         ))}
                         <button
                           type="button"

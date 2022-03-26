@@ -50,8 +50,8 @@ function basicDetails() {
         {(formik) => {
           console.log('Formik props', formik)
           return (
-            <Form className='bg-white ml-[30px] mt-[34px] mb-[30px] rounded-2xl'>
-              <div className="container mx-auto ml-10 p-4">
+            <Form className='bg-white sm:ml-[30px] sm:mt-[34px] sm:mb-[30px] sm:rounded-2xl '>
+              <div className="container mx-auto sm:ml-10 p-4">
                 <h1 className="text-3xl font-semibold">Welcome Yash Mehta</h1>
                 <p>
                   Just <span className="font-semibold">2 minutes </span>
