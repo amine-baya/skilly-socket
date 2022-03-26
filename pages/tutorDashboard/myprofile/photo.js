@@ -51,7 +51,7 @@ function ProfilePhoto() {
   }
   return (
     <>
-      <div className="  font-bold ">
+      <div className="  font-bold bg-white ml-[30px] mt-[34px] mb-[30px] rounded-2xl ">
         <div
           id="heading"
           className="col-span-12  py-5 px-5 text-3xl  font-semibold text-[#3d3d3d] xl:px-20"

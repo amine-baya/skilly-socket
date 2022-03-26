@@ -16,8 +16,8 @@ function timeAvailability() {
   }
   const onSubmit = () => {}
   return (
-    <>
-      <div className="container mx-auto p-4">
+    <div className='bg-white ml-[30px] mt-[34px] mb-[30px] rounded-2xl'>
+      <div className="container mx-auto p-4 ">
         <h1 className="text-3xl font-semibold">Availability</h1>
       </div>
       <hr />
@@ -97,7 +97,7 @@ function timeAvailability() {
           )
         }}
       </Formik>
-    </>
+    </div>
   )
 }
 
