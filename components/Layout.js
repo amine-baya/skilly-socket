@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 
-const SideBar = dynamic(() => import('./Sidebar'))
+const SideBar = dynamic(() => import('./SideBar'))
 const RightSidebar = dynamic(() => import('./RightSidebar'))
 const Navbar = dynamic(() => import('./Navbar'))
 function Layout({ children }) {

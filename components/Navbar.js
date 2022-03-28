@@ -8,7 +8,7 @@ import { getLocalStorage, setLocalStorage, signout } from '../utils/cookies'
 import { getCookie } from 'cookies-next'
 import { ActiveHomeIcon, ActiveProfileIcon, HomeIcon, LoginIcon, MessageIcon, ProfileIcon, RevenueIcon, SessionIcon, SettingIcon } from "../icons";
 import { useRouter } from 'next/router'
-import { SideBarLinks } from './Sidebar'
+import { SideBarLinks } from './SideBar'
 
 function Navbar() {
   const [user_data, set_user_data] = useState(null)
