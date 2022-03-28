@@ -42,7 +42,7 @@ const Qualifications = () => {
           console.log('Formik props', formik)
           return (
             <Form>
-              <div className="className=xs:mx-0 xs:p-0 xs:m-0 sm:container sm:mx-auto sm:p-4">
+              <div className="className=xs:mx-0 xs:p-0 xs:m-0  sm:mx-auto sm:p-4">
                 
                 <FieldArray name="qualification">
                   {(fieldArrayProps) => {
