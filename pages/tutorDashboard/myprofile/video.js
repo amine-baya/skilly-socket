@@ -222,7 +222,7 @@ function Video() {
               </div>
             </div>
           </div>
-          <div className="col-span-6 flex gap-x-10 my-10">
+          <div className="md:col-span-6 col-span-12 flex gap-x-10 my-10">
             <div>
               <button className="  w-auto rounded-lg border border-[#FC4D6D] bg-white px-3 py-1 text-lg font-medium text-[#FC4D6D] md:col-span-2 md:w-full">
                 Skip For Now

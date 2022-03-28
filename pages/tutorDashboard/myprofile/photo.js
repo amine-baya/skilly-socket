@@ -75,11 +75,10 @@ function ProfilePhoto() {
             Tutor Who Look Friendly And Professional Get The Most Students
           </p>
         </div>
-        <div className="grid grid-cols-12 px-5 text-[#545454]  xl:px-20 ">
+        <div className="grid grid-cols-12 px-5 text-[#545454]  xl:px-20 lg: gap-x-2">
           <div className="col-span-12 space-y-8 md:col-span-6">
             <div className="flex gap-2.5 ">
-              {/* <label className="h-auto rounded-lg border border-[#FC4D6D] bg-white px-[21px] py-2.5 text-sm">
-                <input type="file" name="" id="" className="hidden" onChange={(e)=> photoHandleChange(e)} /> */}
+             
               <Dropzone
                 className="hidden"
                 onDrop={handleDrop}
@@ -116,7 +115,7 @@ function ProfilePhoto() {
               >
                 {({ getRootProps, getInputProps }) => (
                   <div
-                    {...getRootProps({ className: 'dropzone md:w-96 w-full ' })}
+                    {...getRootProps({ className: 'dropzone lg:w-96 w-full ' })}
                   >
                     <input {...getInputProps()} />
                     <p className="py-[147px] capitalize  ">
@@ -185,7 +184,7 @@ function ProfilePhoto() {
               </div>
             </div>
           </div>
-          <div className="col-span-6 flex gap-x-10 my-10">
+          <div className="md:col-span-6 col-span-12 flex gap-x-10 my-10">
             <div>
               <button className="  w-auto rounded-lg border border-[#FC4D6D] bg-white px-3 py-1 text-lg font-medium text-[#FC4D6D] md:col-span-2 md:w-full">
                 Skip For Now

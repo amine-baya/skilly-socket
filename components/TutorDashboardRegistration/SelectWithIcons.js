@@ -32,7 +32,7 @@ export default function SelectWithIcons() {
         <>
          
           <div className="mt-1 relative">
-            <Listbox.Button className="relative w-full rounded-[10px] border-2 border-[#C1C1C1] p-2">
+            <Listbox.Button className="relative w-full rounded-[10px] border-2 border-[#C1C1C1] px-3 py-2">
               <span className="flex items-center">
                 <img src={selected.avatar} alt="" className="flex-shrink-0 h-6 w-6 rounded-full" />
                 <span className="ml-3 block truncate">{selected.name}</span>

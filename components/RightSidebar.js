@@ -4,11 +4,11 @@ import { useRouter } from 'next/router'
 function SideBar() {
   const router = useRouter()
   return (
-    <div className="mt-9 hidden py-7 pr-7 pl-5 lg:block">
+    <div className="mt-9 hidden py-7 pr-7 pl-5 lg:block whitespace-nowrap">
       <nav>
         <ul className="font-medium">
           <li
-            className={`block     pb-5  font-roboto text-xl ${
+            className={`block pb-5  font-roboto  ${
               router.pathname === '/tutorDashboard/myprofile/basicDetails'
                 ? 'text-[#FC4D6D]'
                 : 'text-[#878787]'
@@ -19,7 +19,7 @@ function SideBar() {
             </Link>
           </li>
           <li
-            className={`block pb-5     text-xl ${
+            className={`block pb-5      ${
               router.pathname === '/tutorDashboard/myprofile/timeAvailability'
                 ? 'text-[#FC4D6D]'
                 : 'text-[#878787]'
@@ -31,7 +31,7 @@ function SideBar() {
           </li>
 
           <li
-            className={`block pb-5    text-xl ${
+            className={`block pb-5     ${
               router.pathname === '/tutorDashboard/myprofile/photo'
                 ? 'text-[#FC4D6D]'
                 : 'text-[#878787]'
@@ -42,7 +42,7 @@ function SideBar() {
             </Link>
           </li>
           <li
-            className={`block pb-5   text-xl ${
+            className={`block pb-5    ${
               router.pathname === '/tutorDashboard/myprofile/video'
                 ? 'text-[#FC4D6D]'
                 : 'text-[#878787]'
@@ -53,7 +53,7 @@ function SideBar() {
             </Link>
           </li>
           <li
-            className={`block pb-5  text-xl ${
+            className={`block pb-5   ${
               router.pathname === '/tutorDashboard/myprofile/qualifications'
                 ? 'text-[#FC4D6D]'
                 : 'text-[#878787]'

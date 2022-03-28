@@ -67,7 +67,7 @@ function SideBar() {
     },
   ]
   return (
-    <div className="hidden rounded-r-lg bg-white p-5 lg:block ">
+    <div className=" xl:w-96 lg:w-[350px] hidden rounded-r-lg bg-white lg:block px-2 ">
       <span className="block bg-gradient-to-r from-[#feae78] to-[#f94161] bg-clip-text pb-12 pt-2 text-2xl font-bold tracking-widest text-transparent">
         Dashboard
       </span>
@@ -80,14 +80,14 @@ export default SideBar
 
 export function SideBarLinks({ links, hideIcon = false }) {
   return (
-    <nav>
-      <ul>
+    <nav className='w-full'>
+      <ul className=''>
         {links.map((item, i) => (
           <li
             className={`align-center mb-5 block justify-center text-left font-roboto text-lg  font-bold ${
               item.active
-                ? 'rounded-2xl bg-pink p-4 py-3 2xl:px-9'
-                : 'p-4 py-3 2xl:px-9'
+                ? 'rounded-2xl bg-pink px-4 py-3 2xl:px-9 xl:px-5'
+                : 'px-4 py-3 2xl:px-9 xl:px-5'
             } font-roboto`}
           >
             <Link href={item.link}>

@@ -47,7 +47,7 @@ function timeAvailability() {
   return (
     <div className='bg-white lg:ml-[30px] ml-[1px] lg:mt-[34px] md-[1px]  lg:mb-[30px] mb-[1px] lg:rounded-2xl'>
       <div className=" p-5  xl:px-20">
-        <h1 className="text-3xl font-semibold">Availability</h1>
+        <h1 className="text-3xl font-semibold">Time Availability</h1>
       </div>
       <hr />
       <Formik
