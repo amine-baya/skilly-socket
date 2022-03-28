@@ -10,14 +10,56 @@ import Server from '../../../utils/Server'
 import { updateUserVideoDesc } from '../../../utils/constants'
 function Video() {
   const [user_data, set_user_data] = useState({})
+  const [image, setImage] = useState({ preview: '', raw: '' })
+  const [startVideo, setStartVideo] = useState(false)
+  const [playing, setPlaying] = useState(false)
+  const [videoLink, setVideoLink] = useState('')
+  const [uploadVideoLink, setUploadVideoLink] = useState('')
 
   useEffect(() => {
     getUserData()
   }, [])
-
   const getUserData = () => {
     const user = getLocalStorage('user')
     set_user_data(user)
+  }
+  const videoHandleChange = (e) => {
+    if (e.target.files.length) {
+      console.log("e",e.target.files[0])
+      
+      setImage({
+        preview: URL.createObjectURL(e.target.files[0]),
+        raw: e.target.files[0],
+      })
+    }
+    console.log(image.preview)
+   
+    // setStartVideo(false)
+  }
+  setTimeout(() => {
+   setVideoLink(image.preview)
+  }, 1000);
+  const WebcamCapture = () => {
+    setStartVideo(!startVideo)
+
+    setPlaying(true)
+    navigator.getUserMedia(
+      {
+        video: true,
+      },
+      (stream) => {
+        let video = document.getElementsByClassName('app__videoFeed')[0]
+        if (video) {
+          video.srcObject = stream
+        }
+      },
+      (err) => console.error(err)
+    )
+    
+  }
+  const urlHandler = (value) => {
+    setStartVideo(false)
+    setVideoLink(value)
   }
 
   const onSubmit = async (data) => {
@@ -50,17 +92,52 @@ function Video() {
           <div className="grid grid-cols-12 px-5  xl:px-20">
             <div className="col-span-12 md:col-span-7">
               <div className="py-3">
-                <Image src={VidImg} alt="sdf" className="w-full"></Image>
+                {startVideo === true ? (
+                  <video
+                    height="244px"
+                    width="452px"
+                    muted
+                    autoPlay
+                    className="app__videoFeed"
+                  ></video>
+                ) :  videoLink === '' ? (
+                  <div className="h-[244px] w-full bg-gray-200 md:w-[452px]"></div>
+                ) : (
+                  <iframe
+                    className="h-[244px] w-full bg-gray-200 lg:w-[452px]"
+                    src={videoLink}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                )}
               </div>
-
-              <button className="flex gap-2.5 rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-3 py-1 text-lg font-medium text-white">
-                <BsCameraVideo className=" my-auto  text-2xl" />
-                Start Recording
-              </button>
+              <div className="flex gap-x-10">
+                <button
+                  className="flex gap-2.5 rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-3 py-1 text-lg font-medium text-white"
+                  type="button"
+                  onClick={WebcamCapture}
+                >
+                  <BsCameraVideo className=" my-auto  text-2xl" />
+                  Start Recording
+                </button>
+                <label className=" col-span-6 w-auto  cursor-pointer rounded-lg   border border-[#FC4D6D] bg-white px-3 py-1 text-lg font-medium text-[#FC4D6D]">
+                  Upload Video
+                  <input
+                    type="file"
+                    className="hidden"
+                    name="image"
+                    accept="video/mp4,video/x-m4v,video/*"
+                    
+                    onChange={(e) => videoHandleChange(e)}
+                  />
+                </label>
+              </div>
 
               <div className="my-6 text-[#545454]">
                 <p className=" mb-2.5  text-xl font-medium">
-                  or paste a divnk to your video
+                  Or Paste a Link to your video
                 </p>
                 <p className=" font-normal">
                   Learn How To Upload Videos To{' '}
@@ -68,11 +145,12 @@ function Video() {
                   <a className="text-[#1180BE]">Vimeo</a>
                 </p>
               </div>
-              <Field
+              <input
                 type="text"
                 placeholder="www.youtube.com/watch?sjvcscksb"
                 className="mb-6 w-full rounded-xl border border-gray-300 py-3 px-5 tracking-wider outline-none md:mb-0 lg:w-4/5"
                 name="video_divnk"
+                onChange={(e) => urlHandler(e.target.value)}
               />
             </div>
 
@@ -121,8 +199,11 @@ function Video() {
                 <div className="grid grid-cols-10 gap-2.5 text-[#838383]">
                   <FiCheckCircle className="b-colo " />
                   <div className="col-span-9">Greet Your Students Warmly</div>
-                  <FiCheckCircle className="b-colo " /> 
-                  <div className=" col-span-9"> Highlight Any Teaching Certification</div>
+                  <FiCheckCircle className="b-colo " />
+                  <div className=" col-span-9">
+                    {' '}
+                    Highlight Any Teaching Certification
+                  </div>
                   <FiCheckCircle className="b-colo " />
                   <div className=" col-span-9">
                     Present Your Tutoring Experience
@@ -131,7 +212,7 @@ function Video() {
                   <div className="col-span-9">
                     Invite Students To Book A Trial Session
                   </div>
-                  <BsCameraVideo className="my-auto  b-colo  text-xl" />
+                  <BsCameraVideo className="b-colo  my-auto  text-xl" />
                   <div className=" b-colo col-span-9">
                     <div>Example</div>
                   </div>
@@ -143,7 +224,6 @@ function Video() {
               save
             </button>
           </div>
-        
         </Form>
       </Formik>
     </div>

@@ -4,7 +4,7 @@ import { RiAddFill, RiDeleteBinLine } from 'react-icons/ri'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 
 import { IoMdClose } from 'react-icons/io'
-import { Form, Formik, Field, FieldArray } from 'formik'
+import { Form, Formik, Field, FieldArray, ErrorMessage } from 'formik'
 
 const languageOptions = [
   { value: 'Tamil', label: 'Tamil' },
@@ -16,13 +16,24 @@ function basicDetails() {
   const [languageData, setLanguageData] = useState([])
   const [addLanguageData, setAddLanguageData] = useState([])
 
-
   useEffect(() => {
     setLanguageData(languageOptions)
   }, [])
   const initialValues = {
-    phNumbers: [''],
-    qualification: [''],
+    Qualification: [
+      {
+        durationTo: '',
+        durationFrom: '',
+        title: '',
+        Type: '',
+      },
+    ],
+    teachs: [
+      {
+        fee: '',
+        teach: '',
+      },
+    ],
   }
   const onSubmit = () => {}
 
@@ -43,12 +54,12 @@ function basicDetails() {
     <>
       <Formik
         initialValues={initialValues}
-        onSubmit={onSubmit}
-        enableReinitialize
-       
+        onSubmit={async (values) => {
+          await new Promise((r) => setTimeout(r, 500))
+          alert(JSON.stringify(values, null, 2))
+        }}
       >
-        {(formik) => {
-          console.log('Formik props', formik)
+        {({ values }) => {
           return (
             <Form className='bg-white sm:ml-[30px] sm:mt-[34px] sm:mb-[30px] sm:rounded-2xl '>
               <div className="container mx-auto sm:ml-10 sm:p-4">
@@ -114,7 +125,7 @@ function basicDetails() {
                       }}
                     >
                       <option>Option</option>
-                      {languageData.length &&
+                      {languageData?.length &&
                         languageData?.map((item, index) => {
                           return (
                             <option key={index} value={item.value}>
@@ -142,173 +153,178 @@ function basicDetails() {
                     </div>
                   </div>
                   <div className=" col-span-2  ">
-                    <FieldArray name="phNumbers">
-                      {(fieldArrayProps) => {
-                        const { push, remove, form } = fieldArrayProps
-                        const { values } = form
-                        const { phNumbers } = values
-
-                        return (
-                          <>
-                            {phNumbers.map((phNumber, index) => (
-                              <div
-                                key={index}
-                                className=" mb-9 grid grid-cols-12 gap-y-9 gap-x-4 md:gap-9"
-                              >
-                                <div className="grid-col-1 col-span-6  grid   gap-y-2  md:grid-cols-2 ">
-                                  <label className="self-center font-semibold">
-                                    I will like to teach..
-                                  </label>
-                                  <Field
-                                    as="select"
-                                    name={`phNumber.${index}.teach`}
-                                    className="rounded-[10px]  border-2 border-[#C1C1C1] p-2"
-                                  >
-                                    <option>Math</option>
-                                    <option>sfgsf</option>
-                                    <option>sdfgsd</option>
-                                  </Field>
-                                </div>
-                                <div className="col-span-6 grid grid-cols-1 gap-y-2 md:col-span-5  md:grid-cols-2">
-                                  <label className=" self-center font-semibold ">
-                                    My fee per hour
-                                  </label>
-
-                                  <Field
-                                    as="select"
-                                    className="rounded-[10px] border-2 border-[#C1C1C1] p-2 "
-                                    name={`phNumber.${index}.fee`}
-                                  >
-                                    <option>750</option>
-                                    <option>514</option>
-                                    <option>651</option>
-                                  </Field>
-                                </div>
-                                <div className=" col-span-3 col-start-10 flex justify-between md:col-span-1 ">
-                                  <button
-                                    type="button"
-                                    onClick={() => push('')}
-                                  >
-                                    <RiAddFill className="text-2xl" />
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={
-                                      index > 0 ? () => remove(index) : ''
-                                    }
-                                  >
-                                    <RiDeleteBinLine className="text-xl" />
-                                  </button>
-                                </div>
-                              </div>
-                            ))}
-                          </>
-                        )
-                      }}
-                    </FieldArray>
-                  </div>
-                </div>
-                <FieldArray name="qualification">
-                  {(fieldArrayProps) => {
-                    const { push, remove, form } = fieldArrayProps
-                    const { values } = form
-                    const { qualification } = values
-
-                    return (
-                      <>
-                        {qualification.map((qualification, index) => (
-                          <>
-                            <div className="mt-9 grid grid-cols-12 gap-5 sm:bg-[#F2F2F2] sm:p-4 md:gap-x-8 md:p-[26px]">
-                              <div
-                                className="col-span-6 md:col-span-3"
-                                key={index}
-                              >
-                                <p className="mb-5 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold ">
-                                  Qualification Type
-                                </p>
+                   
+                    <FieldArray name="teachs">
+                      {({ insert, remove, push }) => (
+                        <>
+                          {values.teachs?.map((teachs, index) => (
+                            <div
+                              className="mb-9 grid grid-cols-12 gap-y-9 gap-x-4 md:gap-9"
+                              key={index}
+                            >
+                              <div className="grid-col-1 col-span-6  grid   gap-y-2  md:grid-cols-2">
+                                <label
+                                  className="self-center font-semibold"
+                                  htmlFor={`teachs.${index}.teach`}
+                                >
+                                  {' '}
+                                  I will like to teach..
+                                </label>
                                 <Field
                                   as="select"
-                                  name={`Qualification.${index}.Type`}
-                                  className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
+                                  name={`teachs.${index}.teach`}
+                                  placeholder="Jane Doe"
+                                  className="rounded-[10px] border-2 border-[#C1C1C1] p-2 "
                                 >
-                                  <option>experience</option>
-                                  <option>certificate</option>
-                                  <option>degree</option>
+                                  <option>Math</option>
+                                  <option>sfgsf</option>
+                                  <option>sdfgsd</option>
                                 </Field>
                               </div>
-                              <div className="order-2 col-span-10 md:order-none md:col-span-5">
-                                <p className="mb-5 font-semibold  ">
-                                  Qualification Title
-                                </p>
+                              <div className="col-span-6 grid grid-cols-1 gap-y-2 md:col-span-5  md:grid-cols-2">
+                                <label
+                                  className="self-center font-semibold"
+                                  htmlFor={`teachs.${index}.fee`}
+                                >
+                                  My fee per hour
+                                </label>
                                 <Field
-                                  type="text"
-                                  name={`Qualification.${index}.title`}
-                                  className=" w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
-                                />
+                                  name={`teachs.${index}.fee`}
+                                  placeholder="jane@acme.com"
+                                  as="select"
+                                  className="rounded-[10px] border-2 border-[#C1C1C1] p-2 "
+                                >
+                                  {' '}
+                                  <option>750</option>
+                                  <option>514</option>
+                                  <option>651</option>
+                                </Field>
                               </div>
-                              <div className="col-span-6 md:col-span-3">
-                                <p className="mb-5 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold">
-                                  Qualification Duration
-                                </p>
-                                <div className="flex gap-1.5">
-                                  <Field
-                                    as="select"
-                                    name={`Qualification.${index}.durationFrom`}
-                                    className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
-                                  >
-                                    <option>From</option>
-                                    <option>2002</option>
-                                    <option>2001</option>
-                                  </Field>
-                                  <Field
-                                    as="select"
-                                    name={`Qualification.${index}.durationTo`}
-                                    className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
-                                  >
-                                    <option>To</option>
-                                    <option>2005</option>
-                                    <option>2006</option>
-                                  </Field>
-                                </div>
-                              </div>
-                              <div className="order-last col-span-1 mt-11 self-center justify-self-center md:order-none">
+                              <div className=" col-span-3 col-start-10 flex justify-between md:col-span-1 ">
                                 <button
                                   type="button"
-                                  onClick={index > 0 ? () => remove(index) : ''}
+                                  onClick={() => remove(index)}
                                 >
-                                  <RiDeleteBinLine className="text-xl " />
+                                  <RiDeleteBinLine className="text-xl" />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => push({ fee: '', teach: '' })}
+                                >
+                                  <RiAddFill className="text-2xl" />
                                 </button>
                               </div>
                             </div>
-                          </>
-                        ))}
-                        <button
-                          type="button"
-                          onClick={() => push('')}
-                          className="mx-auto flex gap-x-2 p-4 font-bold text-[#2294CD] "
+                          ))}
+                        </>
+                      )}
+                    </FieldArray>
+                  </div>
+                </div>
+                <FieldArray name="Qualification">
+                  {({ insert, remove, push }) => (
+                    <>
+                      {values.Qualification?.map((Qualification, index) => (
+                        <div
+                          className="mt-9 grid grid-cols-12 gap-5 bg-[#F2F2F2] p-4 md:gap-x-8 md:p-[26px]"
+                          key={index}
                         >
-                          <IoMdAddCircleOutline className="self-center" />
-                          Add Additional Qualification
-                        </button>
-                      </>
-                    )
-                  }}
+                          <div className="col-span-6 md:col-span-3">
+                            <p
+                              className="mb-5 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold "
+                              name={`Qualification.${index}.Type`}
+                            >
+                              Qualification Type
+                            </p>
+                            <Field
+                              as="select"
+                              name={`Qualification.${index}.Type`}
+                              className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
+                            >
+                              <option>experience</option>
+                              <option>certificate</option>
+                              <option>degree</option>
+                            </Field>
+                          </div>
+                          <div className="order-2 col-span-10 md:order-none md:col-span-5">
+                            <p
+                              className="mb-5 font-semibold  "
+                              name={`Qualification.${index}.title`}
+                            >
+                              Qualification Title
+                            </p>
+                            <Field
+                              type="text"
+                              name={`Qualification.${index}.title`}
+                              className=" w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
+                            />
+                          </div>
+                          <div className="col-span-6 md:col-span-3">
+                            <p className="mb-5 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold">
+                              Qualification Duration
+                            </p>
+                            <div className="flex gap-1.5">
+                              <Field
+                                as="select"
+                                name={`Qualification.${index}.durationFrom`}
+                                className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
+                              >
+                                <option>From</option>
+                                <option>2002</option>
+                                <option>2001</option>
+                              </Field>
+                              <Field
+                                as="select"
+                                name={`Qualification.${index}.durationTo`}
+                                className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
+                              >
+                                <option>To</option>
+                                <option>2005</option>
+                                <option>2006</option>
+                              </Field>
+                            </div>
+                          </div>
+                          <div className="order-last col-span-1 mt-11 self-center justify-self-center md:order-none">
+                            <button
+                              type="button"
+                              onClick={() => remove(index)}
+                            >
+                              <RiDeleteBinLine className="text-xl " />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={() =>
+                          push({
+                            durationTo: '',
+                            durationFrom: '',
+                            title: '',
+                            Type: '',
+                          })
+                        }
+                        className="mx-auto flex gap-x-2 p-4 font-bold text-[#2294CD] "
+                      >
+                        <IoMdAddCircleOutline className="self-center" />
+                        Add Additional Qualification
+                      </button>
+                    </>
+                  )}
                 </FieldArray>
-             
-               <div className="text-right my-9">
+                
 
-               <button className="rounded-lg bg-[#FC4D6D] py-2.5 px-4 text-white sm:w-auto w-full ">
-              
-                 Save and Next
-               </button>
-               </div>
-             </div>
-         
-            
+                <div className="my-9 text-right">
+                  <button className="w-full rounded-lg bg-[#FC4D6D] py-2.5 px-4 text-white sm:w-auto ">
+                    Save and Next
+                  </button>
+                </div>
+              </div>
             </Form>
           )
         }}
       </Formik>
+    
     </>
   )
 }
