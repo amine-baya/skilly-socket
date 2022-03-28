@@ -44,8 +44,6 @@ function ProfilePhoto() {
         raw: e.target.files[0],
       })
     }
-  
-
   }
   const handleSubmit = async () => {
     if (!profile_img) {
@@ -63,7 +61,7 @@ function ProfilePhoto() {
   }
   return (
     <>
-      <div className="  font-bold bg-white sm:ml-[30px] sm:mt-[34px] sm:mb-[30px] sm:rounded-2xl ">
+      <div className="  md-[1px] ml-[1px] mb-[1px] bg-white font-bold lg:ml-[30px]  lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl">
         <div
           id="heading"
           className="col-span-12  py-5 px-5 text-3xl  font-semibold text-[#3d3d3d] xl:px-20"
@@ -82,8 +80,8 @@ function ProfilePhoto() {
             <div className="flex gap-2.5 ">
               {/* <label className="h-auto rounded-lg border border-[#FC4D6D] bg-white px-[21px] py-2.5 text-sm">
                 <input type="file" name="" id="" className="hidden" onChange={(e)=> photoHandleChange(e)} /> */}
-                <Dropzone
-              className="hidden"
+              <Dropzone
+                className="hidden"
                 onDrop={handleDrop}
                 accept="image/*"
                 minSize={1024}
@@ -91,16 +89,17 @@ function ProfilePhoto() {
               >
                 {({ getRootProps, getInputProps }) => (
                   <div
-                    {...getRootProps({ className: 'h-auto rounded-lg border border-[#FC4D6D] bg-white px-[21px] py-2.5 text-sm' })}
+                    {...getRootProps({
+                      className:
+                        'h-auto rounded-lg border border-[#FC4D6D] bg-white px-[21px] py-2.5 text-sm',
+                    })}
                   >
                     <input {...getInputProps()} />
-                    <p className=" capitalize  ">
-                    Upload A Photo
-                    </p>
+                    <p className=" capitalize  ">Upload A Photo</p>
                   </div>
                 )}
               </Dropzone>
-                {/* Upload A Photo */}
+              {/* Upload A Photo */}
               {/* </label> */}
               <div className=" text-xs">
                 <p>JPG or PNG format</p>
@@ -109,7 +108,7 @@ function ProfilePhoto() {
             </div>
             <div className=" mb-20 flex">
               <Dropzone
-              className="hidden"
+                className="hidden"
                 onDrop={handleDrop}
                 accept="image/*"
                 minSize={1024}
@@ -153,7 +152,7 @@ function ProfilePhoto() {
             </div>
 
             <div>
-              <div className=" grid grid-cols-12 gap-y-4  text-[#838383]">
+              <div className=" grid grid-cols-12 gap-y-4  text-[#838383]  capitalize">
                 <FiCheckCircle className="b-colo indivne mr-2" />
                 <div className=" col-span-11 ">
                   smile and look at the camera
@@ -186,10 +185,18 @@ function ProfilePhoto() {
               </div>
             </div>
           </div>
-
-          <button className=" col-span-6 mt-10 w-auto rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-3 py-1 text-lg font-medium text-white md:col-span-2 md:w-full">
-            Save
-          </button>
+          <div className="col-span-6 flex gap-x-10 my-10">
+            <div>
+              <button className="  w-auto rounded-lg border border-[#FC4D6D] bg-white px-3 py-1 text-lg font-medium text-[#FC4D6D] md:col-span-2 md:w-full">
+                Skip For Now
+              </button>
+            </div>
+            <div className="">
+              <button className=" w-auto rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-7 py-1 text-lg font-medium text-white md:col-span-2 md:mt-0 md:w-full ">
+                Save
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </>

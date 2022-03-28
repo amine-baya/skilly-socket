@@ -45,8 +45,8 @@ function timeAvailability() {
   }
   const onSubmit = () => {}
   return (
-    <div className='bg-white ml-[30px] mt-[34px] mb-[30px] rounded-2xl'>
-      <div className="container mx-auto p-4 ">
+    <div className='bg-white lg:ml-[30px] ml-[1px] lg:mt-[34px] md-[1px]  lg:mb-[30px] mb-[1px] lg:rounded-2xl'>
+      <div className=" p-5  xl:px-20">
         <h1 className="text-3xl font-semibold">Availability</h1>
       </div>
       <hr />
@@ -59,7 +59,7 @@ function timeAvailability() {
           // console.log('Formik props', formik)
           return (
             <Form>
-              <div className="container mx-auto p-4">
+              <div className=" my-10 p-5  xl:px-20">
                 <h1 className="text-2xl font-semibold">Set Your Timezone</h1>
                 <p className="my-4">
                   A Correct Timezone Is Essential To Coordinate Sessions With
@@ -73,7 +73,7 @@ function timeAvailability() {
 
                 <Field
                   as="select"
-                  className="w-7/12 rounded-[10px] border border-[#C1C1C1] px-5 py-3"
+                  className="w-7/12 rounded-[10px] border border-[#C1C1C1] px-5 py-3 text-[#9E9E9E]"
                 >
                   <option>13:53 (GMT+ 5:300- Asia, Kolkata</option>
                   <option>13:53 (GMT+ 5:300- Asia, Kolkata</option>
@@ -83,7 +83,7 @@ function timeAvailability() {
                 <h1 className="mt-12 text-2xl font-semibold">
                   Set Your Availability
                 </h1>
-                <p className="my-4">
+                <p className="my-4 capitalize">
                   availability shows your potential working hours.
                   <br />
                   students can book sessions at these time

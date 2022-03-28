@@ -93,7 +93,7 @@ function TimeAvailabilityCard({ weekName, name }) {
         <div className="order-2 col-span-2 flex justify-between gap-x-5 md:order-none md:col-span-1 md:justify-end">
           <p className="self-center font-medium">Copy Below Timings For</p>
 
-          <select className=" w-auto rounded-[10px] border border-[#C1C1C1] px-4  py-1">
+          <select className=" w-auto rounded-[10px] border border-[#C1C1C1] px-4  py-1 text-[#494949]">
             <option className="hidden " disabled selected>
               Select Days
             </option>
@@ -115,7 +115,7 @@ function TimeAvailabilityCard({ weekName, name }) {
             return (
               <>
                 {cardName.map((cardName, index) => (
-                  <div>
+                  <div className='md:col-span-1 col-span-2'>
                     {indexValue === 0 ? (
                       <WiDayHaze className="text-3xl text-[#7D7D7D]" />
                     ) : indexValue === 1 ? (
@@ -130,7 +130,7 @@ function TimeAvailabilityCard({ weekName, name }) {
                       ) :  <WiDayHaze className="text-3xl text-[#7D7D7D]" />
                     }
 
-                    <div className="flex flex-col gap-4 md:flex-row">
+                    <div className="flex gap-4 ">
                       <div className=" w-full">
                         <Field
                           as="select"
@@ -188,7 +188,7 @@ function TimeAvailabilityCard({ weekName, name }) {
                   onClick={() => push({ from: '', to: '' })}
                   className="order-4 col-span-2 flex gap-x-2 font-bold  text-[#2294CD] md:order-none md:col-span-1 md:mx-auto "
                 >
-                  <IoMdAddCircleOutline className="my-auto text-xl" />
+                  <IoMdAddCircleOutline className="my-auto text-xl text-[#7D7D7D]" />
                   <p className="my-auto">Add Additional Time Slot</p>
                 </button>
               </>

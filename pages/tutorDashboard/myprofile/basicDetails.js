@@ -5,6 +5,7 @@ import { IoMdAddCircleOutline } from 'react-icons/io'
 
 import { IoMdClose } from 'react-icons/io'
 import { Form, Formik, Field, FieldArray, ErrorMessage } from 'formik'
+import SelectWithIcons from '../../../components/TutorDashboardRegistration/SelectWithIcons'
 
 const languageOptions = [
   { value: 'Tamil', label: 'Tamil' },
@@ -52,6 +53,16 @@ function basicDetails() {
 
   return (
     <>
+     <div className=" bg-white lg:ml-[30px] ml-[1px] lg:mt-[34px] md-[1px]  lg:mb-[30px] mb-[1px] lg:rounded-2xl">
+      <div className="  p-5  xl:px-20">
+        <h1 className="text-3xl font-semibold">Welcome Yash Mehta</h1>
+        <p>
+          Just <span className="font-semibold">2 minutes </span>
+          to a beautiful profile of yours, using the information you provide
+          below.
+        </p>
+      </div>
+      <hr />
       <Formik
         initialValues={initialValues}
         onSubmit={async (values) => {
@@ -61,28 +72,20 @@ function basicDetails() {
       >
         {({ values }) => {
           return (
-            <Form className='bg-white sm:ml-[30px] sm:mt-[34px] sm:mb-[30px] sm:rounded-2xl '>
-              <div className="container mx-auto sm:ml-10 sm:p-4">
-                <h1 className="text-3xl font-semibold">Welcome Yash Mehta</h1>
-                <p>
-                  Just <span className="font-semibold">2 minutes </span>
-                  to a beautiful profile of yours, using the information you
-                  provide below.
-                </p>
-              </div>
-              <hr />
-              <div className="container mx-auto sm:p-4">
+            <Form className="my-10 px-5  xl:px-20">
+              <div className=" mx-auto  sm:p-4">
                 <div className=" grid grid-cols-2  gap-4 md:gap-9 ">
                   <div className=" col-span-2 grid  grid-cols-1  gap-y-2   md:col-span-1  md:grid-cols-2">
                     <label className="self-center font-semibold ">
                       My Country Of Origin
                     </label>
-                    <select className="rounded-[10px] border-2 border-[#C1C1C1] p-2">
+                    {/* <select className="rounded-[10px] border-2 border-[#C1C1C1] p-2">
                       <option>India</option>
                       <option>India</option>
                       <option>India</option>
                       <option>India</option>
-                    </select>
+                    </select> */}
+                    <SelectWithIcons />
                   </div>
                   <div></div>
                   <div className=" col-span-2  grid grid-cols-1 gap-y-2   md:col-span-1 md:grid-cols-2">
@@ -111,7 +114,7 @@ function basicDetails() {
                   <div></div>
                   <div className="col-span-2 grid   grid-cols-1 gap-y-2 md:col-span-1  md:grid-cols-2 ">
                     <label className="self-center font-semibold">
-                      I am also fluent with..
+                      I Am Also Fluent With..
                     </label>
                     <select
                       name="language"
@@ -136,7 +139,7 @@ function basicDetails() {
                     </select>
                   </div>
                   <div className=" col-span-2 grid  md:col-span-1 md:grid-cols-7 ">
-                    <div className=" col-span-7 flex  h-11 justify-between self-center text-sm md:col-span-6">
+                    <div className=" col-span-7 flex  h-11 gap-x-5 self-center text-sm md:col-span-6">
                       {addLanguageData?.map((item, key) => {
                         return (
                           <div type="reset" key={key}>
@@ -153,7 +156,6 @@ function basicDetails() {
                     </div>
                   </div>
                   <div className=" col-span-2  ">
-                   
                     <FieldArray name="teachs">
                       {({ insert, remove, push }) => (
                         <>
@@ -168,7 +170,7 @@ function basicDetails() {
                                   htmlFor={`teachs.${index}.teach`}
                                 >
                                   {' '}
-                                  I will like to teach..
+                                  I Will Like To Teach..
                                 </label>
                                 <Field
                                   as="select"
@@ -186,7 +188,7 @@ function basicDetails() {
                                   className="self-center font-semibold"
                                   htmlFor={`teachs.${index}.fee`}
                                 >
-                                  My fee per hour
+                                  My Fee Per Hour
                                 </label>
                                 <Field
                                   name={`teachs.${index}.fee`}
@@ -201,17 +203,18 @@ function basicDetails() {
                                 </Field>
                               </div>
                               <div className=" col-span-3 col-start-10 flex justify-between md:col-span-1 ">
-                                <button
-                                  type="button"
-                                  onClick={() => remove(index)}
-                                >
-                                  <RiDeleteBinLine className="text-xl" />
-                                </button>
+                               
                                 <button
                                   type="button"
                                   onClick={() => push({ fee: '', teach: '' })}
                                 >
-                                  <RiAddFill className="text-2xl" />
+                                  <RiAddFill className="text-2xl text-[#7D7D7D]" />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => remove(index)}
+                                >
+                                  <RiDeleteBinLine className="text-xl text-[#7D7D7D]" />
                                 </button>
                               </div>
                             </div>
@@ -241,9 +244,9 @@ function basicDetails() {
                               name={`Qualification.${index}.Type`}
                               className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
                             >
-                              <option>experience</option>
-                              <option>certificate</option>
-                              <option>degree</option>
+                              <option>Experience</option>
+                              <option>Certificate</option>
+                              <option>Degree</option>
                             </Field>
                           </div>
                           <div className="order-2 col-span-10 md:order-none md:col-span-5">
@@ -285,11 +288,8 @@ function basicDetails() {
                             </div>
                           </div>
                           <div className="order-last col-span-1 mt-11 self-center justify-self-center md:order-none">
-                            <button
-                              type="button"
-                              onClick={() => remove(index)}
-                            >
-                              <RiDeleteBinLine className="text-xl " />
+                            <button type="button" onClick={() => remove(index)}>
+                              <RiDeleteBinLine className="text-xl text-[#7D7D7D]" />
                             </button>
                           </div>
                         </div>
@@ -304,17 +304,16 @@ function basicDetails() {
                             Type: '',
                           })
                         }
-                        className="mx-auto flex gap-x-2 p-4 font-bold text-[#2294CD] "
+                        className="mx-auto flex gap-x-2 p-4 font-bold text-[#2294CD]  "
                       >
-                        <IoMdAddCircleOutline className="self-center" />
+                        <IoMdAddCircleOutline className="self-center text-[#7D7D7D]" />
                         Add Additional Qualification
                       </button>
                     </>
                   )}
                 </FieldArray>
-                
 
-                <div className="my-9 text-right">
+                <div className="my-12 text-right">
                   <button className="w-full rounded-lg bg-[#FC4D6D] py-2.5 px-4 text-white sm:w-auto ">
                     Save and Next
                   </button>
@@ -324,7 +323,7 @@ function basicDetails() {
           )
         }}
       </Formik>
-    
+      </div>
     </>
   )
 }
