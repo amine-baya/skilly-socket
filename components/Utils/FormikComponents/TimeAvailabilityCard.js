@@ -8,7 +8,8 @@ import { IoMdAddCircleOutline } from 'react-icons/io'
 import { RiAddFill, RiDeleteBinLine } from 'react-icons/ri'
 import Image from 'next/image'
 
-function TimeAvailabilityCard({ weekName, name }) {
+function TimeAvailabilityCard({ weekName, name, formik }) {
+
   const [indexValue, setIndexValue] = useState(0)
 
   const timeHandler = (value) => {
@@ -109,13 +110,14 @@ function TimeAvailabilityCard({ weekName, name }) {
         {/* </div> */}
 
         <FieldArray name={name} className="col-span-2">
-          {({ push, remove, form }) => {
+          {({ push, handleRemove,form }) => {
             const cardName = form.values[name]
+            console.log('cardName', cardName)
           
             return (
               <>
-                {cardName.map((cardName, index) => (
-                  <div>
+                {cardName.map((item, index ) => (
+                  <div key={index}>
                     {indexValue === 0 ? (
                       <WiDayHaze className="text-3xl text-[#7D7D7D]" />
                     ) : indexValue === 1 ? (
@@ -135,8 +137,9 @@ function TimeAvailabilityCard({ weekName, name }) {
                         <Field
                           as="select"
                           name={`${cardName}.${index}.from`}
+                          // value={item.from}
                           className=" w-full rounded-[10px] border border-[#C1C1C1] p-3 "
-                          onChange={(e) => timeHandler(e.target.value)}
+                          // onChange={(e) => {timeHandler(e.target.value);}}
                         >
                           <option value="5:00 AM">5:00 AM</option>
                           <option value="5:30 AM">5:30 AM</option>
@@ -164,6 +167,7 @@ function TimeAvailabilityCard({ weekName, name }) {
                         <Field
                           as="select"
                           name={`${cardName}.${index}.to`}
+                          value={item.to}
                           className=" w-full rounded-[10px] border  border-[#C1C1C1] p-3 "
                         >
                           <option>7:00 AM </option>
@@ -177,7 +181,7 @@ function TimeAvailabilityCard({ weekName, name }) {
                       <button type="button">
                         <RiDeleteBinLine
                           className="text-xl"
-                          onClick={() => remove(index)}
+                          onClick={() => { console.log('index', index); handleRemove(index)}}
                         />
                       </button>
                     </div>

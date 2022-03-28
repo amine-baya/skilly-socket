@@ -9,7 +9,7 @@ function Layout({ children }) {
   return (
     <div>
       <Navbar />
-      <div className={`flex ${route.split('/')[1] === 'tutorDashboard' && 'bg-[#FFF2E3]'} `}>
+      <div className={`flex ${route.split('/')[1] === 'tutorDashboard' && 'bg-[#FFF2E3] flex-col-reverse md:flex-row'} `}>
         {route.split('/')[1] === 'tutorDashboard' && <SideBar />}
         <main className='flex-grow'>{children}</main>
         {route.split('/')[2] === 'myprofile' && <RightSidebar />}
