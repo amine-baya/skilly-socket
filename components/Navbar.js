@@ -1,11 +1,14 @@
 import Link from 'next/link'
 import GradientBtn from './HomePage/GradientBtn'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useClickOutside } from 'react-click-outside-hook'
 import { RiCloseCircleLine } from 'react-icons/ri'
 import { getLocalStorage, setLocalStorage, signout } from '../utils/cookies'
 import { getCookie } from 'cookies-next'
+import { ActiveHomeIcon, ActiveProfileIcon, HomeIcon, LoginIcon, MessageIcon, ProfileIcon, RevenueIcon, SessionIcon, SettingIcon } from "../icons";
+import { useRouter } from 'next/router'
+import { SideBarLinks } from './SideBar'
 
 function Navbar() {
   const [user_data, set_user_data] = useState(null)
@@ -13,6 +16,22 @@ function Navbar() {
   let [search, setSearch] = useState(false)
   let [showSuggetions, setShowSuggetions] = useState(false)
   let [showSearchOnLg, setShowSearchOnLg] = useState(false)
+  const { route } = useRouter()
+  const router = useRouter();
+  const sideLinks = [
+      { name: 'Home', link: '/tutorDashboard/about', active: router.pathname === '/tutorDashboard/about', icons: <HomeIcon />, activeIcons: <ActiveHomeIcon /> },
+      { name: 'My Profile', link: '/tutorDashboard/myprofile/basicDetails', active: router.pathname?.split('/').includes('myprofile'), icons: <ProfileIcon />, activeIcons: <ActiveProfileIcon /> },
+      { name: 'My Reviews', link: '/tutorDashboard/myreviews', active: router.pathname === '/tutorDashboard/myreviews', icons: <ProfileIcon />, activeIcons: <ActiveProfileIcon /> },
+      { name: 'Messages', link: '/tutorDashboard/messages', active: router.pathname === '/tutorDashboard/messages', icons: <MessageIcon />, activeIcons: <ActiveProfileIcon /> },
+      { name: 'My Sessions', link: '/tutorDashboard/sessions', active: router.pathname === '/tutorDashboard/sessions', icons: <SessionIcon />, activeIcons: <ActiveProfileIcon /> },
+      { name: 'My Revenue', link: '/tutorDashboard/revenue', active: router.pathname === '/tutorDashboard/revenue', icons: <RevenueIcon />, activeIcons: <ActiveProfileIcon /> },
+      { name: 'Settings', link: '/tutorDashboard/settings', active: router.pathname === '/tutorDashboard/settings', icons: <SettingIcon />, activeIcons: <ActiveProfileIcon /> },
+  ]
+  const [onDashboard, setOnDashboard] = useState(route.split('/')[1] === 'tutorDashboard')
+  useEffect(() => {
+    setOnDashboard(route.split('/')[1] === 'tutorDashboard')
+  }, [route])
+
   function toggleMenu() {
     setMenu(!menu)
   }
@@ -33,16 +52,17 @@ function Navbar() {
       img: '',
       search: true,
     },
-    { name: 'process', link: '/', css: '' },
-    { name: 'steps', link: '/', css: '' },
-    { name: 'login', link: '/auth/login', css: 'md:hidden' },
-    { name: 'reviews', link: '/', css: '!pb-6 ' },
+    { name: 'find tutors', link: '/', css: '' },
+    { name: 'how it works?', link: '/', css: '' },
+    // { name: 'login', link: '/auth/login', css: 'md:hidden' },
+    // { name: 'reviews', link: '/', css: '!pb-6 ' },
   ]
 
   const logout = () => {
     signout(() => {
       window.location = '/tutorDashboard'
     });
+
   }
   return (
     <>
@@ -50,15 +70,18 @@ function Navbar() {
       <div className=" sticky-nav relative  z-30  flex h-[79px]  justify-center    bg-white  shadow-md    ">
         <div className=" relative mx-auto  flex  w-[90rem] items-center justify-between   py-4 px-6  md:px-12   lg:px-20    ">
           {/* <div className=""> */}
-          <Menu
-            height={19}
-            width={30}
-            menuCss={'lg:hidden mr-2'}
-            onClick={toggleMenu}
-          />
+          {
+            !onDashboard &&
+            <Menu
+              height={19}
+              width={30}
+              menuCss={'lg:hidden mr-2'}
+              onClick={toggleMenu}
+            />
+          }
           {/* </div> */}
-          <MenuLink />
-          <div className=" flex gap-12      bg-white md:justify-between  lg:w-full  lg:gap-0">
+          <MenuLink onDashboard={onDashboard} />
+          <div className=" flex gap-12      bg-white md:justify-between">
             {/* <div className=" "> */}
             <Logo height="47" width="179" />
             {/* </div> */}
@@ -76,37 +99,51 @@ function Navbar() {
                 <Menu />
               </span>
             </div>
-            <LargeScreenMenuLinks />
-            <div className=" flex   items-center gap-12">
-              {
-                getCookie("token")
-                  ?
-                  <>
-                    <a
-                      onClick={(e) => { e.preventDefault(); logout() }}
-                      className={`whitespace-nowrap  text-[18px]   font-[600] `}
-                    >
-                      Logout
-                    </a>
-                    <GradientBtn
-                      urlLink={'/tutorDashboard'}
-                      btnName="Dashboard"
-                      btnCss="text-sm   md:text-lg md:px-6  !mx-0 !px-6 !py-3  "
-                    />
-                  </>
-                  :
-                  <>
-                    <Login loginCss={'hidden md:flex'} />
-                    <GradientBtn
-                      urlLink={'/auth/signup'}
-                      btnName="Sign Up"
-                      btnCss="text-sm   md:text-lg md:px-6  !mx-0 !px-6 !py-3  "
-                    />
-                  </>
-              }
-            </div>
 
           </div>
+          <LargeScreenMenuLinks />
+          <div className=" flex  items-center gap-12">
+            {
+              getCookie("token")
+                ?
+                <>
+                  {
+                    !onDashboard &&
+                    <>
+                      <a
+                        onClick={(e) => { e.preventDefault(); logout() }}
+                        className={`whitespace-nowrap  text-[18px]   font-[600] `}
+                      >
+                        Logout
+                      </a>
+                      <GradientBtn
+                        urlLink={'/tutorDashboard'}
+                        btnName="Dashboard"
+                        btnCss="text-sm   md:text-lg md:px-6  !mx-0 !px-6 !py-3  "
+                      />
+                    </>
+                  }
+                </>
+                :
+                <>
+                  <Login />
+                  <GradientBtn
+                    urlLink={'/auth/signup'}
+                    btnName="Join as Tutor"
+                    btnCss="text-sm   md:text-lg md:px-6  !mx-0 !px-6 !py-2 hidden lg:flex "
+                  />
+                </>
+            }
+          </div>
+          {
+            onDashboard &&
+            <Menu
+              height={19}
+              width={30}
+              menuCss={'lg:hidden mr-2'}
+              onClick={toggleMenu}
+            />
+          }
         </div>
         <MainSearch />
       </div>
@@ -229,21 +266,22 @@ function Navbar() {
     )
   }
 
-  function MenuLink({ css }) {
+  function MenuLink({ css, onDashboard }) {
     const [ref, hasClickedOutside] = useClickOutside()
     if (hasClickedOutside === true) setMenu(false)
     return (
       <div
         ref={ref}
         className={`  ${css} menu-transition z-50    shadow-md   ${menu && !hasClickedOutside ? 'flex' : 'hidden'
-          } items-center-center    absolute top-[5rem] left-0 w-52 flex-col  gap-4 rounded-br-2xl bg-white font-monts text-sm   font-semibold capitalize  text-gray-400 `}
+          } items-center-center    absolute top-[5rem] ${onDashboard ? 'right-0' : 'left-0'} w-52 flex-col  gap-4 rounded-br-2xl bg-white font-monts text-sm   font-semibold capitalize  text-gray-400 `}
       >
-        <NavLinks />
+      <SideBarLinks links={sideLinks} hideIcon={true} />
+        <NavLinks onDashboard={onDashboard} />
       </div>
     )
   }
 
-  function NavLinks() {
+  function NavLinks({onDashboard}) {
     return (
       <>
         {links.map((links, index, arr) => (
@@ -289,6 +327,24 @@ function Navbar() {
             />
           </div>
         ))}
+        {
+          getCookie("token")
+            ?
+            onDashboard ?
+            null
+            :
+            <GradientBtn
+              urlLink={'/tutorDashboard'}
+              btnName="Dashboard"
+              btnCss="text-sm   md:text-lg md:px-6  !mx-0 !px-6 !py-3  "
+            />
+            :
+            <GradientBtn
+              urlLink={'/auth/signup'}
+              btnName="Join as Tutor"
+              btnCss="text-sm md:text-2xl md:px-6  !mx-5 mb-4 !px-4 !py-2  "
+            />
+        }
       </>
     )
   }
@@ -298,8 +354,9 @@ function Navbar() {
       <>
         <Link href={'/auth/login'}>
           <a
-            className={`whitespace-nowrap  text-[18px]   font-[600] ${loginCss}`}
+            className={`whitespace-nowrap  text-[18px] flex items-center justify-center  font-[600] ${loginCss}`}
           >
+            <LoginIcon className="mr-1" />
             Log In
           </a>
         </Link>
@@ -360,7 +417,7 @@ export function Logo({ logoCss, width = 240, height = 62 }) {
       <Link href={'/'}>
         <a className={`flex items-center    ${logoCss}`}>
           <Image
-            property
+            // property
             src="/Images/Navbar/png/logo.png"
             width={width}
             height={height}

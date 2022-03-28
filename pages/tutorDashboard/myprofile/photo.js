@@ -4,14 +4,14 @@ import Dropzone from 'react-dropzone'
 import Image from 'next/image'
 import { useState } from 'react'
 import { FiCheckCircle } from 'react-icons/fi'
-import NextAndBackBtn from '../../components/TutorDashboardRegistration/NextAndBackBtn'
-import BlueTickLine from './../../components/TutorDashboardRegistration/BlueTick'
-import Server from '../../utils/Server'
+import NextAndBackBtn from '../../../components/TutorDashboardRegistration/NextAndBackBtn'
+import BlueTickLine from '../../../components/TutorDashboardRegistration/BlueTick'
+import Server from '../../../utils/Server'
 import {
   updateUserProfilePic,
   uploadUserProfilePic,
-} from '../../utils/constants'
-import { getLocalStorage, updateUser } from '../../utils/cookies'
+} from '../../../utils/constants'
+import { getLocalStorage, updateUser } from '../../../utils/cookies'
 
 function ProfilePhoto() {
   const [profile_img, set_profile_img] = useState('')
@@ -63,7 +63,7 @@ function ProfilePhoto() {
   }
   return (
     <>
-      <div className="  font-bold ">
+      <div className="  font-bold bg-white sm:ml-[30px] sm:mt-[34px] sm:mb-[30px] sm:rounded-2xl ">
         <div
           id="heading"
           className="col-span-12  py-5 px-5 text-3xl  font-semibold text-[#3d3d3d] xl:px-20"

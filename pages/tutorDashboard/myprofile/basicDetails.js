@@ -61,8 +61,8 @@ function basicDetails() {
       >
         {({ values }) => {
           return (
-            <Form>
-              <div className="container mx-auto p-4">
+            <Form className='bg-white sm:ml-[30px] sm:mt-[34px] sm:mb-[30px] sm:rounded-2xl '>
+              <div className="container mx-auto sm:ml-10 sm:p-4">
                 <h1 className="text-3xl font-semibold">Welcome Yash Mehta</h1>
                 <p>
                   Just <span className="font-semibold">2 minutes </span>
@@ -71,7 +71,7 @@ function basicDetails() {
                 </p>
               </div>
               <hr />
-              <div className="container mx-auto p-4">
+              <div className="container mx-auto sm:p-4">
                 <div className=" grid grid-cols-2  gap-4 md:gap-9 ">
                   <div className=" col-span-2 grid  grid-cols-1  gap-y-2   md:col-span-1  md:grid-cols-2">
                     <label className="self-center font-semibold ">

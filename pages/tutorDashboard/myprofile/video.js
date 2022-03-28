@@ -4,11 +4,10 @@ import { Formik, Field, Form } from 'formik'
 import Image from 'next/image'
 import { BsCameraVideo } from 'react-icons/bs'
 import { FiCheckCircle } from 'react-icons/fi'
-import VidImg from '../../public/Images/vidImg.png'
-import { getLocalStorage, updateUser } from '../../utils/cookies'
-import Server from '../../utils/Server'
-import { updateUserVideoDesc } from '../../utils/constants'
-
+import VidImg from '../../../public/Images/vidImg.png'
+import { getLocalStorage, updateUser } from '../../../utils/cookies'
+import Server from '../../../utils/Server'
+import { updateUserVideoDesc } from '../../../utils/constants'
 function Video() {
   const [user_data, set_user_data] = useState({})
   const [image, setImage] = useState({ preview: '', raw: '' })
@@ -73,8 +72,7 @@ function Video() {
   }
 
   return (
-    <div className="font-bold">
-     
+    <div className="font-bold bg-white sm:ml-[30px] sm:mt-[34px] sm:mb-[30px] sm:rounded-2xl">
       <div
         id="heading"
         className="col-span-12  px-5  py-5 text-3xl font-semibold text-[#3d3d3d] xl:px-20"

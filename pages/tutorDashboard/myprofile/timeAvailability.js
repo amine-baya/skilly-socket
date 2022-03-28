@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { Field, FieldArray, Form, Formik } from 'formik'
-import FormikControl from '../../components/Utils/FormikComponents/FormikControl'
-import TimeAvailabilityCard from '../../components/Utils/FormikComponents/TimeAvailabilityCard'
+import FormikControl from '../../../components/Utils/FormikComponents/FormikControl'
+import TimeAvailabilityCard from '../../../components/Utils/FormikComponents/TimeAvailabilityCard'
 
 function timeAvailability() {
   const initialValues = {
@@ -45,8 +45,8 @@ function timeAvailability() {
   }
   const onSubmit = () => {}
   return (
-    <>
-      <div className="container mx-auto p-4">
+    <div className='bg-white ml-[30px] mt-[34px] mb-[30px] rounded-2xl'>
+      <div className="container mx-auto p-4 ">
         <h1 className="text-3xl font-semibold">Availability</h1>
       </div>
       <hr />
@@ -56,6 +56,7 @@ function timeAvailability() {
         enableReinitialize
       >
         {(formik) => {
+          // console.log('Formik props', formik)
           return (
             <Form>
               <div className="container mx-auto p-4">
@@ -124,7 +125,7 @@ function timeAvailability() {
           )
         }}
       </Formik>
-    </>
+    </div>
   )
 }
 

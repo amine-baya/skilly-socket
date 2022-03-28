@@ -1,6 +1,6 @@
 import React from 'react'
 import TimeAvailabilityCard from './TimeAvailabilityCard'
-import TimeSelect from './timeSelect'
+import TimeSelect from './TimeSelect'
 
 
 function FormikControl(props) {
