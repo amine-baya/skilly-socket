@@ -3,27 +3,13 @@ import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { AiOutlineDown } from 'react-icons/ai'
 
-const people = [
-  {
-    id: 1,
-    name: 'India',
-    avatar:
-      'https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png',
-  },
-  {
-    id: 2,
-    name: 'America',
-    avatar:
-      'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg',
-  },
-  
-]
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function SelectWithIcons() {
+export default function SelectWithIcons({people}) {
   const [selected, setSelected] = useState(people[0])
 
   return (

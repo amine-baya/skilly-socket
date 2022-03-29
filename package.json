@@ -13,6 +13,7 @@
         "formik": "^2.2.9",
         "moment": "^2.29.1",
         "moment-timezone": "^0.5.34",
+        "multiselect-react-dropdown": "^2.0.21",
         "next": "latest",
         "react": "^17.0.2",
         "react-click-outside-hook": "^1.1.1",

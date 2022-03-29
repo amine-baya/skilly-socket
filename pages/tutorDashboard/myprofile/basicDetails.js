@@ -12,6 +12,21 @@ const languageOptions = [
   { value: 'Gujrati', label: 'Gujrati' },
   { value: 'Marathi ', label: 'Marathi' },
 ]
+const iconSelect = [
+  {
+    id: 1,
+    name: 'India',
+    avatar:
+      'https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png',
+  },
+  {
+    id: 2,
+    name: 'America',
+    avatar:
+      'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg',
+  },
+  
+]
 
 function basicDetails() {
   const [languageData, setLanguageData] = useState([])
@@ -54,8 +69,8 @@ function basicDetails() {
 
   return (
     <>
-      <div className=" md-[1px] ml-[1px] mb-[1px] bg-white lg:ml-[30px]  lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl">
-        <div className="  p-5  xl:px-20">
+      <div className=" md-[1px] ml-[1px] mb-[1px] bg-white lg:ml-[30px]  lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl h1wi">
+        <div className="  p-5  xl:px-12">
           <h1 className="text-3xl font-semibold">Welcome Yash Mehta,</h1>
           <p>
             Just <span className="font-semibold">2 minutes </span>
@@ -73,20 +88,14 @@ function basicDetails() {
         >
           {({ values }) => {
             return (
-              <Form className="my-10 px-5  xl:px-20">
+              <Form className="my-10 px-5  xl:px-12">
                 <div className=" mx-auto  sm:p-4">
                   <div className=" grid grid-cols-2  gap-4 md:gap-9 ">
                     <div className=" col-span-2 grid  grid-cols-1  gap-y-2   md:col-span-1  md:grid-cols-2">
                       <label className="self-center font-semibold ">
                         My Country Of Origin
                       </label>
-                      {/* <select className="rounded-[10px] border-2 border-[#C1C1C1] p-2">
-                      <option>India</option>
-                      <option>India</option>
-                      <option>India</option>
-                      <option>India</option>
-                    </select> */}
-                      <SelectWithIcons />
+                      <SelectWithIcons people={iconSelect} />
                     </div>
                     <div></div>
                     <div className=" col-span-2  grid grid-cols-1 gap-y-2   md:col-span-1 md:grid-cols-2">
@@ -162,7 +171,7 @@ function basicDetails() {
                           <>
                             {values.teachs?.map((teachs, index) => (
                               <div
-                                className="mb-9 grid grid-cols-12 gap-y-9  gap-x-4  md:gap-9"
+                                className="mb-9 grid grid-cols-12 gap-y-9  gap-x-4  md:gap-6"
                                 key={index}
                               >
                                 <div className="grid-col-1 col-span-6  grid   gap-y-2  md:grid-cols-2">
@@ -191,19 +200,7 @@ function basicDetails() {
                                   >
                                     My Fee Per Hour
                                   </label>
-                                  {/* <Field
-                                    name={`teachs.${index}.fee`}
-                                    placeholder="jane@acme.com"
-                                    as="select"
-                                    className="rounded-[10px] border-2 border-[#C1C1C1] p-2 "
-                                  >
-                                    {' '}
-                                    <option>
-                                      750 INR
-                                    </option>
-                                    <option>514 INR</option>
-                                    <option>651 INR</option>
-                                  </Field> */}
+                                 
                                   <div className="relative mt-1 rounded-[10px] shadow-sm h-full border-2 border-[#C1C1C1] p-2">
                                     <Field
                                       type="text"
@@ -258,7 +255,7 @@ function basicDetails() {
                       <>
                         {values.Qualification?.map((Qualification, index) => (
                           <div
-                            className="mt-9 grid grid-cols-12 gap-3 bg-[#F2F2F2] p-4 md:gap-x-8 md:p-[26px]"
+                            className="mt-9 grid grid-cols-12 gap-3 bg-[#F2F2F2] p-4 xl:gap-x-8 md:p-[26px]"
                             key={index}
                           >
                             <div className="col-span-5 md:col-span-3">

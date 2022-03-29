@@ -67,7 +67,7 @@ function SideBar() {
     },
   ]
   return (
-    <div className=" xl:w-96 lg:w-[350px] hidden rounded-r-lg bg-white lg:block px-2 ">
+    <div className=" xl:w-[25rem] lg:w-[232px] hidden rounded-r-lg bg-white lg:block px-2 whitespace-nowrap ">
       <span className="block bg-gradient-to-r from-[#feae78] to-[#f94161] bg-clip-text pb-12 pt-2 text-2xl font-bold tracking-widest text-transparent">
         Dashboard
       </span>

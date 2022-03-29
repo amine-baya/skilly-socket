@@ -71,7 +71,7 @@ function Video() {
   }
 
   return (
-    <div className="md-[1px] ml-[1px] mb-[1px] bg-white lg:ml-[30px]  lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl">
+    <div className="md-[1px] ml-[1px] mb-[1px] bg-white lg:ml-[30px]  lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl h1wi">
       <div
         id="heading"
         className="col-span-12  p-5 text-3xl font-semibold text-[#3d3d3d] xl:px-12"
@@ -100,10 +100,10 @@ function Video() {
                   className="app__videoFeed"
                 ></video>
               ) : videoLink === '' ? (
-                <div className="h-[244px] w-full bg-gray-200 md:w-[452px]"></div>
+                <div className="h-[244px] w-full bg-gray-200"></div>
               ) : (
                 <iframe
-                  className="h-[244px] w-full bg-gray-200 lg:w-[452px]"
+                  className="h-[244px] w-full bg-gray-200 xl:w-[452px]"
                   src={videoLink}
                   title="YouTube video player"
                   frameBorder="0"
@@ -112,7 +112,7 @@ function Video() {
                 ></iframe>
               )}
             </div>
-            <div className="flex  gap-x-10">
+            <div className="flex  xl:gap-x-10 gap-x-2">
               <button
                 className="flex gap-2.5 rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-3 py-1 text-lg font-medium text-white"
                 type="button"
