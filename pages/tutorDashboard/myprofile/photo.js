@@ -61,21 +61,21 @@ function ProfilePhoto() {
   }
   return (
     <>
-      <div className="  md-[1px] ml-[1px] mb-[1px] bg-white font-bold lg:ml-[30px]  lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl">
+      <div className="  md-[1px] ml-[1px] mb-[1px] bg-white font-bold lg:ml-[30px]  lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl h1wi">
         <div
           id="heading"
-          className="col-span-12  py-5 px-5 text-3xl  font-semibold text-[#3d3d3d] xl:px-20"
+          className="col-span-12  py-5 px-5 text-3xl  font-semibold text-[#3d3d3d] xl:px-12"
         >
           Profile Photo
         </div>
         <hr className="text-[#E2E2E2]" />
-        <div className="my-10 px-5  text-[#545454]  xl:px-20">
+        <div className="my-10 px-5  text-[#545454]  xl:px-12">
           <p className="py-3 text-2xl ">Make A Great First Impression</p>
           <p className="">
             Tutor Who Look Friendly And Professional Get The Most Students
           </p>
         </div>
-        <div className="grid grid-cols-12 px-5 text-[#545454]  xl:px-20 lg: gap-x-2">
+        <div className="grid grid-cols-12 px-5 text-[#545454]  xl:px-12 lg: gap-x-2">
           <div className="col-span-12 space-y-8 md:col-span-6">
             <div className="flex gap-2.5 ">
              

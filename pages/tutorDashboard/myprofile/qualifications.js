@@ -1,14 +1,12 @@
 import React from 'react'
-import  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { RiAddFill, RiDeleteBinLine } from 'react-icons/ri'
 import { IoMdAddCircleOutline } from 'react-icons/io'
-
 
 import { Form, Formik, Field, FieldArray } from 'formik'
 import { BackgroundImage } from '../../../components/Uploadphoto'
 
 const Qualifications = () => {
- 
   const [background_img, set_background_img] = useState()
 
   const handleChange = async (acceptedFiles) => {
@@ -17,79 +15,90 @@ const Qualifications = () => {
       data.append('profile_pic', acceptedFiles, acceptedFiles.name)
       // const response = await Server.post(uploadUserBackgroundPic, data)
       // if (response.success) {
-        set_background_img(response.data.file_name)
+      set_background_img(response.data.file_name)
       // }
     }
   }
   const initialValues = {
-    qualification: [''],
+    Qualification: [
+      {
+        durationTo: '',
+        durationFrom: '',
+        title: '',
+        Type: '',
+        institute: '',
+      },
+    ],
   }
-  const onSubmit = (e) => {console.log('e', e)}
-  
-  return (
-    <div className=' bg-white sm:ml-[30px] sm:mt-[34px] sm:mb-[30px] sm:rounded-2xl '>
-        <h1 className='text-3xl mt-3 ml-12  font-semibold text-[#3d3d3d] xl:px-20'>Qualifications</h1>
-        <p className='border-b mt-7'></p>
-        <div className='bg-[ #F2F2F2]'>
-        <>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        enableReinitialize
-       
-      >
-        {(formik) => {
-          console.log('Formik props', formik)
-          return (
-            <Form>
-              <div className="className=xs:mx-0 xs:p-0 xs:m-0  sm:mx-auto sm:p-4">
-                
-                <FieldArray name="qualification">
-                  {(fieldArrayProps) => {
-                    const { push, remove, form } = fieldArrayProps
-                    const { values } = form
-                    const { qualification } = values
+  const onSubmit = (e) => {
+    console.log('e', e)
+  }
 
-                    return (
-                      <>
-                        {qualification.map((qualification, index) => (
-                          <div>
-                            <div className="mt-9 grid grid-cols-12 gap-5 sm:bg-[#F2F2F2] p-4 md:gap-x-8 md:p-[26px]">
-                              <div
-                                className="col-span-6 md:col-span-3"
-                                key={index}
-                              >
-                                <p className="mb-5 xs:text-[13px] sm:text-[16px] sm:overflow-hidden sm:overflow-ellipsis sm:whitespace-nowrap font-semibold ">
+  return (
+    <div className=" h1wi bg-white sm:rounded-2xl lg:ml-[30px] lg:mt-[34px] lg:mb-[30px] h1wi">
+      <h1 className=" p-5  text-3xl font-semibold text-[#3d3d3d]  xl:px-12  ">
+        Qualifications
+      </h1>
+      <hr className="text-[#E2E2E2]  " />
+      <div className="bg-[ #F2F2F2] px-5 xl:px-12 pb-2">
+        <>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={async (values) => {
+              await new Promise((r) => setTimeout(r, 500))
+              alert(JSON.stringify(values, null, 2))
+            }}
+          >
+            {({ values }) => {
+              return (
+                <Form>
+                  <div className="xs:m-0 xs:mx-0 xs:p-0  sm:mx-auto">
+                    <FieldArray name="Qualification">
+                      {({ insert, remove, push }) => (
+                        <>
+                          {values.Qualification?.map((Qualification, index) => (
+                            <div
+                              className="mt-9 grid grid-cols-12 gap-3 bg-[#F2F2F2] p-4 md:p-[26px] xl:gap-x-8"
+                              key={index}
+                            >
+                              <div className="col-span-5 md:col-span-3">
+                                <p
+                                  className="mb-5 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold "
+                                  name={`Qualification.${index}.Type`}
+                                >
                                   Qualification Type
                                 </p>
                                 <Field
                                   as="select"
-                                  name={`qualification.${index}.Type`}
+                                  name={`Qualification.${index}.Type`}
                                   className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
                                 >
-                                  <option>experience</option>
-                                  <option>certificate</option>
-                                  <option>degree</option>
+                                  <option>Experience</option>
+                                  <option>Certificate</option>
+                                  <option>Degree</option>
                                 </Field>
                               </div>
-                              <div className="order-2 col-span-10 md:order-none md:col-span-5">
-                                <p className="mb-5 font-semibold xs:text-[13px] sm:text-[16px] ">
+                              <div className="order-2 col-span-12 md:order-none md:col-span-4">
+                                <p
+                                  className="mb-5 font-semibold  "
+                                  name={`Qualification.${index}.title`}
+                                >
                                   Qualification Title
                                 </p>
                                 <Field
                                   type="text"
-                                  name={`qualification.${index}.title`}
+                                  name={`Qualification.${index}.title`}
                                   className=" w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
                                 />
                               </div>
-                              <div className="col-span-6 md:col-span-3">
-                                <p className=" xs:text-[13px] sm:text-[16px] mb-5 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold">
+                              <div className="col-span-7 md:col-span-4">
+                                <p className="mb-5 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold">
                                   Qualification Duration
                                 </p>
                                 <div className="flex gap-1.5">
                                   <Field
                                     as="select"
-                                    name={`qualification.${index}.durationFrom`}
+                                    name={`Qualification.${index}.durationFrom`}
                                     className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
                                   >
                                     <option>From</option>
@@ -98,27 +107,27 @@ const Qualifications = () => {
                                   </Field>
                                   <Field
                                     as="select"
-                                    name={`qualification.${index}.durationFrom`}
+                                    name={`Qualification.${index}.durationTo`}
                                     className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
                                   >
                                     <option>To</option>
+                                    <option>2005</option>
                                     <option>2006</option>
-                                    <option>2007</option>
                                   </Field>
-                              
                                 </div>
                               </div>
-                              <div className="order-last col-span-1 mt-11 self-center justify-self-center md:order-none">
+
+                              <div className="order-6 col-span-1 mt-11 self-center justify-self-center md:order-none">
                                 <button
                                   type="button"
-                                  onClick={index > 0 ? () => remove(index) : ''}
+                                  onClick={() => remove(index)}
                                 >
-                                  <RiDeleteBinLine className="text-xl " />
+                                  <RiDeleteBinLine className="text-xl text-[#7D7D7D]" />
                                 </button>
                               </div>
                               <div className="order-2 col-span-11 md:order-none ">
                                 <p className="mb-5 font-semibold xs:text-[13px] sm:text-[16px] ">
-                                 Degree Issuing Institute
+                                  Degree Issuing Institute
                                 </p>
                                 <Field
                                   type="text"
@@ -126,51 +135,63 @@ const Qualifications = () => {
                                   className=" w-full rounded-[10px] border-2 border-[#C1C1C1] p-2 "
                                 />
                               </div>
-                              <div className="order-2 col-span-8 md:order-none ">
-                              <BackgroundImage
-                               background_pic={ background_img }
-                                handleChange={(e) => handleChange(e)}
-                                />
+                              <div className="order-7 col-span-12  md:order-none ">
+                                <div className="text-lg capitalize ">
+                                  Upload Your Certificates To Increase The
+                                  Credibility Of Your Profile(Optional)
+                                </div>
+                                <br />
+                                <br />
+                                <div className="flex items-center gap-2">
+                                  <label className=" col-span-6 w-auto  cursor-pointer rounded-lg   border border-[#FC4D6D] bg-white px-3 py-1 text-lg font-medium text-[#FC4D6D]">
+                                    Upload Video
+                                    <input
+                                      type="file"
+                                      className="hidden"
+                                      name="image"
+                                    />
+                                  </label>
+                                  <div className="text-xs">
+                                    <div className="">JPG or PNG format</div>
+                                    <div>Maximum size - 20MB.</div>
+                                  </div>
+                                </div>
                               </div>
-                              
-                                
-                              
-
-
-
-
                             </div>
-                          </div>
-                        ))}
-                        <button
-                          type="button"
-                          onClick={() => push('')}
-                          className="mx-auto flex gap-x-2 p-4 font-bold text-[#2294CD] "
-                        >
-                          <IoMdAddCircleOutline className="self-center" />
-                          Add Additional Qualification
-                        </button>
-                      </>
-                    )
-                  }}
-                </FieldArray>
-             
-               <div className="text-right my-9">
+                          ))}
+                          <button
+                            type="button"
+                            onClick={() =>
+                              push({
+                                durationTo: '',
+                                durationFrom: '',
+                                title: '',
+                                Type: '',
+                                institute: '',
+                              })
+                            }
+                            className="order-7 mx-auto flex gap-x-2 p-4 font-bold text-[#2294CD] md:order-none  "
+                          >
+                            <IoMdAddCircleOutline className="self-center text-[#7D7D7D]" />
+                            Add Additional Qualification
+                          </button>
+                        </>
+                      )}
+                    </FieldArray>
+                    
 
-               <button className="rounded-lg bg-[#FC4D6D] py-2.5 px-4 text-white sm:w-auto w-full ">
-              
-                 Save and Next
-               </button>
-               </div>
-             </div>
-         
-            
-            </Form>
-          )
-        }}
-      </Formik>
-    </>
-        </div>
+                    <div className="my-9 w-full text-right">
+                      <button className="w-full rounded-lg bg-[#FC4D6D] py-2.5 px-6 text-white lg:w-auto  ">
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </Form>
+              )
+            }}
+          </Formik>
+        </>
+      </div>
     </div>
   )
 }

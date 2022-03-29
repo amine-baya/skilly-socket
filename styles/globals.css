@@ -1,7 +1,11 @@
+
 @tailwind base;
 @tailwind components;
 .b-colo{
     @apply text-[#1180BE] my-auto 
+}
+.h1wi{
+    @apply 2xl:w-[95%] xl:w-[980px] 
 }
 @tailwind utilities;
 .snap-fullPage {
@@ -16,6 +20,7 @@
 @import url('./CourseCart.css');
 @import url('./TutorsDashboardPage.css');
 @import url('./TutorProfile.css');
+@import url('./CheckboxComponent.css');
 
 
 
@@ -25,3 +30,6 @@
 
 /* --------------TutorDashboard--------------- */
 
+::-webkit-scrollbar{
+    appearance: none;
+}
