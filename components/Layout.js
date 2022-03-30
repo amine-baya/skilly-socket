@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 
 const SideBar = dynamic(() => import('./SideBar'))
 const ProfileRightSidebar = dynamic(() => import('./ProfileRightSidebar'))
+const SettingRightSideBar = dynamic(() => import('./SettingRightSidebar'))
 const Navbar = dynamic(() => import('./Navbar'))
 function Layout({ children }) {
   const { route } = useRouter()
@@ -13,6 +14,7 @@ function Layout({ children }) {
         {route.split('/')[1] === 'tutorDashboard' && <SideBar />}
         <main className='flex-grow'>{children}</main>
         {route.split('/')[2] === 'myprofile' && <ProfileRightSidebar />}
+        {route.split('/')[3] === 'settings' && <SettingRightSideBar />}
       </div>
     </div>
   )

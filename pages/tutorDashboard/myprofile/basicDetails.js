@@ -95,7 +95,7 @@ function basicDetails() {
                       <label className="self-center font-semibold ">
                         My Country Of Origin
                       </label>
-                      <SelectWithIcons people={iconSelect} />
+                      <SelectWithIcons people={iconSelect} changestyle="border-2 border-[#C1C1C1] rounded-[10px] " flag="left" />
                     </div>
                     <div></div>
                     <div className=" col-span-2  grid grid-cols-1 gap-y-2   md:col-span-1 md:grid-cols-2">
