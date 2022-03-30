@@ -32,10 +32,12 @@ const options = [
 
 function TimeAvailabilityCard({ weekName, name, formik }) {
   const [indexValue, setIndexValue] = useState(0)
+  const [indexData, setIndexData] = useState(0)
+  const [checkBoxValue, setCheckBoxValue] = useState("")
 
-  const timeHandler = (value) => {
+  const timeHandler = (value, index) => {
     console.log('time', value)
-
+    setIndexData(index)
     if (
       value === '7:00 AM' ||
       value === '7:30 AM' ||
@@ -105,6 +107,7 @@ function TimeAvailabilityCard({ weekName, name, formik }) {
       setIndexValue(3)
     }
   }
+  console.log("xheckbox", checkBoxValue)
   return (
     <>
       <div className="grid grid-cols-2 gap-10 bg-[#F2F2F2]  p-6">
@@ -127,12 +130,12 @@ function TimeAvailabilityCard({ weekName, name, formik }) {
             <option>Saturday</option>
             <option>Sunday</option>
           </select> */}
-          <CheckboxComponent options={options}/>
+          <CheckboxComponent options={options} setCheckBoxValue={setCheckBoxValue}/>
         </div>
         {/* </div> */}
 
         <FieldArray name={name} className="col-span-2">
-          {({ push, handleRemove, form }) => {
+          {({ push, remove, form }) => {
             const cardName = form.values[name]
             console.log('cardName', cardName)
 
@@ -140,19 +143,27 @@ function TimeAvailabilityCard({ weekName, name, formik }) {
               <>
                 {cardName.map((item, index) => (
                   <div className="col-span-2 md:col-span-1" key={index}>
-                    {indexValue === 0 ? (
+                    {indexData===index &&
+                    indexValue === 0 ? (<>
                       <WiDayHaze className="text-3xl text-[#7D7D7D]" />
-                    ) : indexValue === 1 ? (
+                      {console.log("sagar", indexData, index)}
+                    </>
+                    ) : indexValue === 1  ? (
+                      <>
                       <BsSun className="mb-1 text-2xl text-[#7D7D7D]" />
-                    ) : indexValue === 2 ? (
+                      {console.log("sagar", indexData, index)}
+                      </>
+
+                    ) : indexValue === 2  ? (
                       <BsCloudMoon className="mb-1 text-2xl text-[#7D7D7D]" />
-                    ) : indexValue === 3 ? (
+                    ) : indexValue === 3  ? (
                       <div className="h-7 w-7">
                         <Image src={nightIcon} alt="" />
                       </div>
                     ) : (
                       <WiDayHaze className="text-3xl text-[#7D7D7D]" />
-                    )}
+                      //  null
+                    )  }
 
                     <div className="flex gap-4 ">
                       <div className=" w-full">
@@ -161,7 +172,7 @@ function TimeAvailabilityCard({ weekName, name, formik }) {
                           name={`${cardName}.${index}.from`}
                           // value={item.from}
                           className=" w-full rounded-[10px] border border-[#C1C1C1] p-3 "
-                          // onChange={(e) => {timeHandler(e.target.value);}}
+                          onChange={(e) => {timeHandler(e.target.value, index);}}
                         >
                           <option value="5:00 AM">5:00 AM</option>
                           <option value="5:30 AM">5:30 AM</option>
@@ -205,7 +216,7 @@ function TimeAvailabilityCard({ weekName, name, formik }) {
                           className="text-xl"
                           onClick={() => {
                             console.log('index', index)
-                            handleRemove(index)
+                            remove(index)
                           }}
                         />
                       </button>

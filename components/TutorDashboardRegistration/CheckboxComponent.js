@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
 
-function CheckboxComponent({ options }) {
+function CheckboxComponent({ options, setCheckBoxValue }) {
   const [expanded, setExpanded] = useState(false)
 
   const showCheckboxes = (values) => {
     setExpanded(values)
   }
 
+  const ValueChangeHandler =(values)=>{
+console.log("values", values)
+setCheckBoxValue(values )
+  }
   return (
     <>
       <div class="multiselect w-[135px]">
@@ -22,15 +26,23 @@ function CheckboxComponent({ options }) {
         <div
           id="checkboxes"
           className={
-            expanded === true ? `absolute block w-auto bg-white z-10` : ''
+            expanded === true ? `absolute z-10 block w-auto bg-white` : ''
           }
         >
           {options.map((item) => {
-            console.log('item', item.days)
+            // console.log('item', item.days)
             return (
               <>
-                <label for={item.days} className="text-[#7E7E7E] flex gap-3 px-4 py-2.5">
-                  <input type="checkbox" id={item.days} className="h-4 w-4 my-auto"/>
+                <label
+                  for={item.days}
+                  className="flex gap-3 px-4 py-2.5 text-[#7E7E7E]"
+                >
+                  <input
+                    type="checkbox"
+                    id={item.days}
+                    className="my-auto h-4 w-4"
+                    onClick={()=>ValueChangeHandler(item.days)}
+                  />
                   {item.days}
                 </label>
               </>

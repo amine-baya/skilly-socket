@@ -60,8 +60,8 @@ function SideBar() {
     },
     {
       name: 'Settings',
-      link: '/tutorDashboard/settings',
-      active: router.pathname === '/tutorDashboard/settings',
+      link: '/tutorDashboard/settings/nameAndLogin',
+      active: router.pathname?.split('/').includes('settings'),
       icons: <SettingIcon />,
       activeIcons: <ActiveProfileIcon />,
     },
