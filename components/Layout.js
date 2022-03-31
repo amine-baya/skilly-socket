@@ -11,7 +11,7 @@ function Layout({ children }) {
       <Navbar />
       <div className={`flex ${route.split('/')[1] === 'tutorDashboard' && 'bg-[#FFF2E3]  flex-col-reverse lg:flex-row'} `}>
         {route.split('/')[1] === 'tutorDashboard' && <SideBar />}
-        <main className='flex-grow'>{children}</main>
+        <main className='flex-grow overflow-x-auto '>{children}</main>
         {route.split('/')[2] === 'myprofile' && <RightSidebar />}
       </div>
     </div>
