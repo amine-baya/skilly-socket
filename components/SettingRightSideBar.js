@@ -1,5 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 
 function SettingRightSideBar() {
@@ -15,18 +16,18 @@ function SettingRightSideBar() {
               : 'text-[#878787]'
           } `}
         >
-          <Link href="/tutorDashboard/settings/settingNotification">
+          <Link href="/tutorDashboard/settings/nameAndLogin">
             <a>Name And Login</a>
           </Link>
         </li>
         <li
-          className={` font-semibold  lg:pb-9 lg:text-xl ${
-            router.pathname === '/tutorDashboard/myprofile/timeAvailability'
+          className={` font-roboto font-semibold  lg:pb-9 lg:text-xl ${
+            router.pathname === '/tutorDashboard/settings/settingNotification'
               ? 'lg:text-[#FC4D6D] lg:border-none border-b-4 border-[#FC4D6D]'
               : 'text-[#878787]'
-          }  router.pathname == "/" ? active :text-[pink]  font-roboto`}
+          } `}
         >
-          <Link href="/tutorDashboard/myprofile/timeAvailability">
+          <Link href="/tutorDashboard/settings/settingNotification">
             <a>Notification</a>
           </Link>
         </li>

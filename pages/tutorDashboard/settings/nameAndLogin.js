@@ -81,7 +81,7 @@ function NameAndLogin() {
                 name="emailusername"
                 className="md:col-span-7 col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none"
               />
-              <label className="md:col-span-2 col-span-9 whitespace-nowrap">
+              <label className="md:col-span-2 col-span-9 ">
                 Current password
               </label>
               <Field
