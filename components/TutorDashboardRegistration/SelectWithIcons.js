@@ -3,28 +3,44 @@ import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { AiOutlineDown } from 'react-icons/ai'
 
-
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function SelectWithIcons({people}) {
+export default function SelectWithIcons({ people, changestyle, flag }) {
   const [selected, setSelected] = useState(people[0])
 
   return (
     <Listbox value={selected} onChange={setSelected}>
       {({ open }) => (
         <>
-         
-          <div className="mt-1 relative">
-            <Listbox.Button className="relative w-full rounded-[10px] border-2 border-[#C1C1C1] px-3 py-2">
-              <span className="flex items-center">
-                <img src={selected.avatar} alt="" className="flex-shrink-0 h-6 w-6 rounded-full" />
-                <span className="ml-3 block truncate">{selected.name}</span>
+          <div className={`relative mt-1 whitespace-nowrap ${changestyle}`}>
+            <Listbox.Button className="relative flex w-full rounded-[10px] px-3 py-[5px]">
+              <span className="flex items-center gap-2">
+                <img
+                  src={selected.avatar}
+                  alt=""
+                  className="h-6 w-6 flex-shrink-0 rounded-full"
+                />
+                {flag==="center" ? (
+                  <div>
+                    <AiOutlineDown
+                      className=" h-3 font-black"
+                      aria-hidden="true"
+                    />
+                  </div>
+                ) : null}
+                <span className="block whitespace-nowrap">{selected.name}</span>
               </span>
-              <span className="ml-1 absolute inset-y-0 right-0 flex items-center pr-1 pointer-events-none">
-                <AiOutlineDown className=" font-black h-3" aria-hidden="true" />
+              <span className="pointer-events-none absolute right-0  my-auto ml-1 flex items-center pr-1">
+                {flag==="left" ? (
+                  <div>
+                    <AiOutlineDown
+                      className="mt-1 h-3 font-black"
+                      aria-hidden="true"
+                    />
+                  </div>
+                ) : null}
               </span>
             </Listbox.Button>
 
@@ -35,14 +51,14 @@ export default function SelectWithIcons({people}) {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+              <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {people.map((person) => (
                   <Listbox.Option
                     key={person.id}
                     className={({ active }) =>
                       classNames(
-                        active ? 'text-white bg-indigo-600' : 'text-gray-900',
-                        'cursor-default select-none relative py-2 pl-3 pr-9'
+                        active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                        'relative cursor-default select-none py-2 pl-3 pr-9'
                       )
                     }
                     value={person}
@@ -50,9 +66,16 @@ export default function SelectWithIcons({people}) {
                     {({ selected, active }) => (
                       <>
                         <div className="flex items-center">
-                          <img src={person.avatar} alt="" className="flex-shrink-0 h-6 w-6 rounded-full" />
+                          <img
+                            src={person.avatar}
+                            alt=""
+                            className="h-6 w-6 flex-shrink-0 rounded-full"
+                          />
                           <span
-                            className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
+                            className={classNames(
+                              selected ? 'font-semibold' : 'font-normal',
+                              'ml-3 block truncate'
+                            )}
                           >
                             {person.name}
                           </span>

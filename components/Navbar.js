@@ -25,7 +25,7 @@ function Navbar() {
       { name: 'Messages', link: '/tutorDashboard/messages', active: router.pathname === '/tutorDashboard/messages', icons: <MessageIcon />, activeIcons: <ActiveProfileIcon /> },
       { name: 'My Sessions', link: '/tutorDashboard/sessions', active: router.pathname === '/tutorDashboard/sessions', icons: <SessionIcon />, activeIcons: <ActiveProfileIcon /> },
       { name: 'My Revenue', link: '/tutorDashboard/revenue', active: router.pathname === '/tutorDashboard/revenue', icons: <RevenueIcon />, activeIcons: <ActiveProfileIcon /> },
-      { name: 'Settings', link: '/tutorDashboard/settings', active: router.pathname === '/tutorDashboard/settings', icons: <SettingIcon />, activeIcons: <ActiveProfileIcon /> },
+      { name: 'Settings', link: '/tutorDashboard/settings/nameAndLogin', active: router.pathname?.split('/').includes('settings') , icons: <SettingIcon />, activeIcons: <ActiveProfileIcon /> },
   ]
   const [onDashboard, setOnDashboard] = useState(route.split('/')[1] === 'tutorDashboard')
   useEffect(() => {

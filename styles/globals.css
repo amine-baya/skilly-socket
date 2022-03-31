@@ -2,7 +2,7 @@
 @tailwind base;
 @tailwind components;
 .b-colo{
-    @apply text-[#1180BE] my-auto 
+    @apply text-[#1180BE] my-auto whitespace-nowrap h-[14px] w-[14px]
 }
 .h1wi{
     @apply 2xl:w-[95%] xl:w-[980px] 
@@ -32,4 +32,9 @@
 
 ::-webkit-scrollbar{
     appearance: none;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
