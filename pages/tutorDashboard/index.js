@@ -7,11 +7,11 @@ import { getCookie } from 'cookies-next'
 import Link from 'next/link'
 
 const tutorDashboard = () => {
-  useEffect(() => {
-    if (true) {
-      isAuth()
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (true) {
+  //     isAuth()
+  //   }
+  // }, [])
 
   const isAuth = async () => {
     if (getCookie('token')) {
