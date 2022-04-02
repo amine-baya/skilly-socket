@@ -68,7 +68,7 @@ function Education() {
                           return (
                             <div>
                               <main className="mb-8 flex flex-col gap-8 p-5   font-roboto text-[#545454] md:px-16">
-                                <University index={index} certD={certD} />
+                                <University index={index} certD={certD} />  
                                 <Degree index={index} certD={certD} />
                                 <DegreeType index={index} certD={certD} />
                                 <Specialization index={index} certD={certD} />

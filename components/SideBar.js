@@ -42,33 +42,33 @@ function SideBar() {
       link: '/tutorDashboard/messages',
       active: router.pathname === '/tutorDashboard/messages',
       icons: <MessageIcon />,
-      activeIcons: <ActiveProfileIcon />,
+      activeIcons: <MessageIcon />,
     },
     {
       name: 'My Sessions',
       link: '/tutorDashboard/mySession/mySession',
       active: router.pathname === '/tutorDashboard/mySession/mySession',
       icons: <SessionIcon />,
-      activeIcons: <ActiveProfileIcon />,
+      activeIcons: <SessionIcon />,
     },
     {
       name: 'My Revenue',
       link: '/tutorDashboard/revenue',
       active: router.pathname === '/tutorDashboard/revenue',
       icons: <RevenueIcon />,
-      activeIcons: <ActiveProfileIcon />,
+      activeIcons: <RevenueIcon />,
     },
     {
       name: 'Settings',
       link: '/tutorDashboard/settings/nameAndLogin',
       active: router.pathname?.split('/').includes('settings'),
       icons: <SettingIcon />,
-      activeIcons: <ActiveProfileIcon />,
+      activeIcons: <SettingIcon />,
     },
   ]
   return (
     <div className=" w-[232px] max-w-[232px] min-w-[232px] hidden rounded-r-lg bg-white lg:block px-2 whitespace-nowrap ">
-      <span className="block bg-gradient-to-r from-[#feae78] to-[#f94161] bg-clip-text pb-12 pt-2 text-2xl font-bold tracking-widest text-transparent">
+      <span className="block bg-gradient-to-r from-[#FC4D6D] to-[#FDA02F] bg-clip-text py-8 text-2xl font-bold tracking-widest text-transparent text-center font-poppins">
         Dashboard
       </span>
       <SideBarLinks links={links} />

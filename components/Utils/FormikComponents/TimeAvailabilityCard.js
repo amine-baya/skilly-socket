@@ -226,7 +226,7 @@ function TimeAvailabilityCard({ weekName, name, formik }) {
                 <button
                   type="button"
                   onClick={() => push({ from: '', to: '' })}
-                  className="order-4 col-span-2 flex gap-x-2 font-bold  text-[#2294CD] md:order-none md:col-span-1 md:mx-auto "
+                  className="order-4 col-span-2 flex gap-x-2 font-bold  text-[#2294CD] md:order-none md:col-span-1 md:mx-auto mt-6"
                 >
                   <IoMdAddCircleOutline className="my-auto text-xl text-[#7D7D7D]" />
                   <p className="my-auto">Add Additional Time Slot</p>

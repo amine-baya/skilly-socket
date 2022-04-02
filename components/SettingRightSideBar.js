@@ -6,11 +6,11 @@ import Link from 'next/link'
 function SettingRightSideBar() {
     const router = useRouter()
   return (
-    <div className="lg:mt-9 p-3 whitespace-nowrap">
+    <div className="lg:mt-[110px] mt-5 xl:mr-14 mr-7 xl:ml-[26px] ml-3 whitespace-nowrap font-poppins">
     <nav>
-      <ul className="flex flex-row overflow-x-scroll justify-between gap-3 lg:whitespace-nowrap text-[14px] lg:flex-col ">
+      <ul className="flex flex-row overflow-x-scroll justify-between gap-y-[19px] lg:whitespace-nowrap text-[14px] lg:flex-col ">
         <li
-          className={` font-roboto font-semibold  lg:pb-9 lg:text-xl ${
+          className={` font-roboto font-semibold   lg:text-xl ${
             router.pathname === '/tutorDashboard/settings/nameAndLogin'
               ? 'lg:text-[#FC4D6D] lg:border-none border-b-4 border-[#FC4D6D]'
               : 'text-[#878787]'
@@ -21,7 +21,7 @@ function SettingRightSideBar() {
           </Link>
         </li>
         <li
-          className={` font-roboto font-semibold  lg:pb-9 lg:text-xl ${
+          className={` font-roboto font-semibold   lg:text-xl ${
             router.pathname === '/tutorDashboard/settings/settingNotification'
               ? 'lg:text-[#FC4D6D] lg:border-none border-b-4 border-[#FC4D6D]'
               : 'text-[#878787]'
