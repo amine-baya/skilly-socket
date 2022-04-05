@@ -33,8 +33,8 @@ function Mobile({ user_data }) {
     <div className="mx-auto mb-12 max-w-sm p-4  font-poppins sm:mx-auto md:hidden">
       <Title />
       <select className="mb-6 w-full max-w-[373px] rounded-md border-2 bg-white py-2 px-4 text-sm text-gray-400 outline-none ">
-        {user_data?.subject_taught_id.map(function (dd) {
-          return <option>{SUBJECTS[dd]}</option>
+        {user_data?.subject_taught_id.map(function (dd, index) {
+          return <option key={index}>{SUBJECTS[dd]}</option>
         })}
       </select>
 
@@ -58,6 +58,7 @@ function Desktop({ user_data }) {
           {user_data.subject_taught_id.map(function (dd, key) {
             return (
               <h1
+                key={key}
                 className={`cursor-pointer ${
                   key === 0 ? 'text-[#FC4D6D]' : null
                 }`}

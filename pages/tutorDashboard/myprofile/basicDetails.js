@@ -27,7 +27,7 @@ const iconSelect = [
   },
 ]
 
-function basicDetails() {
+function BasicDetails() {
   const [languageData, setLanguageData] = useState([])
   const [addLanguageData, setAddLanguageData] = useState([])
 
@@ -370,4 +370,4 @@ function basicDetails() {
   )
 }
 
-export default basicDetails
+export default BasicDetails

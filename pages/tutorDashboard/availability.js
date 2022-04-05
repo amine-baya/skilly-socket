@@ -238,7 +238,7 @@ const InputTime = (props) => {
       <option value="Pacific/Fiji">
         (GMT+12:00) Fiji, Kamchatka, Marshall Is.
       </option>
-      <option value="Pacific/Tongatapu">(GMT+13:00) Nuku'alofa</option>
+      <option value="Pacific/Tongatapu">(GMT+13:00) Nuku&apos;alofa</option>
     </select>
   )
 }
@@ -268,7 +268,7 @@ const Days = (props) => {
             props.values?.availability[dayParam].length > 0 ? (
               props.values?.availability[dayParam].map(function (avail, index) {
                 return (
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2" key={index}>
                     <Field
                       type="time"
                       id={`availability.${dayParam}.${index}.from`}
@@ -283,7 +283,7 @@ const Days = (props) => {
                       className="w-36 rounded-lg border-2 bg-white py-2 px-4 text-[#A8A2A2] outline-none"
                     />
                     {index ? (
-                      <a
+                      <Link
                         className="relative h-4 w-4"
                         href="/"
                         onClick={(e) => {
@@ -296,9 +296,9 @@ const Days = (props) => {
                           objectFit="cover"
                           layout="fill"
                         />
-                      </a>
+                      </Link>
                     ) : (
-                      <a
+                      <Link
                         className="relative h-4 w-4"
                         href="/"
                         onClick={(e) => {
@@ -311,7 +311,7 @@ const Days = (props) => {
                           objectFit="cover"
                           layout="fill"
                         />
-                      </a>
+                      </Link>
                     )}
                   </div>
                 )

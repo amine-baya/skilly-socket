@@ -65,7 +65,7 @@ function Certification() {
                         index
                       ) {
                         return (
-                          <div>
+                          <div key={index}>
                             <main className="mb-8 flex flex-col gap-8 p-5   font-roboto text-[#545454] md:px-16">
                               <Subject index={index} certD={certD} />
                               <Certificate index={index} certD={certD} />

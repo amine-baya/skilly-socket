@@ -139,11 +139,15 @@ function DesktopTimeZone({ user_data }) {
 function Calender(props) {
   return (
     <div className=" flex justify-between px-1 text-center text-sm">
-      {getCurrentWeek(props.add, props.user_data.timezone).map(function (val) {
+      {getCurrentWeek(props.add, props.user_data.timezone).map(function (
+        val,
+        index
+      ) {
         return (
           <DayComponent
             user_data={props.user_data}
             day={val}
+            key={index}
             data={
               props.user_data.availability[
                 momentTz(val)
@@ -176,10 +180,10 @@ function DayComponent(props) {
           {momentTz(props.day).tz(props.user_data.timezone).format('DD')}
         </div>
       </div>
-      <div class="space-y-3 text-[#848484] md:text-lg">
+      <div className="space-y-3 text-[#848484] md:text-lg">
         {props.data && props.data.length > 0
-          ? props.data.map(function (time) {
-              return <div>{time.from}</div>
+          ? props.data.map(function (time, index) {
+              return <div key={index}>{time.from}</div>
             })
           : null}
       </div>
@@ -197,7 +201,7 @@ function Sunday() {
           29
         </div>
       </div>
-      <div class="space-y-3 text-[#848484] md:text-lg">
+      <div className="space-y-3 text-[#848484] md:text-lg">
         <div>14:30</div>
         <div>14:30</div>
         <div>14:30</div>
@@ -210,7 +214,7 @@ function Monday() {
   return (
     <div className="space-y-6">
       <DayAndDate day="mo" date="30" />
-      <div class="space-y-3 text-[#FC4D6D] md:text-lg ">
+      <div className="space-y-3 text-[#FC4D6D] md:text-lg ">
         <div>14:30</div>
         <div>14:30</div>
         <div>14:30</div>
@@ -226,7 +230,7 @@ function Tuesday() {
   return (
     <div className="space-y-6">
       <DayAndDate day="tu" date="31" />
-      <div class="space-y-3 text-[#FC4D6D] md:text-lg  ">
+      <div className="space-y-3 text-[#FC4D6D] md:text-lg  ">
         <div>11:30</div>
         <div>11:30</div>
         <div>11:30</div>
@@ -238,7 +242,7 @@ function Wednesday() {
   return (
     <div className="space-y-6">
       <DayAndDate day="we" date="1" />
-      <div class="space-y-3 text-[#FC4D6D]  md:text-lg">
+      <div className="space-y-3 text-[#FC4D6D]  md:text-lg">
         <div>14:30</div>
         <div>14:30</div>
         <div>14:30</div>
@@ -258,7 +262,7 @@ function Thursday() {
   return (
     <div className="space-y-6">
       <DayAndDate day="th" date="2" />
-      <div class="space-y-3 text-[#FC4D6D]  md:text-lg">
+      <div className="space-y-3 text-[#FC4D6D]  md:text-lg">
         <div>14:30</div>
         <div>14:30</div>
         <div>14:30</div>
@@ -273,7 +277,7 @@ function Friday() {
   return (
     <div className="space-y-6">
       <DayAndDate day="fr" date="3" />
-      <div class="space-y-3 text-[#FC4D6D]  md:text-lg">
+      <div className="space-y-3 text-[#FC4D6D]  md:text-lg">
         <div>14:30</div>
         <div>14:30</div>
         <div>14:30</div>
@@ -285,7 +289,7 @@ function Saturday() {
   return (
     <div className="space-y-6">
       <DayAndDate day="sa" date="4" />
-      <div class="space-y-3  text-[#FC4D6D] md:text-lg ">
+      <div className="space-y-3  text-[#FC4D6D] md:text-lg ">
         <div>14:30</div>
         <div>14:30</div>
         <div>14:30</div>

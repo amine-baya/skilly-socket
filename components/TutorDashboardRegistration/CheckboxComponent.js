@@ -13,15 +13,15 @@ function CheckboxComponent({ options, setCheckBoxValue }) {
   }
   return (
     <>
-      <div class="multiselect w-[135px]">
+      <div className="multiselect w-[135px]">
         <div
-          class="selectBox relative"
+          className="selectBox relative"
           onClick={() => showCheckboxes(!expanded)}
         >
           <select className="w-auto rounded-[10px] border border-[#C1C1C1] px-4  py-1 text-[#494949]">
             <option>Select Days</option>
           </select>
-          <div class="overSelect"></div>
+          <div className="overSelect"></div>
         </div>
         <div
           id="checkboxes"
@@ -34,7 +34,7 @@ function CheckboxComponent({ options, setCheckBoxValue }) {
             return (
               <>
                 <label
-                  for={item.days}
+                  htmlFor={item.days}
                   className="flex gap-3 px-4 py-2.5 text-[#7E7E7E]"
                 >
                   <input

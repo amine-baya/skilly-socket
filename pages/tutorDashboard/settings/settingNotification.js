@@ -70,8 +70,8 @@ function SettingNotification() {
                 </label>
 
                 <p className=" text-xs md:text-base">
-                  SMS alerts about tutors' first responses to your requests and
-                  trial session reminders.
+                  SMS alerts about tutor&apos;s first responses to your requests
+                  and trial session reminders.
                 </p>
               </div>
             </div>
@@ -84,8 +84,8 @@ function SettingNotification() {
 
                 <p className=" text-xs md:text-base">
                   Receive automated phone call reminders about your upcoming
-                  sessions when you haven't viewed your calendar on skillytree
-                  for a while.
+                  sessions when you haven&apos;t viewed your calendar on
+                  skillytree for a while.
                 </p>
               </div>
             </div>

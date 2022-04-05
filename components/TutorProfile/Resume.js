@@ -120,14 +120,14 @@ function Desktop({ user_data }) {
             ? user_data.education_certificates &&
               user_data.education_certificates.map(function (dd) {
                 return (
-                  <div className="text-lg text-[#787878] ">
+                  <div className="text-lg text-[#787878] " key={index}>
                     {dd.university}, {dd.degree}, {dd.specialization}
                   </div>
                 )
               })
             : user_data.teaching_certificates.map(function (dd) {
                 return (
-                  <div className="text-lg text-[#787878] ">
+                  <div className="text-lg text-[#787878] " key={index}>
                     {dd.certificate_title}, {dd.description}, {dd.issued_by}
                   </div>
                 )

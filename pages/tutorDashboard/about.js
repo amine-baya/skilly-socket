@@ -5,7 +5,7 @@ import { getLocalStorage, updateUser } from '../../utils/cookies'
 import { Formik, Field, FieldArray, Form } from 'formik'
 import Server from '../../utils/Server'
 import { updateUserAbout, uploadUserBackgroundPic } from '../../utils/constants'
-
+import Link from 'next/link'
 function About() {
   const [user_data, set_user_data] = useState({})
   const [background_img, set_background_img] = useState()
@@ -229,7 +229,7 @@ const LanguageAndLevel = ({ values }) => {
                           </Field>
                         </div>
                         {index ? (
-                          <a
+                          <Link
                             className=""
                             href="/"
                             onClick={(e) => {
@@ -238,9 +238,9 @@ const LanguageAndLevel = ({ values }) => {
                             }}
                           >
                             -
-                          </a>
+                          </Link>
                         ) : (
-                          <a
+                          <Link
                             className=""
                             href="/"
                             onClick={(e) => {
@@ -249,7 +249,7 @@ const LanguageAndLevel = ({ values }) => {
                             }}
                           >
                             +
-                          </a>
+                          </Link>
                         )}
                       </div>
                     </>
@@ -417,7 +417,7 @@ const Age = () => (
         id="eighteen_plus"
         className=" h-6 w-6 border-2 border-gray-300 bg-blue-200 "
       />
-      <span className="capitalize">i confirm i'm over 18</span>
+      <span className="capitalize">i confirm i&apos;m over 18</span>
     </div>
   </div>
 )

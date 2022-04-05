@@ -129,6 +129,7 @@ function Video(props) {
             <div className=" flex justify-center gap-2 ">
               {Array.from(Array(5), (index) => index + 1).map((index) => (
                 <Image
+                  key={index}
                   src={'/Images/TutorProfile/svg/yellow-star.svg'}
                   height={19.38}
                   width={19.03}

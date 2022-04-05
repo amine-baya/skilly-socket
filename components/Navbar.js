@@ -224,7 +224,7 @@ function Navbar() {
                 width={18}
               />
             </div>
-            <Link href={links.link||'/'}>
+            <Link href={links.link || '/'}>
               <a
                 key={index}
                 className={` ${
