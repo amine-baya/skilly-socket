@@ -316,7 +316,7 @@ function basicDetails() {
                             <div className="order-last col-span-1 mt-11 self-center justify-self-center md:order-none">
                               <button
                                 type="button"
-                                onClick={() => remove(index)}
+                                onClick={index<=0? null :() => remove(index)}
                               >
                                 <RiDeleteBinLine className="text-xl text-[#7D7D7D]" />
                               </button>
@@ -335,7 +335,7 @@ function basicDetails() {
                           }
                           className="mx-auto flex gap-x-2 p-4 font-bold text-[#2294CD]  "
                         >
-                          <IoMdAddCircleOutline className="self-center text-[#7D7D7D]" />
+                          <IoMdAddCircleOutline className="self-center text-[#2294CD]" />
                           Add Additional Qualification
                         </button>
                       </>

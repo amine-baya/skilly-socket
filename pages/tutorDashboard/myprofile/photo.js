@@ -130,12 +130,12 @@ function ProfilePhoto() {
           <div className="col-span-12 mt-6 space-y-8 md:col-span-6 md:mt-0">
             <p className="text-[22px] font-medium">Tips For An Amazing Photo</p>
             <div className="flex gap-3 ">
-              {profile_img || user_data.profile_img ? (
+              {profile_img || user_data?.profile_img ? (
                 <section className="flex gap-2">
                   <div className="h-[106px] w-[106px] bg-blue-300">
                     <img
                       src={`https://akbh.s3.ap-south-1.amazonaws.com/skillshare/user/profile_img/${
-                        profile_img ? profile_img : user_data.profile_img
+                        profile_img ? profile_img : user_data?.profile_img
                       }`}
                       alt="img"
                     />

@@ -58,7 +58,7 @@ const Qualifications = () => {
                         <>
                           {values.Qualification?.map((Qualification, index) => (
                             <div
-                              className="mt-9 grid grid-cols-12 gap-3 bg-[#F2F2F2] p-4 md:p-[26px] xl:gap-x-8"
+                              className="mt-9 grid grid-cols-12 gap-3 bg-[#F2F2F2] p-4 md:p-[26px] xl:gap-x-8 rounded-[15px]"
                               key={index}
                             >
                               <div className="col-span-5 md:col-span-3">
@@ -120,7 +120,7 @@ const Qualifications = () => {
                               <div className="order-6 col-span-1 mt-11 self-center justify-self-center md:order-none">
                                 <button
                                   type="button"
-                                  onClick={() => remove(index)}
+                                  onClick={index<=0? null :() => remove(index)}
                                 >
                                   <RiDeleteBinLine className="text-xl text-[#7D7D7D]" />
                                 </button>
@@ -143,8 +143,8 @@ const Qualifications = () => {
                                 <br />
                                 <br />
                                 <div className="flex items-center gap-2">
-                                  <label className=" col-span-6 w-auto  cursor-pointer rounded-lg   border border-[#FC4D6D] bg-white px-3 py-1 text-lg font-medium text-[#FC4D6D]">
-                                    Upload Video
+                                  <label className=" col-span-6 w-auto  cursor-pointer rounded-lg capitalize   border border-[#FC4D6D] bg-white px-3 py-1 text-lg font-medium text-[#FC4D6D]">
+                                  upload a photo
                                     <input
                                       type="file"
                                       className="hidden"
@@ -170,9 +170,9 @@ const Qualifications = () => {
                                 institute: '',
                               })
                             }
-                            className="order-7 mx-auto flex gap-x-2 p-4 font-bold text-[#2294CD] md:order-none  "
+                            className="order-7 flex gap-x-2 p-4 font-bold text-[#2294CD] md:order-none  "
                           >
-                            <IoMdAddCircleOutline className="self-center text-[#7D7D7D]" />
+                            <IoMdAddCircleOutline className="self-center text-[#2294CD]" />
                             Add Additional Qualification
                           </button>
                         </>

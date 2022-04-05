@@ -18,8 +18,8 @@ function SideBar() {
   const links = [
     {
       name: 'Home',
-      link: '/tutorDashboard/about',
-      active: router.pathname === '/tutorDashboard/about',
+      link: '/tutorDashboard/homePage',
+      active: router.pathname === '/tutorDashboard/homePage',
       icons: <HomeIcon />,
       activeIcons: <ActiveHomeIcon />,
     },
