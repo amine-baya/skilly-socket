@@ -120,8 +120,8 @@ function mySession() {
                 </p>
               </div>
               <div className="mt-[75px]  mb-5">
-                <button className=" w-full rounded-2xl bg-[#FF7A92] py-5 font-bold capitalize text-white text-2xl ">
-                enter in 00:30:29
+                <button className=" w-full rounded-2xl bg-[#FF7A92] py-5 text-2xl font-bold capitalize text-white ">
+                  enter in 00:30:29
                 </button>
               </div>
             </div>

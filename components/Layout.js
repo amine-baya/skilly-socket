@@ -10,10 +10,19 @@ function Layout({ children }) {
   return (
     <div>
       <Navbar />
-      <div className={`flex ${route.split('/')[1] === 'tutorDashboard' && 'bg-[#FFF2E3]  flex-col-reverse lg:flex-row'} `}>
+      <div
+        className={`flex ${
+          route.split('/')[1] === 'tutorDashboard' &&
+          'flex-col-reverse  bg-[#FFF2E3] lg:flex-row'
+        } `}
+      >
         {route.split('/')[1] === 'tutorDashboard' && <SideBar />}
-        <main className='flex-grow-0 w-full overflow-x-auto'>{children}</main>
-        {route.split('/')[2] === 'myprofile' ? <ProfileRightSidebar /> : route.split('/')[2] === 'settings' ? <SettingRightSideBar/> : null }
+        <main className="w-full flex-grow-0 overflow-x-auto">{children}</main>
+        {route.split('/')[2] === 'myprofile' ? (
+          <ProfileRightSidebar />
+        ) : route.split('/')[2] === 'settings' ? (
+          <SettingRightSideBar />
+        ) : null}
       </div>
     </div>
   )

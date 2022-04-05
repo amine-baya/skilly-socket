@@ -33,7 +33,7 @@ const options = [
 function TimeAvailabilityCard({ weekName, name, formik }) {
   const [indexValue, setIndexValue] = useState(0)
   const [indexData, setIndexData] = useState(0)
-  const [checkBoxValue, setCheckBoxValue] = useState("")
+  const [checkBoxValue, setCheckBoxValue] = useState('')
 
   const timeHandler = (value, index) => {
     console.log('time', value)
@@ -107,7 +107,7 @@ function TimeAvailabilityCard({ weekName, name, formik }) {
       setIndexValue(3)
     }
   }
-  console.log("xheckbox", checkBoxValue)
+  console.log('xheckbox', checkBoxValue)
   return (
     <>
       <div className="grid grid-cols-2 gap-10 bg-[#F2F2F2]  p-6">
@@ -130,7 +130,10 @@ function TimeAvailabilityCard({ weekName, name, formik }) {
             <option>Saturday</option>
             <option>Sunday</option>
           </select> */}
-          <CheckboxComponent options={options} setCheckBoxValue={setCheckBoxValue}/>
+          <CheckboxComponent
+            options={options}
+            setCheckBoxValue={setCheckBoxValue}
+          />
         </div>
         {/* </div> */}
 
@@ -143,27 +146,26 @@ function TimeAvailabilityCard({ weekName, name, formik }) {
               <>
                 {cardName.map((item, index) => (
                   <div className="col-span-2 md:col-span-1" key={index}>
-                    {indexData===index &&
-                    indexValue === 0 ? (<>
-                      <WiDayHaze className="text-3xl text-[#7D7D7D]" />
-                      {console.log("sagar", indexData, index)}
-                    </>
-                    ) : indexValue === 1  ? (
+                    {indexData === index && indexValue === 0 ? (
                       <>
-                      <BsSun className="mb-1 text-2xl text-[#7D7D7D]" />
-                      {console.log("sagar", indexData, index)}
+                        <WiDayHaze className="text-3xl text-[#7D7D7D]" />
+                        {console.log('sagar', indexData, index)}
                       </>
-
-                    ) : indexValue === 2  ? (
+                    ) : indexValue === 1 ? (
+                      <>
+                        <BsSun className="mb-1 text-2xl text-[#7D7D7D]" />
+                        {console.log('sagar', indexData, index)}
+                      </>
+                    ) : indexValue === 2 ? (
                       <BsCloudMoon className="mb-1 text-2xl text-[#7D7D7D]" />
-                    ) : indexValue === 3  ? (
+                    ) : indexValue === 3 ? (
                       <div className="h-7 w-7">
                         <Image src={nightIcon} alt="" />
                       </div>
                     ) : (
                       <WiDayHaze className="text-3xl text-[#7D7D7D]" />
                       //  null
-                    )  }
+                    )}
 
                     <div className="flex gap-4 ">
                       <div className=" w-full">
@@ -172,7 +174,9 @@ function TimeAvailabilityCard({ weekName, name, formik }) {
                           name={`${cardName}.${index}.from`}
                           // value={item.from}
                           className=" w-full rounded-[10px] border border-[#C1C1C1] p-3 "
-                          onChange={(e) => {timeHandler(e.target.value, index);}}
+                          onChange={(e) => {
+                            timeHandler(e.target.value, index)
+                          }}
                         >
                           <option value="5:00 AM">5:00 AM</option>
                           <option value="5:30 AM">5:30 AM</option>
@@ -226,7 +230,7 @@ function TimeAvailabilityCard({ weekName, name, formik }) {
                 <button
                   type="button"
                   onClick={() => push({ from: '', to: '' })}
-                  className="order-4 col-span-2 flex gap-x-2 font-bold  text-[#2294CD] md:order-none md:col-span-1 md:mx-auto mt-6"
+                  className="order-4 col-span-2 mt-6 flex gap-x-2  font-bold text-[#2294CD] md:order-none md:col-span-1 md:mx-auto"
                 >
                   <IoMdAddCircleOutline className="my-auto text-xl text-[#7D7D7D]" />
                   <p className="my-auto">Add Additional Time Slot</p>

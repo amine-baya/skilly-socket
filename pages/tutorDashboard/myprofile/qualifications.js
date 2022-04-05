@@ -35,12 +35,12 @@ const Qualifications = () => {
   }
 
   return (
-    <div className=" h1wi bg-white sm:rounded-2xl lg:ml-[30px] lg:mt-[34px] lg:mb-[30px] h1wi">
+    <div className=" h1wi h1wi bg-white sm:rounded-2xl lg:ml-[30px] lg:mt-[34px] lg:mb-[30px]">
       <h1 className=" p-5  text-3xl font-semibold text-[#3d3d3d]  xl:px-12  ">
         Qualifications
       </h1>
       <hr className="text-[#E2E2E2]  " />
-      <div className="bg-[ #F2F2F2] px-5 xl:px-12 pb-2">
+      <div className="bg-[ #F2F2F2] px-5 pb-2 xl:px-12">
         <>
           <Formik
             initialValues={initialValues}
@@ -58,7 +58,7 @@ const Qualifications = () => {
                         <>
                           {values.Qualification?.map((Qualification, index) => (
                             <div
-                              className="mt-9 grid grid-cols-12 gap-3 bg-[#F2F2F2] p-4 md:p-[26px] xl:gap-x-8 rounded-[15px]"
+                              className="mt-9 grid grid-cols-12 gap-3 rounded-[15px] bg-[#F2F2F2] p-4 md:p-[26px] xl:gap-x-8"
                               key={index}
                             >
                               <div className="col-span-5 md:col-span-3">
@@ -120,7 +120,9 @@ const Qualifications = () => {
                               <div className="order-6 col-span-1 mt-11 self-center justify-self-center md:order-none">
                                 <button
                                   type="button"
-                                  onClick={index<=0? null :() => remove(index)}
+                                  onClick={
+                                    index <= 0 ? null : () => remove(index)
+                                  }
                                 >
                                   <RiDeleteBinLine className="text-xl text-[#7D7D7D]" />
                                 </button>
@@ -143,8 +145,8 @@ const Qualifications = () => {
                                 <br />
                                 <br />
                                 <div className="flex items-center gap-2">
-                                  <label className=" col-span-6 w-auto  cursor-pointer rounded-lg capitalize   border border-[#FC4D6D] bg-white px-3 py-1 text-lg font-medium text-[#FC4D6D]">
-                                  upload a photo
+                                  <label className=" col-span-6 w-auto  cursor-pointer rounded-lg border   border-[#FC4D6D] bg-white px-3 py-1 text-lg font-medium capitalize text-[#FC4D6D]">
+                                    upload a photo
                                     <input
                                       type="file"
                                       className="hidden"
@@ -178,7 +180,6 @@ const Qualifications = () => {
                         </>
                       )}
                     </FieldArray>
-                    
 
                     <div className="my-9 w-full text-right">
                       <button className="w-full rounded-lg bg-[#FC4D6D] py-2.5 px-6 text-white lg:w-auto  ">

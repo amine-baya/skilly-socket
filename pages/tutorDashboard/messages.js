@@ -26,7 +26,7 @@ let data = [
     date: '12/31/2021',
     messages: {
       receive:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos cumque, nam delectus eaque sed sapiente animi? At, maxime impedit deleniti illo mollitia repudiandae magnam autem maiores eum! Laborum, enim quos.",
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos cumque, nam delectus eaque sed sapiente animi? At, maxime impedit deleniti illo mollitia repudiandae magnam autem maiores eum! Laborum, enim quos.',
       send: 'Hi Claire! hi need to learn for traveling',
     },
   },
@@ -47,10 +47,10 @@ let data = [
     username: 'Claire.U 4',
     date: '12/31/2021',
     messages: {
-        receive:
-          "Hey Yashvi, That's great! would you like my help with this? do you have any questions for me about how I conduct my Sessions?",
-        send: 'Hi Claire! hi need to learn for traveling',
-      },
+      receive:
+        "Hey Yashvi, That's great! would you like my help with this? do you have any questions for me about how I conduct my Sessions?",
+      send: 'Hi Claire! hi need to learn for traveling',
+    },
   },
 ]
 function Messages() {
@@ -103,8 +103,8 @@ function Messages() {
                         <div className="font-medium"> {item.username}</div>
                         <div className="mt-auto text-[12px] ">{item.date}</div>
                       </div>
-                      <div className=" text-ellipsis overflow-hidden whitespace-nowrap w-[254px] ">
-                       {item.messages.receive}
+                      <div className=" w-[254px] overflow-hidden text-ellipsis whitespace-nowrap ">
+                        {item.messages.receive}
                       </div>
                     </div>
                   </div>
@@ -130,15 +130,15 @@ function Messages() {
                 </button>
               </li>
               <div className="my-auto whitespace-nowrap">
-                        {showReview?.image && (
-                          <Image
-                            src={showReview?.image || null}
-                            alt="Picture of the author"
-                            width={38}
-                            height={38}
-                          />
-                        )}
-                      </div>
+                {showReview?.image && (
+                  <Image
+                    src={showReview?.image || null}
+                    alt="Picture of the author"
+                    width={38}
+                    height={38}
+                  />
+                )}
+              </div>
               <li className="ml-3 mt-2 text-xl font-semibold text-[#515151]">
                 {showReview?.username || ''}
               </li>
@@ -213,14 +213,14 @@ function Messages() {
                     </div>
                     </div>
                   </div> */}
-                  <div className='flex flex-col gap-5'>
+                  <div className="flex flex-col gap-5">
                     <div className="flex">
-                      <div className="mx-auto rounded-[26px] bg-[#F0F0F0] px-2.5 text-sm py-1 text-[#7A7979]">
+                      <div className="mx-auto rounded-[26px] bg-[#F0F0F0] px-2.5 py-1 text-sm text-[#7A7979]">
                         Wed, 29 Dec
                       </div>
                     </div>
                     <div className="flex">
-                      <div className="ml-auto flex max-w-[410px] sm:gap-5 gap-1 rounded-xl bg-[#FFE5EA] py-[14px] px-5">
+                      <div className="ml-auto flex max-w-[410px] gap-1 rounded-xl bg-[#FFE5EA] py-[14px] px-5 sm:gap-5">
                         {showReview.messages.send}
                         <label className="mt-auto text-xs text-[#686868]">
                           11:42
@@ -243,7 +243,7 @@ function Messages() {
                           />
                         )}
                       </div>
-                      <div className="flex  sm:gap-5 gap-3 rounded-xl  bg-[#ECECEC] py-[14px] px-5">
+                      <div className="flex  gap-3 rounded-xl bg-[#ECECEC]  py-[14px] px-5 sm:gap-5">
                         <p className="max-w-[410px]">
                           {showReview.messages.receive}
                         </p>

@@ -17,10 +17,9 @@ function SettingNotification() {
           <div className=" px-5 py-6 font-semibold text-[#545454] xl:px-12">
             <h1 className="mb-8 text-lg font-semibold">Email notifications</h1>
             <div className="mb-8 flex gap-3">
-            <div className="whitespace-nowrap">
-
-              <FiCheckCircle className="b-colo  mt-2" />
-                </div>
+              <div className="whitespace-nowrap">
+                <FiCheckCircle className="b-colo  mt-2" />
+              </div>
               <div className="flex flex-col gap-2">
                 <label className=" text-lg font-medium">
                   sessions scheduling
@@ -32,10 +31,9 @@ function SettingNotification() {
               </div>
             </div>
             <div className="mb-8 flex gap-3">
-            <div className="whitespace-nowrap">
-
-              <FiCheckCircle className="b-colo  mt-2" />
-            </div>
+              <div className="whitespace-nowrap">
+                <FiCheckCircle className="b-colo  mt-2" />
+              </div>
               <div className="flex flex-col gap-2">
                 <label className=" text-lg font-medium">
                   General reminders
@@ -47,10 +45,9 @@ function SettingNotification() {
               </div>
             </div>
             <div className="mb-8 flex gap-3">
-            <div className="whitespace-nowrap">
-
-              <FiCheckCircle className="b-colo mt-2" />
-            </div>
+              <div className="whitespace-nowrap">
+                <FiCheckCircle className="b-colo mt-2" />
+              </div>
               <div className="flex flex-col gap-2">
                 <label className=" text-lg font-medium">
                   miscellaneous notifications
@@ -64,10 +61,9 @@ function SettingNotification() {
             </div>
             <h1 className="mb-8 text-lg font-semibold">SMS notifications</h1>
             <div className="mb-8 flex gap-3">
-            <div className="whitespace-nowrap">
-
-              <FiCheckCircle className="b-colo  mt-2" />
-            </div>
+              <div className="whitespace-nowrap">
+                <FiCheckCircle className="b-colo  mt-2" />
+              </div>
               <div className="flex flex-col gap-2">
                 <label className=" text-lg font-medium">
                   sessions and messages
@@ -83,10 +79,8 @@ function SettingNotification() {
               Voice call notifications
             </h1>
             <div className="mb-8 flex gap-3">
-              <div className="flex flex-col gap-2 ml-[30px]">
-                <label className=" text-lg font-medium">
-                  sessions
-                </label>
+              <div className="ml-[30px] flex flex-col gap-2">
+                <label className=" text-lg font-medium">sessions</label>
 
                 <p className=" text-xs md:text-base">
                   Receive automated phone call reminders about your upcoming
@@ -97,10 +91,9 @@ function SettingNotification() {
             </div>
             <h1 className="mb-8 text-lg font-semibold">SkillyTree insights</h1>
             <div className="mb-8 flex gap-3">
-            <div className="whitespace-nowrap">
-
-              <FiCheckCircle className="b-colo  mt-2" />
-            </div>
+              <div className="whitespace-nowrap">
+                <FiCheckCircle className="b-colo  mt-2" />
+              </div>
               <div className="flex flex-col gap-2">
                 <label className=" text-lg font-medium">
                   Allow Preply team to contact me for product improvements

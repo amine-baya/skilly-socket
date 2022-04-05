@@ -93,25 +93,35 @@ function HomePage() {
                 Live
               </div>
             </div>
-            <div className='text-[#767676] text-lg font-medium'>
-              <div className='flex gap-[11px]'>
-                <input type="checkbox" name="profileUploaded" id="" className='border-[#E04343] border-2 h-[18px] w-[18px] my-auto' />
+            <div className="text-lg font-medium text-[#767676]">
+              <div className="flex gap-[11px]">
+                <input
+                  type="checkbox"
+                  name="profileUploaded"
+                  id=""
+                  className="my-auto h-[18px] w-[18px] border-2 border-[#E04343]"
+                />
                 <label>profile uploaded</label>
               </div>
-              <div className='flex gap-[11px]'>
-                <input type="checkbox" name="profileUploaded" id="" className='border-[#E04343] border-2 h-[18px] w-[18px] my-auto' />
+              <div className="flex gap-[11px]">
+                <input
+                  type="checkbox"
+                  name="profileUploaded"
+                  id=""
+                  className="my-auto h-[18px] w-[18px] border-2 border-[#E04343]"
+                />
                 <label>profile uploaded</label>
               </div>
               <div>
-                <TiTick className='text-[#03CD0B]'/>
+                <TiTick className="text-[#03CD0B]" />
                 <label>profile uploaded</label>
               </div>{' '}
               <div>
-                <TiTick className='text-[#03CD0B]'/>
+                <TiTick className="text-[#03CD0B]" />
                 <label>profile uploaded</label>
               </div>{' '}
               <div>
-                <TiTick className='text-[#03CD0B]'/>
+                <TiTick className="text-[#03CD0B]" />
                 <label>profile uploaded</label>
               </div>
             </div>

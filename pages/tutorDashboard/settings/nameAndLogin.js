@@ -4,33 +4,32 @@ import { Formik, Field, Form } from 'formik'
 
 import SelectWithIcons from '../../../components/TutorDashboardRegistration/SelectWithIcons'
 
-const data =[
-    {
-        id: 1,
-        name: "+91",
-        avatar:
-          'https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png',
-      },
-      {
-        id: 2,
-        name: "+1",
-        avatar:
-          'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg',
-      },
+const data = [
+  {
+    id: 1,
+    name: '+91',
+    avatar:
+      'https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png',
+  },
+  {
+    id: 2,
+    name: '+1',
+    avatar:
+      'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg',
+  },
 ]
 function NameAndLogin() {
   const initialValues = {
-    verifyPassword: "",
-    newPassword: "",
-    currentPassword: "",
-    emailusername: "",
-    phonenumber: "",
-    lastName: "",
-    firstName: "",
-    
+    verifyPassword: '',
+    newPassword: '',
+    currentPassword: '',
+    emailusername: '',
+    phonenumber: '',
+    lastName: '',
+    firstName: '',
   }
-  const onSubmit =  (data) => {
-      console.log("value", data)
+  const onSubmit = (data) => {
+    console.log('value', data)
   }
   return (
     <>
@@ -40,73 +39,81 @@ function NameAndLogin() {
             id="heading"
             className="col-span-12  p-5 text-3xl font-semibold text-[#3d3d3d] xl:px-12"
           >
-           name and login
+            name and login
           </div>
           <hr className="text-[#E2E2E2]" />
 
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             <Form className="grid grid-cols-9 gap-y-6 px-5 py-6 font-semibold text-[#545454] xl:px-12">
-              <label className="md:col-span-2 col-span-9 whitespace-nowrap">first name</label>
+              <label className="col-span-9 whitespace-nowrap md:col-span-2">
+                first name
+              </label>
               <Field
                 type="text"
                 name="firstName"
-                className="md:col-span-7 col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none"
+                className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-7"
               />
-              <label className="md:col-span-2 col-span-9 whitespace-nowrap">Last name</label>
+              <label className="col-span-9 whitespace-nowrap md:col-span-2">
+                Last name
+              </label>
               <Field
                 type="text"
                 name="lastName"
-                className="md:col-span-7 col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none"
+                className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-7"
               />
-              <label className="md:col-span-2 col-span-9 whitespace-nowrap">
+              <label className="col-span-9 whitespace-nowrap md:col-span-2">
                 Phone number
               </label>
-              <div className="md:col-span-7 col-span-9 h-11 w-full flex md:gap-x-2 gap-x-5 rounded-lg border border-[#C1C1C1]">
-                  <div>
-
-                <SelectWithIcons people={data} className="h-11 border-none w-[126px]" flag="center" changestyle="font-extrabold" />
-                  </div>
+              <div className="col-span-9 flex h-11 w-full gap-x-5 rounded-lg border border-[#C1C1C1] md:col-span-7 md:gap-x-2">
+                <div>
+                  <SelectWithIcons
+                    people={data}
+                    className="h-11 w-[126px] border-none"
+                    flag="center"
+                    changestyle="font-extrabold"
+                  />
+                </div>
                 <Field
                   type="number"
                   name="phonenumber
                 "
-                  className=" h-10 w-full focus:outline-none my-auto"
+                  className=" my-auto h-10 w-full focus:outline-none"
                 />
               </div>
-              <label className="md:col-span-2 col-span-9 whitespace-nowrap">
+              <label className="col-span-9 whitespace-nowrap md:col-span-2">
                 email/username
               </label>
               <Field
                 type="text"
                 name="emailusername"
-                className="md:col-span-7 col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none"
+                className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-7"
               />
-              <label className="md:col-span-2 col-span-9 ">
+              <label className="col-span-9 md:col-span-2 ">
                 Current password
               </label>
               <Field
                 type="text"
                 name="currentPassword"
-                className="md:col-span-7 col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none"
+                className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-7"
               />
-              <label className="md:col-span-2 col-span-9 whitespace-nowrap">
+              <label className="col-span-9 whitespace-nowrap md:col-span-2">
                 New password
               </label>
               <Field
                 type="text"
                 name="newPassword"
-                className="md:col-span-7 col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none"
+                className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-7"
               />
-              <label className="md:col-span-2 col-span-9 whitespace-nowrap">
+              <label className="col-span-9 whitespace-nowrap md:col-span-2">
                 Verify password
               </label>
               <Field
                 type="text"
                 name="verifyPassword"
-                className="md:col-span-7 col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none"
+                className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-7"
               />
-              <div className="md:col-span-2 col-span-9"></div>
-              <div className="md:col-span-7 col-span-9  flex justify-between">
+              <div className="col-span-9 md:col-span-2"></div>
+              <div className="col-span-9 flex  justify-between md:col-span-7">
                 <button
                   className="flex gap-2.5 rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-3 py-1 text-lg font-medium capitalize text-white"
                   type="submit"
@@ -114,7 +121,10 @@ function NameAndLogin() {
                   save settings
                 </button>
 
-                <button className="  w-auto  cursor-pointer rounded-lg   border border-[#FC4D6D] bg-white px-3 py-1  font-medium capitalize" type="button">
+                <button
+                  className="  w-auto  cursor-pointer rounded-lg   border border-[#FC4D6D] bg-white px-3 py-1  font-medium capitalize"
+                  type="button"
+                >
                   delete account
                 </button>
               </div>

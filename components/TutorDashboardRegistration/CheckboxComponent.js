@@ -7,9 +7,9 @@ function CheckboxComponent({ options, setCheckBoxValue }) {
     setExpanded(values)
   }
 
-  const ValueChangeHandler =(values)=>{
-console.log("values", values)
-setCheckBoxValue(values )
+  const ValueChangeHandler = (values) => {
+    console.log('values', values)
+    setCheckBoxValue(values)
   }
   return (
     <>
@@ -41,7 +41,7 @@ setCheckBoxValue(values )
                     type="checkbox"
                     id={item.days}
                     className="my-auto h-4 w-4"
-                    onClick={()=>ValueChangeHandler(item.days)}
+                    onClick={() => ValueChangeHandler(item.days)}
                   />
                   {item.days}
                 </label>

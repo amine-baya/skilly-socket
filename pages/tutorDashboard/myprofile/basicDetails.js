@@ -25,7 +25,6 @@ const iconSelect = [
     avatar:
       'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg',
   },
-  
 ]
 
 function basicDetails() {
@@ -69,7 +68,7 @@ function basicDetails() {
 
   return (
     <>
-      <div className=" md-[1px] ml-[1px] mb-[1px] bg-white lg:ml-[30px]  lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl h1wi">
+      <div className=" md-[1px] h1wi ml-[1px] mb-[1px] bg-white  lg:ml-[30px] lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl">
         <div className="  p-5  xl:px-12">
           <h1 className="text-3xl font-semibold">Welcome Yash Mehta,</h1>
           <p>
@@ -95,14 +94,21 @@ function basicDetails() {
                       <label className="self-center font-semibold ">
                         My Country Of Origin
                       </label>
-                      <SelectWithIcons people={iconSelect} changestyle="border-2 border-[#C1C1C1] rounded-[10px] " flag="left" />
+                      <SelectWithIcons
+                        people={iconSelect}
+                        changestyle="border-2 border-[#C1C1C1] rounded-[10px] "
+                        flag="left"
+                      />
                     </div>
                     <div></div>
                     <div className=" col-span-2  grid grid-cols-1 gap-y-2   md:col-span-1 md:grid-cols-2">
                       <label className="self-center font-semibold">
                         I Natively Speak
                       </label>
-                      <Field as="select" className="rounded-[10px]  border-2 border-[#C1C1C1] p-2">
+                      <Field
+                        as="select"
+                        className="rounded-[10px]  border-2 border-[#C1C1C1] p-2"
+                      >
                         <option>Hindi</option>
                         <option>Hindi</option>
                         <option>Hindi</option>
@@ -114,7 +120,10 @@ function basicDetails() {
                       <label className="self-center font-semibold">
                         My English Fluency
                       </label>
-                      <Field as="select" className="rounded-[10px]  border-2 border-[#C1C1C1] p-2">
+                      <Field
+                        as="select"
+                        className="rounded-[10px]  border-2 border-[#C1C1C1] p-2"
+                      >
                         <option>Expert</option>
                         <option>Expert</option>
                         <option>Expert</option>
@@ -200,8 +209,8 @@ function basicDetails() {
                                   >
                                     My Fee Per Hour
                                   </label>
-                                 
-                                  <div className="relative mt-1 rounded-[10px] shadow-sm h-full border-2 border-[#C1C1C1] p-2">
+
+                                  <div className="relative mt-1 h-full rounded-[10px] border-2 border-[#C1C1C1] p-2 shadow-sm">
                                     <Field
                                       type="text"
                                       name={`teachs.${index}.fee`}
@@ -229,7 +238,7 @@ function basicDetails() {
                                   </div>
                                 </div>
 
-                                <div className=" col-span-3 col-start-10 flex justify-between xl:gap-8 lg:gap-3 md:col-span-1 ">
+                                <div className=" col-span-3 col-start-10 flex justify-between md:col-span-1 lg:gap-3 xl:gap-8 ">
                                   <button
                                     type="button"
                                     onClick={() => push({ fee: '', teach: '' })}
@@ -238,7 +247,9 @@ function basicDetails() {
                                   </button>
                                   <button
                                     type="button"
-                                    onClick={index<=0? null :() => remove(index)}
+                                    onClick={
+                                      index <= 0 ? null : () => remove(index)
+                                    }
                                   >
                                     <RiDeleteBinLine className="text-xl text-[#7D7D7D]" />
                                   </button>
@@ -255,7 +266,7 @@ function basicDetails() {
                       <>
                         {values.Qualification?.map((Qualification, index) => (
                           <div
-                            className="mt-9 grid grid-cols-12 gap-3 bg-[#F2F2F2] p-4 xl:gap-x-8 md:p-[26px]"
+                            className="mt-9 grid grid-cols-12 gap-3 bg-[#F2F2F2] p-4 md:p-[26px] xl:gap-x-8"
                             key={index}
                           >
                             <div className="col-span-5 md:col-span-3">
@@ -316,7 +327,9 @@ function basicDetails() {
                             <div className="order-last col-span-1 mt-11 self-center justify-self-center md:order-none">
                               <button
                                 type="button"
-                                onClick={index<=0? null :() => remove(index)}
+                                onClick={
+                                  index <= 0 ? null : () => remove(index)
+                                }
                               >
                                 <RiDeleteBinLine className="text-xl text-[#7D7D7D]" />
                               </button>

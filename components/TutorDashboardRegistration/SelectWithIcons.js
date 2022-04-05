@@ -22,7 +22,7 @@ export default function SelectWithIcons({ people, changestyle, flag }) {
                   alt=""
                   className="h-6 w-6 flex-shrink-0 rounded-full"
                 />
-                {flag==="center" ? (
+                {flag === 'center' ? (
                   <div>
                     <AiOutlineDown
                       className=" h-3 font-black"
@@ -33,7 +33,7 @@ export default function SelectWithIcons({ people, changestyle, flag }) {
                 <span className="block whitespace-nowrap">{selected.name}</span>
               </span>
               <span className="pointer-events-none absolute right-0  my-auto ml-1 flex items-center pr-1">
-                {flag==="left" ? (
+                {flag === 'left' ? (
                   <div>
                     <AiOutlineDown
                       className="mt-1 h-3 font-black"
