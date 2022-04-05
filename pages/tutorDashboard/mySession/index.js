@@ -52,16 +52,19 @@ function MySession() {
 
             console.log({ currentTime, startTimeB, endTimeB })
 
-            let status, color
+            let status, color, text
             if (currentTime < startTimeB) {
-              status = 'Session has not started yet'
+              text = 'Session has not started yet'
               color = 'bg-blue-200'
+              status = 'pending'
             } else if (currentTime > endTimeB) {
-              status = 'Session has ended'
+              text = 'Session has ended'
               color = 'bg-green-200'
+              status = 'ended'
             } else {
               status = 'Session is active'
-              color = 'bg-red-200'
+              text = 'bg-red-200'
+              status = 'active'
             }
 
             return (
@@ -103,7 +106,7 @@ function MySession() {
                   </div>
                   <div className="mt-[75px]  mb-5">
                     <button className=" w-full rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-white ">
-                      {status}
+                      {text}
                     </button>
                   </div>
                 </div>
