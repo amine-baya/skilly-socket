@@ -52,9 +52,9 @@ const Tutors = () => {
       </Head>
       <div className=" mt-8 flex justify-center">
         <SearchBox onSearch={(val) => setSearchText(val)} />
-      </div> */}
+      </div> 
 
-      {/* <div className=" my-8 mx-16 flex flex-wrap content-center justify-center gap-x-8 gap-y-8">
+       <div className=" my-8 mx-16 flex flex-wrap content-center justify-center gap-x-8 gap-y-8">
         {tutorData
           ? tutorData.map(function (dd, key) {
               return (

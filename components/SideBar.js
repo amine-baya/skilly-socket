@@ -45,8 +45,8 @@ function SideBar() {
     },
     {
       name: 'My Sessions',
-      link: '/tutorDashboard/mySession/mySession',
-      active: router.pathname === '/tutorDashboard/mySession/mySession',
+      link: '/tutorDashboard/mySession',
+      active: router.pathname === '/tutorDashboard/mySession',
       icons: <SessionIcon />,
       activeIcons: <SessionIcon />,
     },
