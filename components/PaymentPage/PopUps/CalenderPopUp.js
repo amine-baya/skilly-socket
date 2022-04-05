@@ -122,7 +122,7 @@ const CalenderPopUp = ({ setOpenPopUp, setTotalSelectedTimes, link }) => {
       .then((res) => {
         console.log(res.data)
         alert('submitted')
-        Router.push('/bookings')
+        Router.push('/tutorDashboard/mySession')
       })
       .catch((err) => {
         const clashed = err.response.data.message.clashedTimings.map((item) => {
