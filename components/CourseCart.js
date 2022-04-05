@@ -7,6 +7,7 @@ function CourseCart({
   tutorName,
   tutorImg,
   countryLogo,
+  setOpenPopUp
 }) {
   return (
     <div className="  flex  rounded-md transition-all  ease-in-out   ">
@@ -20,7 +21,7 @@ function CourseCart({
           <Language />
           <ActiveFinishedRatingBox />
           <Description />
-          <BookTrialBtn space={'my-4'} />
+          <BookTrialBtn space={'my-4'} setOpenPopUp={setOpenPopUp}/>
         </div>
         <ViewAndChat space={'px-4'} />
       </div>
@@ -152,7 +153,7 @@ function CourseCart({
       </div>
     )
   }
-  function BookTrialBtn({ space }) {
+  function BookTrialBtn({ space,setOpenPopUp }) {
     return (
       <div className={`relative flex justify-center ${space} `}>
         <Link href={'/'}>

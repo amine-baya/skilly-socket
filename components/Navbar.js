@@ -106,7 +106,7 @@ function Navbar() {
       img: '',
       search: true,
     },
-    { name: 'find tutors', link: '/', css: '' },
+    { name: 'find tutors', link: '/tutors', css: '' },
     { name: 'how it works?', link: '/', css: '' },
     // { name: 'login', link: '/auth/login', css: 'md:hidden' },
     // { name: 'reviews', link: '/', css: '!pb-6 ' },
@@ -120,7 +120,7 @@ function Navbar() {
   return (
     <>
       {/*    fixed*/}
-      <div className=" sticky-nav relative  z-30  flex h-[79px]  justify-center    bg-white  shadow-md    ">
+      <div className=" sticky top-0  z-30  flex h-[79px]  justify-center    bg-white  shadow-md    ">
         <div className=" relative mx-auto  flex  w-[90rem] items-center justify-between   py-4 px-6  md:px-12   lg:px-20    ">
           {/* <div className=""> */}
           {!onDashboard && (
@@ -224,7 +224,7 @@ function Navbar() {
                 width={18}
               />
             </div>
-            <Link href={'/'}>
+            <Link href={links.link||'/'}>
               <a
                 key={index}
                 className={` ${
