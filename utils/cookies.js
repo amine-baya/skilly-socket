@@ -20,8 +20,9 @@ export const getLocalStorage = (key) => {
 }
 
 // Auth enticate user by passing data to cookie and localstorage during signin
-export const authenticate = (response, next) => {
-  setCookies('token', response.access_token)
+export const authenticate = (response, ROLE_NAME, next) => {
+  setCookies('token', response.tokens)
+  setCookies('role', ROLE_NAME)
   next()
 }
 

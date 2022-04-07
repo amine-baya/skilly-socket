@@ -3,36 +3,42 @@ import InputBox1 from '../../Utils/InputBoxes/InputBox1'
 import AuthButton from '../../Utils/Buttons/AuthButton'
 import NavLink from 'next/link'
 import Server from '../../../utils/Server'
-import { ROLE_NAME } from '../../../utils/constants'
-import { authenticate, removeLocalStorage } from '../../../utils/cookies'
+import { ROLE_NAME, tutorLogin } from '../../../utils/constants'
+import { authenticate, getLocalStorage, signout } from '../../../utils/cookies'
 import Router from 'next/router'
 import { useEffect } from 'react'
+import { getCookie, getCookies } from 'cookies-next'
 
 const Login = (props) => {
-  // useEffect(() => {
-  //   removeLocalStorage('user')
-  // }, [])
+  useEffect(() => {
+    const token = getCookie('token')
+    const role = getCookie('role')
+    if (token && role) {
+      if (role === ROLE_NAME.TUTOR) {
+        Router.push('/tutorDashboard/about')
+      } else {
+        Router.push('/auth/tutor/signup')
+      }
+    }
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     const email = e.target.email.value
     const password = e.target.password.value
-    const login_response = await Server.post('/user/login', {
+    const login_response = await Server.post(tutorLogin, {
       email,
       password,
     })
-    if (login_response.success) {
-      switch (login_response.data.role_name) {
-        case ROLE_NAME.TUTOR:
-          authenticate(login_response.data, () =>
-            // Router.push('/tutorDashboard')
-            // window.location.href="/tutorDashboard"
-            setTimeout((window.location = '/tutorDashboard'), 2000)
-          )
-          break
-        default:
-          break
-      }
+    if (
+      login_response.success &&
+      login_response.data.role === ROLE_NAME.TUTOR
+    ) {
+      authenticate(login_response.data, ROLE_NAME.TUTOR, () =>
+        Router.push('/tutorDashboard')
+      )
+    } else {
+      signout(() => Router.push(0))
     }
   }
 
