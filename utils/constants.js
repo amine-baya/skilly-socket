@@ -1,12 +1,12 @@
 // export const baseUrl = 'http://localhost:5100';
 export const baseUrl = 'http://65.0.176.119:5087'
-export const typesenseUrl = 'http://13.233.137.22:3020/typesense'
+export const typesenseUrl = 'http://13.233.137.22:3020/typesense/'
 export const baseUrlProfilePic =
   'https://akbh.s3.ap-south-1.amazonaws.com/skillshare/user/profile_img/'
 
 // API's
-export const userRegister = '/user/register'
-export const userLogin = '/user/login'
+export const tutorRegister = '/tutor/create'
+export const tutorLogin = '/tutor/login'
 export const getUserProfile = '/user/profile'
 export const uploadUserProfilePic = '/user/update/profile-pic'
 export const uploadUserBackgroundPic = '/user/update/background-pic'
