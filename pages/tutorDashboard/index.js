@@ -1,40 +1,29 @@
 import { useEffect } from 'react'
 import Router from 'next/router'
 import Server from '../../utils/Server'
-import { getUserProfile, ROLE_NAME } from '../../utils/constants'
+import { getTutorProfile, ROLE_NAME } from '../../utils/constants'
 import { getLocalStorage, setLocalStorage } from '../../utils/cookies'
 import { getCookie } from 'cookies-next'
 import Link from 'next/link'
 
 const tutorDashboard = () => {
-  // useEffect(() => {
-  //   if (true) {
-  //     isAuth()
-  //   }
-  // }, [])
+  useEffect(() => {
+    isAuth()
+  }, [])
 
   const isAuth = async () => {
-    if (getCookie('token')) {
-      const user = await Server.get(getUserProfile, {
-        Authorization: `BEARER ${getCookie('token')}`,
-      })
-      if (user.success && user.data.role_name === ROLE_NAME.TUTOR) {
-        const login_response = user.data
-        setLocalStorage('user', {
-          ...login_response,
-          ...login_response.tutor_details,
-          ...login_response.tutor_profile,
-          tutor_details: undefined,
-          tutor_profile: undefined,
-        })
-        if (!user.data.tutor_details.profile_update) {
-          Router.push('/tutorDashboard/about')
+    if (getCookie('token') && getCookie('role') === ROLE_NAME.TUTOR) {
+      const user = await Server.get(getTutorProfile)
+      if (user.success && user.data.role === ROLE_NAME.TUTOR) {
+        setLocalStorage('user', user.data)
+        if (!user.data.profile_update) {
+          Router.push('/tutorDashboard/myprofile/basicDetails')
         }
       } else {
-        Router.push('/auth/login')
+        Router.push('/auth/tutor/login')
       }
     } else {
-      Router.push('/auth/login')
+      Router.push('/auth/tutor/login')
     }
   }
 

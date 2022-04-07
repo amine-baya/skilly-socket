@@ -7,10 +7,10 @@ export const baseUrlProfilePic =
 // API's
 export const tutorRegister = '/tutor/create'
 export const tutorLogin = '/tutor/login'
-export const getUserProfile = '/user/profile'
+export const getTutorProfile = '/tutor/profile'
 export const uploadUserProfilePic = '/user/update/profile-pic'
 export const uploadUserBackgroundPic = '/user/update/background-pic'
-export const updateUserAbout = '/user/tutor/profile/update/about'
+export const updateBasicDetails = '/tutor/update/basic-details'
 export const updateUserProfilePic = '/user/tutor/profile/update/profile-pic'
 export const updateUserDescription = '/user/tutor/profile/update/description'
 export const updateUserVideoDesc =

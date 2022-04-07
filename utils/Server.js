@@ -3,11 +3,15 @@ import axios from 'axios'
 import { baseUrl } from './constants.js'
 import { getCookie } from 'cookies-next'
 
+const TOKEN = getCookie('token')
+  ? JSON.parse(getCookie('token')).access_token
+  : false
+
 const Server = axios.create({
   baseURL: baseUrl,
   headers: {
     common: {
-      Authorization: `BEARER ${getCookie('token')}`,
+      Authorization: `BEARER ${TOKEN}`,
     },
   },
 })

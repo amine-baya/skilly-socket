@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Router from 'next/router'
 import { AiOutlineClose } from 'react-icons/ai'
 import { RiAddFill, RiDeleteBinLine } from 'react-icons/ri'
 import { IoMdAddCircleOutline } from 'react-icons/io'
@@ -6,12 +7,10 @@ import { IoMdAddCircleOutline } from 'react-icons/io'
 import { IoMdClose } from 'react-icons/io'
 import { Form, Formik, Field, FieldArray, ErrorMessage } from 'formik'
 import SelectWithIcons from '../../../components/TutorDashboardRegistration/SelectWithIcons'
+import { getLocalStorage, updateUser } from '../../../utils/cookies'
+import { updateBasicDetails } from '../../../utils/constants'
+import Server from '../../../utils/Server'
 
-const languageOptions = [
-  { value: 'Tamil', label: 'Tamil' },
-  { value: 'Gujrati', label: 'Gujrati' },
-  { value: 'Marathi ', label: 'Marathi' },
-]
 const iconSelect = [
   {
     id: 1,
@@ -28,42 +27,49 @@ const iconSelect = [
 ]
 
 function BasicDetails() {
-  const [languageData, setLanguageData] = useState([])
-  const [addLanguageData, setAddLanguageData] = useState([])
+  const [user_data, set_user_data] = useState({})
 
   useEffect(() => {
-    setLanguageData(languageOptions)
+    set_user_data(getLocalStorage('user'))
   }, [])
+
   const initialValues = {
-    Qualification: [
-      {
-        durationTo: '',
-        durationFrom: '',
-        title: '',
-        Type: '',
-      },
-    ],
-    teachs: [
-      {
-        fee: '',
-        teach: '',
-        Currency: '',
-      },
-    ],
+    country: user_data.country ? user_data.country : '',
+    native_language: user_data.native_language ? user_data.native_language : '',
+    english_fluency: user_data.english_fluency ? user_data.english_fluency : '',
+    other_languages:
+      user_data.other_languages && user_data.other_languages[0]
+        ? user_data.other_languages
+        : [],
+    subjects_and_pricing:
+      user_data.subjects_and_pricing && user_data.subjects_and_pricing[0]
+        ? user_data.subjects_and_pricing
+        : [
+            {
+              subject: '',
+              price: '',
+              currency_format: '',
+            },
+          ],
+    qualifications:
+      user_data.qualifications && user_data.qualifications[0]
+        ? user_data.qualifications
+        : [
+            {
+              qualification_type: '',
+              qualification_title: '',
+              qualification_duration_from: '',
+              qualification_duration_to: '',
+            },
+          ],
   }
-  const onSubmit = () => {}
-
-  const languageDataSelect = (value) => {
-    setAddLanguageData([...addLanguageData, value])
-    const newInput = languageData.filter((item) => item.value !== value)
-    setLanguageData(newInput)
-  }
-
-  const handleClose = (item, index) => {
-    const newInput = [...addLanguageData]
-    setLanguageData([...languageData, { label: item, value: item }])
-    newInput.splice(index, 1)
-    setAddLanguageData(newInput)
+  const onSubmit = async (data) => {
+    const user_update = await Server.put(updateBasicDetails, data)
+    if (user_update.success) {
+      updateUser({ ...data }, () => {
+        Router.push('/tutorDashboard/myprofile/timeAvailability')
+      })
+    }
   }
 
   return (
@@ -80,10 +86,8 @@ function BasicDetails() {
         <hr />
         <Formik
           initialValues={initialValues}
-          onSubmit={async (values) => {
-            await new Promise((r) => setTimeout(r, 500))
-            alert(JSON.stringify(values, null, 2))
-          }}
+          onSubmit={onSubmit}
+          enableReinitialize
         >
           {({ values }) => {
             return (
@@ -94,11 +98,18 @@ function BasicDetails() {
                       <label className="self-center font-semibold ">
                         My Country Of Origin
                       </label>
-                      <SelectWithIcons
-                        people={iconSelect}
-                        changestyle="border-2 border-[#C1C1C1] rounded-[10px] "
-                        flag="left"
-                      />
+                      <Field
+                        as="select"
+                        className="rounded-[10px]  border-2 border-[#C1C1C1] p-2"
+                        name="country"
+                        id="country"
+                        required
+                      >
+                        <option value="">Select </option>
+                        <option value="America">America </option>
+                        <option value="Pakistan">Pakistan </option>
+                        <option value="India">India </option>
+                      </Field>
                     </div>
                     <div></div>
                     <div className=" col-span-2  grid grid-cols-1 gap-y-2   md:col-span-1 md:grid-cols-2">
@@ -108,10 +119,14 @@ function BasicDetails() {
                       <Field
                         as="select"
                         className="rounded-[10px]  border-2 border-[#C1C1C1] p-2"
+                        name="native_language"
+                        id="native_language"
+                        required
                       >
-                        <option>Hindi</option>
-                        <option>Hindi</option>
-                        <option>Hindi</option>
+                        <option value="">Select </option>
+                        <option value="Hindi">Hindi </option>
+                        <option value="English">English </option>
+                        <option value="Marathi">Marathi </option>
                       </Field>
                     </div>
                     <div></div>
@@ -123,10 +138,14 @@ function BasicDetails() {
                       <Field
                         as="select"
                         className="rounded-[10px]  border-2 border-[#C1C1C1] p-2"
+                        name="english_fluency"
+                        id="english_fluency"
+                        required
                       >
-                        <option>Expert</option>
-                        <option>Expert</option>
-                        <option>Expert</option>
+                        <option value="">Select </option>
+                        <option value="Beginner">Beginner </option>
+                        <option value="Intermidiate">Intermidiate </option>
+                        <option value="Expert">Expert </option>
                       </Field>
                       <div></div>
                     </div>
@@ -135,136 +154,124 @@ function BasicDetails() {
                       <label className="self-center font-semibold">
                         I Am Also Fluent With..
                       </label>
-                      <select
-                        name="language"
+                      <Field
+                        as="select"
                         className="rounded-[10px]  border-2 border-[#C1C1C1] p-2 "
                         // {...formik.getFieldProps("skill")}
-                        id="language"
-                        onChange={(e) => {
-                          // setFormskillValue()
-                          languageDataSelect(e.target.value)
-                          // formik.setFieldValue("skill", e.target.value);
-                        }}
+                        id="other_languages"
+                        name="other_languages"
+                        multiple
                       >
-                        <option>Option</option>
-                        {languageData?.length &&
-                          languageData?.map((item, index) => {
-                            return (
-                              <option key={index} value={item.value}>
-                                {item.label}
-                              </option>
-                            )
-                          })}
-                      </select>
-                    </div>
-                    <div className=" col-span-2 grid  md:col-span-1 md:grid-cols-7 ">
-                      <div className=" col-span-7 flex  h-11 gap-x-5 self-center text-sm md:col-span-6">
-                        {addLanguageData?.map((item, key) => {
-                          return (
-                            <div type="reset" key={key}>
-                              <span className="flex h-[27px] place-items-center gap-6 rounded bg-[#F6F6F6] px-2.5">
-                                {item}
-                                <IoMdClose
-                                  onClick={(e) => handleClose(item, key)}
-                                  className=" my-auto h-auto cursor-pointer stroke-[38px]"
-                                />
-                              </span>
-                            </div>
-                          )
-                        })}
-                      </div>
+                        <option value="">Select </option>
+                        <option value="Hindi">Hindi </option>
+                        <option value="Marathi">Marathi </option>
+                        <option value="Gujarati">Gujarati </option>
+                      </Field>
                     </div>
                     <div className=" col-span-2  ">
-                      <FieldArray name="teachs">
+                      <FieldArray name="subjects_and_pricing">
                         {({ insert, remove, push }) => (
                           <>
-                            {values.teachs?.map((teachs, index) => (
-                              <div
-                                className="mb-9 grid grid-cols-12 gap-y-9  gap-x-4  md:gap-6"
-                                key={index}
-                              >
-                                <div className="grid-col-1 col-span-6  grid   gap-y-2  md:grid-cols-2">
-                                  <label
-                                    className="self-center font-semibold"
-                                    htmlFor={`teachs.${index}.teach`}
-                                  >
-                                    {' '}
-                                    I Will Like To Teach..
-                                  </label>
-                                  <Field
-                                    as="select"
-                                    name={`teachs.${index}.teach`}
-                                    placeholder="Jane Doe"
-                                    className="rounded-[10px] border-2 border-[#C1C1C1] p-2 "
-                                  >
-                                    <option>Math</option>
-                                    <option>sfgsf</option>
-                                    <option>sdfgsd</option>
-                                  </Field>
-                                </div>
-                                <div className="col-span-6 grid grid-cols-1 gap-y-2 md:col-span-5  md:grid-cols-2">
-                                  <label
-                                    className="self-center font-semibold"
-                                    htmlFor={`teachs.${index}.fee`}
-                                  >
-                                    My Fee Per Hour
-                                  </label>
-
-                                  <div className="relative mt-1 h-full rounded-[10px] border-2 border-[#C1C1C1] p-2 shadow-sm">
+                            {values.subjects_and_pricing?.map(
+                              (subjects_and_pricing, index) => (
+                                <div
+                                  className="mb-9 grid grid-cols-12 gap-y-9  gap-x-4  md:gap-6"
+                                  key={index}
+                                >
+                                  <div className="grid-col-1 col-span-6  grid   gap-y-2  md:grid-cols-2">
+                                    <label
+                                      className="self-center font-semibold"
+                                      htmlFor={`subjects_and_pricing.${index}.subject`}
+                                    >
+                                      {' '}
+                                      I Will Like To Teach..
+                                    </label>
                                     <Field
-                                      type="text"
-                                      name={`teachs.${index}.fee`}
-                                      id={`teachs.${index}.fee`}
-                                      className="block h-full w-full rounded-md border-gray-300  focus:outline-none"
-                                      placeholder="000  "
-                                    />
-                                    <div className="absolute inset-y-0 right-0 flex items-center">
-                                      <label
-                                        htmlFor="currency"
-                                        className="sr-only"
-                                      >
-                                        Currency
-                                      </label>
-                                      <select
-                                        id={`teachs.${index}.Currency`}
-                                        name={`teachs.${index}.Currency`}
-                                        className="h-full rounded-md border-transparent bg-transparent py-0 pl-2 pr-3 font-bold text-gray-500  sm:text-sm"
-                                      >
-                                        <option>INR</option>
-                                        <option>CAD</option>
-                                        <option>EUR</option>
-                                      </select>
+                                      as="select"
+                                      name={`subjects_and_pricing.${index}.subject`}
+                                      id={`subjects_and_pricing.${index}.subject`}
+                                      placeholder="Jane Doe"
+                                      className="rounded-[10px] border-2 border-[#C1C1C1] p-2 "
+                                    >
+                                      <option value="">Select</option>
+                                      <option value="Math">Math</option>
+                                      <option value="English">English</option>
+                                      <option value="Coding">Coding</option>
+                                    </Field>
+                                  </div>
+                                  <div className="col-span-6 grid grid-cols-1 gap-y-2 md:col-span-5  md:grid-cols-2">
+                                    <label
+                                      className="self-center font-semibold"
+                                      htmlFor={`subjects_and_pricing.${index}.price`}
+                                    >
+                                      My Price Per Hour
+                                    </label>
+
+                                    <div className="relative mt-1 h-full rounded-[10px] border-2 border-[#C1C1C1] p-2 shadow-sm">
+                                      <Field
+                                        type="number"
+                                        name={`subjects_and_pricing.${index}.price`}
+                                        id={`subjects_and_pricing.${index}.price`}
+                                        className="block h-full w-full rounded-md border-gray-300  focus:outline-none"
+                                        placeholder="000  "
+                                      />
+                                      <div className="absolute inset-y-0 right-0 flex items-center">
+                                        <label
+                                          htmlFor="currency_format"
+                                          className="sr-only"
+                                        >
+                                          Currency
+                                        </label>
+                                        <Field
+                                          as="select"
+                                          id={`subjects_and_pricing.${index}.currency_format`}
+                                          name={`subjects_and_pricing.${index}.currency_format`}
+                                          className="h-full rounded-md border-transparent bg-transparent py-0 pl-2 pr-3 font-bold text-gray-500  sm:text-sm"
+                                        >
+                                          <option value="">Select</option>
+                                          <option value="USD">USD</option>
+                                          <option value="CAD">CAD</option>
+                                          <option value="EUR">EUR</option>
+                                          <option value="INR">INR</option>
+                                        </Field>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
 
-                                <div className=" col-span-3 col-start-10 flex justify-between md:col-span-1 lg:gap-3 xl:gap-8 ">
-                                  <button
-                                    type="button"
-                                    onClick={() => push({ fee: '', teach: '' })}
-                                  >
-                                    <RiAddFill className="text-2xl text-[#7D7D7D]" />
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={
-                                      index <= 0 ? null : () => remove(index)
-                                    }
-                                  >
-                                    <RiDeleteBinLine className="text-xl text-[#7D7D7D]" />
-                                  </button>
+                                  <div className=" col-span-3 col-start-10 flex justify-between md:col-span-1 lg:gap-3 xl:gap-8 ">
+                                    <button
+                                      type="button"
+                                      onClick={() =>
+                                        push({
+                                          subject: '',
+                                          price: '',
+                                          currency_format: '',
+                                        })
+                                      }
+                                    >
+                                      <RiAddFill className="text-2xl text-[#7D7D7D]" />
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={
+                                        index <= 0 ? null : () => remove(index)
+                                      }
+                                    >
+                                      <RiDeleteBinLine className="text-xl text-[#7D7D7D]" />
+                                    </button>
+                                  </div>
                                 </div>
-                              </div>
-                            ))}
+                              )
+                            )}
                           </>
                         )}
                       </FieldArray>
                     </div>
                   </div>
-                  <FieldArray name="Qualification">
+                  <FieldArray name="qualifications">
                     {({ insert, remove, push }) => (
                       <>
-                        {values.Qualification?.map((Qualification, index) => (
+                        {values.qualifications?.map((qualifications, index) => (
                           <div
                             className="mt-9 grid grid-cols-12 gap-3 bg-[#F2F2F2] p-4 md:p-[26px] xl:gap-x-8"
                             key={index}
@@ -272,30 +279,33 @@ function BasicDetails() {
                             <div className="col-span-5 md:col-span-3">
                               <p
                                 className="mb-5 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold "
-                                name={`Qualification.${index}.Type`}
+                                name={`qualifications.${index}.qualification_type`}
                               >
                                 Qualification Type
                               </p>
                               <Field
                                 as="select"
-                                name={`Qualification.${index}.Type`}
+                                name={`qualifications.${index}.qualification_type`}
                                 className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
                               >
-                                <option>Experience</option>
-                                <option>Certificate</option>
-                                <option>Degree</option>
+                                <option value="">Select</option>
+                                <option value="Experience">Experience</option>
+                                <option value="Certificate">Certificate</option>
+                                <option value="Bachelors">Bachelors</option>
+                                <option value="Degree">Degree</option>
                               </Field>
                             </div>
                             <div className="order-2 col-span-10 md:order-none md:col-span-5">
                               <p
                                 className="mb-5 font-semibold  "
-                                name={`Qualification.${index}.title`}
+                                name={`qualifications.${index}.title`}
                               >
                                 Qualification Title
                               </p>
                               <Field
                                 type="text"
-                                name={`Qualification.${index}.title`}
+                                id={`qualifications.${index}.qualification_title`}
+                                name={`qualifications.${index}.qualification_title`}
                                 className=" w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
                               />
                             </div>
@@ -305,23 +315,15 @@ function BasicDetails() {
                               </p>
                               <div className="flex gap-1.5">
                                 <Field
-                                  as="select"
-                                  name={`Qualification.${index}.durationFrom`}
+                                  id={`qualifications.${index}.qualification_duration_from`}
+                                  name={`qualifications.${index}.qualification_duration_from`}
                                   className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
-                                >
-                                  <option>From</option>
-                                  <option>2002</option>
-                                  <option>2001</option>
-                                </Field>
+                                ></Field>
                                 <Field
-                                  as="select"
-                                  name={`Qualification.${index}.durationTo`}
+                                  id={`qualifications.${index}.qualification_duration_to`}
+                                  name={`qualifications.${index}.qualification_duration_to`}
                                   className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
-                                >
-                                  <option>To</option>
-                                  <option>2005</option>
-                                  <option>2006</option>
-                                </Field>
+                                ></Field>
                               </div>
                             </div>
                             <div className="order-last col-span-1 mt-11 self-center justify-self-center md:order-none">
