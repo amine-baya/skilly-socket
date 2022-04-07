@@ -120,6 +120,7 @@ function Navbar() {
   return (
     <>
       {/*    fixed*/}
+
       <div className=" sticky top-0  z-30  flex h-[79px]  justify-center    bg-white  shadow-md    ">
         <div className=" relative mx-auto  flex  w-[90rem] items-center justify-between   py-4 px-6  md:px-12   lg:px-20    ">
           {/* <div className=""> */}
@@ -222,6 +223,7 @@ function Navbar() {
                 src="/Images/Navbar/svg/search.svg"
                 height={18}
                 width={18}
+                alt={''}
               />
             </div>
             <Link href={links.link || '/'}>
@@ -241,6 +243,7 @@ function Navbar() {
       </div>
     )
   }
+
   function Menu({ menuCss, height = 20, width = 26, onClick }) {
     return (
       <div
@@ -253,6 +256,7 @@ function Navbar() {
           src="/Images/Navbar/svg/menu.svg"
           height={height}
           width={width}
+          alt={''}
         />
         {/* <Image   src={'/Images/menu.svg'} height={height} width={width} /> */}
       </div>
