@@ -1,33 +1,26 @@
 import Image from 'next/image'
-import InputBox1 from '../Utils/InputBoxes/InputBox1'
-import AuthButton from '../Utils/Buttons/AuthButton'
-import NavLink from 'next/link'
-import Server from '../../utils/Server'
-import { ROLE_NAME } from '../../utils/constants'
-import { authenticate, removeLocalStorage } from '../../utils/cookies'
 import Router from 'next/router'
-import { useEffect } from 'react'
+import InputBox1 from '../../Utils/InputBoxes/InputBox1'
+import AuthButton from '../../Utils/Buttons/AuthButton'
+import NavLink from 'next/link'
+import { ROLE_NAME, userRegister } from '../../../utils/constants'
+import { authenticate } from '../../../utils/cookies'
+import Server from '../../../utils/Server'
 
-const Login = (props) => {
-  // useEffect(() => {
-  //   removeLocalStorage('user')
-  // }, [])
-
+const SignUp = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
+    const name = e.target.name.value
     const email = e.target.email.value
     const password = e.target.password.value
-    const login_response = await Server.post('/user/login', {
-      email,
-      password,
-    })
+    const data = { name, email, password, role: 'TUTOR' }
+
+    const login_response = await Server.post(userRegister, data)
     if (login_response.success) {
       switch (login_response.data.role_name) {
         case ROLE_NAME.TUTOR:
           authenticate(login_response.data, () =>
-            // Router.push('/tutorDashboard')
-            // window.location.href="/tutorDashboard"
-            setTimeout((window.location = '/tutorDashboard'), 2000)
+            Router.push('/tutorDashboard')
           )
           break
         default:
@@ -90,10 +83,7 @@ const Login = (props) => {
           </div>
         </div>
 
-        <div
-          className="relative min-h-[70vh] sm:basis-[50%]"
-          style={{ zIndex: 1000 }}
-        >
+        <div className="relative min-h-[70vh] sm:basis-[50%]">
           <div
             className="absolute
             flex
@@ -105,8 +95,8 @@ const Login = (props) => {
           >
             <div className="absolute flex h-full w-full flex-col justify-center sm:w-2/3">
               <div className="flex w-full justify-center py-4">
-                <span className="mx-2 text-4xl font-bold text-white">Log</span>
-                <span className="text-4xl font-bold text-pink">In</span>
+                <span className="mx-2 text-4xl font-bold text-white">Sign</span>
+                <span className="text-4xl font-bold text-pink">Up</span>
               </div>
 
               <div className="w-full">
@@ -132,27 +122,40 @@ const Login = (props) => {
 
               <form onSubmit={handleSubmit}>
                 <div className="px-4">
-                  {/* <InputBox1 type="text" label="Name" id="name" /> */}
-                  <InputBox1 type="email" label="Email" id="email" required />
+                  <InputBox1
+                    type="text"
+                    label="Name"
+                    id="name"
+                    name="name"
+                    required
+                  />
+                  <InputBox1
+                    type="email"
+                    label="Email"
+                    id="email"
+                    name="email"
+                    required
+                  />
                   <InputBox1
                     type="password"
                     label="Password"
                     id="password"
+                    name="password"
                     required
                   />
                 </div>
 
                 <div className="flex justify-between px-6 text-xs text-white">
                   <span>Forgot Password ?</span>
-                  <NavLink href="/auth/signup">
+                  <NavLink href="/auth/login">
                     <span className="cursor-pointer hover:text-pink">
-                      Don&apos;t have an account? Sign Up
+                      Already Have an account? Log In
                     </span>
                   </NavLink>
                 </div>
 
                 <div className="mt-8">
-                  <AuthButton type="submit" label="Log In" />
+                  <AuthButton type="submit" label="Sign Up" />
                 </div>
               </form>
             </div>
@@ -163,4 +166,4 @@ const Login = (props) => {
   )
 }
 
-export default Login
+export default SignUp

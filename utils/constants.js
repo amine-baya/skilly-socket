@@ -1,6 +1,6 @@
 // export const baseUrl = 'http://localhost:5100';
-export const baseUrl = 'https://api.goskilly.com'
-export const typesenseUrl = 'https://ts.goskilly.com/typesense/api/'
+export const baseUrl = 'http://65.0.176.119:5087'
+export const typesenseUrl = 'http://13.233.137.22:3020/typesense'
 export const baseUrlProfilePic =
   'https://akbh.s3.ap-south-1.amazonaws.com/skillshare/user/profile_img/'
 

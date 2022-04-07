@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import Router from 'next/router'
-import InputBox1 from '../Utils/InputBoxes/InputBox1'
-import AuthButton from '../Utils/Buttons/AuthButton'
+import InputBox1 from '../../Utils/InputBoxes/InputBox1'
+import AuthButton from '../../Utils/Buttons/AuthButton'
 import NavLink from 'next/link'
-import { ROLE_NAME, userRegister } from '../../utils/constants'
-import { authenticate } from '../../utils/cookies'
-import Server from '../../utils/Server'
+import { ROLE_NAME, userRegister } from '../../../utils/constants'
+import { authenticate } from '../../../utils/cookies'
+import Server from '../../../utils/Server'
 
 const SignUp = (props) => {
   const handleSubmit = async (e) => {
