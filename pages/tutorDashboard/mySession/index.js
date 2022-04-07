@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useRouter } from 'next/router'
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 function MySession() {
+  const router = useRouter()
   useEffect(() => {
     axios.get(`${API_URL}/booking/all`).then((response) => {
       const bookingsList = response.data.data
@@ -52,29 +54,56 @@ function MySession() {
 
             console.log({ currentTime, startTimeB, endTimeB })
 
-            let status, color, text
+            const diff = startTimeB - currentTime
+
+            const diffHours = Math.floor(diff / 3600)
+            const diffMinutes = Math.floor((diff % 3600) / 60)
+            const diffSeconds = Math.floor((diff % 3600) % 60)
+
+            let status, style, text, in6Hours, onClick
+
+            onClick = () => {}
             if (currentTime < startTimeB) {
-              text = 'Session has not started yet'
-              color = 'bg-blue-200'
+              if (diff < 3600 * 6) {
+                in6Hours = true
+                text = 'Session is starting soon'
+                // text = `Session is starting in ${diffHours} hours  ${diffMinutes} minutes`
+              } else {
+                in6Hours = false
+
+                text = 'Session has not started yet'
+              }
+              style = 'bg-blue-200'
               status = 'pending'
             } else if (currentTime > endTimeB) {
               text = 'Session has ended'
-              color = 'bg-green-200'
+              style = 'bg-green-200'
               status = 'ended'
             } else {
-              status = 'Session is active'
-              text = 'bg-red-200'
+              text = 'Session is active'
+              style = 'bg-red-200'
               status = 'active'
+
+              onClick = () => {
+                console.log({ booking })
+                router.push('/session/' + booking.booking_id)
+              }
             }
+            //TODO Add the preferred color scheme here for the button
+            //temp override button style
+            style = 'bg-[#FC4D6D]'
 
             return (
               <div className="rounded-2xl bg-white" key={i}>
                 <div className="flex flex-col gap-2.5 p-4 lg:px-2 lg:py-4 xl:p-4   ">
-                  {false && (
+                  {in6Hours && (
                     // TODO Add this
                     <h3 className="font-medium">
                       today, within{' '}
-                      <span className="text-[#FC4D6D]">00:15:35 minutes</span>
+                      <span className="text-[#FC4D6D]">
+                        {/* {diffHours}:{diffMinutes} */}
+                        {diffHours} hrs {diffMinutes} mins
+                      </span>
                     </h3>
                   )}
                   <p className="text-2xl font-semibold">
@@ -105,7 +134,10 @@ function MySession() {
                     </p>
                   </div>
                   <div className="mt-[75px]  mb-5">
-                    <button className=" w-full rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-white ">
+                    <button
+                      onClick={onClick}
+                      className={`w-full rounded-2xl  py-5 text-2xl font-bold capitalize text-white ${style}`}
+                    >
                       {text}
                     </button>
                   </div>
