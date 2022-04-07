@@ -3,29 +3,22 @@ import Router from 'next/router'
 import InputBox1 from '../../Utils/InputBoxes/InputBox1'
 import AuthButton from '../../Utils/Buttons/AuthButton'
 import NavLink from 'next/link'
-import { ROLE_NAME, userRegister } from '../../../utils/constants'
+import { ROLE_NAME, tutorRegister } from '../../../utils/constants'
 import { authenticate } from '../../../utils/cookies'
 import Server from '../../../utils/Server'
 
 const SignUp = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const name = e.target.name.value
+    const first_name = e.target.first_name.value
+    const last_name = e.target.last_name.value
     const email = e.target.email.value
     const password = e.target.password.value
-    const data = { name, email, password, role: 'TUTOR' }
+    const data = { first_name, last_name, email, password }
 
-    const login_response = await Server.post(userRegister, data)
+    const login_response = await Server.post(tutorRegister, data)
     if (login_response.success) {
-      switch (login_response.data.role_name) {
-        case ROLE_NAME.TUTOR:
-          authenticate(login_response.data, () =>
-            Router.push('/tutorDashboard')
-          )
-          break
-        default:
-          break
-      }
+      Router.push('/auth/tutor/login')
     }
   }
 
@@ -124,9 +117,16 @@ const SignUp = (props) => {
                 <div className="px-4">
                   <InputBox1
                     type="text"
-                    label="Name"
-                    id="name"
-                    name="name"
+                    label="First Name"
+                    id="first_name"
+                    name="first_name"
+                    required
+                  />
+                  <InputBox1
+                    type="text"
+                    label="Last Name"
+                    id="last_name"
+                    name="last_name"
                     required
                   />
                   <InputBox1
@@ -147,7 +147,7 @@ const SignUp = (props) => {
 
                 <div className="flex justify-between px-6 text-xs text-white">
                   <span>Forgot Password ?</span>
-                  <NavLink href="/auth/login">
+                  <NavLink href="/auth/tutor/login">
                     <span className="cursor-pointer hover:text-pink">
                       Already Have an account? Log In
                     </span>
