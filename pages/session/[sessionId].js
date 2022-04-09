@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
-import axios from 'axios'
+import Server from 'utils/Server'
+import { baseUrl } from 'utils/constants'
 export default function Session(props) {
   const router = useRouter()
   const { sessionId } = router.query
-  const API_URL = process.env.NEXT_PUBLIC_API_URL
   const [loading, setLoading] = useState(true)
   const [roomUrl, setRoomUrl] = useState('')
 
@@ -14,8 +14,7 @@ export default function Session(props) {
   //Meeting Id has to be the booking id, not the session id
   // sample meeting id: 624814e0126a1bfc2671ec7a
   useEffect(() => {
-    axios
-      .get(`${API_URL}/session/${sessionId}/start`)
+    Server.get(`${baseUrl}/session/${sessionId}/start`)
       .then((res) => {
         setRoomUrl(`${res.data.data.session_link}?roomIntegrations=on`)
         setLoading(false)
@@ -25,7 +24,7 @@ export default function Session(props) {
         showError(errorMessage)
         setLoading(false)
       })
-  }, [API_URL, sessionId])
+  }, [baseUrl, sessionId])
 
   useEffect(() => {
     const wherebyDiv = document.getElementById('whereby')

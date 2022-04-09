@@ -15,6 +15,11 @@ export const totalSelectedSlots = atom({
   default: 0,
 })
 
+export const selectedTutor = atom({
+  key: 'selectedTutor',
+  default: {},
+})
+
 export const selectedSlots = atom({
   key: 'selectedSlots',
   default: [],

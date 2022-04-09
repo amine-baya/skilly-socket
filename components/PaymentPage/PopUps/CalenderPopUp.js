@@ -14,30 +14,36 @@ import {
 } from 'date-fns'
 import CrossIcon from 'icons/CrossIcon'
 import PopUpButton from 'components/Utils/Buttons/PopUpButton'
-import axios from 'axios'
+
 import Router from 'next/router'
 import { useRecoilState } from 'recoil'
-import { selectedSlots } from 'Atoms/PopUpAtoms'
-const CalenderPopUp = ({ setOpenPopUp, setTotalSelectedTimes, link }) => {
+import { selectedSlots, selectedTutor } from 'Atoms/PopUpAtoms'
+import { baseUrl } from 'utils/constants'
+import Server from 'utils/Server'
+
+const CalenderPopUp = ({
+  setOpenPopUp,
+  setTotalSelectedTimes,
+  link,
+  tutor,
+}) => {
   const [selectedTimes, setSelectedTimes] = useRecoilState(selectedSlots)
   const [weekDates, setWeekDates] = useState(takeWeek())
   const [randomTimes, setRandomTimes] = useState([])
   const [clashedTimings, setClashedTimings] = useState([])
   const copyTimeRef = useRef()
-  const API_URL = process.env.NEXT_PUBLIC_API_URL
+  const [selectedTutorData, setSelectedTutor] = useRecoilState(selectedTutor)
 
   const weekDays = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA']
 
   useEffect(() => {
     const initialDate = weekDates[0]
-    axios
-      .get(`${API_URL}/booking/week`, {
-        params: { startDate: initialDate },
-      })
-      .then((response) => {
-        setRandomTimes(response.data.data.totalSlots)
-      })
-  }, [API_URL, weekDates])
+    Server.get(`${baseUrl}/booking/week`, {
+      params: { startDate: initialDate, tutorId: selectedTutorData.id },
+    }).then((response) => {
+      setRandomTimes(response.data.totalSlots)
+    })
+  }, [weekDates, tutor.id])
 
   // function to take week dates
   function takeWeek(start = new Date()) {
@@ -76,9 +82,6 @@ const CalenderPopUp = ({ setOpenPopUp, setTotalSelectedTimes, link }) => {
         time,
         id,
       }
-
-      console.log('beep')
-      console.log({ selectedTimes })
       setSelectedTimes([...selectedTimes, newTime])
     }
   }
@@ -113,18 +116,18 @@ const CalenderPopUp = ({ setOpenPopUp, setTotalSelectedTimes, link }) => {
 
   const createMeetings = () => {
     //TODO Update the tutor and student id here
-    axios
-      .post(`${API_URL}/booking/create`, {
-        selectedTimes,
-        tutor: 'tutor_id',
-        student: 'student_id',
-      })
+    console.log({ selectedTutorData })
+    Server.post(`${baseUrl}/booking/create`, {
+      selectedTimes,
+      tutor: selectedTutorData,
+    })
       .then((res) => {
         console.log(res.data)
         alert('submitted')
         Router.push('/tutorDashboard/mySession')
       })
       .catch((err) => {
+        console.log({ err })
         const clashed = err.response.data.message.clashedTimings.map((item) => {
           return item.id
         })

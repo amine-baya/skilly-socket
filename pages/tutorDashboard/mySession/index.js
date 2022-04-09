@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-const API_URL = process.env.NEXT_PUBLIC_API_URL
-
+import Server from 'utils/Server'
+import { baseUrl } from 'utils/constants'
 function MySession() {
   const router = useRouter()
   useEffect(() => {
-    axios.get(`${API_URL}/booking/all`).then((response) => {
-      const bookingsList = response.data.data
+    Server.get(`${baseUrl}/booking/all`).then((response) => {
+      const bookingsList = response.data
       // sort bookings by start_date
       const sortedBookings = bookingsList.sort((a, b) => {
         return parseInt(a.start_date) - parseInt(b.start_date)

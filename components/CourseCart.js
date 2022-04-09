@@ -9,6 +9,8 @@ function CourseCart({
   countryLogo,
   tutorId,
   setOpenPopUp,
+  tutorData,
+  setSelectedTutor,
 }) {
   return (
     <div className="flex snap-center rounded-md transition-all ease-in-out">
@@ -25,8 +27,9 @@ function CourseCart({
 
           <BookTrialBtn
             space={'my-4'}
-            tutorId={tutorId}
             setOpenPopUp={setOpenPopUp}
+            tutorData={tutorData}
+            setSelectedTutor={setSelectedTutor}
           />
         </div>
         <ViewAndChat space={'px-4'} />
@@ -191,7 +194,7 @@ function CourseCart({
   //         </div>
   //       </Link>
   // =======
-  function BookTrialBtn({ space, setOpenPopUp }) {
+  function BookTrialBtn({ space, setOpenPopUp, setSelectedTutor, tutorData }) {
     return (
       <div
         className={`relative z-10 flex justify-center ${space} cursor-pointer`}
@@ -200,6 +203,7 @@ function CourseCart({
           <button
             onClick={() => {
               setOpenPopUp && setOpenPopUp({ ...false, calendarPopUp: true })
+              setSelectedTutor(tutorData.id)
             }}
             className="inline-block w-[220px] rounded-full px-6 py-2 text-center text-[14px] font-[600] text-[#FC4D6D] shadow-lg drop-shadow-lg backdrop-blur-md transition duration-150 ease-in-out hover:bg-[#FC4D6D] hover:text-white "
           >
