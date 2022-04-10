@@ -43,7 +43,7 @@ const CalenderPopUp = ({
     }).then((response) => {
       setRandomTimes(response.data.totalSlots)
     })
-  }, [weekDates, tutor.id])
+  }, [weekDates, selectedTutorData.id])
 
   // function to take week dates
   function takeWeek(start = new Date()) {

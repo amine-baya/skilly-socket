@@ -6,7 +6,7 @@ import { getLocalStorage, setLocalStorage } from '../../utils/cookies'
 import { getCookie } from 'cookies-next'
 import Link from 'next/link'
 
-const tutorDashboard = () => {
+const TutorDashboard = () => {
   useEffect(() => {
     isAuth()
   }, [])
@@ -54,4 +54,4 @@ const tutorDashboard = () => {
   )
 }
 
-export default tutorDashboard
+export default TutorDashboard
