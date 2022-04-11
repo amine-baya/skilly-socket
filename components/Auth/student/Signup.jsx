@@ -147,7 +147,7 @@ const SignUp = (props) => {
 
                 <div className="flex justify-between px-6 text-xs text-white">
                   <span>Forgot Password ?</span>
-                  <NavLink href="/auth/login">
+                  <NavLink href="/auth/student/login">
                     <span className="cursor-pointer hover:text-pink">
                       Already Have an account? Log In
                     </span>

@@ -31,8 +31,8 @@ function Navbar() {
   const sideLinks = [
     {
       name: 'Home',
-      link: '/tutorDashboard/about',
-      active: router.pathname === '/tutorDashboard/about',
+      link: '/tutorDashboard/myprofile/basicDetails',
+      active: router.pathname === '/tutorDashboard/myprofile/basicDetails',
       icons: <HomeIcon />,
       activeIcons: <ActiveHomeIcon />,
     },
@@ -181,7 +181,7 @@ function Navbar() {
               <>
                 <Login />
                 <GradientBtn
-                  urlLink={'/auth/signup'}
+                  urlLink={'/auth/tutor/signup'}
                   btnName="Join as Tutor"
                   btnCss="text-sm   md:text-lg md:px-6  !mx-0 !px-6 !py-2 hidden lg:flex "
                 />
@@ -406,7 +406,7 @@ function Navbar() {
           )
         ) : (
           <GradientBtn
-            urlLink={'/auth/signup'}
+            urlLink={'/auth/tutor/signup'}
             btnName="Join as Tutor"
             btnCss="text-sm md:text-2xl md:px-6  !mx-5 mb-4 !px-4 !py-2  "
           />
@@ -418,7 +418,7 @@ function Navbar() {
   function Login({ loginCss }) {
     return (
       <>
-        <Link href={'/auth/login'}>
+        <Link href={'/auth/tutor/login'}>
           <a
             className={`flex  items-center justify-center whitespace-nowrap text-[18px]  font-[600] ${loginCss}`}
           >

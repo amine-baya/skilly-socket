@@ -31,7 +31,7 @@ const TutorDashboard = () => {
     <>
       <div className="h-full w-full">
         <div className="fixed -z-10 h-full w-full">
-          <Link href={'/tutorDashboard/about'}>
+          <Link href={'/tutorDashboard/myprofile/basicDetails'}>
             <a className={`whitespace-nowrap  text-[18px]   font-[600]`}>
               Start
             </a>
