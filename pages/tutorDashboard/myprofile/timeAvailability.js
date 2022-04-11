@@ -5,6 +5,7 @@ import FormikControl from '../../../components/Utils/FormikComponents/FormikCont
 // import TimeAvailabilityCard from '../../../components/Utils/FormikComponents/TimeAvailabilityCard'
 import { timezoneList } from '../../../utils/constants'
 import axios from 'axios'
+import Server from '../../../utils/Server'
 
 function TimeAvailability() {
   const initialValues = {
@@ -59,7 +60,7 @@ function TimeAvailability() {
   //     .then(response => console.log(response)).catch((e) => console.log(e));
   // }, [availability])
 
-  const onSubmit = (value) => {
+  const onSubmit = async (value) => {
     const availability = []
     for (const key in value) {
       const result = value[key].filter((val) => val.from && val.to)
@@ -76,6 +77,12 @@ function TimeAvailability() {
       timezone,
       availability,
     }
+
+    const res = await Server.put('/tutor/update/time-availability', payload)
+    console.log(
+      '🚀 ~ file: timeAvailability.js ~ line 82 ~ onSubmit ~ res',
+      res
+    )
   }
 
   return (
