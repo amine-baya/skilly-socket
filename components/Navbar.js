@@ -2,9 +2,11 @@ import Link from 'next/link'
 import GradientBtn from './HomePage/GradientBtn'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { useClickOutside } from 'react-click-outside-hook'
 import { RiCloseCircleLine } from 'react-icons/ri'
 import { getLocalStorage, setLocalStorage, signout } from '../utils/cookies'
+import { typesenseUrl } from '../utils/constants'
 import { getCookie } from 'cookies-next'
 import {
   ActiveHomeIcon,
@@ -140,8 +142,9 @@ function Navbar() {
             {/* </div> */}
             {/* <Logo height="34" width="134" /> */}
             <div
-              className={`mx-auto hidden  items-center    justify-center gap-2  ${showSearchOnLg ? 'lg:flex ' : 'hidden'
-                }`}
+              className={`mx-auto hidden  items-center    justify-center gap-2  ${
+                showSearchOnLg ? 'lg:flex ' : 'hidden'
+              }`}
             >
               <NavSearchBox />
               {/* <SearchBox searchCss={'bg-red-400 '} /> */}
@@ -228,9 +231,11 @@ function Navbar() {
             <Link href={links.link || '/'}>
               <a
                 key={index}
-                className={` ${links.name == 'home' ? 'text-black after:absolute' : ''
-                  }   font-monts text-base font-semibold  ${links.name ? pageLinksHoverBorder : ''
-                  }  ${links.name === 'search' ? 'hidden' : ''}`}
+                className={` ${
+                  links.name == 'home' ? 'text-black after:absolute' : ''
+                }   font-monts text-base font-semibold  ${
+                  links.name ? pageLinksHoverBorder : ''
+                }  ${links.name === 'search' ? 'hidden' : ''}`}
               >
                 {links.name}
               </a>
@@ -245,8 +250,9 @@ function Navbar() {
     return (
       <div
         onClick={onClick}
-        className={` hover:bg-gray-200  ${menu ? 'bg-gray-200' : ''
-          } relative flex items-center rounded-2xl ${menuCss}  cursor-pointer   p-2`}
+        className={` hover:bg-gray-200  ${
+          menu ? 'bg-gray-200' : ''
+        } relative flex items-center rounded-2xl ${menuCss}  cursor-pointer   p-2`}
       >
         <Image
           src="/Images/Navbar/svg/menu.svg"
@@ -265,13 +271,14 @@ function Navbar() {
 
     return (
       <div
-        className={`  ${search ? 'flex' : 'hidden'
-          }     search-transition absolute   inset-x-0 top-[8rem] !z-50  mx-6 flex justify-center md:mx-auto md:hidden   `}
+        className={`  ${
+          search ? 'flex' : 'hidden'
+        }     search-transition absolute   inset-x-0 top-[8rem] !z-50  mx-6 flex justify-center md:mx-auto md:hidden   `}
       >
         <div
           ref={suggetions}
           className=" flex   flex-col items-center  rounded-xl bg-white shadow-md "
-        // onClick={}
+          // onClick={}
         >
           <div className="   mx-4 mt-4  flex  h-10 items-center justify-center gap-3  rounded-full pb-4">
             <SearchBox
@@ -281,8 +288,9 @@ function Navbar() {
             />
           </div>
           <div
-            className={`${showSuggetions && !hasClickedOutsideSearch ? 'flex' : 'hidden'
-              }     z-50 flex   w-[calc(100%-10%)] flex-col items-center  gap-4  pb-4 `}
+            className={`${
+              showSuggetions && !hasClickedOutsideSearch ? 'flex' : 'hidden'
+            }     z-50 flex   w-[calc(100%-10%)] flex-col items-center  gap-4  pb-4 `}
           >
             {Array.from(Array(5), (_, index) => index + 1).map((index, arr) => (
               <div key={index} className=" flex flex-col items-center ">
@@ -293,7 +301,7 @@ function Navbar() {
                         src="/Images/Navbar/svg/suggetionProflieImg.svg"
                         height={24}
                         width={24}
-                        alt=''
+                        alt=""
                       />
                       <span className="capitalize text-gray-400">
                         Gardening Course By Rosea Bell
@@ -302,8 +310,9 @@ function Navbar() {
                   </Link>
                 </div>
                 <div
-                  className={`mx-8 h-[2px] w-full bg-gray-200  ${arr.length === arr.length ? 'hidden' : ''
-                    }`}
+                  className={`mx-8 h-[2px] w-full bg-gray-200  ${
+                    arr.length === arr.length ? 'hidden' : ''
+                  }`}
                 />
               </div>
             ))}
@@ -327,9 +336,11 @@ function Navbar() {
     return (
       <div
         ref={ref}
-        className={`  ${css} menu-transition z-50    shadow-md   ${menu && !hasClickedOutside ? 'flex' : 'hidden'
-          } items-center-center    absolute top-[5rem] ${onDashboard ? 'right-0' : 'left-0'
-          } w-52 flex-col  gap-4 rounded-br-2xl bg-white font-monts text-sm   font-semibold capitalize  text-gray-400 `}
+        className={`  ${css} menu-transition z-50    shadow-md   ${
+          menu && !hasClickedOutside ? 'flex' : 'hidden'
+        } items-center-center    absolute top-[5rem] ${
+          onDashboard ? 'right-0' : 'left-0'
+        } w-52 flex-col  gap-4 rounded-br-2xl bg-white font-monts text-sm   font-semibold capitalize  text-gray-400 `}
       >
         <SideBarLinks links={sideLinks} hideIcon={true} />
         <NavLinks onDashboard={onDashboard} />
@@ -344,43 +355,48 @@ function Navbar() {
           <div key={index} className=" -mt-4">
             <Link href={'/'}>
               <a
-                className={`${links.icon === 'searchIcon' ? 'hidden' : ''
-                  }   ml-8  mb-4 flex pt-4 transition delay-100   ease-in-out hover:text-gray-500  ${links.css ? links.css : ''
-                  } ${links.css ? links.css : ''}`}
+                className={`${
+                  links.icon === 'searchIcon' ? 'hidden' : ''
+                }   ml-8  mb-4 flex pt-4 transition delay-100   ease-in-out hover:text-gray-500  ${
+                  links.css ? links.css : ''
+                } ${links.css ? links.css : ''}`}
                 onClick={
                   links.name === 'search'
                     ? () => {
-                      setSearch(true)
-                      setMenu(false)
-                    }
+                        setSearch(true)
+                        setMenu(false)
+                      }
                     : ''
                 }
               >
                 <div
-                  className={`mr-2 mt-[2px] ${links.search ? 'block' : 'hidden'
-                    }`}
+                  className={`mr-2 mt-[2px] ${
+                    links.search ? 'block' : 'hidden'
+                  }`}
                 >
                   <Image
                     priority
                     src="/Images/Navbar/svg/search.svg"
                     height={18}
                     width={18}
-                    alt=''
+                    alt=""
                   />
                 </div>
                 <span
-                  className={`${links.name === 'home'
-                    ? 'hover:text-pink-500 cursor-pointer text-[#FC4D6D]'
-                    : ''
-                    }`}
+                  className={`${
+                    links.name === 'home'
+                      ? 'hover:text-pink-500 cursor-pointer text-[#FC4D6D]'
+                      : ''
+                  }`}
                 >
                   {links.name}
                 </span>
               </a>
             </Link>
             <div
-              className={`mx-6 h-[1px] w-40 rounded-full bg-gray-200 md:${links.name == 'login' ? 'hidden' : 'md:flex'
-                } ${links.icon == 'searchIcon' ? 'hidden ' : ''} `}
+              className={`mx-6 h-[1px] w-40 rounded-full bg-gray-200 md:${
+                links.name == 'login' ? 'hidden' : 'md:flex'
+              } ${links.icon == 'searchIcon' ? 'hidden ' : ''} `}
             />
           </div>
         ))}
@@ -422,7 +438,22 @@ function Navbar() {
 export default Navbar
 
 function NavSearchBox({ searchCss, click, reference }) {
-  const [suggetion, setSuggetion] = useState('');
+  const [searchText, setSearchText] = useState('')
+  const [searchResults, setSearchResults] = useState([])
+
+  const searchTutor = async () => {
+    const { data } = await axios.get(typesenseUrl + '/tutor/search', {
+      params: { q: searchText },
+    })
+    const newResults = [...data.data.hits]
+    setSearchResults(newResults)
+  }
+
+  useEffect(() => {
+    if (searchText) {
+      searchTutor()
+    }
+  }, [searchText])
 
   return (
     <>
@@ -431,7 +462,12 @@ function NavSearchBox({ searchCss, click, reference }) {
       >
         <Link href={'/'}>
           <a className="mr-4 flex items-center rounded-full  ">
-            <Image src="/Images/Navbar/svg/search.svg" height={18} width={18} alt='' />
+            <Image
+              src="/Images/Navbar/svg/search.svg"
+              height={18}
+              width={18}
+              alt=""
+            />
           </a>
         </Link>
         <input
@@ -440,45 +476,57 @@ function NavSearchBox({ searchCss, click, reference }) {
           className=" h- !z-50   w-full font-bold capitalize  tracking-[0.16em] placeholder-[#B4B4B4] outline-none placeholder:text-[12px] placeholder:leading-[15px] placeholder:tracking-[0.16em] "
           type="text"
           placeholder="SEARCH A SKILL"
-          onChange={(e) => setSuggetion(e.target.value)}
+          onChange={(e) => setSearchText(e.target.value)}
         />
 
         {/* suggetion box */}
-        {suggetion && (
-          <SuggetionBox />
-        )}
+        {searchText && <SuggetionBox results={searchResults} />}
       </div>
     </>
   )
 }
 
 // Suggetion Box
-export const SuggetionBox = () => {
+export const SuggetionBox = ({ results }) => {
+  const goToTutorProfile = (tutor_id) => {
+    console.log(
+      '🚀 ~ file: Navbar.js ~ line 492 ~ goToTutorProfile ~ tutor_id',
+      tutor_id
+    )
+  }
+
   return (
-    <div className='absolute flex flex-col items-center justify-start sm:w-[400px] w-[335px] h-[230px] py-2 sm:px-4 px-3 bg-[#FEFEFE] z-50 rounded-2xl sm:top-[35px] top-[48px] left-[50%] -translate-x-[50%] shadow-2xl capitalize font-monts overflow-y-scroll'>
+    <div className="absolute top-[48px] left-[50%] z-50 flex w-[335px] -translate-x-[50%] flex-col items-center justify-start overflow-y-scroll rounded-2xl bg-[#FEFEFE] py-2 px-3 font-monts capitalize shadow-2xl sm:top-[35px] sm:w-[400px] sm:px-4">
       {/* result card */}
-      <div className='w-full flex items-center justify-start sm:gap-4 gap-2 sm:pl-6 pl-1 py-2 border-b border-[#C4C4C4] cursor-pointer'>
-        {/* image */}
-        <div className='relative w-[28px] h-[28px] rounded-full overflow-hidden'>
-          <Image
-            src='/Images/revuserimg.png'
-            alt='res'
-            objectFit='contain'
-            layout='fill'
-          />
-        </div>
-        {/* subject */}
-        <p className='text-[#9B9B9B] font-medium truncate overflow-x-hidden'>
-          Gardening Course by rosea bell
-        </p>
-      </div>
+      {results.map((val, index) => {
+        return (
+          <div
+            key={val.id}
+            className="flex w-full cursor-pointer items-center justify-start gap-2 border-b border-[#C4C4C4] py-2 pl-1 sm:gap-4 sm:pl-6"
+            onClick={() => goToTutorProfile(val.id)}
+          >
+            {/* image */}
+            <div className="relative h-[28px] w-[28px] overflow-hidden rounded-full">
+              <Image
+                src="/Images/revuserimg.png"
+                alt="res"
+                objectFit="contain"
+                layout="fill"
+              />
+            </div>
+            {/* subject */}
+            <p className="overflow-x-hidden truncate font-medium text-[#9B9B9B]">
+              {val.tutor_name}
+            </p>
+          </div>
+        )
+      })}
     </div>
   )
 }
 
-
 export function SearchBox({ searchCss, click, reference }) {
-  const [suggetion, setSuggetion] = useState('');
+  const [suggetion, setSuggetion] = useState('')
 
   return (
     <div
@@ -494,14 +542,17 @@ export function SearchBox({ searchCss, click, reference }) {
       />
       <Link href={'/'}>
         <a className="ml-4 flex items-center rounded-full  ">
-          <Image src="/Images/Navbar/svg/search.svg" height={18} width={18} alt='' />
+          <Image
+            src="/Images/Navbar/svg/search.svg"
+            height={18}
+            width={18}
+            alt=""
+          />
         </a>
       </Link>
 
       {/* suggetion box */}
-      {suggetion && (
-        <SuggetionBox />
-      )}
+      {suggetion && <SuggetionBox />}
     </div>
   )
 }
@@ -516,7 +567,7 @@ export function Logo({ logoCss, width = 240, height = 62 }) {
             src="/Images/Navbar/png/logo.png"
             width={width}
             height={height}
-            alt=''
+            alt=""
           />
         </a>
       </Link>

@@ -1,43 +1,50 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import { Field, FieldArray, Form, Formik } from 'formik'
 import FormikControl from '../../../components/Utils/FormikComponents/FormikControl'
-import TimeAvailabilityCard from '../../../components/Utils/FormikComponents/TimeAvailabilityCard'
+// import TimeAvailabilityCard from '../../../components/Utils/FormikComponents/TimeAvailabilityCard'
+import { timezoneList } from '../../../utils/constants'
 import axios from 'axios'
 
 function TimeAvailability() {
   const initialValues = {
-    MondayName: [
+    monday: [
       {
         from: '',
         to: '',
       },
     ],
-    TuesdayName: [
+    tuesday: [
       {
         from: '',
         to: '',
       },
     ],
-    WednesdayName: [
+    wednesday: [
       {
         from: '',
         to: '',
       },
     ],
-    ThursdayName: [
+    thursday: [
       {
         from: '',
         to: '',
       },
     ],
-    FridayName: [
+    friday: [
       {
         from: '',
         to: '',
       },
     ],
-    SaturdayName: [
+    saturday: [
+      {
+        from: '',
+        to: '',
+      },
+    ],
+    sunday: [
       {
         from: '',
         to: '',
@@ -45,48 +52,30 @@ function TimeAvailability() {
     ],
   }
 
-  const [timezone, setTimezone] = useState('');
-
-  // format accr to postman body
-  const [availability, setAvailability] = useState({
-    timezone: timezone || "America/Los_Angeles",
-    availability: [
-      {
-        day: 'monday',
-        slots: initialValues.MondayName
-      },
-      {
-        day: 'tuesday',
-        slots: initialValues.TuesdayName
-      },
-      {
-        day: 'wednesday',
-        slots: initialValues.WednesdayName
-      },
-      {
-        day: 'thursday',
-        slots: initialValues.ThursdayName
-      },
-      {
-        day: 'friday',
-        slots: initialValues.FridayName
-      },
-      {
-        day: 'saturday',
-        slots: initialValues.SaturdayName
-      }
-    ]
-  })
+  const [timezone, setTimezone] = useState('America/Los_Angeles')
 
   // useEffect(() => {
   //   axios.put('http://65.0.176.119:5087/tutor/update/time-availability', JSON.stringify(availability), { headers: { 'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjUzZGNjM2Q1YTVkNTFmMGEyOWU4ZjEiLCJyb2xlIjoiVFVUT1IiLCJpYXQiOjE2NDk2NjQ4NzUsImV4cCI6MTY0OTgzNzY3NX0.MV0gw0EWZQmLk2tGl97lCCwakbrcZSgK0Jfq9mSoxpA' } })
   //     .then(response => console.log(response)).catch((e) => console.log(e));
   // }, [availability])
 
-  console.log(availability);
-
   const onSubmit = (value) => {
-    console.log('value', value)
+    const availability = []
+    for (const key in value) {
+      const result = value[key].filter((val) => val.from && val.to)
+      if (result.length > 0) {
+        availability.push({ day: key, slots: result })
+      }
+    }
+
+    if (availability.length === 0) {
+      return alert('Please Select Atleast One Slot')
+    }
+
+    const payload = {
+      timezone,
+      availability,
+    }
   }
 
   return (
@@ -118,11 +107,17 @@ function TimeAvailability() {
 
                 <Field
                   as="select"
+                  name="timezone"
                   className="w-7/12 rounded-[10px] border border-[#C1C1C1] px-5 py-3 text-[#9E9E9E]"
+                  onChange={(e) => setTimezone(e.target.value)}
                 >
-                  <option value='Asia, Kolkata'>13:53 (GMT+ 5:300- Asia, Kolkata</option>
-                  <option value='Asia, Kolkata'>13:53 (GMT+ 5:300- Asia, Kolkata</option>
-                  <option value='Asia, Kolkata'>13:53 (GMT+ 5:300- Asia, Kolkata</option>
+                  {timezoneList.map((val, index) => {
+                    return (
+                      <option key={index} value={val}>
+                        {val}
+                      </option>
+                    )
+                  })}
                 </Field>
 
                 <h1 className="mt-12 text-2xl font-semibold">
@@ -137,41 +132,48 @@ function TimeAvailability() {
                   <FormikControl
                     control="timeAvailabilityCard"
                     weekName="Monday"
-                    name="MondayName"
+                    name="monday"
                     formik={formik}
                   />
                   <FormikControl
                     control="timeAvailabilityCard"
                     weekName="Tuesday"
-                    name="TuesdayName"
+                    name="tuesday"
                     formik={formik}
                   />
                   <FormikControl
                     control="timeAvailabilityCard"
                     weekName="Wednesday"
-                    name="WednesdayName"
+                    name="wednesday"
                     formik={formik}
                   />
                   <FormikControl
                     control="timeAvailabilityCard"
                     weekName="Thursday"
-                    name="ThursdayName"
+                    name="thursday"
                     formik={formik}
                   />
                   <FormikControl
                     control="timeAvailabilityCard"
                     weekName="Friday"
-                    name="FridayName"
+                    name="friday"
                     formik={formik}
                   />
                   <FormikControl
                     control="timeAvailabilityCard"
                     weekName="Saturday"
-                    name="SaturdayName"
+                    name="saturday"
+                    formik={formik}
+                  />
+                  <FormikControl
+                    control="timeAvailabilityCard"
+                    weekName="Sunday"
+                    name="sunday"
                     formik={formik}
                   />
                 </div>
               </div>
+              <button type="submit">Submit</button>
             </Form>
           )
         }}
