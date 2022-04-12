@@ -59,6 +59,7 @@ function MobileImg() {
           src="/Images/HomePage/skills-offered.webp"
           height={633}
           width={630}
+          alt='skill'
         />
       </div>
     </>

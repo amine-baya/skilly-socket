@@ -15,7 +15,7 @@ const PopUpButton = ({ label, link, setOpenPopUp, data }) => {
           {label}
         </button>
       ) : link ? (
-        <Link href={link}>
+        <Link href={link} passHref>
           <button
             onClick={() => setOpenPopUp({ ...false })}
             // type={props.type}

@@ -42,6 +42,7 @@ function BackgroundFullImg({ user_data }) {
         src={`https://akbh.s3.ap-south-1.amazonaws.com/skillshare/user/profile_img/${user_data.background_pic}`}
         layout="fill"
         objectFit="cover"
+        alt='yo'
       />
     </div>
   )
@@ -70,6 +71,7 @@ function LeftImg({ user_data }) {
         src={`https://akbh.s3.ap-south-1.amazonaws.com/skillshare/user/profile_img/${user_data.profile_img}`}
         height={327}
         width={224}
+        alt='yo'
       />
     </div>
   )
@@ -91,6 +93,7 @@ function RightText({ css, user_data }) {
                   src={'/Images/TutorProfile/svg/right-ok.svg'}
                   height={21}
                   width={21}
+                  alt='yo'
                 />
               ) : null}
             </div>
@@ -134,6 +137,7 @@ function TutorDescription({ user_data }) {
             src={'/Images/TutorProfile/svg/topper-cap.svg'}
             height={20}
             width={22}
+            alt='yo'
           />
         </div>
         <span>
@@ -170,6 +174,7 @@ function TutorDescription({ user_data }) {
             src={'/Images/TutorProfile/svg/circles.svg'}
             height={16}
             width={16}
+            alt='yo'
           />
         </div>
         <span>0 lessons</span>

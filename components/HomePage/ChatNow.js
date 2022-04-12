@@ -51,6 +51,7 @@ function MobileImg() {
           src="/Images/HomePage/chatnow-mobile-428w-622h.png"
           height={622}
           width={428}
+          alt='chat'
         />
       </div>
     </>
@@ -68,6 +69,7 @@ function DesktopImg() {
           src="/Images/HomePage/chatnow-desktop-774w-714h.png"
           height={714}
           width={774}
+          alt='chat'
         />
       </div>
     </>

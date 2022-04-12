@@ -49,6 +49,7 @@ function MobileImg() {
           src="/Images/HomePage/expert-mobile-428w-571h.png"
           height={571}
           width={428}
+          alt='mb'
         />
       </div>
     </>
@@ -66,6 +67,7 @@ function DesktopImg() {
           src="/Images/HomePage/expert-desktop-678w-658h.png"
           height={658}
           width={678}
+          alt='lg'
         />
       </div>
     </>

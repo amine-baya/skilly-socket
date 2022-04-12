@@ -39,6 +39,7 @@ function BackgroundFullImg({ user_data }) {
         src={`https://akbh.s3.ap-south-1.amazonaws.com/skillshare/user/profile_img/${user_data.background_pic}`}
         layout="fill"
         objectFit="cover"
+        alt='yo'
       />
     </div>
   )
@@ -56,6 +57,7 @@ function AndrewSmith({ user_data }) {
             src={'/Images/TutorProfile/svg/right-ok.svg'}
             height={21}
             width={21}
+            alt='yo'
           />
         </div>
         <div className="inline-block">
@@ -63,6 +65,7 @@ function AndrewSmith({ user_data }) {
             src={'/Images/TutorProfile/svg/australia.svg'}
             height={19}
             width={19}
+            alt='yo'
           />
         </div>
       </h1>
@@ -93,6 +96,7 @@ function TutorDescription({ user_data }) {
             priority
             height={16}
             width={16}
+            alt='yo'
           />
         </div>
         <span>
@@ -124,6 +128,7 @@ function TutorDescription({ user_data }) {
             src={'/Images/TutorProfile/svg/circles-gray.svg'}
             height={13.33}
             width={13.33}
+            alt='yo'
           />
         </div>
         <span>0 lessons</span>
@@ -139,6 +144,7 @@ function ProfileImg({ profile_img }) {
           src={`https://akbh.s3.ap-south-1.amazonaws.com/skillshare/user/profile_img/${profile_img}`}
           objectFit="contain"
           layout="fill"
+          alt='yo'
         />
       </div>
     </div>

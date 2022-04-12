@@ -30,6 +30,7 @@ function GradientBtn({ urlLink, btnName, leftArrow, rightArrow, btnCss }) {
               src={'/Images/GradientBtn/right-arrow.svg'}
               height={18}
               width={20}
+              alt='arrow'
             />
           </div>
           <div
@@ -41,6 +42,7 @@ function GradientBtn({ urlLink, btnName, leftArrow, rightArrow, btnCss }) {
               src={'/Images/GradientBtn/left-arrow.svg'}
               height={24}
               width={26}
+              alt='arrow'
             />
           </div>
         </a>

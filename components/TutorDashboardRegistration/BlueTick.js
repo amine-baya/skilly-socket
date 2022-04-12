@@ -8,6 +8,7 @@ export default function BlueTickLine({ data }) {
             src="/Images/ProfilePhoto/blue-tick.png"
             objectFit="cover"
             layout="fill"
+            alt='tick'
           />
         </div>
         <div className="text-sm capitalize">{data}</div>

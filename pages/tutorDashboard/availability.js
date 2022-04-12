@@ -256,6 +256,7 @@ const Days = (props) => {
             src="/Images/ProfilePhoto/blue-tick.png"
             objectFit="cover"
             layout="fill"
+            alt='tick'
           />
         </div>
         <span className="capitalize">{dayName}</span>
@@ -265,7 +266,7 @@ const Days = (props) => {
         render={(arrayHelpers) => (
           <div>
             {props.values?.availability[dayParam] &&
-            props.values?.availability[dayParam].length > 0 ? (
+              props.values?.availability[dayParam].length > 0 ? (
               props.values?.availability[dayParam].map(function (avail, index) {
                 return (
                   <div className="flex items-center gap-2" key={index}>
@@ -295,6 +296,7 @@ const Days = (props) => {
                           src="/Images/TutorsDashboard/minus.png"
                           objectFit="cover"
                           layout="fill"
+                          alt='minus'
                         />
                       </Link>
                     ) : (
@@ -310,6 +312,7 @@ const Days = (props) => {
                           src="/Images/TutorsDashboard/plus.svg"
                           objectFit="cover"
                           layout="fill"
+                          alt='plus'
                         />
                       </Link>
                     )}
@@ -339,6 +342,7 @@ const Day = ({ day, url = '#' }) => {
             src="/Images/ProfilePhoto/blue-tick.png"
             objectFit="cover"
             layout="fill"
+            alt='tick'
           />
         </div>
         <span className="capitalize">{day}</span>
@@ -371,6 +375,7 @@ const Day = ({ day, url = '#' }) => {
               src="/Images/TutorsDashboard/plus.svg"
               objectFit="cover"
               layout="fill"
+              alt='plus'
             />
           </a>
         </Link>

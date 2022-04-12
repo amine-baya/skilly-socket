@@ -12,10 +12,10 @@ const Navbar = () => {
         <span className="h-[3px] w-[26px] bg-black"></span>
       </div>
       <div className="hidden sm:flex">
-        <Image src="/Images/Navbar/png/logo.png" height={60} width={227} />
+        <Image src="/Images/Navbar/png/logo.png" height={60} width={227} alt='yo' />
       </div>
       <div className="flex sm:hidden">
-        <Image src="/Images/Navbar/png/logo.png" height={40} width={151} />
+        <Image src="/Images/Navbar/png/logo.png" height={40} width={151} alt='yo' />
       </div>
       <div className="flex items-center justify-between">
         <div className="hidden px-4 sm:block">
@@ -26,7 +26,7 @@ const Navbar = () => {
           <span className="h-[3px] w-[20px] bg-black"></span>
           <span className="h-[3px] w-[26px] bg-black"></span>
         </div>
-        <Link href={'/auth/tutor/login'}>
+        <Link href={'/auth/tutor/login'} passHref>
           <div className="hidden px-4 sm:block">
             <span className="text-xl font-bold">Log In</span>
           </div>

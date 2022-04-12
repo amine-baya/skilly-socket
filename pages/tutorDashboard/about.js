@@ -57,19 +57,19 @@ function About() {
         initialValues={
           user_data
             ? {
-                name: user_data.name,
-                email: user_data.email,
-                language_spoken: user_data.language_spoken,
-                country: user_data.country,
-                subject_taught_id: user_data.subject_taught_id,
-                hourly_rate: user_data.hourly_rate,
-                teaching_experience_id: user_data.teaching_experience_id,
-                current_situation_id: user_data.current_situation_id,
-                country_code: user_data.country_code,
-                number: user_data.number,
-                eighteen_plus: user_data.eighteen_plus,
-                background_pic_title: user_data.background_pic_title,
-              }
+              name: user_data.name,
+              email: user_data.email,
+              language_spoken: user_data.language_spoken,
+              country: user_data.country,
+              subject_taught_id: user_data.subject_taught_id,
+              hourly_rate: user_data.hourly_rate,
+              teaching_experience_id: user_data.teaching_experience_id,
+              current_situation_id: user_data.current_situation_id,
+              country_code: user_data.country_code,
+              number: user_data.number,
+              eighteen_plus: user_data.eighteen_plus,
+              background_pic_title: user_data.background_pic_title,
+            }
             : {}
         }
         onSubmit={async (values) => {
@@ -373,6 +373,7 @@ const CountryCode = () => (
           src="/Images/TutorsDashboard/country-Flag.png"
           objectFit="cover"
           layout="fill"
+          alt='flag'
         />
       </div>
       <Field

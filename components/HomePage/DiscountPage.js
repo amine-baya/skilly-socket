@@ -54,6 +54,7 @@ function MobileImg() {
           src="/Images/HomePage/discount-mobile-428w-495h.png"
           height={495}
           width={428}
+          alt='mb'
         />
       </div>
     </>
@@ -73,6 +74,7 @@ function DesktopImg() {
           width={781}
           // height={685}
           // width={840}
+          alt='lg'
         />
       </div>
     </>

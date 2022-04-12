@@ -50,6 +50,7 @@ function MobileImg() {
           src="/Images/HomePage/woman-sitting-mobile.png"
           height={526}
           width={428}
+          alt='mb'
         />
       </div>
     </>
@@ -67,6 +68,7 @@ function DesktopImg() {
           src="/Images/HomePage/woman-sitting-desktop.png"
           height={607}
           width={783}
+          alt='lg'
         />
       </div>
     </>

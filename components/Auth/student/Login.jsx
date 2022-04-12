@@ -43,11 +43,13 @@ const Login = (props) => {
           src="/Images/auth/bg_mobile.png"
           layout="fill"
           className="sm:hidden"
+          alt='mb'
         />
         <Image
           src="/Images/auth/bg_desktop.png"
           layout="fill"
           className="hidden sm:block"
+          alt='lg'
         />
       </div>
 
@@ -55,13 +57,13 @@ const Login = (props) => {
         <div className="relative min-h-[30vh] text-white sm:basis-[50%]">
           <div className="absolute h-full w-full sm:hidden">
             <div className="absolute -bottom-[40px] z-20 flex h-[80px] w-[80px] items-center justify-center">
-              <Image src="/Images/auth/plant.png" width={80} height={80} />
+              <Image src="/Images/auth/plant.png" width={80} height={80} alt='plant' />
             </div>
             <div className="absolute -bottom-[40px] right-0 z-20 flex h-[80px] w-[80px] items-center justify-center">
-              <Image src="/Images/auth/bowl.png" width={60} height={60} />
+              <Image src="/Images/auth/bowl.png" width={60} height={60} alt='bowl' />
             </div>
             <div className="absolute z-20 flex h-full w-full items-center justify-center">
-              <Image src="/Images/auth/guitar.png" width={60} height={60} />
+              <Image src="/Images/auth/guitar.png" width={60} height={60} alt='guitar' />
             </div>
           </div>
 
@@ -85,7 +87,7 @@ const Login = (props) => {
             </div>
 
             <div className="absolute bottom-0 h-[80vh] w-full">
-              <Image src="/Images/auth/girl.png" layout="fill" />
+              <Image src="/Images/auth/girl.png" layout="fill" alt='girl' />
             </div>
           </div>
         </div>
@@ -112,13 +114,14 @@ const Login = (props) => {
               <div className="w-full">
                 <div className="mt-8 flex justify-center">
                   <span className="px-2">
-                    <Image src="/Images/auth/fb.png" width={36} height={36} />
+                    <Image src="/Images/auth/fb.png" width={36} height={36} alt='meta' />
                   </span>
                   <span className="px-2">
                     <Image
                       src="/Images/auth/google.png"
                       width={36}
                       height={36}
+                      alt='goo'
                     />
                   </span>
                 </div>
@@ -144,7 +147,7 @@ const Login = (props) => {
 
                 <div className="flex justify-between px-6 text-xs text-white">
                   <span>Forgot Password ?</span>
-                  <NavLink href="/auth/student/signup">
+                  <NavLink href="/auth/student/signup" passHref>
                     <span className="cursor-pointer hover:text-pink">
                       Don&apos;t have an account? Sign Up
                     </span>

@@ -49,6 +49,7 @@ function MobileImg() {
           src="/Images/HomePage/surprised-happy-girl-mobile.png"
           height={628}
           width={428}
+          alt='mb'
         />
       </div>
     </>
@@ -66,6 +67,7 @@ function DesktopImg() {
           src="/Images/HomePage/surprised-happy-girl-desktop.png"
           height={1404}
           width={1524}
+          alt='girl'
         />
       </div>
     </>

@@ -49,6 +49,7 @@ function MobileImg() {
           src="/Images/HomePage/guitar-man-mobile.png"
           width={856}
           height={1310}
+          alt='yo'
         />
       </div>
     </>
@@ -64,6 +65,7 @@ function DesktopImg() {
         src="/Images/HomePage/guitar-man-desktop.png"
         width={748}
         height={720}
+        alt='yo'
       />
     </div>
   )

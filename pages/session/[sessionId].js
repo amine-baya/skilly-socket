@@ -24,6 +24,7 @@ export default function Session(props) {
         showError(errorMessage)
         setLoading(false)
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [baseUrl, sessionId])
 
   useEffect(() => {

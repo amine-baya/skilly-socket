@@ -67,7 +67,7 @@ function DesktopTestimonial({ setReview, review }) {
       <div className="mx-auto flex items-center gap-2 font-roboto text-lg font-bold capitalize text-[#5A5959]">
         <span> write a review</span>
         <button onClick={() => setReview(true)} className="cursor">
-          <img src=" /Images/TutorProfile/svg/pen.svg" />
+          <img src=" /Images/TutorProfile/svg/pen.svg" alt='yo' />
         </button>
       </div>
     </>
@@ -77,9 +77,8 @@ function PopUpWindow({ setReview, review }) {
   return (
     <div
       onClick={() => setReview(false)}
-      className={`absolute   left-0 top-0 ${
-        review ? 'flex' : 'hidden'
-      }    bgColor h-full w-full items-center justify-center`}
+      className={`absolute   left-0 top-0 ${review ? 'flex' : 'hidden'
+        }    bgColor h-full w-full items-center justify-center`}
     >
       <div className="  mt-20 w-[591px] rounded-xl bg-white px-6 py-4  font-poppins capitalize  opacity-100 shadow-md ">
         <h1 className=" text-lg font-semibold text-[#787878] ">review</h1>
@@ -142,7 +141,7 @@ function StudentReviews() {
   return (
     <section className="flex justify-between md:gap-3 ">
       <div className="relative h-[120px]  w-[120px] rounded-3xl rounded-br-none bg-gray-200">
-        <Image src="/" objectFit="cover" layout="fill" />
+        <Image src="/" objectFit="cover" layout="fill" alt='yo' />
       </div>
 
       <div className=" mx-2 w-[260px]  capitalize">

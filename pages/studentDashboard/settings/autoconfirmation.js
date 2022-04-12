@@ -25,7 +25,7 @@ const Autoconfirmation = () => {
                             skillyTree Space
                         </p>
                         <p>
-                            Autoconfirm tracks the time you spend connected with your tutor in the skillyTree Space. 15 minutes after a session is completed, it is confirmed automatically and we release your tutor's payment. If there are any issues, please contact us right after the session and we'll help you find a solution.
+                            Autoconfirm tracks the time you spend connected with your tutor in the skillyTree Space. 15 minutes after a session is completed, it is confirmed automatically and we release your tutor&apos;s payment. If there are any issues, please contact us right after the session and we&apos;ll help you find a solution.
                         </p>
                     </p>
                 </div>

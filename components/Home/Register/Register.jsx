@@ -16,6 +16,7 @@ function RegisterPage() {
             height={1220}
             width={856}
             className="-mt-8"
+            alt='md'
           />
         </div>
         <div className="-ml-8 hidden w-full justify-center  md:flex">
@@ -26,6 +27,7 @@ function RegisterPage() {
             // height={505}
             // width={979}
             className="-mt-3"
+            alt='lg'
           />
         </div>
         <div className="mb-8 -mt-4 md:mt-0">

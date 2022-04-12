@@ -10,7 +10,7 @@ const SearchBox = ({ onSearch }) => {
         onKeyUp={(e) => onSearch(e.target.value)}
       />
       <span className="absolute right-3 top-2">
-        <Image src="/Images/Navbar/search_icon.png" height={16} width={16} />
+        <Image src="/Images/Navbar/search_icon.png" height={16} width={16} alt='search' />
       </span>
     </div>
   )

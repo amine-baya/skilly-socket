@@ -77,21 +77,18 @@ function AboutTutor() {
     return (
       <div className="absolute   -bottom-2 flex     w-full justify-center   gap-[1rem] md:bottom-4 ">
         <div
-          className={`${
-            slides.slide1 ? 'bg-[#FC4D6D]' : 'bg-white'
-          } h-[10px] w-[10px] overflow-hidden rounded-full ring-2 ring-[#FC4D6D] hover:cursor-pointer`}
+          className={`${slides.slide1 ? 'bg-[#FC4D6D]' : 'bg-white'
+            } h-[10px] w-[10px] overflow-hidden rounded-full ring-2 ring-[#FC4D6D] hover:cursor-pointer`}
           onClick={toggleSlides1}
         />
         <div
-          className={`${
-            slides.slide2 ? 'bg-[#FC4D6D]' : 'bg-white'
-          } h-[10px] w-[10px] overflow-hidden rounded-full ring-2 ring-[#FC4D6D] hover:cursor-pointer `}
+          className={`${slides.slide2 ? 'bg-[#FC4D6D]' : 'bg-white'
+            } h-[10px] w-[10px] overflow-hidden rounded-full ring-2 ring-[#FC4D6D] hover:cursor-pointer `}
           onClick={toggleSlides2}
         />
         <div
-          className={`${
-            slides.slide3 ? 'bg-[#FC4D6D]' : 'bg-white'
-          } h-[10px] w-[10px] overflow-hidden rounded-full ring-2 ring-[#FC4D6D] hover:cursor-pointer `}
+          className={`${slides.slide3 ? 'bg-[#FC4D6D]' : 'bg-white'
+            } h-[10px] w-[10px] overflow-hidden rounded-full ring-2 ring-[#FC4D6D] hover:cursor-pointer `}
           onClick={toggleSlides3}
         />
       </div>
@@ -112,6 +109,7 @@ function Video(props) {
             src={`http://img.youtube.com/vi/${props.user_data.video_link}/0.jpg`}
             layout="fill"
             objectFit="cover"
+            alt='yo'
           />
 
           <div className="white-linear-gradient absolute  bottom-0" />
@@ -121,6 +119,7 @@ function Video(props) {
                 src={'/Images/TutorProfile/svg/video-play-btn.svg'}
                 objectFit="cover"
                 layout="fill"
+                alt='yo'
               />
             </a>
           </Link>
@@ -133,6 +132,7 @@ function Video(props) {
                   src={'/Images/TutorProfile/svg/yellow-star.svg'}
                   height={19.38}
                   width={19.03}
+                  alt='yo'
                 />
               ))}
             </div>
