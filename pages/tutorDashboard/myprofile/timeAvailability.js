@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-
+import Router from 'next/router'
 import { Field, FieldArray, Form, Formik } from 'formik'
 import FormikControl from '../../../components/Utils/FormikComponents/FormikControl'
+import { updateUser } from '../../../utils/cookies'
 // import TimeAvailabilityCard from '../../../components/Utils/FormikComponents/TimeAvailabilityCard'
 import { timezoneList } from '../../../utils/constants'
 import axios from 'axios'
@@ -78,11 +79,16 @@ function TimeAvailability() {
       availability,
     }
 
-    const res = await Server.put('/tutor/update/time-availability', payload)
-    console.log(
-      '🚀 ~ file: timeAvailability.js ~ line 82 ~ onSubmit ~ res',
-      res
+    const user_update = await Server.put(
+      '/tutor/update/time-availability',
+      payload
     )
+    if (user_update.success) {
+      console.log(payload)
+      updateUser({ ...payload }, () => {
+        Router.push('/tutorDashboard/myprofile/photo')
+      })
+    }
   }
 
   return (
@@ -180,7 +186,18 @@ function TimeAvailability() {
                   />
                 </div>
               </div>
-              <button type="submit">Submit</button>
+              <div className="col-span-12 my-10 flex gap-x-10 md:col-span-6">
+                <div>
+                  <button className="  w-auto rounded-lg border border-[#FC4D6D] bg-white px-3 py-1 text-lg font-medium text-[#FC4D6D] md:col-span-2 md:w-full">
+                    Skip For Now
+                  </button>
+                </div>
+                <div className="">
+                  <button className=" w-auto rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-7 py-1 text-lg font-medium text-white md:col-span-2 md:mt-0 md:w-full ">
+                    Next
+                  </button>
+                </div>
+              </div>
             </Form>
           )
         }}

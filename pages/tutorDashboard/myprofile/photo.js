@@ -46,6 +46,7 @@ function ProfilePhoto() {
     }
   }
   const handleSubmit = async () => {
+    console.log('coming here')
     if (!profile_img) {
       Router.push('certification')
     } else {
@@ -133,7 +134,7 @@ function ProfilePhoto() {
                 <section className="flex gap-2">
                   <div className="h-[106px] w-[106px] bg-blue-300">
                     <img
-                      src={`https://akbh.s3.ap-south-1.amazonaws.com/skillshare/user/profile_img/${
+                      src={`https://akbh.s3.ap-south-1.amazonaws.com/skillytree/user/profile_img/${
                         profile_img ? profile_img : user_data?.profile_img
                       }`}
                       alt="img"
@@ -190,8 +191,11 @@ function ProfilePhoto() {
               </button>
             </div>
             <div className="">
-              <button className=" w-auto rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-7 py-1 text-lg font-medium text-white md:col-span-2 md:mt-0 md:w-full ">
-                Save
+              <button
+                onClick={() => handleSubmit()}
+                className=" w-auto rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-7 py-1 text-lg font-medium text-white md:col-span-2 md:mt-0 md:w-full "
+              >
+                Next
               </button>
             </div>
           </div>

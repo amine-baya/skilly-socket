@@ -1,10 +1,9 @@
 import { useEffect } from 'react'
 import Router from 'next/router'
-import Server from '../../utils/Server'
-import { getTutorProfile, ROLE_NAME } from '../../utils/constants'
-import { getLocalStorage, setLocalStorage } from '../../utils/cookies'
+import { ROLE_NAME } from '../../utils/constants'
 import { getCookie } from 'cookies-next'
 import Link from 'next/link'
+import { getLocalStorage } from '../../utils/cookies'
 
 const TutorDashboard = () => {
   useEffect(() => {
@@ -13,15 +12,9 @@ const TutorDashboard = () => {
 
   const isAuth = async () => {
     if (getCookie('token') && getCookie('role') === ROLE_NAME.TUTOR) {
-      const user = await Server.get(getTutorProfile)
-      if (user.success && user.data.role === ROLE_NAME.TUTOR) {
-        setLocalStorage('user', user.data)
-        if (!user.data.profile_update) {
-          Router.push('/tutorDashboard/myprofile/basicDetails')
-        }
-      } else {
-        Router.push('/auth/tutor/login')
-      }
+      const user_profile_update = getLocalStorage('user').profile_update
+      if (!user_profile_update)
+        Router.push('/tutorDashboard/myprofile/basicDetails')
     } else {
       Router.push('/auth/tutor/login')
     }

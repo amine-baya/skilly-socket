@@ -3,24 +3,39 @@ import InputBox1 from '../../Utils/InputBoxes/InputBox1'
 import AuthButton from '../../Utils/Buttons/AuthButton'
 import NavLink from 'next/link'
 import Server from '../../../utils/Server'
-import { ROLE_NAME, tutorLogin } from '../../../utils/constants'
-import { authenticate, getLocalStorage, signout } from '../../../utils/cookies'
+import {
+  ROLE_NAME,
+  tutorLogin,
+  getTutorProfile,
+} from '../../../utils/constants'
+import { authenticate, setLocalStorage, signout } from '../../../utils/cookies'
 import Router from 'next/router'
 import { useEffect } from 'react'
 import { getCookie, getCookies } from 'cookies-next'
 
 const Login = (props) => {
   useEffect(() => {
+    loginCheck()
+  }, [])
+
+  const loginCheck = async () => {
     const token = getCookie('token')
     const role = getCookie('role')
     if (token && role) {
       if (role === ROLE_NAME.TUTOR) {
-        Router.push('/tutorDashboard/myprofile/basicDetails')
+        const user = await Server.get(getTutorProfile)
+        if (user.success && user.data.role === ROLE_NAME.TUTOR) {
+          setLocalStorage('user', user.data)
+          Router.push('/tutorDashboard')
+        } else {
+          Router.push('/auth/tutor/login')
+        }
+        Router.push('/tutorDashboard')
       } else {
         Router.push('/auth/tutor/signup')
       }
     }
-  }, [])
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -34,11 +49,11 @@ const Login = (props) => {
       login_response.success &&
       login_response.data.role === ROLE_NAME.TUTOR
     ) {
-      authenticate(login_response.data, ROLE_NAME.TUTOR, () =>
-        Router.push('/tutorDashboard')
-      )
+      authenticate(login_response.data, ROLE_NAME.TUTOR, async () => {
+        Router.reload()
+      })
     } else {
-      signout(() => Router.push(0))
+      signout(() => Router.reload())
     }
   }
 

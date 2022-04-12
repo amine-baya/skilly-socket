@@ -1,5 +1,5 @@
-// export const baseUrl = 'http://localhost:5100'
-export const baseUrl = 'http://65.0.176.119:5087'
+export const baseUrl = 'http://localhost:5087'
+// export const baseUrl = 'http://65.0.176.119:5087'
 export const typesenseUrl = 'http://13.233.137.22:3020/typesense/'
 export const baseUrlProfilePic =
   'https://akbh.s3.ap-south-1.amazonaws.com/skillshare/user/profile_img/'
@@ -8,10 +8,10 @@ export const baseUrlProfilePic =
 export const tutorRegister = '/tutor/create'
 export const tutorLogin = '/tutor/login'
 export const getTutorProfile = '/tutor/profile'
-export const uploadUserProfilePic = '/user/update/profile-pic'
+export const uploadUserProfilePic = '/tutor/upload/profile-pic'
 export const uploadUserBackgroundPic = '/user/update/background-pic'
 export const updateBasicDetails = '/tutor/update/basic-details'
-export const updateUserProfilePic = '/user/tutor/profile/update/profile-pic'
+export const updateUserProfilePic = '/tutor/update/profile-pic'
 export const updateUserDescription = '/user/tutor/profile/update/description'
 export const updateUserVideoDesc =
   '/user/tutor/profile/update/video-introduction'

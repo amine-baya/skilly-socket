@@ -76,7 +76,9 @@ function BasicDetails() {
     <>
       <div className=" md-[1px] h1wi ml-[1px] mb-[1px] bg-white  lg:ml-[30px] lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl">
         <div className="  p-5  xl:px-12">
-          <h1 className="text-3xl font-semibold">Welcome Yash Mehta,</h1>
+          <h1 className="text-3xl font-semibold">
+            Welcome {user_data.first_name ? user_data.first_name : ''}
+          </h1>
           <p>
             Just <span className="font-semibold">2 minutes </span>
             to a beautiful profile of yours, using the information you provide
