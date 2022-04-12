@@ -13,9 +13,9 @@ export const uploadUserBackgroundPic = '/user/update/background-pic'
 export const updateBasicDetails = '/tutor/update/basic-details'
 export const updateUserProfilePic = '/tutor/update/profile-pic'
 export const updateUserDescription = '/user/tutor/profile/update/description'
-export const updateUserVideoDesc =
-  '/user/tutor/profile/update/video-introduction'
+export const updateUserVideoDesc = '/tutor/update/video-introduction'
 export const updateUserAvailability = '/user/tutor/profile/update/availability'
+export const updateUserQualification = '/tutor/update/qualifications'
 export const updateUserEducation =
   '/user/tutor/profile/update/education-certificate'
 export const updateUserCertificate =

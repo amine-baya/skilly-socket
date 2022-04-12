@@ -46,16 +46,15 @@ function ProfilePhoto() {
     }
   }
   const handleSubmit = async () => {
-    console.log('coming here')
     if (!profile_img) {
-      Router.push('certification')
+      Router.push('/tutorDashboard/myprofile/video')
     } else {
       const user_update = await Server.put(updateUserProfilePic, {
         profile_img,
       })
       if (user_update.success) {
         updateUser({ profile_img }, () => {
-          Router.push('certification')
+          Router.push('/tutorDashboard/myprofile/video')
         })
       }
     }

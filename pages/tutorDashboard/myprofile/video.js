@@ -13,6 +13,7 @@ function Video() {
   const [image, setImage] = useState({ preview: '', raw: '' })
   const [startVideo, setStartVideo] = useState(false)
   const [playing, setPlaying] = useState(false)
+  const [video_url, set_video_url] = useState('')
   const [videoLink, setVideoLink] = useState('')
   const [uploadVideoLink, setUploadVideoLink] = useState('')
 
@@ -62,10 +63,13 @@ function Video() {
   }
 
   const onSubmit = async (data) => {
-    const user_update = await Server.put(updateUserVideoDesc, data)
+    console.log(video_url)
+    const user_update = await Server.put(updateUserVideoDesc, {
+      video_url: video_url,
+    })
     if (user_update.success) {
-      updateUser({ ...data }, () => {
-        Router.push('availabidivty')
+      updateUser({ video_url: video_url }, () => {
+        Router.push('qualifications')
       })
     }
   }
@@ -151,7 +155,10 @@ function Video() {
               placeholder="www.youtube.com/watch?sjvcscksb"
               className="mb-6 w-full rounded-xl border border-gray-300 py-3 px-5 tracking-wider outline-none md:mb-0 lg:w-4/5"
               name="video_divnk"
-              onChange={(e) => urlHandler(e.target.value)}
+              id="video_divnk"
+              onChange={(e) => {
+                urlHandler(e.target.value), set_video_url(e.target.value)
+              }}
             />
           </div>
 
