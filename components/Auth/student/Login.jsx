@@ -17,24 +17,18 @@ const Login = (props) => {
     e.preventDefault()
     const email = e.target.email.value
     const password = e.target.password.value
-    const login_response = await Server.post('/user/login', {
+    const login_response = await Server.post('/student/login', {
       email,
       password,
     })
     if (login_response.success) {
-      switch (login_response.data.role_name) {
-        case ROLE_NAME.TUTOR:
-          authenticate(login_response.data, () =>
-            // Router.push('/tutorDashboard')
-            // window.location.href="/tutorDashboard"
-            setTimeout((window.location = '/tutorDashboard'), 2000)
-          )
-          break
-        default:
-          break
-      }
+      authenticate(login_response.data, 'STUDENT', () =>
+        setTimeout((window.location = '/studentDashboard'), 2000)
+      )
     }
   }
+
+
 
   return (
     <div className="h-full w-full">
@@ -133,7 +127,7 @@ const Login = (props) => {
                 <span className="h-1 w-full bg-white"></span>
               </div>
 
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={(e) => handleSubmit(e)}>
                 <div className="px-4">
                   {/* <InputBox1 type="text" label="Name" id="name" /> */}
                   <InputBox1 type="email" label="Email" id="email" required />

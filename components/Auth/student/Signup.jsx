@@ -3,29 +3,22 @@ import Router from 'next/router'
 import InputBox1 from '../../Utils/InputBoxes/InputBox1'
 import AuthButton from '../../Utils/Buttons/AuthButton'
 import NavLink from 'next/link'
-import { ROLE_NAME, userRegister } from '../../../utils/constants'
+import { ROLE_NAME, studentRegister } from '../../../utils/constants'
 import { authenticate } from '../../../utils/cookies'
 import Server from '../../../utils/Server'
 
 const SignUp = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const name = e.target.name.value
     const email = e.target.email.value
     const password = e.target.password.value
-    const data = { name, email, password, role: 'TUTOR' }
+    const data = { email, password }
 
-    const login_response = await Server.post(userRegister, data)
+    const login_response = await Server.post(studentRegister, data)
     if (login_response.success) {
-      switch (login_response.data.role_name) {
-        case ROLE_NAME.TUTOR:
-          authenticate(login_response.data, () =>
-            Router.push('/tutorDashboard')
-          )
-          break
-        default:
-          break
-      }
+      authenticate(login_response.data,'STUDENT', () =>
+        Router.push('/auth/student/login')
+      )
     }
   }
 
@@ -123,15 +116,15 @@ const SignUp = (props) => {
                 <span className="h-1 w-full bg-white"></span>
               </div>
 
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={(e) => handleSubmit(e)}>
                 <div className="px-4">
-                  <InputBox1
+                  {/* <InputBox1
                     type="text"
                     label="Name"
                     id="name"
                     name="name"
                     required
-                  />
+                  /> */}
                   <InputBox1
                     type="email"
                     label="Email"
