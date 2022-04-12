@@ -59,19 +59,21 @@ const MyReview = () => {
   const [showReview, setshowReview] = useState(
     isTabletOrMobile ? null : data[0]
   )
+
   function review(item) {
     setshowReview(item)
   }
+
   console.log('showReview', showReview)
+
   return (
     <div className="grid h-full   grid-cols-12  bg-white sm:bg-[#FFF2E3]">
       <div className="col-span-12 border-y border-[#DFDFDF] py-3 px-7 font-semibold text-[#5E5252] md:hidden">
         <h1>My Reviews</h1>
       </div>
       <div
-        className={`${
-          showReview === null ? '' : 'hidden'
-        } col-span-12 w-full overflow-auto  border-[#FF9515]  sm:block md:col-span-4 md:border-r `}
+        className={`${showReview === null ? '' : 'hidden'
+          } col-span-12 w-full overflow-auto  border-[#FF9515]  sm:block md:col-span-4 md:border-r `}
       >
         <div className="boder-[#DFDFDF] sticky top-1 border-b md:border-[#FF9515]">
           <ul className="ml-7  flex">
@@ -85,9 +87,8 @@ const MyReview = () => {
                 <div
                   key={index}
                   onClick={() => review(item)}
-                  className={`flex items-center gap-2 border-b p-5  sm:border-b-0 lg:gap-4   ${
-                    showReview?.id === item.id ? 'bg-white' : ''
-                  }`}
+                  className={`flex items-center gap-2 border-b p-5  sm:border-b-0 lg:gap-4   ${showReview?.id === item.id ? 'bg-white' : ''
+                    }`}
                 >
                   <div className="whitespace-nowrap">
                     <Image
@@ -150,9 +151,8 @@ const MyReview = () => {
       </div>
 
       <div
-        className={`${
-          showReview === null ? 'hidden' : 'block'
-        } col-span-12 w-full overflow-hidden  sm:block  md:col-span-8 `}
+        className={`${showReview === null ? 'hidden' : 'block'
+          } col-span-12 w-full overflow-hidden  sm:block  md:col-span-8 `}
       >
         <div className="sticky top-1  border-b border-[#FF9515] bg-white  text-center     md:bg-[#FFF2E3]">
           <ul className="mt-1.5 flex p-[7px] text-center sm:justify-center md:px-6">
@@ -237,8 +237,8 @@ const MyReview = () => {
                         <Image
                           src={counrtyIcon}
                           alt="Country Flag"
-                          //   width={18}
-                          //   height={18}
+                        //   width={18}
+                        //   height={18}
                         />
                         <label className="ml-2.5">Great Britain</label>
                       </div>

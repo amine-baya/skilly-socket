@@ -13,7 +13,7 @@ function CourseCart({
   setSelectedTutor,
 }) {
   return (
-    <div className="flex snap-center rounded-md transition-all ease-in-out">
+    <div className="flex snap-center rounded-md transition-all ease-in-out bg-[#ffffff]">
       <div className="w-[350px] overflow-hidden rounded-2xl  pb-[20px] font-poppins shadow-xl ring-2 ring-[#FC4D6D] ring-opacity-10">
         <CoverSection />
         <TutorDetails
@@ -166,7 +166,7 @@ function CourseCart({
   function Description() {
     return (
       <div
-        className={` px-4 font-monts text-xs font-semibold capitalize text-[#606060]   `}
+        className={` px-4 font-monts text-xs font-semibold capitalize text-[#606060] whitespace-normal`}
       >
         <span className="font-extrabold">Brief :</span> dolor sit amet,
         consectetur elit. Fringilla enim, at rhoncus nisl, condimentum,Fringilla
