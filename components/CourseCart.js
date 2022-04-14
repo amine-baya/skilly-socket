@@ -1,5 +1,6 @@
-import Link from 'next/link'
-import Image from 'next/image'
+import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter } from "next/router";
 
 function CourseCart({
   coverImg,
@@ -12,6 +13,8 @@ function CourseCart({
   tutorData,
   setSelectedTutor,
 }) {
+  const router = useRouter();
+
   return (
     <div className="flex snap-center rounded-md transition-all ease-in-out bg-[#ffffff]">
       <div className="w-[350px] overflow-hidden rounded-2xl  pb-[20px] font-poppins shadow-xl ring-2 ring-[#FC4D6D] ring-opacity-10">
@@ -19,6 +22,7 @@ function CourseCart({
         <TutorDetails
           space={'-mt-[1.8rem] ml-[105px] '}
           imgPosition={'-top-[3rem] left-[-5.5rem]'}
+          router={router}
         />
         <div className="flex flex-col items-center gap-3 py-4 px-2">
           <Language />
@@ -67,7 +71,7 @@ function CourseCart({
     )
   }
 
-  function TutorDetails({ space, imgPosition }) {
+  function TutorDetails({ space, imgPosition, router }) {
     return (
       <div className={`relative ${space}   flex    items-center    `}>
         <div
@@ -76,7 +80,7 @@ function CourseCart({
           <Image src={tutorImg} alt="tutor" height={75} width={75} />
         </div>
         <div className="flex gap-[8px]   ">
-          <span className="text-[14px] font-semibold ">{tutorName}</span>
+          <span onClick={() => router?.push('/tutorProfile')} className="text-[14px] font-semibold cursor-pointer">{tutorName}</span>
           <div>
             <Image
               className="self-center"
@@ -203,7 +207,7 @@ function CourseCart({
           <button
             onClick={() => {
               setOpenPopUp && setOpenPopUp({ ...false, calendarPopUp: true })
-              setSelectedTutor(tutorData.id)
+              setSelectedTutor(tutorData?.id)
             }}
             className="inline-block w-[220px] rounded-full px-6 py-2 text-center text-[14px] font-[600] text-[#FC4D6D] shadow-lg drop-shadow-lg backdrop-blur-md transition duration-150 ease-in-out hover:bg-[#FC4D6D] hover:text-white "
           >
