@@ -40,7 +40,7 @@ const WalletPopUp = ({ setOpenPopUp, totalSelectedTimes }) => {
         </div>
 
         {/* bottom */}
-        <BottomButton totalSelectedTimes={totalSelectedTimes} />
+        <BottomButton totalSelectedTimes={totalSelectedTimes} setOpenPopUp={setOpenPopUp} />
       </div>
     </div>
   )
@@ -82,7 +82,7 @@ const Cards = () => {
 }
 
 // Bottom Button and Sessions selected
-const BottomButton = ({ totalSelectedTimes }) => {
+const BottomButton = ({ totalSelectedTimes, setOpenPopUp }) => {
   return (
     <div className="bottom-0 flex w-full items-center justify-between gap-4 px-3">
       {/* Left */}
@@ -95,7 +95,7 @@ const BottomButton = ({ totalSelectedTimes }) => {
       </div>
 
       {/* Right */}
-      <PopUpButton label="Proceed" />
+      <PopUpButton label="Pay Now" link="/studentDashboard/sessions" setOpenPopUp={setOpenPopUp} />
     </div>
   )
 }

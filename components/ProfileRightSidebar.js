@@ -72,7 +72,7 @@ function SideBar() {
           </li> */}
         </ul>
       </nav>
-      <div className=" hidden h-auto w-auto rounded-md bg-[#FC4D6D] py-2.5 px-[13px] font-roboto text-lg font-medium text-white lg:block">
+      <div className=" hidden h-auto w-auto rounded-md bg-[#FC4D6D] py-2.5 px-[13px] font-roboto text-lg font-medium text-white lg:block cursor-pointer">
         <Link href="/tutorProfile" passHref>
           <label>Preview Profile</label>
         </Link>

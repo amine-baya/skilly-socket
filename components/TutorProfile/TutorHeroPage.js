@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import ProfilePhotoPopUp from "./ProfilePhotoPopUp";
+import ProfilePhotoPopUp from "./PopUps/ProfilePhotoPopUp";
 import { openPopUps } from "../../Atoms/PopUpAtoms";
 import { useRecoilState } from "recoil";
 

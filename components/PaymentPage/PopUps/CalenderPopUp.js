@@ -39,11 +39,11 @@ const CalenderPopUp = ({
   useEffect(() => {
     const initialDate = weekDates[0]
     Server.get(`${baseUrl}/booking/week`, {
-      params: { startDate: initialDate, tutorId: selectedTutorData.id },
+      params: { startDate: initialDate, tutorId: selectedTutorData?.id },
     }).then((response) => {
       setRandomTimes(response.data.totalSlots)
     })
-  }, [weekDates, selectedTutorData.id])
+  }, [weekDates, selectedTutorData?.id])
 
   // function to take week dates
   function takeWeek(start = new Date()) {
@@ -65,14 +65,14 @@ const CalenderPopUp = ({
         (key) =>
           key.id ===
           weekDates[rowIndex].toDateString().split(' ').join('') +
-            randomTimes[rowIndex][colIndex]
+          randomTimes[rowIndex][colIndex]
       ).length > 0
     ) {
       const tempSelected = [...selectedTimes].filter(
         (key) =>
           key.id !==
           weekDates[rowIndex].toDateString().split(' ').join('') +
-            randomTimes[rowIndex][colIndex]
+          randomTimes[rowIndex][colIndex]
       )
       setSelectedTimes(tempSelected)
     } else {
@@ -116,7 +116,7 @@ const CalenderPopUp = ({
 
   const createMeetings = () => {
     //TODO Update the tutor and student id here
-    console.log({ selectedTutorData })
+    // console.log({ selectedTutorData })
     Server.post(`${baseUrl}/booking/create`, {
       selectedTimes,
       tutor: selectedTutorData,
@@ -145,7 +145,7 @@ const CalenderPopUp = ({
   }
 
   return (
-    <div className="h-[594px] w-[406px] rounded-3xl bg-white text-[#FC4D6D] sm:h-[683px] sm:w-[521px]">
+    <div className={`h-[594px] w-[406px] rounded-3xl bg-white text-[#FC4D6D] sm:h-[683px] sm:w-[521px] ${Router.pathname === '/tutors' ? 'shadow-2xl' : ''}`}>
       {/* top */}
       <TopHeader setOpenPopUp={setOpenPopUp} />
 
@@ -208,11 +208,10 @@ const CalenderPopUp = ({
                 {weekDates?.map((date, i) => (
                   <p
                     key={i}
-                    className={`w-7 rounded-full bg-gradient-to-br p-[1px] font-semibold text-[#454545] ${
-                      isToday(date)
-                        ? 'from-[#FC4D6D] to-[#FDA02F] text-white'
-                        : ''
-                    }`}
+                    className={`w-7 rounded-full bg-gradient-to-br p-[1px] font-semibold text-[#454545] ${isToday(date)
+                      ? 'from-[#FC4D6D] to-[#FDA02F] text-white'
+                      : ''
+                      }`}
                   >
                     {format(date, 'dd')}
                   </p>
@@ -233,23 +232,21 @@ const CalenderPopUp = ({
                           return (
                             <p
                               key={colIndex}
-                              className={`cursor-pointer rounded-full px-[3px] text-center text-sm font-medium transition duration-200 sm:px-3 sm:py-[1px] sm:font-semibold ${
-                                (selectedTimes?.filter(
-                                  (key) =>
-                                    key.id ===
-                                    weekDates[rowIndex]
-                                      .toDateString()
-                                      .split(' ')
-                                      .join('') +
-                                      randomTimes[rowIndex][colIndex]
-                                )).length > 0
-                                  ? `${
-                                      clashedTimings.includes(id)
-                                        ? 'bg-gray-500'
-                                        : 'bg-[#FC4D6D]'
-                                    } text-white`
-                                  : ''
-                              }`}
+                              className={`cursor-pointer rounded-full px-[3px] text-center text-sm font-medium transition duration-200 sm:px-3 sm:py-[1px] sm:font-semibold ${(selectedTimes?.filter(
+                                (key) =>
+                                  key.id ===
+                                  weekDates[rowIndex]
+                                    .toDateString()
+                                    .split(' ')
+                                    .join('') +
+                                  randomTimes[rowIndex][colIndex]
+                              )).length > 0
+                                ? `${clashedTimings.includes(id)
+                                  ? 'bg-gray-500'
+                                  : 'bg-[#FC4D6D]'
+                                } text-white`
+                                : ''
+                                }`}
                               onClick={() =>
                                 handleTimeSlot(
                                   rowIndex,
@@ -286,7 +283,7 @@ const CalenderPopUp = ({
           link={link}
           setOpenPopUp={setOpenPopUp}
         />
-        <button onClick={createMeetings}>TEMP SUBMIT</button>
+        {/* <button onClick={createMeetings}>TEMP SUBMIT</button> */}
       </div>
     </div>
   )

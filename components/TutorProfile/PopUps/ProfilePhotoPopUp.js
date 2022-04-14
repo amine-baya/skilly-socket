@@ -1,7 +1,7 @@
 import React from 'react';
-import CrossIcon from "../../icons/CrossIcon";
-import WhatsAppTree from "../../icons/WhatsAppTree";
-import { openPopUps } from "../../Atoms/PopUpAtoms";
+import CrossIcon from "../../../icons/CrossIcon";
+import WhatsAppTree from "../../../icons/WhatsAppTree";
+import { openPopUps } from "../../../Atoms/PopUpAtoms";
 import { useRecoilState } from "recoil";
 
 const ProfilePhotoPopUp = () => {
