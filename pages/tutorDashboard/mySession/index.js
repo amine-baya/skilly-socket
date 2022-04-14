@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import Link from "next/link"
 import { useRouter } from 'next/router'
 import Server from 'utils/Server'
 import { baseUrl } from 'utils/constants'
+
 function MySession() {
   const router = useRouter()
   useEffect(() => {
@@ -23,7 +25,7 @@ function MySession() {
           <h1 className="text-2xl font-semibold text-[#5E5252]">
             Active Sessions
           </h1>
-          <h1 className="font-bold text-[#FC4D6D]">archived Sessions </h1>
+          <Link href="/tutorDashboard/mySession/archivedSessions" className="font-bold text-[#FC4D6D]">archived Sessions </Link>
         </div>
 
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-3 xl:gap-9 ">
@@ -62,7 +64,7 @@ function MySession() {
 
             let status, style, text, in6Hours, onClick
 
-            onClick = () => {}
+            onClick = () => { }
             if (currentTime < startTimeB) {
               if (diff < 3600 * 6) {
                 in6Hours = true
