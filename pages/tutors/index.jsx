@@ -47,39 +47,29 @@ const Tutors = () => {
   }, [searchText, page])
 
   return (
-    <>
-      <Head>
-        <title>Skilly tree</title>
-      </Head>
-      <div className=" mt-8 flex justify-center">
-        <SearchBox onSearch={(val) => setSearchText(val)} />
-      </div>
+    <main className="mx-auto flex h-[calc(100vh-79px)] w-full max-w-[calc(1440px-160px)] snap-y snap-mandatory flex-wrap items-center justify-evenly gap-y-[6rem] gap-x-2 overflow-scroll overflow-x-hidden scroll-smooth py-11 transition  delay-150 duration-1000 ease-in-out lg:justify-around">
 
-      <div className=" my-8 mx-16 flex flex-wrap content-center justify-center gap-x-8 gap-y-8">
-        {/* <main className="mx-auto flex h-[calc(100vh-79px)] w-full max-w-[calc(1440px-160px)] snap-y snap-mandatory flex-wrap items-center justify-evenly gap-y-[6rem] gap-x-2 overflow-scroll overflow-x-hidden scroll-smooth py-11 transition  delay-150 duration-1000 ease-in-out lg:justify-around"> */}
+      {tutorData
+        ? tutorData.map(function (dd, key) {
+          return (
+            // <Link href={'/tutors'} passHref key={key}>
+            <CourseCart
+              topRightTitle={'top tutors'}
+              key={key}
+              coverImg={`${baseUrlProfilePic}${dd.background_pic}`}
+              tutorName={dd.tutor_name}
+              setOpenPopUp={setOpenPopUp}
+              setSelectedTutor={setSelectedTutor}
+              countryLogo={'/Images/CourseCart/united-kingdom.svg'}
+              tutorImg={`${baseUrlProfilePic}${dd.profile_img}`}
+              tutorData={dd}
+            />
+            // </Link>
+          )
+        })
+        : null
+      }
 
-        {tutorData
-          ? tutorData.map(function (dd, key) {
-              return (
-                // <Link href={'/tutors'} passHref key={key}>
-                <CourseCart
-                  topRightTitle={'top tutors'}
-                  key={key}
-                  coverImg={`${baseUrlProfilePic}${dd.background_pic}`}
-                  tutorName={dd.tutor_name}
-                  setOpenPopUp={setOpenPopUp}
-                  setSelectedTutor={setSelectedTutor}
-                  countryLogo={'/Images/CourseCart/united-kingdom.svg'}
-                  tutorImg={`${baseUrlProfilePic}${dd.profile_img}`}
-                  tutorData={dd}
-                />
-                // </Link>
-              )
-            })
-          : null}
-      </div>
-
-      {/* </main> */}
 
       {/* TimeSlot PopUp */}
       {openPopUp.calendarPopUp && (
@@ -91,8 +81,9 @@ const Tutors = () => {
             link={'/payment'}
           />
         </div>
-      )}
-    </>
+      )
+      }
+    </main >
   )
 }
 
