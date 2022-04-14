@@ -8,6 +8,7 @@ export const openPopUps = atom({
     karmaPopUp: false,
     walletPopUp: false,
     ProfilePhotoPopUp: false,
+    CoverPhotoPopUp: false,
   },
 })
 

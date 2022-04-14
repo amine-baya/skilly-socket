@@ -2,16 +2,18 @@ import Image from 'next/image';
 import ProfilePhotoPopUp from "./PopUps/ProfilePhotoPopUp";
 import { openPopUps } from "../../Atoms/PopUpAtoms";
 import { useRecoilState } from "recoil";
+import CoverPhotoPopUp from './PopUps/CoverPhotoPopUp';
 
 export default function TutorHeroPage() {
   // top open and close popup
   const [profilePopUp, setProfilePopUp] = useRecoilState(openPopUps);
+  const [CoverPopUp, setCoverPopUp] = useRecoilState(openPopUps);
 
   return (
     <div className="snap-fullPage relative hidden md:flex h-[calc(100vh-79px)] items-center justify-start overflow-hidden bg-gradient-to-r from-[#FF7C7CB8] to-[#C4C4C400]">
       <BackgroundImg />
       {/* camera  */}
-      <div className='absolute z-[1] top-[15px] right-[15px] cursor-pointer'>
+      <div onClick={() => setCoverPopUp({ ...false, CoverPhotoPopUp: true })} className='absolute z-[1] top-[15px] right-[15px] cursor-pointer'>
         <div className='relative w-[27.5px] h-[22.5px]'>
           <Image
             src="/Images/TutorProfile/camera.png"
@@ -35,8 +37,14 @@ export default function TutorHeroPage() {
       {/* main */}
       <div className='flex items-center gap-8 lg:pl-16 pl-8'>
         <UserImage setProfilePopUp={setProfilePopUp} />
+
+        {/* profile photo popup */}
         {profilePopUp.ProfilePhotoPopUp && (
           <ProfilePhotoPopUp />
+        )}
+
+        {CoverPopUp.CoverPhotoPopUp && (
+          <CoverPhotoPopUp />
         )}
       </div>
     </div>
