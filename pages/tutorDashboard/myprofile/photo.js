@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Router from 'next/router'
-import Dropzone from 'react-dropzone'
+import Dropzone, { useDropzone } from 'react-dropzone'
 import Image from 'next/image'
 import { useState } from 'react'
 import { FiCheckCircle } from 'react-icons/fi'
@@ -14,6 +14,7 @@ import {
 import { getLocalStorage, updateUser } from '../../../utils/cookies'
 
 function ProfilePhoto() {
+  // already written code
   const [profile_img, set_profile_img] = useState('')
   const [image, setImage] = useState({ preview: '', raw: '' })
 
@@ -59,6 +60,24 @@ function ProfilePhoto() {
       }
     }
   }
+
+
+  // their merged code
+  const [files, setFiles] = useState([])
+
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: 'image/*',
+    onDrop: (acceptedFiles) => {
+      setFiles(
+        acceptedFiles.map((file) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        )
+      )
+    },
+  })
+
   return (
     <>
       <div className="  md-[1px] h1wi ml-[1px] mb-[1px] bg-white font-bold  lg:ml-[30px] lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl">
@@ -78,75 +97,48 @@ function ProfilePhoto() {
         <div className="lg: grid grid-cols-12 gap-x-2  px-5 text-[#545454] xl:px-12">
           <div className="col-span-12 space-y-8 md:col-span-6">
             <div className="flex gap-2.5 ">
-              <Dropzone
-                className="hidden"
-                onDrop={handleDrop}
-                accept="image/*"
-                minSize={1024}
-                maxSize={3072000}
+              <div
+                {...getRootProps({
+                  className:
+                    ' h-auto rounded-lg border border-[#FC4D6D] bg-white px-[21px] py-2.5 text-sm',
+                })}
               >
-                {({ getRootProps, getInputProps }) => (
-                  <div
-                    {...getRootProps({
-                      className:
-                        'h-auto rounded-lg border border-[#FC4D6D] bg-white px-[21px] py-2.5 text-sm',
-                    })}
-                  >
-                    <input {...getInputProps()} />
-                    <p className=" capitalize  ">Upload A Photo</p>
-                  </div>
-                )}
-              </Dropzone>
-              {/* Upload A Photo */}
-              {/* </label> */}
+                <input {...getInputProps()} />
+                <p>Upload A Photo</p>
+              </div>
               <div className=" text-xs">
                 <p>JPG or PNG format</p>
                 <p>Maximum size - 2MB.</p>
               </div>
             </div>
             <div className=" mb-20 flex">
-              <Dropzone
-                className="hidden"
-                onDrop={handleDrop}
-                accept="image/*"
-                minSize={1024}
-                maxSize={3072000}
+
+              <div
+                {...getRootProps({ className: 'dropzone lg:w-96 w-full ' })}
               >
-                {({ getRootProps, getInputProps }) => (
-                  <div
-                    {...getRootProps({ className: 'dropzone lg:w-96 w-full ' })}
-                  >
-                    <input {...getInputProps()} />
-                    <p className="py-[147px] capitalize  ">
-                      drag and drop your photo here
-                    </p>
-                  </div>
-                )}
-              </Dropzone>
+                <input {...getInputProps()} />
+                <p className="py-[147px] capitalize  ">
+                  drag and drop your photo here
+                </p>
+              </div>
+
             </div>
           </div>
 
           <div className="col-span-12 mt-6 space-y-8 md:col-span-6 md:mt-0">
             <p className="text-[22px] font-medium">Tips For An Amazing Photo</p>
             <div className="flex gap-3 ">
-              {profile_img || user_data?.profile_img ? (
-                <section className="flex gap-2">
-                  <div className="h-[106px] w-[106px] bg-blue-300">
-                    <img
-                      src={`https://akbh.s3.ap-south-1.amazonaws.com/skillytree/user/profile_img/${
-                        profile_img ? profile_img : user_data?.profile_img
-                      }`}
-                      alt="img"
-                    />
-                  </div>
-                  {/* <div className="h-[106px] w-[106px] bg-blue-300">
-                    <img src="" alt="img" />
+              {files.length !== 0 ?
+                files.length &&
+                files?.map((file) => (
+                  <div className="  h-auto bg-blue-300" key={file.name}>
+                    <div >
+                      <img src={file?.preview} />
                     </div>
-                    <div className="h-[106px] w-[106px] bg-blue-300">
-                    <img src="" alt="img" />
-                  </div> */}
-                </section>
-              ) : null}
+                  </div>
+                ))
+
+                : null}
             </div>
 
             <div>
@@ -190,11 +182,8 @@ function ProfilePhoto() {
               </button>
             </div>
             <div className="">
-              <button
-                onClick={() => handleSubmit()}
-                className=" w-auto rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-7 py-1 text-lg font-medium text-white md:col-span-2 md:mt-0 md:w-full "
-              >
-                Next
+              <button onClick={() => handleSubmit()} className=" w-auto rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-7 py-1 text-lg font-medium text-white md:col-span-2 md:mt-0 md:w-full ">
+                Save
               </button>
             </div>
           </div>
