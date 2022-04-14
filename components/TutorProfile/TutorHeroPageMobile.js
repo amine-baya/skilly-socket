@@ -16,6 +16,7 @@ function TutorHeroPageMobile() {
     const user = getLocalStorage('user')
     set_user_data(user)
   }
+  
   return (
     <div className="relative flex h-64 items-center justify-center  md:hidden ">
       {user_data ? (
@@ -115,7 +116,7 @@ function TutorDescription({ user_data }) {
         </div>
         <span>
           Speaks{' '}
-          {user_data.language_spoken
+          {user_data?.language_spoken
             .map(function (elem) {
               return elem.language
             })

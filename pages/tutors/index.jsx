@@ -27,8 +27,7 @@ const Tutors = () => {
   const [selectedTutorData, setSelectedTutor] = useRecoilState(selectedTutor)
 
   const [openPopUp, setOpenPopUp] = useRecoilState(openPopUps)
-  const [totalSelectedTimes, setTotalSelectedTimes] =
-    useRecoilState(totalSelectedSlots)
+  const [totalSelectedTimes, setTotalSelectedTimes] = useRecoilState(totalSelectedSlots)
 
   useEffect(() => {
     async function defaultFunc() {
