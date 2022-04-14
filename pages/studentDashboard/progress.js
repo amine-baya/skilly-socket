@@ -1,252 +1,336 @@
-import React from 'react';
-import Image from 'next/image';
-import { AiOutlineLeft } from "react-icons/ai";
-import { FiEdit } from "react-icons/fi";
-import TickGreen from "../../icons/TickGreen.jsx";
+import React, { useEffect, useState } from 'react'
+import Image from 'next/image'
+import leavesicon from '../../public/Images/leavesicon.png'
+import righticon from '../../public/Images/righticon.png'
+import twoicon from '../../public/Images/twoicon.png'
+import threeicon from '../../public/Images/threeicon.png'
+import editpenicon from '../../public/Images/editpenicon.png'
+import { AiOutlineLeft } from 'react-icons/ai'
 
-const Progress = () => {
+let data = [
+    {
+        id: 1,
+        image: '/Images/Arlene Mccoy.png',
+        username: 'Arlene MCcoy',
+        profession: 'Gardening',
+        progress: {
+            title: 'Gardening',
+            description: 'Arlene Mccoy sessions for gardening',
+            sessions: {
+                sessionstate: 'Session1',
+                sessionstatus: 'Introduction',
+                sessionagenda:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum duis orci blandit commodo cursuslacus adipiscing molestie. Suspendisse enim dui id sed id lectus pharetra eleifend. Faucibus sit ut cras scelerisque. Dolor tortor sed placerat dui sociis',
+                tutorremarks:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum duis orci blandit commodo cursuslacus adipiscing molestie. Suspendisse enim dui id sed id lectus pharetra eleifend. Faucibus sit ut cras scelerisque. Dolor tortor sed placerat dui sociis',
+                date: '5/3/2021',
+            },
+        },
+    },
+    {
+        id: 2,
+        image: '/Images/Albert Flores.png',
+        username: 'Albert Flores',
+        profession: 'Cooking',
+        progress: {
+            title: 'Cooking',
+            description: 'Albert flores sessions for Cooking',
+            sessions: {
+                sessionstate: 'Session3',
+                sessionstatus: 'Introduction',
+                sessionagenda:
+                    'Cooking classes are a powerful place for learning because food is something we can all relate to, be excited about, and apply in our live. teaching cooking classes to kids and adults, I’ve learned many lessons (some the hard way) for making cooking classes fun and educational, tasty and healthy, effective and timely.',
+                tutorremarks:
+                    ' I always feel like I over-plan my cooking lessons,anything and everything you might need. Planning can save you from forgetting really important materials. Muffins aren’t quite muffins if you forget the muffin tin, although muffin cake works too.',
+                date: '12/6/2021',
+            },
+        },
+    },
+    {
+        id: 3,
+        image: '/Images/Annette Black.png',
+        username: 'Annette Black',
+        profession: 'Teaching',
+        progress: {
+            title: 'Teaching',
+            description: 'Annette Black sessions for Teaching',
+            sessions: {
+                sessionstate: 'Session1',
+                sessionstatus: 'Sets and Lists',
+                sessionagenda:
+                    'The syllabus also contains the usual information about assignments, work expectations, and plagiarism. Together with the context, Estes said, it tells students not only what they will do, but the kind of thinking they will be asked to try.',
+                tutorremarks:
+                    'excels at applying what he/she learns in the classroom to real-world and real-life situations.',
+                date: '20/8/2021',
+            },
+        },
+    },
+    {
+        id: 4,
+        image: '/Images/Dianne Russell.png',
+        username: 'Dianne Russel',
+        profession: 'Horse Riding',
+        progress: {
+            title: 'Horse Riding',
+            description: 'Dianne Russell sessions for Horse Riding',
+            sessions: {
+                sessionstate: 'Session6',
+                sessionstatus: 'Safety measures',
+                sessionagenda:
+                    'you might economize by keeping your horses at home and hauling in for a weekly lesson. Obviously, what my students do outside of my barn isnt under my direct control.',
+                tutorremarks:
+                    'I guide such a student with a fairly detailed weekly training schedule based on homework (the skills she needs to work on), lifestyle (its unrealistic to expect most students, mothers and 9-to-5ers to ride every day) and the five-day work week I believe is ideal for horses.',
+                date: '11/3/2022',
+            },
+        },
+    },
+    {
+        id: 5,
+        image: '/Images/Elanor Pena.png',
+        username: 'Elanor Pena',
+        profession: 'Coding',
+        progress: {
+            title: 'Coding',
+            description: 'Elanor sessions for Coding',
+            sessions: {
+                sessionstate: 'Session2',
+                sessionstatus: ' Django Framework',
+                sessionagenda:
+                    'article describes an approach of systematic, rule guided qualitative text analysis, which tries to preserve some methodological strengths of quantitative content analysis and widen them to a concept of qualitative procedure.',
+                tutorremarks:
+                    'If we say, qualitative content analysis wants to preserve the advantages of quantitative content analysis for a more qualitative text interpretation',
+                date: '25/3/2022',
+            },
+        },
+    },
+]
+
+const MyProgress = () => {
+    const [showProgress, setshowProgress] = useState("")
+
+    const [indexValue, setIndexValue] = useState(0)
+    function progress(item, index) {
+        setshowProgress(item)
+        setIndexValue(index)
+    }
+    useEffect(() => {
+        if (showProgress.length === 0) {
+
+            setshowProgress(data[0])
+        }
+    }, [showProgress])
+
+
     return (
-        <div className="h-full whitespace-nowrap font-roboto px-4 sm:px-9 p-9 w-full block mx-auto capitalize">
-            <div className="mb-9 flex gap-3 items-end">
-                <h1 className="text-2xl font-semibold text-[#5E5252]">
-                    My Progress
+        <div className="p-2 lg:p-[33px]">
+            <h1 className="mb-[30px] hidden font-poppins  text-2xl font-semibold text-[#5E5252] md:block">
+                MyProgress
+            </h1>
+            <div className=" flex h-full flex-col-reverse justify-between gap-2 md:flex-row lg:gap-[25px]">
+                <div className=" h-full w-full rounded-[15px] bg-white  px-1 py-[25px] md:px-[21px] ">
+                    <div className="flex justify-between">
+                        <div className="flex gap-[13px]">
+                            <div className="my-auto">
+                                <Image
+                                    src={leavesicon}
+                                    alt="Country Flag"
+                                //   width={18}
+                                //   height={18}
+                                />
+                            </div>
+                            <div className="">
+                                <h1 className="font-roboto text-2xl font-bold mb-2">
+                                    {showProgress?.progress?.title}
+                                </h1>
+                                <h1 className="font-roboto text-[14px] ">
+                                    {showProgress?.progress?.description}
+                                </h1>
+                            </div>
+                        </div>
+                        <div className="my-auto ">
+                            <label className="flex font-semibold">
+                                <AiOutlineLeft className="my-auto text-sm" />
+                                Back
+                            </label>
+                        </div>
+                    </div>
+                    <div className=" mt-10 grid grid-cols-1 md:grid-cols-2  md:flex-row">
+                        <div className="relative md:px-0 px-1.5">
+                            <div className="grid grid-flow-col grid-cols-none grid-rows-3 md:grid-flow-row md:grid-cols-3 md:grid-rows-none">
+                                <div className=" text-left text-xs md:text-right md:text-sm md:order-none order-3">
+                                    <h1 className="mb-[14px] text-[#000000]">Session1</h1>
+                                    <h1 className="text-[#888888]">Introduction</h1>
+                                </div>
+
+                                <div className=" ml-auto flex h-[40px] items-center justify-self-center md:ml-0 md:h-auto md:flex-col md:order-none order-2">
+                                    <div className="h-[30px] w-[30px] md:h-[40px] md:w-[40px]">
+                                        <Image
+                                            src={righticon}
+                                            alt="Country Flag"
+                                        // width={40}
+                                        // height={40}
+                                        />
+                                    </div>
+                                    <div className="mx-auto my-auto h-[1px] w-[52px] bg-[#9E9E9E] md:my-0 md:h-[62px] md:w-0.5"></div>
+                                    <div className="my-auto flex md:my-0">
+                                        <div className="mx-auto h-[9px] w-[9px] rounded-full bg-[#9E9E9E] md:mb-[31px] "></div>
+                                    </div>
+                                </div>
+                                <div className="my-auto md:my-0 md:order-none order-1">
+                                    <h1 className=" text-[10px] font-medium text-[#20C374] md:text-left ">
+                                        Completed
+                                    </h1>
+                                </div>
+
+                                <div className="text-center text-xs md:my-auto md:text-right md:text-sm md:order-none order-6">
+                                    <h1 className="mb-[14px] text-[#000000]">Session Number</h1>
+                                    <h1 className="text-[#888888]">Session Name</h1>
+                                </div>
+
+                                <div className=" flex h-[40px] items-center justify-self-center md:h-auto md:flex-col md:order-none order-5">
+                                    <div className="mx-auto  my-auto h-[1px] w-[52px] bg-[#9E9E9E] md:my-0 md:h-[62px] md:w-0.5 "></div>
+                                    <div className="h-[30px] w-[30px] md:h-[40px] md:w-[40px]">
+                                        <Image
+                                            src={twoicon}
+                                            alt="Country Flag"
+                                            className="h-[30px] w-[30px]"
+                                        />
+                                    </div>
+                                    <div className="mx-auto my-auto h-[1px] w-[52px] bg-[#9E9E9E] md:my-0 md:h-[62px] md:w-0.5"></div>
+                                    <div className="my-auto flex md:my-0">
+                                        <div className="mx-auto h-[9px] w-[9px] rounded-full bg-[#9E9E9E] md:mb-[31px]"></div>
+                                    </div>
+                                </div>
+                                <div className="my-auto flex justify-center md:justify-start md:order-none order-4">
+                                    <h1 className="h-[25px] w-auto rounded bg-[#F6F4FD] p-1  text-[10px] font-medium text-[#1976D2] ">
+                                        In Progress
+                                    </h1>
+                                </div>
+
+                                <div className="text-center text-xs md:my-auto md:text-right md:text-sm md:order-none order-9">
+                                    <h1 className="mb-[14px] text-[#000000]">Session Number</h1>
+                                    <h1 className="text-[#888888]">Session Name</h1>
+                                </div>
+
+                                <div className="  flex h-[40px] items-center justify-self-center md:h-auto md:flex-col md:order-none order-8">
+                                    <div className="mx-auto  my-auto h-[1px] w-[52px] bg-[#9E9E9E] md:my-0 md:h-[62px] md:w-0.5"></div>
+                                    <div className="h-[30px] w-[30px] whitespace-nowrap md:h-[40px] md:w-[40px]">
+                                        <Image
+                                            src={threeicon}
+                                            alt="Country Flag"
+                                        // width={40}
+                                        // height={40}
+                                        />
+                                    </div>
+                                    <div className="mx-auto  my-auto h-[1px] w-[32px] bg-[#9E9E9E] md:my-0 md:h-[62px] md:w-0.5"></div>
+                                </div>
+                                <div className="my-auto flex justify-center md:justify-start md:order-none order-7">
+                                    <h1 className="h-[25px] w-auto rounded border border-[#BDBDBD] p-1 text-[10px] font-medium text-[#BDBDBD] md:ml-0 ml-4">
+                                        Pending
+                                    </h1>
+                                </div>
+                            </div>
+                            {/* </div> */}
+                        </div>
+
+                        <div className=" mt-[100px] w-auto justify-self-center rounded-[15px] border-2 border-[#C8C8C8] p-4 md:mt-0">
+                            <div className="mb-10 flex flex-col gap-2.5">
+                                <ul className="flex justify-between">
+                                    <li className="">
+                                        <h1 className="text-lg font-medium">
+                                            {showProgress?.progress?.sessions?.sessionstate}
+                                        </h1>
+                                    </li>
+                                    <li className=" font-bold text-[#20C374]">
+                                        <h1>Completed</h1>
+                                    </li>
+                                </ul>
+                                <h1 className="text-[#8C8C8C]">
+                                    {showProgress?.progress?.sessions?.sessionstatus}
+                                </h1>
+                                <div className="flex justify-between">
+                                    <div>
+                                        <h1 className="text-[#8C8C8C]">
+                                            {showProgress?.progress?.sessions?.date}
+                                        </h1>
+                                    </div>
+                                    <div className="">
+                                        <Image
+                                            src={editpenicon}
+                                            alt="Country Flag"
+                                        //   width={18}
+                                        //   height={18}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div className="flex flex-col gap-[13px]">
+                                    <h1 className="text-[18px] font-bold">Session Agenda</h1>
+                                    <h1 className="text-[14px] text-[#414141]">
+                                        {showProgress?.progress?.sessions?.sessionagenda}
+                                    </h1>
+                                    <div className="flex">
+                                        <label className=" ml-auto text-xs font-bold text-[#818181] ">
+                                            Read More
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div className="mt-2.5 flex flex-col gap-[13px]">
+                                    <h1 className="text-[18px] font-bold">
+                                        Post Session Tutor Remarks
+                                    </h1>
+                                    <p className="text-[14px] text-[#414141]">
+                                        {showProgress?.progress?.sessions?.tutorremarks}
+                                    </p>
+                                    <div className="flex">
+                                        <label className=" ml-auto text-xs font-bold text-[#818181] ">
+                                            Read More
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h1 className="mt-[30px] mb-[17px] block font-poppins text-2xl font-semibold text-[#5E5252] md:hidden">
+                    MyProgress
                 </h1>
-            </div>
+                <div className="">
+                    <h1 className="font-poppins text-xl font-semibold">
+                        My Targeted Skills
+                    </h1>
+                    <div className=" mt-[9px] h-full w-full rounded-[15px] bg-[#FFFFFF]  md:w-[212px] lg:w-[233px] xl:w-[309px] 2xl:w-[367px]  ">
+                        <ul className="flex flex-col gap-y-[22px]">
+                            {data.length > 0 &&
+                                data.map((item, index) => (
 
-            <main className='flex items-center justify-between w-full flex-wrap-reverse gap-8'>
-                {/* main */}
-                <Main />
-
-                {/* right sidebar */}
-                <RightSidebar />
-            </main>
-        </div>
-    )
-}
-
-export default Progress;
-
-
-// main
-const Main = () => {
-    return (
-        <div className='bg-white rounded-2xl sm:flex-1 sm:w-fit w-full max-h-fit py-4 px-8'>
-            {/* top */}
-            <Top />
-
-            {/* center */}
-            <div className='flex items-center justify-between w-full flex-wrap mt-14 mx-auto gap-5'>
-                {/* steps */}
-                {/* for lg */}
-                <Steps />
-                {/* for sm */}
-                <StepsMobile />
-
-                {/* sidebox */}
-                <Sidebox />
-            </div>
-        </div>
-    )
-}
-
-
-// Main's top
-const Top = () => {
-    return (
-        <div className='flex items-center justify-between w-full'>
-            {/* image and subject */}
-            <div className='flex items-center justify-center gap-3'>
-                <div className='relative w-14 h-14'>
-                    <Image
-                        src='/Images/revuserimg.png'
-                        alt='tutor'
-                        objectFit='contain'
-                        layout='fill'
-                    />
-                </div>
-                <div className='flex flex-col items-start justify-center gap-2'>
-                    <h2 className='font-bold text-xl'>
-                        Gardening
-                    </h2>
-                    <small className='text-[#5F5F5F] font-medium'>
-                        Annette Black Sessions for gardening
-                    </small>
-                </div>
-            </div>
-
-            <button className='border-none text-[#5B5151] font-medium flex items-center justify-center gap-1'>
-                <AiOutlineLeft /> Back
-            </button>
-        </div>
-    )
-}
-
-
-// steps
-const Steps = () => {
-    return (
-        <div className='overflow-y-scroll w-[300px] max-h-[450px]'>
-            <div className='hidden md:flex flex-col items-center font-roboto'>
-                {/* 1st */}
-                <div className='flex items-start w-full justify-between gap-3'>
-                    <div className='flex flex-col gap-1 items-end'>
-                        <p>
-                            Session 1
-                        </p>
-                        <p className='text-[#888888]'>
-                            Introduction
-                        </p>
-                    </div>
-
-                    {/* check */}
-                    <div className='flex items-center justify-center flex-col'>
-                        <TickGreen />
-                    </div>
-
-                    {/* chip */}
-                    <small className='text-[#20C374] font-medium mt-2'>
-                        completed
-                    </small>
-                </div>
-
-                {/* lines */}
-                <VerticalLines />
-
-                {/* 2nd */}
-                <div className='flex items-start w-full justify-between gap-3'>
-                    <div className='flex flex-col gap-1 items-end'>
-                        <p>
-                            Session 2
-                        </p>
-                        <p className='text-[#888888]'>
-                            Introduction
-                        </p>
-                    </div>
-
-                    {/* check */}
-                    <div className='flex items-center justify-center flex-col mt-1'>
-                        <p className='w-[45px] h-[45px] rounded-full text-white text-2xl bg-[#00E676] flex items-center justify-center font-semibold'>
-                            2
-                        </p>
-                    </div>
-
-                    {/* chip */}
-                    <small className='font-medium rounded-md mt-2 text-[#1976D2]'>
-                        In Progress
-                    </small>
-                </div>
-
-                {/* lines */}
-                <VerticalLines />
-
-                {/* 3nd */}
-                <div className='flex items-start w-full justify-between gap-3'>
-                    <div className='flex flex-col gap-1 items-end'>
-                        <p>
-                            Session 3
-                        </p>
-                        <p className='text-[#888888]'>
-                            Introduction
-                        </p>
-                    </div>
-
-                    {/* check */}
-                    <div className='flex items-center justify-center flex-col'>
-                        <TickGreen />
-                    </div>
-
-                    {/* chip */}
-                    <small className='text-[#20C374] font-medium mt-2'>
-                        completed
-                    </small>
-                </div>
-
-                {/* lines */}
-                <VerticalLines />
-            </div>
-        </div>
-    )
-}
-
-
-// steps for modile
-const StepsMobile = () => {
-    return (
-        <div className='overflow-x-scroll h-[150px] max-w-full'>
-            <div className='md:hidden flex items-center justify-start h-full w-fit'>
-                {/* 1st */}
-                <div className='flex flex-col items-center justify-between h-full'>
-                    {/* chip */}
-                    <small className='text-[#20C374] font-medium mt-2'>
-                        completed
-                    </small>
-
-                    {/* check */}
-                    <div className='flex items-center justify-center flex-col'>
-                        <TickGreen />
-                    </div>
-
-                    <div className='flex flex-col gap-1 items-center'>
-                        <p>
-                            Session 1
-                        </p>
-                        <p className='text-[#888888]'>
-                            Introduction
-                        </p>
-                    </div>
-                </div>
-
-                {/* lines */}
-                <HorizontalLines />
-
-                {/* 2nd */}
-                <div className='flex flex-col items-center justify-between h-full'>
-                    {/* chip */}
-                    <small className='font-medium rounded-md mt-2 text-[#1976D2]'>
-                        In Progress
-                    </small>
-
-                    {/* check */}
-                    <div className='flex items-center justify-center flex-col mt-1'>
-                        <p className='w-[45px] h-[45px] rounded-full text-white text-2xl bg-[#00E676] flex items-center justify-center font-semibold'>
-                            2
-                        </p>
-                    </div>
-
-                    <div className='flex flex-col gap-1 items-center'>
-                        <p>
-                            Session 2
-                        </p>
-                        <p className='text-[#888888]'>
-                            Introduction
-                        </p>
-                    </div>
-                </div>
-
-                {/* lines */}
-                <HorizontalLines />
-
-                {/* 3nd */}
-                <div className='flex flex-col items-center justify-between h-full'>
-                    {/* chip */}
-                    <small className='font-medium rounded-md mt-2 text-[#1976D2]'>
-                        In Progress
-                    </small>
-
-                    {/* check */}
-                    <div className='flex items-center justify-center flex-col mt-1'>
-                        <p className='w-[45px] h-[45px] rounded-full text-white text-2xl bg-[#00E676] flex items-center justify-center font-semibold'>
-                            3
-                        </p>
-                    </div>
-
-                    <div className='flex flex-col gap-1 items-center'>
-                        <p>
-                            Session 3
-                        </p>
-                        <p className='text-[#888888]'>
-                            Introduction
-                        </p>
+                                    <div
+                                        key={index}
+                                        onClick={() => progress(item, index)}
+                                        className={`flex gap-2 hover:cursor-pointer md:gap-4 p-4 ${index === indexValue ? "bg-[#EEEEEE] " : null} `}
+                                    >
+                                        <div>
+                                            <Image
+                                                src={item.image}
+                                                alt="Picture of the author"
+                                                width={58}
+                                                height={58}
+                                            />
+                                        </div>
+                                        <div className="">
+                                            <h1 className="text-xl font-semibold md:text-base lg:text-xl">
+                                                {item.username}
+                                            </h1>
+                                            <h1 className="text-lg font-medium md:text-sm lg:text-lg">
+                                                {item.profession}
+                                            </h1>
+                                        </div>
+                                    </div>
+                                ))}
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -254,164 +338,4 @@ const StepsMobile = () => {
     )
 }
 
-
-// util lines vertical
-const HorizontalLines = () => {
-    return (
-        <>
-            <span className='w-14 h-[2px] bg-[#9E9E9E] relative bottom-[10px]' />
-            <span className='h-2 w-[8px] rounded-full bg-[#9E9E9E] relative bottom-[10px]' />
-            <span className='w-14 h-[2px] bg-[#9E9E9E] ml-4 relative bottom-[10px]' />
-        </>
-    )
-}
-
-
-// util lines vertical
-const VerticalLines = () => {
-    return (
-        <>
-            <span className='h-14 w-[2px] bg-[#9E9E9E] relative left-[10px]' />
-            <span className='w-2 h-[8px] rounded-full bg-[#9E9E9E] relative left-[10px]' />
-            <span className='h-14 w-[2px] bg-[#9E9E9E] mt-4 relative left-[10px]' />
-        </>
-    )
-}
-
-
-// sidebox
-const Sidebox = () => {
-    return (
-        <div className='flex flex-col gap-3 p-3 border-2 border-[#C8C8C8] rounded-lg sm:w-[397px] w-full h-full font-roboto overflow-y-scroll'>
-            {/* session */}
-            <div className='flex flex-col w-full gap-1'>
-                <div className='flex items-center justify-between'>
-                    <p className='font-medium text-[#484848]'>
-                        Session 1
-                    </p>
-                    <small className='font-bold text-[#20C374]'>
-                        completed
-                    </small>
-                </div>
-                <div className='flex items-center'>
-                    <p className='font-medium text-[#8C8C8C]'>
-                        Introduction
-                    </p>
-                </div>
-                <div className='flex items-center justify-between'>
-                    <p className='font-medium text-[#8C8C8C]'>
-                        Date - 5-March-2022
-                    </p>
-                    <button className='flex items-center justify-center'>
-                        <FiEdit />
-                    </button>
-                </div>
-            </div>
-
-            {/* session agenda */}
-            <div className='flex flex-col gap-2'>
-                <p className='font-bold text-[#484848]'>
-                    Session Agenda
-                </p>
-                <p className='text-[#414141] whitespace-normal text-[14px]'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum duis orci blandit commodo cursus
-                    <br />
-                    lacus adipiscing molestie. Suspendisse enim dui id sed id lectus pharetra eleifend. Faucibus sit ut cras scelerisque. Dolor tortor sed placerat dui sociis
-                </p>
-                <div className='flex justify-end w-full'>
-                    <button className='font-bold text-[#818181] text-[12px]'>
-                        Read more
-                    </button>
-                </div>
-            </div>
-
-            {/* session tutor remark */}
-            <div className='flex flex-col gap-2'>
-                <p className='font-bold text-[#484848]'>
-                    Post Session Tutor Remarks
-                </p>
-                <p className='text-[#414141] whitespace-normal text-[14px]'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum duis orci blandit commodo cursus
-                    <br />
-                    lacus adipiscing molestie. Suspendisse enim dui id sed id lectus pharetra eleifend. Faucibus sit ut cras scelerisque. Dolor tortor sed placerat dui sociis
-                </p>
-                <div className='flex justify-end w-full'>
-                    <button className='font-bold text-[#818181] text-[12px]'>
-                        Read more
-                    </button>
-                </div>
-            </div>
-        </div>
-    )
-}
-
-
-// right sidebar
-const RightSidebar = () => {
-    return (
-        <div className='flex flex-col sm:w-[309px] w-full md:h-[600px] h-fit gap-2'>
-            <p className='pl-1 font-semibold text-lg tracking-wide text-[#414141]'>
-                My Targeted skills
-            </p>
-            {/* skills */}
-            <div className='flex flex-col items-center gap-2 bg-white rounded-2xl w-full md:h-full md:max-h-full max-h-[330px] py-3 overflow-y-scroll'>
-                {/* map on it */}
-                <SkillsCard />
-                <SkillsCard />
-                <SkillsCard />
-                <SkillsCard />
-                <SkillsCard />
-                <SkillsCard />
-                <SkillsCard />
-                <SkillsCard />
-                <SkillsCard />
-                <SkillsCard />
-            </div>
-        </div>
-    )
-}
-
-
-// skills card
-const SkillsCard = () => {
-    return (
-        <div className='w-full h-[75px] flex flex-1 items-center justify-start md:gap-4 gap-6 md:pl-5 pl-8 py-2 rounded-md'>
-            {/* Image */}
-            <div className='relative w-12 h-12'>
-                <Image
-                    src='/Images/revuserimg.png'
-                    alt='tutor'
-                    objectFit='contain'
-                    layout='fill'
-                />
-            </div>
-
-            <div className='flex flex-col items-start justify-center'>
-                <h2 className='font-semibold text-lg text-[#565555] tracking-wide'>
-                    Arlene McCoy
-                </h2>
-                <p className='text-[#5F5F5F] font-medium'>
-                    Gardening
-                </p>
-            </div>
-        </div>
-    )
-}
-
-
-// circle green
-// #2E9C3F
-
-// line
-// #9E9E9E
-
-// secont text color
-// #888888
-
-// in progress color
-// #1976D2
-// its bg
-// #F6F4FD
-
-// circle border and text color
-// #9E9E9E
+export default MyProgress

@@ -1,182 +1,41 @@
-import React from 'react'
+import React from 'react';
 
 const PaymentHistory = () => {
     return (
-        <div className="md-[1px] h1wi ml-[1px] mb-[1px] bg-white h-[calc(100vh-150px)] max-h-fit capitalize lg:ml-[30px] lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl font-poppins">
-            <div className="flex justify-between p-5 sm:px-8">
-                <h1 className="text-2xl font-semibold text-[#5E5252]">
-                    Payment history
-                </h1>
-                <h1 className="font-bold text-[#3F97FF]">Update Billing Info</h1>
+        <div className='bg-white lg:ml-[33px] lg:mt-[31px] lg:rounded-[18px] min-w-fit font-poppins pb-[263px]'>
+            <div className='flex justify-between border-b'>
+                <h1 className='font-semibold text-[16px] s:text-[22px] sm:text-2xl  text-[#5E5252] sm:pl-[50px] pt-[11px] lg:pt-[20px] pb-[11px] lg:pb-[19px] ml-[16px] lg:ml-0'>Payment History</h1>
+                <h1 className='font-semibold text-[14px] sm:text-[18px]  text-[#3F97FF] sm:pr-[33px] pt-[11px] lg:pt-[30px] pb-[22px] mr-[16px] lg:mr-0'>Update Billing Info</h1>
+            </div>
+            <div >
+                <table className=' flex flex-row sm:flex-col justify-between'>
+                    <thead className='pl-[16px] sm:pl-0'>
+                        <tr className='sm:border-b h-[57px] sm:grid sm:grid-cols-4 items-center text-[#858585]'>
+                            <td className='sm:pl-[59px] block sm:inline mt-4 sm:mt-0'>Date</td>
+                            <td className='block sm:inline mt-[15px] sm:mt-0'>Hours</td>
+                            <td className='block sm:inline mt-[14px] sm:mt-0'>Subject</td>
+                            <td className='sm:text-right sm:pr-[33px] text-[#3F97FF] text-[14px] block sm:inline mt-4 sm:mt-0'>Download All</td>
+                        </tr>
+                    </thead>
+
+                    <tbody className='pr-[18px] sm:pr-0'>
+                        <tr className='sm:border-b h-[57px] sm:grid sm:grid-cols-4 items-center text-[#5F5F5F]'>
+                            <td className='sm:pl-[59px] block text-right sm:text-left sm:inline mt-4 sm:mt-0'>8 Dec 2021</td>
+                            <td className='block sm:inline text-right sm:text-left mt-[15px] sm:mt-0'>1hr</td>
+                            <td className='block sm:inline text-right sm:text-left mt-[14px] sm:mt-0'>IT Project Management</td>
+                            <td className='text-right sm:pr-[33px] text-[#3F97FF] text-[14px] block sm:inline mt-4 sm:mt-0'>Get Receipt</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div className='border-t mx-[37px] mt-[17px] sm:border-0 sm:mt-0'></div>
+                <div className='text-center pt-[47px] pb-[30px] sm:hidden'>
+                    <button className='bg-[#FC4D6D] px-[70px] xs:px-[85px] s:px-[120px]  h-[40px]  rounded-[8px] text-[#FFFFFF]'>Save Settings</button>
+                </div>
             </div>
 
-            <hr className="text-[#E2E2E2]" />
-
-            {/* for lg devices */}
-            <div className="hidden sm:block text-md capitalize font-medium w-full">
-                <HistoryLG />
-            </div>
-
-            {/* for sm devices */}
-            <div className="block sm:hidden text-md capitalize font-medium w-full">
-                <HistorySM />
-            </div>
         </div>
     )
 }
 
 export default PaymentHistory
-
-// for lg devices
-const HistoryLG = () => {
-    return (
-        <div className='flex flex-col justify-center w-full'>
-            {/* headings */}
-            <div className='flex items-center justify-between w-full p-5 px-8 text-[#858585]'>
-                <p>
-                    Date
-                </p>
-                <p>
-                    Hours
-                </p>
-                <p>
-                    Subject
-                </p>
-                <p className='text-[#3F97FF] cursor-pointer'>
-                    Download All
-                </p>
-            </div>
-
-            {/* divider */}
-            <hr className="text-[#E2E2E2]" />
-
-            {/* details */}
-            <div className='flex items-center justify-between w-full p-5 px-8 text-[#5F5F5F]'>
-                <p>
-                    8 Dec 2021
-                </p>
-                <p>
-                    1hr
-                </p>
-                <p>
-                    IT Project Management
-                </p>
-                <p className='text-[#3F97FF] cursor-pointer'>
-                    Get Reciept
-                </p>
-            </div>
-
-            {/* divider */}
-            <hr className="text-[#E2E2E2]" />
-        </div>
-    )
-}
-
-
-// for sm devices
-const HistorySM = () => {
-    return (
-        <div className='flex flex-col justify-center w-full'>
-            {/* date */}
-            <div className='flex items-center justify-between w-full py-3 px-8 text-[#858585]'>
-                <p>
-                    Date
-                </p>
-                <p className='text-[#5F5F5F]'>
-                    8 Dec 2021
-                </p>
-            </div>
-
-            {/* Hours */}
-            <div className='flex items-center justify-between w-full py-3 px-8 text-[#858585]'>
-                <p>
-                    Hours
-                </p>
-                <p className='text-[#5F5F5F]'>
-                    1hr
-                </p>
-            </div>
-
-            {/* Subject */}
-            <div className='flex items-center justify-between w-full py-3 px-8 text-[#858585]'>
-                <p>
-                    Subject
-                </p>
-                <p className='text-[#5F5F5F]'>
-                    IT project Management
-                </p>
-            </div>
-
-            {/* download */}
-            <div className='flex items-center justify-between w-full py-3 px-8 text-[#3F97FF]'>
-                <p className='cursor-pointer'>
-                    Download
-                </p>
-                <p className='cursor-pointer'>
-                    Get Receipt
-                </p>
-            </div>
-        </div>
-    )
-}
-
-
-// {/* Date */}
-// <div className='flex sm:flex-col sm:justify-center justify-between'>
-// <p className='py-4 px-8 text-[#858585]'>
-//     Date
-// </p>
-
-// <hr className="text-[#E2E2E2]" />
-
-// <p className='py-4 px-8 text-[#5F5F5F]'>
-//     8 Dec 2021
-// </p>
-
-// <hr className="text-[#E2E2E2]" />
-// </div>
-
-// {/* Hours */}
-// <div className='flex sm:flex-col sm:justify-center justify-between'>
-// <p className='py-4 px-8 text-[#858585]'>
-//     Hours
-// </p>
-
-// <hr className="text-[#E2E2E2]" />
-
-// <p className='py-4 px-8 text-[#5F5F5F]'>
-//     1hr
-// </p>
-
-// <hr className="text-[#E2E2E2]" />
-// </div>
-
-// {/* Subject */}
-// <div className='flex sm:flex-col sm:justify-center justify-between'>
-// <p className='py-4 px-8 text-[#858585]'>
-//     Subject
-// </p>
-
-// <hr className="text-[#E2E2E2]" />
-
-// <p className='py-4 px-8 text-[#5F5F5F]'>
-//     IT Project Management
-// </p>
-
-// <hr className="text-[#E2E2E2]" />
-// </div>
-
-// {/* Download */}
-// <div className='flex sm:flex-col sm:justify-center justify-between text-[#3F97FF]'>
-// <p className='py-4 px-8'>
-//     Download All
-// </p>
-
-// <hr className="text-[#E2E2E2]" />
-
-// <p className='py-4 px-8'>
-//     Get Reciept
-// </p>
-
-// <hr className="text-[#E2E2E2]" />
-// </div>
