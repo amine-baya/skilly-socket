@@ -18,6 +18,7 @@ const data = [
       'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg',
   },
 ]
+
 function NameAndLogin() {
   const initialValues = {
     verifyPassword: '',
@@ -28,9 +29,11 @@ function NameAndLogin() {
     lastName: '',
     firstName: '',
   }
+
   const onSubmit = (data) => {
     console.log('value', data)
   }
+
   return (
     <>
       <div>
