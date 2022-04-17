@@ -1,6 +1,8 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { useRouter } from "next/router";
+import Link from 'next/link'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+
+import { countryList } from '../utils/constants'
 
 function CourseCart({
   coverImg,
@@ -13,10 +15,10 @@ function CourseCart({
   tutorData,
   setSelectedTutor,
 }) {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
-    <div className="flex snap-center rounded-md transition-all ease-in-out bg-[#ffffff]">
+    <div className="flex snap-center rounded-md bg-[#ffffff] transition-all ease-in-out">
       <div className="w-[350px] overflow-hidden rounded-2xl  pb-[20px] font-poppins shadow-xl ring-2 ring-[#FC4D6D] ring-opacity-10">
         <CoverSection />
         <TutorDetails
@@ -43,28 +45,31 @@ function CourseCart({
 
   function CoverSection() {
     return (
-      <div className="relative  h-[210px] overflow-hidden rounded-t-2xl rounded-br-[30px]">
-        <Image
-          placeholder="blur"
-          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/RQAAuEB4mUJ9Y0AAAAASUVORK5CYII="
-          // priority
-          src={coverImg}
-          height={191}
-          width={383}
-          alt="user"
-        />
+      <div className="relative  h-[210px] cursor-pointer overflow-hidden rounded-t-2xl rounded-br-[30px]">
+        <Link href={`/tutors/${tutorData._id}`}>
+          <Image
+            placeholder="blur"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/RQAAuEB4mUJ9Y0AAAAASUVORK5CYII="
+            // priority
+            src={coverImg}
+            height={191}
+            width={383}
+            alt="user"
+          />
+        </Link>
         <div className="transparent-box absolute top-0 rounded-br-3xl px-[23px] py-[10px] text-center font-poppins text-[12px] font-bold uppercase text-white ">
           {topRightTitle}
         </div>
 
         <div className="absolute top-[10px] right-[18px]">
           <div className="relative h-[18px] w-[14px] cursor-pointer">
-            <Image
-              src="/Images/CourseCart/Bookmark.png"
+            {/* <Image
+              src={countryLogo}
               layout="fill"
               objectFit="contain"
               alt="bookmark"
-            />
+            /> */}
+            <span>{countryLogo}</span>
           </div>
         </div>
       </div>
@@ -80,7 +85,12 @@ function CourseCart({
           <Image src={tutorImg} alt="tutor" height={75} width={75} />
         </div>
         <div className="flex gap-[8px]   ">
-          <span onClick={() => router?.push('/tutorProfile')} className="text-[14px] font-semibold cursor-pointer">{tutorName}</span>
+          <span
+            onClick={() => router?.push(`/tutors/${tutorData.id}`)}
+            className="cursor-pointer text-[14px] font-semibold"
+          >
+            {tutorName}
+          </span>
           <div>
             <Image
               className="self-center"
@@ -91,13 +101,14 @@ function CourseCart({
             />
           </div>
           <div>
-            <Image
+            {/* <Image
               className="self-center"
-              src={countryLogo}
+              src={String(countryLogo)}
               width={14}
               height={15}
               alt="country"
-            />
+            /> */}
+            <span>{countryLogo}</span>
           </div>
         </div>
       </div>
@@ -125,7 +136,22 @@ function CourseCart({
             height={15}
             alt="voice"
           />
-          <span>English (Native), Hindi (Conversational) +1</span>
+          <span>
+            {tutorData.native_language
+              ? tutorData.native_language + ' (Native), '
+              : ''}
+            {tutorData.other_languages && tutorData.other_languages.length > 0
+              ? tutorData.other_languages[0] +
+                (tutorData.other_languages.length > 1
+                  ? ' + ' + (tutorData.other_languages.length - 1)
+                  : '')
+              : ''}
+            {tutorData.other_languages
+              ? tutorData.other_languages.length === 0
+                ? '-'
+                : ''
+              : ''}
+          </span>
         </span>
       </div>
     )
@@ -170,7 +196,7 @@ function CourseCart({
   function Description() {
     return (
       <div
-        className={` px-4 font-monts text-xs font-semibold capitalize text-[#606060] whitespace-normal`}
+        className={` whitespace-normal px-4 font-monts text-xs font-semibold capitalize text-[#606060]`}
       >
         <span className="font-extrabold">Brief :</span> dolor sit amet,
         consectetur elit. Fringilla enim, at rhoncus nisl, condimentum,Fringilla

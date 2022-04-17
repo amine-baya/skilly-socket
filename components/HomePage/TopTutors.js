@@ -12,6 +12,7 @@ function TopTutors() {
                 topRightTitle={'top tutors'}
                 coverImg="/Images/CourseCart/girl-using-tablet.png"
                 tutorName={'Radhakishan J.'}
+                tutorData={{ _id: 'sadfasf' }}
                 countryLogo={'/Images/CourseCart/united-kingdom.svg'}
                 tutorImg="/Images/CourseCart/girl-looking-up.png"
               />
@@ -26,6 +27,7 @@ function TopTutors() {
                 topRightTitle={'top tutors'}
                 coverImg="/Images/CourseCart/girl-using-tablet.png"
                 tutorName={'Radhakishan J.'}
+                tutorData={{ _id: 'sadfasf' }}
                 countryLogo={'/Images/CourseCart/united-kingdom.svg'}
                 tutorImg={'/Images/CourseCart/girl-looking-up.png'}
               />

@@ -7,15 +7,15 @@ import { FiCheckCircle } from 'react-icons/fi'
 import NextAndBackBtn from '../../../components/TutorDashboardRegistration/NextAndBackBtn'
 import BlueTickLine from '../../../components/TutorDashboardRegistration/BlueTick'
 import Server from '../../../utils/Server'
-import {
-  updateUserProfilePic,
-  uploadUserProfilePic,
-} from '../../../utils/constants'
+import { baseUrl, uploadUserProfilePic } from '../../../utils/constants'
 import { getLocalStorage, updateUser } from '../../../utils/cookies'
+import FormData from 'form-data'
+import axios from 'axios'
+import { getCookie } from 'cookies-next'
 
 function ProfilePhoto() {
   // already written code
-  const [profile_img, set_profile_img] = useState('')
+  const [profile_img, set_profile_img] = useState(new FormData())
   const [image, setImage] = useState({ preview: '', raw: '' })
 
   const [user_data, set_user_data] = useState({})
@@ -34,7 +34,10 @@ function ProfilePhoto() {
     data.append('profile_pic', acceptedFiles[0], acceptedFiles[0].name)
     const response = await Server.post(uploadUserProfilePic, data)
     if (response.success) {
-      set_profile_img(response.data.file_name)
+      profile_img.set('profile_pic', acceptedFiles[0])
+
+      console.log(profile_img)
+      set_profile_img(profile_img)
     }
   }
   const photoHandleChange = (e) => {
@@ -44,6 +47,9 @@ function ProfilePhoto() {
         preview: URL.createObjectURL(e.target.files[0]),
         raw: e.target.files[0],
       })
+      profile_img.set('profile_pic', e.target.files[0])
+      set_profile_img(profile_img)
+      console.log(profile_img)
     }
   }
   const handleSubmit = async () => {
@@ -52,11 +58,23 @@ function ProfilePhoto() {
       Router.push('/tutorDashboard/myprofile/video')
     } else {
       console.log('uploading profile picture')
-      console.log(profile_img)
-      const user_update = await Server.put(updateUserProfilePic, {
-        profile_img,
+      console.log(profile_img.profile_pic)
+      const response = await axios({
+        method: 'post',
+        url: baseUrl + uploadUserProfilePic,
+        data: profile_img,
+        headers: {
+          'Content-Type': `multipart/form-data`,
+          Authorization: `BEARER ${
+            JSON.parse(getCookie('token')).access_token
+          }`,
+        },
       })
-      if (user_update.success) {
+
+      // const user_upload = await Server.post(uploadUserProfilePic, {
+      //   profile_img,
+      // })
+      if (response.success) {
         updateUser({ profile_img }, () => {
           Router.push('/tutorDashboard/myprofile/video')
         })
@@ -77,7 +95,9 @@ function ProfilePhoto() {
           })
         )
       )
-      set_profile_img(acceptedFiles[0].path)
+      profile_img.set('profile_pic', acceptedFiles[0])
+      set_profile_img(profile_img)
+      console.log(profile_img)
     },
   })
 
