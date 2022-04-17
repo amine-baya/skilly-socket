@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { AiOutlineDown } from 'react-icons/ai'
 
@@ -7,9 +7,18 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function SelectWithIcons({ people, changestyle, flag }) {
-  const [selected, setSelected] = useState(people[0])
+export default function SelectWithIcons({
+  people,
+  current,
+  changestyle,
+  flag,
+  update,
+}) {
+  const [selected, setSelected] = useState(people[current])
 
+  useEffect(() => {
+    update(selected.name)
+  }, [selected])
   return (
     <Listbox value={selected} onChange={setSelected}>
       {({ open }) => (
@@ -18,7 +27,7 @@ export default function SelectWithIcons({ people, changestyle, flag }) {
             <Listbox.Button className="relative flex w-full rounded-[10px] px-3 py-[5px]">
               <span className="flex items-center gap-2">
                 <img
-                  src={selected.avatar}
+                  src={selected.image}
                   alt=""
                   className="h-6 w-6 flex-shrink-0 rounded-full"
                 />
@@ -52,9 +61,9 @@ export default function SelectWithIcons({ people, changestyle, flag }) {
               leaveTo="opacity-0"
             >
               <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {people.map((person) => (
+                {people.map((person, i) => (
                   <Listbox.Option
-                    key={person.id}
+                    key={i}
                     className={({ active }) =>
                       classNames(
                         active ? 'bg-indigo-600 text-white' : 'text-gray-900',
@@ -67,7 +76,7 @@ export default function SelectWithIcons({ people, changestyle, flag }) {
                       <>
                         <div className="flex items-center">
                           <img
-                            src={person.avatar}
+                            src={person.image}
                             alt=""
                             className="h-6 w-6 flex-shrink-0 rounded-full"
                           />

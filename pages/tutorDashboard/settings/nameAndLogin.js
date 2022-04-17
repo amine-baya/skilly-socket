@@ -74,6 +74,9 @@ function NameAndLogin() {
                     className="h-11 w-[126px] border-none"
                     flag="center"
                     changestyle="font-extrabold"
+                    update={() => {
+                      return 0
+                    }}
                   />
                 </div>
                 <Field

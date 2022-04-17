@@ -1,15 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Router from 'next/router'
 import { Field, FieldArray, Form, Formik } from 'formik'
 import FormikControl from '../../../components/Utils/FormikComponents/FormikControl'
-import { updateUser } from '../../../utils/cookies'
+import { getLocalStorage, updateUser } from '../../../utils/cookies'
 // import TimeAvailabilityCard from '../../../components/Utils/FormikComponents/TimeAvailabilityCard'
 import { timezoneList } from '../../../utils/constants'
 import axios from 'axios'
 import Server from '../../../utils/Server'
 
 function TimeAvailability() {
-  const initialValues = {
+  const [user, setUser] = useState({})
+  const [flag, setFlag] = useState(false) // turns true when all data is loaded from localstorage
+  const [currentTimezone, setCurrentTimezone] = useState('')
+  const [initialValues, setInitialValues] = useState({
     monday: [
       {
         from: '',
@@ -52,7 +55,30 @@ function TimeAvailability() {
         to: '',
       },
     ],
-  }
+  })
+  // console.log(initialValues)
+  useEffect(() => {
+    const user = getLocalStorage('user')
+    setUser(user)
+  }, [])
+  useEffect(() => {
+    if (user.availability) {
+      let _in = {}
+      for (let i = 0; i < user.availability.length; i++) {
+        let day = user.availability[i].day
+        _in = initialValues
+        _in[day] = user.availability[i].slots
+        // console.log(day, user.availability[i].slots)
+        // console.log(initialValues['sunday'])
+      }
+      setInitialValues(_in)
+      console.log(initialValues)
+      setFlag(true)
+    }
+    if (user.timezone) {
+      setCurrentTimezone(user.timezone)
+    }
+  }, [user])
 
   const [timezone, setTimezone] = useState('America/Los_Angeles')
 
@@ -73,11 +99,13 @@ function TimeAvailability() {
     if (availability.length === 0) {
       return alert('Please Select Atleast One Slot')
     }
+    console.log(availability)
 
     const payload = {
       timezone,
       availability,
     }
+    // console.log('payload is', payload)
 
     const user_update = await Server.put(
       '/tutor/update/time-availability',
@@ -97,111 +125,121 @@ function TimeAvailability() {
         <h1 className="text-3xl font-semibold">Time Availability</h1>
       </div>
       <hr />
-      <Formik
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        enableReinitialize
-      >
-        {(formik) => {
-          // console.log('Formik props', formik)
-          return (
-            <Form>
-              <div className=" my-10 p-5  xl:px-12">
-                <h1 className="text-2xl font-semibold">Set Your Timezone</h1>
-                <p className="my-4">
-                  A Correct Timezone Is Essential To Coordinate Sessions With
-                  International Students
-                </p>
+      {flag && (
+        <Formik
+          initialValues={initialValues}
+          onSubmit={onSubmit}
+          enableReinitialize={true}
+        >
+          {(formik) => {
+            // console.log('Formik props', formik)
+            return (
+              <Form>
+                <div className=" my-10 p-5  xl:px-12">
+                  <h1 className="text-2xl font-semibold">Set Your Timezone</h1>
+                  <p className="my-4">
+                    A Correct Timezone Is Essential To Coordinate Sessions With
+                    International Students
+                  </p>
 
-                <p className="mt-9 mb-6 font-semibold">
-                  {' '}
-                  Choose Your Timezone{' '}
-                </p>
+                  <p className="mt-9 mb-6 font-semibold">
+                    {' '}
+                    Choose Your Timezone{' '}
+                  </p>
 
-                <Field
-                  as="select"
-                  name="timezone"
-                  className="w-7/12 rounded-[10px] border border-[#C1C1C1] px-5 py-3 text-[#9E9E9E]"
-                  onChange={(e) => setTimezone(e.target.value)}
-                >
-                  {timezoneList.map((val, index) => {
-                    return (
-                      <option key={index} value={val}>
-                        {val}
-                      </option>
-                    )
-                  })}
-                </Field>
+                  <Field
+                    as="select"
+                    name="timezone"
+                    className="w-7/12 rounded-[10px] border border-[#C1C1C1] px-5 py-3 text-[#9E9E9E]"
+                    onChange={(e) => setTimezone(e.target.value)}
+                  >
+                    {timezoneList.map((val, index) => {
+                      if (currentTimezone === val) {
+                        return (
+                          <option key={index} value={val} selected="selected">
+                            {val}
+                          </option>
+                        )
+                      } else {
+                        return (
+                          <option key={index} value={val}>
+                            {val}
+                          </option>
+                        )
+                      }
+                    })}
+                  </Field>
 
-                <h1 className="mt-12 text-2xl font-semibold">
-                  Set Your Availability
-                </h1>
-                <p className="my-4 capitalize">
-                  availability shows your potential working hours.
-                  <br />
-                  students can book sessions at these time
-                </p>
-                <div className="space-y-6">
-                  <FormikControl
-                    control="timeAvailabilityCard"
-                    weekName="Monday"
-                    name="monday"
-                    formik={formik}
-                  />
-                  <FormikControl
-                    control="timeAvailabilityCard"
-                    weekName="Tuesday"
-                    name="tuesday"
-                    formik={formik}
-                  />
-                  <FormikControl
-                    control="timeAvailabilityCard"
-                    weekName="Wednesday"
-                    name="wednesday"
-                    formik={formik}
-                  />
-                  <FormikControl
-                    control="timeAvailabilityCard"
-                    weekName="Thursday"
-                    name="thursday"
-                    formik={formik}
-                  />
-                  <FormikControl
-                    control="timeAvailabilityCard"
-                    weekName="Friday"
-                    name="friday"
-                    formik={formik}
-                  />
-                  <FormikControl
-                    control="timeAvailabilityCard"
-                    weekName="Saturday"
-                    name="saturday"
-                    formik={formik}
-                  />
-                  <FormikControl
-                    control="timeAvailabilityCard"
-                    weekName="Sunday"
-                    name="sunday"
-                    formik={formik}
-                  />
+                  <h1 className="mt-12 text-2xl font-semibold">
+                    Set Your Availability
+                  </h1>
+                  <p className="my-4 capitalize">
+                    availability shows your potential working hours.
+                    <br />
+                    students can book sessions at these time
+                  </p>
+                  <div className="space-y-6">
+                    <FormikControl
+                      control="timeAvailabilityCard"
+                      weekName="Monday"
+                      name="monday"
+                      formik={formik}
+                    />
+                    <FormikControl
+                      control="timeAvailabilityCard"
+                      weekName="Tuesday"
+                      name="tuesday"
+                      formik={formik}
+                    />
+                    <FormikControl
+                      control="timeAvailabilityCard"
+                      weekName="Wednesday"
+                      name="wednesday"
+                      formik={formik}
+                    />
+                    <FormikControl
+                      control="timeAvailabilityCard"
+                      weekName="Thursday"
+                      name="thursday"
+                      formik={formik}
+                    />
+                    <FormikControl
+                      control="timeAvailabilityCard"
+                      weekName="Friday"
+                      name="friday"
+                      formik={formik}
+                    />
+                    <FormikControl
+                      control="timeAvailabilityCard"
+                      weekName="Saturday"
+                      name="saturday"
+                      formik={formik}
+                    />
+                    <FormikControl
+                      control="timeAvailabilityCard"
+                      weekName="Sunday"
+                      name="sunday"
+                      formik={formik}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="col-span-12 my-10 flex gap-x-10 md:col-span-6">
-                <div>
-                  <button className="  w-auto rounded-lg border border-[#FC4D6D] bg-white px-3 py-1 text-lg font-medium text-[#FC4D6D] md:col-span-2 md:w-full">
-                    Skip For Now
-                  </button>
+                <div className="col-span-12 my-10 flex gap-x-10 md:col-span-6">
+                  <div>
+                    <button className="  w-auto rounded-lg border border-[#FC4D6D] bg-white px-3 py-1 text-lg font-medium text-[#FC4D6D] md:col-span-2 md:w-full">
+                      Skip For Now
+                    </button>
+                  </div>
+                  <div className="">
+                    <button className=" w-auto rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-7 py-1 text-lg font-medium text-white md:col-span-2 md:mt-0 md:w-full ">
+                      Next
+                    </button>
+                  </div>
                 </div>
-                <div className="">
-                  <button className=" w-auto rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-7 py-1 text-lg font-medium text-white md:col-span-2 md:mt-0 md:w-full ">
-                    Next
-                  </button>
-                </div>
-              </div>
-            </Form>
-          )
-        }}
-      </Formik>
+              </Form>
+            )
+          }}
+        </Formik>
+      )}
     </div>
   )
 }

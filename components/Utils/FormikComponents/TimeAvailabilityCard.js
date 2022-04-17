@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Field, FieldArray } from 'formik'
 import { WiDayHaze } from 'react-icons/wi'
 import { BsSun, BsCloudMoon } from 'react-icons/bs'
@@ -37,6 +37,10 @@ function TimeAvailabilityCard({ weekName, name, formik }) {
   const [indexValue, setIndexValue] = useState(0)
   const [indexData, setIndexData] = useState(0)
   const [checkBoxValue, setCheckBoxValue] = useState('')
+
+  useEffect(() => {
+    console.log('checkboxvalue', checkBoxValue)
+  }, [checkBoxValue])
 
   const timeHandler = (value, index) => {
     // setIndexData(index)

@@ -48,8 +48,11 @@ function ProfilePhoto() {
   }
   const handleSubmit = async () => {
     if (!profile_img) {
+      console.log('Could not find profile picture')
       Router.push('/tutorDashboard/myprofile/video')
     } else {
+      console.log('uploading profile picture')
+      console.log(profile_img)
       const user_update = await Server.put(updateUserProfilePic, {
         profile_img,
       })
@@ -60,7 +63,6 @@ function ProfilePhoto() {
       }
     }
   }
-
 
   // their merged code
   const [files, setFiles] = useState([])
@@ -75,6 +77,7 @@ function ProfilePhoto() {
           })
         )
       )
+      set_profile_img(acceptedFiles[0].path)
     },
   })
 
@@ -112,32 +115,27 @@ function ProfilePhoto() {
               </div>
             </div>
             <div className=" mb-20 flex">
-
-              <div
-                {...getRootProps({ className: 'dropzone lg:w-96 w-full ' })}
-              >
+              <div {...getRootProps({ className: 'dropzone lg:w-96 w-full ' })}>
                 <input {...getInputProps()} />
                 <p className="py-[147px] capitalize  ">
                   drag and drop your photo here
                 </p>
               </div>
-
             </div>
           </div>
 
           <div className="col-span-12 mt-6 space-y-8 md:col-span-6 md:mt-0">
             <p className="text-[22px] font-medium">Tips For An Amazing Photo</p>
             <div className="flex gap-3 ">
-              {files.length !== 0 ?
-                files.length &&
-                files?.map((file) => (
-                  <div className="  h-auto bg-blue-300" key={file.name}>
-                    <div >
-                      <img src={file?.preview} />
+              {files.length !== 0
+                ? files.length &&
+                  files?.map((file) => (
+                    <div className="  h-auto bg-blue-300" key={file.name}>
+                      <div>
+                        <img src={file?.preview} />
+                      </div>
                     </div>
-                  </div>
-                ))
-
+                  ))
                 : null}
             </div>
 
@@ -182,7 +180,10 @@ function ProfilePhoto() {
               </button>
             </div>
             <div className="">
-              <button onClick={() => handleSubmit()} className=" w-auto rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-7 py-1 text-lg font-medium text-white md:col-span-2 md:mt-0 md:w-full ">
+              <button
+                onClick={() => handleSubmit()}
+                className=" w-auto rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-7 py-1 text-lg font-medium text-white md:col-span-2 md:mt-0 md:w-full "
+              >
                 Save
               </button>
             </div>
