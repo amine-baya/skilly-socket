@@ -1,10 +1,10 @@
-import AboutTutor from '../components/TutorProfile/AboutTutor';
-import Resume from '../components/TutorProfile/Resume';
-import Reviews from '../components/TutorProfile/Reviews';
-import Schedule from '../components/TutorProfile/Schedule';
-import TutorHeroPage from '../components/TutorProfile/TutorHeroPage';
-import TutorHeroPageMobile from '../components/TutorProfile/TutorHeroPageMobile';
-import TutorFooter from "../components/TutorProfile/TutorFooter";
+import AboutTutor from '../components/TutorProfile/AboutTutor'
+import Resume from '../components/TutorProfile/Resume'
+import Reviews from '../components/TutorProfile/Reviews'
+import Schedule from '../components/TutorProfile/Schedule'
+import TutorHeroPage from '../components/TutorProfile/TutorHeroPage'
+import TutorHeroPageMobile from '../components/TutorProfile/TutorHeroPageMobile'
+import TutorFooter from '../components/TutorProfile/TutorFooter'
 
 function TutorProfile() {
   return (
@@ -19,6 +19,5 @@ function TutorProfile() {
     </div>
   )
 }
-
 
 export default TutorProfile

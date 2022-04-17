@@ -91,9 +91,10 @@ function BasicDetails() {
                       </label>
                       <SelectWithIcons
                         people={iconSelect}
+                        current={0}
                         changestyle="border-2 border-[#C1C1C1] rounded-[10px] "
                         flag="left"
-                        update={() => {
+                        uupdate={() => {
                           return 0
                         }}
                       />

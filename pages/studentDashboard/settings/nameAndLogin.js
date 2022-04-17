@@ -145,6 +145,7 @@ function NameAndLogin() {
                 <div>
                   <SelectWithIcons
                     people={data}
+                    current={0}
                     className="h-11 w-[126px] border-none"
                     flag="center"
                     changestyle="font-extrabold"
