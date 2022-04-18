@@ -2,7 +2,7 @@
 export const baseUrl = 'http://65.0.176.119:5087'
 export const typesenseUrl = 'http://13.233.137.22:3020/typesense/'
 export const baseUrlProfilePic =
-  'https://akbh.s3.ap-south-1.amazonaws.com/skillshare/user/profile_img/'
+  'https://akbh.s3.amazonaws.com/skillytree/user/profile_img/'
 
 // API's
 export const studentRegister = '/student/signup'

@@ -84,7 +84,13 @@ function CourseCart({
         <div
           className={` absolute  ${imgPosition}  mr-4 flex h-[75px] w-[75px] items-center justify-center rounded-full ring-2 ring-white`}
         >
-          <Image src={tutorImg} alt="tutor" height={75} width={75} />
+          <Image
+            src={tutorImg}
+            className="rounded-full"
+            alt="tutor"
+            height={75}
+            width={75}
+          />
         </div>
         <div className="flex gap-[8px]   ">
           <span

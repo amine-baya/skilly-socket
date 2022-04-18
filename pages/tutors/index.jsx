@@ -54,6 +54,7 @@ const Tutors = () => {
             let _obj = countryList.find((o) => o.name === dd.country)
             console.log(_obj)
             console.log(dd)
+            console.log(`${baseUrlProfilePic}${dd.profile_img}`)
             return (
               // <Link href={'/tutors'} passHref key={key}>
               <CourseCart
