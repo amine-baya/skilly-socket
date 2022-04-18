@@ -31,6 +31,10 @@ function Navbar() {
   let [showSearchOnLg, setShowSearchOnLg] = useState(false)
   const { route } = useRouter()
   const router = useRouter()
+  const [flag, setFlag] = useState(false)
+  useEffect(() => {
+    getLocalStorage('user') ? setFlag(flag) : setFlag(flag)
+  }, [])
   const sideLinks = [
     {
       name: 'Home',
@@ -90,7 +94,10 @@ function Navbar() {
   )
 
   useEffect(() => {
-    setOnDashboard(route.split('/')[1] === 'tutorDashboard')
+    setOnDashboard(
+      route.split('/')[1] === 'tutorDashboard' ||
+        route.split('/')[1] === 'studentDashboard'
+    )
     setOnStudentDashboard(route.split('/')[1] === 'studentDashboard')
   }, [route])
 
@@ -167,19 +174,23 @@ function Navbar() {
           <div className=" flex  items-center gap-12">
             {getCookie('token') ? (
               <>
+                <a
+                  onClick={(e) => {
+                    e.preventDefault()
+                    logout()
+                  }}
+                  className={`whitespace-nowrap  text-[18px]   font-[600] `}
+                >
+                  Logout
+                </a>
                 {!onDashboard && (
                   <>
-                    <a
-                      onClick={(e) => {
-                        e.preventDefault()
-                        logout()
-                      }}
-                      className={`whitespace-nowrap  text-[18px]   font-[600] `}
-                    >
-                      Logout
-                    </a>
                     <GradientBtn
-                      urlLink={'/tutorDashboard'}
+                      urlLink={
+                        getCookie('role') === 'TUTOR'
+                          ? '/tutorDashboard'
+                          : '/studentDashboard'
+                      }
                       btnName="Dashboard"
                       btnCss="text-sm   md:text-lg md:px-6  !mx-0 !px-6 !py-3  "
                     />
@@ -487,14 +498,16 @@ function NavSearchBox({ searchCss, click, reference }) {
         />
 
         {/* suggetion box */}
-        {searchText && <SuggetionBox results={searchResults} />}
+        {searchText && (
+          <SuggetionBox results={searchResults} update={setSearchResults} />
+        )}
       </div>
     </>
   )
 }
 
 // Suggetion Box
-export const SuggetionBox = ({ results }) => {
+export const SuggetionBox = ({ results, update }) => {
   const goToTutorProfile = (tutor_id) => {
     Router.push(`/tutors/${tutor_id}`)
     console.log(
@@ -510,8 +523,13 @@ export const SuggetionBox = ({ results }) => {
         return (
           <div
             key={val.id}
-            className="flex w-full cursor-pointer items-center justify-start gap-2 border-b border-[#C4C4C4] py-2 pl-1 sm:gap-4 sm:pl-6"
-            onClick={() => goToTutorProfile(val.id)}
+            className={`flex w-full cursor-pointer items-center justify-start gap-2  border-[#C4C4C4] py-2 pl-1 sm:gap-4 sm:pl-6 ${
+              index === results.length - 1 ? '' : 'border-b'
+            }`}
+            onClick={() => {
+              update([])
+              goToTutorProfile(val.id)
+            }}
           >
             {/* image */}
             <div className="relative h-[28px] w-[28px] overflow-hidden rounded-full">

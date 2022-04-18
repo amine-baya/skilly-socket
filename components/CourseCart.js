@@ -51,7 +51,9 @@ function CourseCart({
             placeholder="blur"
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/RQAAuEB4mUJ9Y0AAAAASUVORK5CYII="
             // priority
-            src={coverImg}
+            src={
+              coverImg ? coverImg : 'Images/CourseCart/girl-using-tablet.png'
+            }
             height={191}
             width={383}
             alt="user"

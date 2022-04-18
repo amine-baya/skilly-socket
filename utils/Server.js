@@ -36,7 +36,9 @@ Server.interceptors.response.use(
   function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    alert('ERROR ' + error.response.data.message)
+    if (typeof window !== 'undefined') {
+      alert('ERROR ' + error.response.data.message)
+    }
     // return Promise.reject(error)
     return false
   }

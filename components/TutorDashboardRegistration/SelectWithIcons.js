@@ -15,9 +15,12 @@ export default function SelectWithIcons({
   update,
 }) {
   const [selected, setSelected] = useState(people[current])
+  const [add, setAdd] = useState(0)
 
   useEffect(() => {
     update(selected.name)
+    let _tmp = people.findIndex((it) => it.name === selected.name)
+    setAdd(_tmp)
   }, [selected])
   return (
     <Listbox value={selected} onChange={setSelected}>
@@ -27,7 +30,7 @@ export default function SelectWithIcons({
             <Listbox.Button className="relative flex w-full rounded-[10px] px-3 py-[5px]">
               <span className="flex items-center gap-2">
                 <img
-                  src={selected.image}
+                  src={people[current].image}
                   alt=""
                   className="h-6 w-6 flex-shrink-0 rounded-full"
                 />
@@ -39,7 +42,9 @@ export default function SelectWithIcons({
                     />
                   </div>
                 ) : null}
-                <span className="block whitespace-nowrap">{selected.name}</span>
+                <span className="block whitespace-nowrap">
+                  {people[current].name}
+                </span>
               </span>
               <span className="pointer-events-none absolute right-0  my-auto ml-1 flex items-center pr-1">
                 {flag === 'left' ? (
@@ -60,7 +65,10 @@ export default function SelectWithIcons({
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              <Listbox.Options
+                className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                selected={people[selected]}
+              >
                 {people.map((person, i) => (
                   <Listbox.Option
                     key={i}

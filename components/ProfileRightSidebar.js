@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-function SideBar() {
+function SideBar({ tutor }) {
   const router = useRouter()
 
   return (
@@ -78,7 +78,7 @@ function SideBar() {
         </ul>
       </nav>
       <div className=" hidden h-auto w-auto cursor-pointer rounded-md bg-[#FC4D6D] py-2.5 px-[13px] font-roboto text-lg font-medium text-white lg:block">
-        <Link href="/tutors/" passHref>
+        <Link href={`/tutors/` + tutor?._id} passHref>
           <label>Preview Profile</label>
         </Link>
       </div>

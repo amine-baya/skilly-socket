@@ -45,7 +45,7 @@ function Layout({ children, tutor }) {
         {/* for tutor */}
         {route.split('/')[1] === 'tutorDashboard' &&
         route.split('/')[2] === 'myprofile' ? (
-          <ProfileRightSidebar />
+          <ProfileRightSidebar tutor={user} />
         ) : route.split('/')[1] === 'tutorDashboard' &&
           route.split('/')[2] === 'settings' ? (
           <SettingRightSideBar />

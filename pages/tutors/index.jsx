@@ -59,12 +59,20 @@ const Tutors = () => {
               <CourseCart
                 topRightTitle={'top tutors'}
                 key={key}
-                coverImg={`${baseUrlProfilePic}${dd.background_pic}`}
+                coverImg={
+                  dd.background_pic
+                    ? `${baseUrlProfilePic}${dd.background_pic}`
+                    : '/Images/CourseCart/girl-using-tablet.png'
+                }
                 tutorName={dd.tutor_name}
                 setOpenPopUp={setOpenPopUp}
                 setSelectedTutor={setSelectedTutor}
                 countryLogo={_obj ? _obj.emoji : ''}
-                tutorImg={`${baseUrlProfilePic}${dd.profile_img}`}
+                tutorImg={
+                  dd.profile_img
+                    ? `${baseUrlProfilePic}${dd.profile_img}`
+                    : '/Images/CourseCart/girl-looking-up.png'
+                }
                 tutorData={dd}
               />
 

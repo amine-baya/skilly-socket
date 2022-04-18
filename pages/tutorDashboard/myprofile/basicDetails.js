@@ -47,6 +47,9 @@ function BasicDetails() {
   useEffect(() => {
     set_user_data(getLocalStorage('user'))
     setLanguageData(languageOptions)
+    setNativeLanguage(user_data.native_language)
+    setEnglishFluency(user_data.english_fluency)
+    setCountryData(user_data.country)
   }, [])
   useEffect(() => {
     if (user_data && user_data.other_languages) {
@@ -121,11 +124,24 @@ function BasicDetails() {
   }
   let current = 0
   if (user_data.country) {
-    current = countryList.findIndex((it) => (it.name = user_data.country))
+    current = countryList.findIndex((it) => it.name == user_data.country)
   }
   const onSubmit = async (data) => {
     data['subjects_and_pricing'] = initialValues.subjects_and_pricing
     data['qualifications'] = user_data.qualifications
+    if (!data.native_language) {
+      data.native_language = user_data.native_language
+    }
+    if (!data.english_fluency) {
+      data.english_fluency = user_data.english_fluency
+    }
+    if (!data.other_languages) {
+      data.other_languages = user_data.other_languages
+    }
+    if (!data.country) {
+      data.country = user_data.country
+    }
+
     const user_update = await Server.put(updateBasicDetails, data)
     if (user_update.success) {
       updateUser({ ...data }, () => {
@@ -159,7 +175,7 @@ function BasicDetails() {
             _values.other_languages = addLanguageData
             console.log(JSON.stringify(values, null, 2))
             onSubmit(_values)
-            alert(JSON.stringify(values, null, 2))
+            // alert(JSON.stringify(values, null, 2))
           }}
         >
           {({ values }) => {
@@ -488,7 +504,7 @@ function BasicDetails() {
                             </div>
                           </div>
                         ))}
-                        <button
+                        {/* <button
                           type="button"
                           onClick={() =>
                             push({
@@ -502,7 +518,7 @@ function BasicDetails() {
                         >
                           <IoMdAddCircleOutline className="self-center text-[#2294CD]" />
                           Add Additional Qualification
-                        </button>
+                        </button> */}
                       </>
                     )}
                   </FieldArray>

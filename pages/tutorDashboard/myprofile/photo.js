@@ -7,7 +7,11 @@ import { FiCheckCircle } from 'react-icons/fi'
 import NextAndBackBtn from '../../../components/TutorDashboardRegistration/NextAndBackBtn'
 import BlueTickLine from '../../../components/TutorDashboardRegistration/BlueTick'
 import Server from '../../../utils/Server'
-import { baseUrl, uploadUserProfilePic } from '../../../utils/constants'
+import {
+  baseUrl,
+  uploadUserProfilePic,
+  updateUserProfilePic,
+} from '../../../utils/constants'
 import { getLocalStorage, updateUser } from '../../../utils/cookies'
 import FormData from 'form-data'
 import axios from 'axios'
@@ -71,12 +75,17 @@ function ProfilePhoto() {
         },
       })
 
-      // const user_upload = await Server.post(uploadUserProfilePic, {
-      //   profile_img,
-      // })
+      console.log('response')
+
+      const user_upload = await Server.put(updateUserProfilePic, {
+        profile_img: response.data.data.file_name,
+      })
       if (response.success) {
         console.log('profile picture uploaded')
-        Router.push('/tutorDashboard/myprofile/video')
+        if (user_upload) {
+          console.log('user profile picture update')
+          Router.push('/tutorDashboard/myprofile/video')
+        }
       }
     }
   }
