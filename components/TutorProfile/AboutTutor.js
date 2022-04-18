@@ -1,21 +1,26 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { PencilIcon } from '@heroicons/react/solid'
+import Image from 'next/image';
+import Link from 'next/link';
+import { PencilIcon } from '@heroicons/react/solid';
+import { openPopUps } from "../../Atoms/PopUpAtoms";
+import { useRecoilState } from "recoil";
+import DescriptionPopUp from './PopUps/DescriptionPopUp';
 
 function AboutTutor({ tutor, user }) {
+  const [openPopUp, setOpenPopUp] = useRecoilState(openPopUps);
+
   return (
-    <div className="snap-fullPage relative mx-auto flex flex-col items-start gap-4 px-4 sm:items-center lg:justify-center lg:gap-0">
+    <div className="snap-fullPage relative mx-auto flex flex-col items-start gap-4 sm:items-center lg:justify-center lg:gap-0">
       <TopTitle />
 
       {/* mainContainer For lg deivces */}
       <main className="hidden flex-wrap-reverse items-center justify-center gap-8 lg:flex">
         <Video />
-        <Description user={user} tutor={tutor} />
+        <Description user={user} tutor={tutor} setOpenPopUp={setOpenPopUp} />
       </main>
 
       {/* mainContainer For lg deivces */}
-      <main className="flex flex-col items-start justify-center gap-3 md:gap-6 lg:hidden">
-        <DescriptionPhone user={user} tutor={tutor} />
+      <main className="flex flex-col items-start justify-center gap-3 md:gap-6 lg:hidden px-4">
+        <DescriptionPhone user={user} tutor={tutor} setOpenPopUp={setOpenPopUp} />
         <VideoPhone />
       </main>
 
@@ -23,6 +28,13 @@ function AboutTutor({ tutor, user }) {
       <p className="absolute bottom-[-150px] -z-[10] hidden text-center font-poppins text-[350px] font-semibold tracking-widest text-[#F1F1F1] lg:block">
         SKILLS
       </p>
+
+      {/* DescriptionPopUp */}
+      {openPopUp.DescriptionPopUp && (
+        <div className='absolute flex items-center justify-center w-full h-full bg-gray-500/50'>
+          <DescriptionPopUp />
+        </div>
+      )}
     </div>
   )
 }
@@ -31,7 +43,7 @@ export default AboutTutor
 
 const TopTitle = () => {
   return (
-    <div className="flex flex-col items-start justify-center gap-2 font-poppins capitalize tracking-wide lg:items-center lg:gap-4">
+    <div className="flex flex-col items-start justify-center gap-2 font-poppins capitalize tracking-wide lg:items-center lg:gap-4 px-4">
       <p className="hidden font-bold text-[#FC4D6D] lg:inline-block">
         About us
       </p>
@@ -170,12 +182,13 @@ function VideoPhone(props) {
   )
 }
 
-const Description = ({ user, tutor }) => {
+const Description = ({ user, tutor, setOpenPopUp }) => {
   return (
     <div className="flex h-full w-full flex-col items-end justify-between gap-3 font-roboto sm:w-[467px]">
       {/* Edit Button */}
       {user._id == tutor._id ? (
-        <button className="flex items-center justify-center gap-3 font-semibold text-[#FC4D6D]">
+        <button onClick={() => setOpenPopUp({ ...false, DescriptionPopUp: true })}
+          className="flex items-center justify-center gap-3 font-semibold text-[#FC4D6D]">
           <span className="w-5">
             <PencilIcon />
           </span>
@@ -221,12 +234,13 @@ const Description = ({ user, tutor }) => {
 }
 
 // for md and sm devices
-const DescriptionPhone = ({ user, tutor }) => {
+const DescriptionPhone = ({ user, tutor, setOpenPopUp }) => {
   return (
     <div className="flex h-full w-full flex-col items-end justify-between gap-2 font-roboto sm:w-[467px] md:gap-3">
       {/* Edit Button */}
       {user._id == tutor._id ? (
-        <button className="flex items-center justify-center gap-3 font-semibold text-[#FC4D6D]">
+        <button onClick={() => setOpenPopUp({ ...false, DescriptionPopUp: true })}
+          className="flex items-center justify-center gap-3 font-semibold text-[#FC4D6D]">
           <span className="w-5">
             <PencilIcon />
           </span>

@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import StarFilled from "../../icons/StarFilled";
 import StarEmpty from "../../icons/StarEmpty";
+import { openPopUps } from "../../Atoms/PopUpAtoms";
+import { useRecoilState } from "recoil";
+import ReviewPopUp from './PopUps/ReviewPopUp';
 
 const Reviews = () => {
     const [showReview, setShowReview] = useState(0);     // storing index of reviews array
     const [review, setReview] = useState({});
+    const [openPopUp, setOpenPopUp] = useRecoilState(openPopUps);
 
     const reviews = [
         { title: 'Teaches Concepts in Depth', desc: 'I had been dreaming to learn guitar for 4 yrs. One day I visited Peppertree.com. I clicked "Buy a Trial Session". Later all happened automatically, I kept attending the amazing tutor online and she kept me motivated. Its been 4 weeks & 40 sessions.And woohoo! I just surprised all my friends at a party with my skills! Stop desiring a skill, just start with Peppertree!' },
@@ -21,20 +25,28 @@ const Reviews = () => {
     useEffect(() => {
         // initially it will show 0th index review
         showReviewFunction(showReview);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showReview])
 
     return (
-        <div className='snap-fullPage h-[calc(100vh-79px)] flex flex-col items-center sm:justify-evenly sm:gap-0 gap-16 bg-[#FFF7F7] px-4'>
-            <TopHeading />
+        <div className='snap-fullPage relative h-[calc(100vh-79px)] flex flex-col items-center sm:justify-evenly sm:gap-0 gap-16 bg-[#FFF7F7] px-4'>
+            <TopHeading setOpenPopUp={setOpenPopUp} />
 
             <ReviewContainer review={review} showReview={showReview} setShowReview={setShowReview} reviews={reviews} />
+
+            {/* ReviewPopUp */}
+            {openPopUp.ReviewPopUp && (
+                <div className='absolute flex items-center justify-center w-full h-full bg-gray-500/50'>
+                    <ReviewPopUp />
+                </div>
+            )}
         </div>
     )
 }
 
 export default Reviews;
 
-const TopHeading = () => {
+const TopHeading = ({ setOpenPopUp }) => {
     return (
         <div className='flex items-center justify-between xl:w-[1069px] min-w-[396px] w-full mx-auto font-monts'>
             <h2 className='text-[#5E5252] font-bold lg:text-[30px] md:text-[25px] sm:text-[22px] text-[18px]'>
@@ -56,7 +68,8 @@ const TopHeading = () => {
             </div>
 
             {/* button */}
-            <button className='w-[129.47px] h-[31px] sm:w-[213px] sm:h-[51px] sm:text-[16px] text-[12px] rounded-md text-[#FC4D6D] border-2 border-[#FC4D6D] font-poppins font-medium flex items-center justify-evenly'>
+            <button onClick={() => setOpenPopUp({ ...false, ReviewPopUp: true })}
+                className='w-[129.47px] h-[31px] sm:w-[213px] sm:h-[51px] sm:text-[16px] text-[12px] rounded-md text-[#FC4D6D] border-2 border-[#FC4D6D] font-poppins font-medium flex items-center justify-evenly'>
                 <span className='md:text-[25px] text-[20px]'>
                     +
                 </span>
