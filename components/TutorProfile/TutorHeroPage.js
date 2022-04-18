@@ -4,7 +4,7 @@ import { openPopUps } from '../../Atoms/PopUpAtoms'
 import { useRecoilState } from 'recoil'
 import CoverPhotoPopUp from './PopUps/CoverPhotoPopUp'
 
-export default function TutorHeroPage() {
+export default function TutorHeroPage({ tutor, user }) {
   // top open and close popup
   const [profilePopUp, setProfilePopUp] = useRecoilState(openPopUps)
   const [CoverPopUp, setCoverPopUp] = useRecoilState(openPopUps)
@@ -29,20 +29,26 @@ export default function TutorHeroPage() {
 
       {/* Profession */}
       <p className="absolute -bottom-6 hidden w-full text-center font-poppins text-[100px] font-semibold uppercase tracking-[25px] text-[#424242] opacity-50 lg:block">
-        <span className="text-[#FFFFFF]">Professional</span> chef
+        <span className="text-[#FFFFFF]">{tutor.first_name}</span>{' '}
+        {' ' + tutor.last_name}
       </p>
 
       {/* ProfileChip */}
-      <ProfileChip />
+      {tutor._id === user._id ? <ProfileChip /> : ''}
 
       {/* main */}
       <div className="flex items-center gap-8 pl-8 lg:pl-16">
         <UserImage setProfilePopUp={setProfilePopUp} />
+        {user._id === tutor._id ? (
+          <>
+            {/* profile photo popup */}
+            {profilePopUp.ProfilePhotoPopUp && <ProfilePhotoPopUp />}
 
-        {/* profile photo popup */}
-        {profilePopUp.ProfilePhotoPopUp && <ProfilePhotoPopUp />}
-
-        {CoverPopUp.CoverPhotoPopUp && <CoverPhotoPopUp />}
+            {CoverPopUp.CoverPhotoPopUp && <CoverPhotoPopUp />}
+          </>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   )

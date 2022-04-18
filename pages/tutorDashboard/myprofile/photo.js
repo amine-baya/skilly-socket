@@ -75,9 +75,8 @@ function ProfilePhoto() {
       //   profile_img,
       // })
       if (response.success) {
-        updateUser({ profile_img }, () => {
-          Router.push('/tutorDashboard/myprofile/video')
-        })
+        console.log('profile picture uploaded')
+        Router.push('/tutorDashboard/myprofile/video')
       }
     }
   }

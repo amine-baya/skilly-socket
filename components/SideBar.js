@@ -12,7 +12,7 @@ import {
   SessionIcon,
   SettingIcon,
 } from '../icons'
-function SideBar() {
+function SideBar({ tutor }) {
   const router = useRouter()
   const links = [
     {
@@ -70,14 +70,14 @@ function SideBar() {
       <span className="block bg-gradient-to-r from-[#FC4D6D] to-[#FDA02F] bg-clip-text py-8 text-center font-poppins text-2xl font-bold tracking-widest text-transparent">
         Dashboard
       </span>
-      <SideBarLinks links={links} />
+      <SideBarLinks links={links} {...{ tutor }} />
     </div>
   )
 }
 
 export default SideBar
 
-export function SideBarLinks({ links, hideIcon = false }) {
+export function SideBarLinks({ links, tutor, hideIcon = false }) {
   return (
     <nav className="w-full">
       <ul className="">

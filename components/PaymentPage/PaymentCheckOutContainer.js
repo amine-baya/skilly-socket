@@ -4,7 +4,7 @@ import PopUpContainer from './PopUpContainer'
 import { useRecoilState } from 'recoil'
 import { openPopUps, totalSelectedSlots } from '../../Atoms/PopUpAtoms'
 
-const PaymentCheckOutContainer = () => {
+const PaymentCheckOutContainer = ({ tutor }) => {
   const [openPopUp, setOpenPopUp] = useRecoilState(openPopUps)
   const [totalSelectedTimes, setTotalSelectedTimes] =
     useRecoilState(totalSelectedSlots)
@@ -16,6 +16,7 @@ const PaymentCheckOutContainer = () => {
         totalSelectedTimes={totalSelectedTimes}
         openPopUp={openPopUp}
         setTotalSelectedTimes={setTotalSelectedTimes}
+        {...{ tutor }}
       />
       <PaymentProfileContainer
         setOpenPopUp={setOpenPopUp}

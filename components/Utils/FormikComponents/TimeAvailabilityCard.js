@@ -132,74 +132,75 @@ function TimeAvailabilityCard({ weekName, name, formik }) {
             const cardName = form.values[name]
             return (
               <>
-                {cardName.map((item, dayIndex) => (
-                  <div className="col-span-2 md:col-span-1" key={dayIndex}>
-                    {indexData === dayIndex && indexValue === 0 ? (
-                      <>
+                {cardName &&
+                  cardName.map((item, dayIndex) => (
+                    <div className="col-span-2 md:col-span-1" key={dayIndex}>
+                      {indexData === dayIndex && indexValue === 0 ? (
+                        <>
+                          <WiDayHaze className="text-3xl text-[#7D7D7D]" />
+                          {/* {console.log('sagar', indexData, index)} */}
+                        </>
+                      ) : indexValue === 1 ? (
+                        <>
+                          <BsSun className="mb-1 text-2xl text-[#7D7D7D]" />
+                          {/* {console.log('sagar', indexData, index)} */}
+                        </>
+                      ) : indexValue === 2 ? (
+                        <BsCloudMoon className="mb-1 text-2xl text-[#7D7D7D]" />
+                      ) : indexValue === 3 ? (
+                        <div className="h-7 w-7">
+                          <Image src={nightIcon} alt="" />
+                        </div>
+                      ) : (
                         <WiDayHaze className="text-3xl text-[#7D7D7D]" />
-                        {/* {console.log('sagar', indexData, index)} */}
-                      </>
-                    ) : indexValue === 1 ? (
-                      <>
-                        <BsSun className="mb-1 text-2xl text-[#7D7D7D]" />
-                        {/* {console.log('sagar', indexData, index)} */}
-                      </>
-                    ) : indexValue === 2 ? (
-                      <BsCloudMoon className="mb-1 text-2xl text-[#7D7D7D]" />
-                    ) : indexValue === 3 ? (
-                      <div className="h-7 w-7">
-                        <Image src={nightIcon} alt="" />
-                      </div>
-                    ) : (
-                      <WiDayHaze className="text-3xl text-[#7D7D7D]" />
-                      //  null
-                    )}
+                        //  null
+                      )}
 
-                    <div className="flex gap-4 ">
-                      <div className=" w-full">
-                        <Field
-                          as="select"
-                          name={`${name}.${dayIndex}.from`}
-                          // value={item.from}
-                          className=" w-full rounded-[10px] border border-[#C1C1C1] p-3 "
-                        >
-                          {timeList.map((val, ind) => {
-                            return (
-                              <option key={ind} value={val.time}>
-                                {val.time}
-                              </option>
-                            )
-                          })}
-                        </Field>
+                      <div className="flex gap-4 ">
+                        <div className=" w-full">
+                          <Field
+                            as="select"
+                            name={`${name}.${dayIndex}.from`}
+                            // value={item.from}
+                            className=" w-full rounded-[10px] border border-[#C1C1C1] p-3 "
+                          >
+                            {timeList.map((val, ind) => {
+                              return (
+                                <option key={ind} value={val.time}>
+                                  {val.time}
+                                </option>
+                              )
+                            })}
+                          </Field>
+                        </div>
+                        <label className="my-auto font-bold">To</label>
+                        <div className=" w-full">
+                          <Field
+                            as="select"
+                            name={`${name}.${dayIndex}.to`}
+                            // value={item.to}
+                            className=" w-full rounded-[10px] border  border-[#C1C1C1] p-3 "
+                          >
+                            {timeList.map((val, index) => {
+                              return (
+                                <option key={index} value={val.time}>
+                                  {val.time}
+                                </option>
+                              )
+                            })}
+                          </Field>
+                        </div>
+                        <button type="button">
+                          <RiDeleteBinLine
+                            className="text-xl"
+                            onClick={() => {
+                              remove(dayIndex)
+                            }}
+                          />
+                        </button>
                       </div>
-                      <label className="my-auto font-bold">To</label>
-                      <div className=" w-full">
-                        <Field
-                          as="select"
-                          name={`${name}.${dayIndex}.to`}
-                          // value={item.to}
-                          className=" w-full rounded-[10px] border  border-[#C1C1C1] p-3 "
-                        >
-                          {timeList.map((val, index) => {
-                            return (
-                              <option key={index} value={val.time}>
-                                {val.time}
-                              </option>
-                            )
-                          })}
-                        </Field>
-                      </div>
-                      <button type="button">
-                        <RiDeleteBinLine
-                          className="text-xl"
-                          onClick={() => {
-                            remove(dayIndex)
-                          }}
-                        />
-                      </button>
                     </div>
-                  </div>
-                ))}
+                  ))}
                 <button
                   type="button"
                   onClick={() => push({ from: '', to: '' })}

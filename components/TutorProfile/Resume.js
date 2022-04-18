@@ -1,22 +1,24 @@
-import React from 'react';
+import React from 'react'
+import moment from 'moment'
 
-function Resume() {
+function Resume({ tutor }) {
+  console.log(tutor)
   return (
-    <div className="snap-fullPage h-[calc(100vh-79px)] flex flex-col gap-5 items-start justify-start pt-6 font-poppins">
+    <div className="snap-fullPage flex h-[calc(100vh-79px)] flex-col items-start justify-start gap-5 pt-6 font-poppins">
       <ResumeTitle />
 
       {/* main */}
-      <div className='w-full overflow-x-scroll'>
-        <MainResume />
+      <div className="w-full overflow-x-scroll">
+        <MainResume qualifications={tutor.qualifications} />
       </div>
     </div>
   )
 }
-export default Resume;
+export default Resume
 
 function ResumeTitle() {
   return (
-    <section className="space-y-2 sm:mx-auto sm:p-0 pl-5">
+    <section className="space-y-2 pl-5 sm:mx-auto sm:p-0">
       <h2 className="text-2xl font-semibold capitalize tracking-wide text-[#5F5F5F]">
         Resume
       </h2>
@@ -35,36 +37,48 @@ function SmallLine() {
   )
 }
 
-const MainResume = () => {
-  const titles = ['Duration', 'Type', 'Title/Designation', 'Institute'];
-  const desc = [
-    { duration: 'June 2016 - May 2018', type: 'Degree', title: 'M.A. (English Literature & Philosiphy)', institute: 'New Hamshire and Oxford College of Arts (London, UK)' },
-    { duration: 'June 2016 - May 2020', type: 'Diploma', title: 'M.A. (English Literature & Philosiphy)', institute: 'New Hamshire and Oxford College of Arts (London, UK)' },
-    { duration: 'June 2016 - May 2018', type: 'Degree', title: 'M.A. (English Literature & Philosiphy)', institute: 'New Hamshire and Oxford College of Arts (London, UK)' },
-  ]
+const MainResume = ({ qualifications }) => {
+  const titles = ['Duration', 'Type', 'Title/Designation']
+  // const desc = [
+  //   {
+  //     qualification_duration_from: 'June 2016',
+  //     qualification_duration_to: 'May 2018',
+  //     qualification_type: 'Degree',
+  //     title: 'M.A. (English Literature & Philosiphy)',
+  //   },
+  //   {
+  //     qualification_duration_from: 'June 2016',
+  //     qualification_duration_to: 'May 2020',
+  //     qualification_type: 'Diploma',
+  //     title: 'M.A. (English Literature & Philosiphy)',
+  //   },
+  //   {
+  //     qualification_duration_from: 'June 2016',
+  //     qualification_duration_to: 'May 2018',
+  //     qualification_type: 'Degree',
+  //     title: 'M.A. (English Literature & Philosiphy)',
+  //   },
+  // ]
+  console.log(qualifications)
 
   return (
-    <table className='w-full min-w-[1000px] overflow-scroll text-center font-poppins font-medium text-[#5F5F5F]'>
-      <tr className='h-20'>
+    <table className="w-full min-w-[1000px] overflow-scroll text-center font-poppins font-medium text-[#5F5F5F]">
+      <tr className="h-20">
         {titles?.map((title, i) => (
-          <th key={i}>
-            {title}
-          </th>
+          <th key={i}>{title}</th>
         ))}
       </tr>
-      {desc?.map((dex, i) => (
+      {qualifications?.map((dex, i) => (
         <tr key={i} className={`h-20  ${i % 2 == 0 ? 'bg-[#FFF7F7]' : ''}`}>
-          <td className='w-[50px] whitespace-pre-wrap'>
-            {dex?.duration}
+          <td className="w-[50px] whitespace-pre-wrap">
+            {moment(dex?.qualification_duration_from, 'YYYY-MM-DD').year()} -{' '}
+            {moment(dex?.qualification_duration_to, 'YYYY-MM-DD').year()}
           </td>
-          <td className='w-[50px] whitespace-pre-wrap'>
-            {dex?.type}
+          <td className="w-[50px] whitespace-pre-wrap">
+            {dex?.qualification_type}
           </td>
-          <td className='w-[50px] whitespace-pre-wrap'>
-            {dex?.title}
-          </td>
-          <td className='w-[50px] whitespace-pre-wrap'>
-            {dex?.institute}
+          <td className="w-[50px] whitespace-pre-wrap">
+            {dex?.qualification_title}
           </td>
         </tr>
       ))}

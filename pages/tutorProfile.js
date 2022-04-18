@@ -9,13 +9,13 @@ import TutorFooter from '../components/TutorProfile/TutorFooter'
 function TutorProfile() {
   return (
     <div className="full-page-snap-main">
-      <TutorHeroPageMobile />
+      {/* <TutorHeroPageMobile />
       <TutorHeroPage />
       <Reviews />
-      <AboutTutor />
+      <AboutTutor /> */}
       {/* <Schedule /> */}
-      <Resume />
-      <TutorFooter />
+      {/* <Resume />
+      <TutorFooter /> */}
     </div>
   )
 }

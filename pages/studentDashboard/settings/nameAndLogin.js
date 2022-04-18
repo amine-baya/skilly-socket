@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { Formik, Field, Form } from 'formik'
 
+import Server from '../../../utils/Server'
+import { baseUrl, studentupdateLoginDetails } from '../../../utils/constants'
+import axios from 'axios'
+
 import SelectWithIcons from '../../../components/TutorDashboardRegistration/SelectWithIcons'
 import { useDropzone } from 'react-dropzone'
-import { useState } from 'react'
+import { getLocalStorage } from '../../../utils/cookies'
 
 const data = [
   {
@@ -22,6 +26,40 @@ const data = [
 ]
 function NameAndLogin() {
   const [files, setFiles] = useState([])
+  const [user, setUser] = useState({})
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [gender, setGender] = useState('')
+  const [email, setEmail] = useState('')
+  const [dob, setDob] = useState(new Date())
+  const [phone, setPhone] = useState({})
+
+  useEffect(() => {
+    setUser(getLocalStorage('user'))
+  }, [])
+
+  useEffect(() => {
+    if (user.first_name) {
+      setFirstName(user.first_name)
+    }
+    if (user.last_name) {
+      setLastName(user.last_name)
+    }
+
+    setLastName(user.last_name)
+    setEmail(user.email)
+    if (user.dob) {
+      setDob(new Date(user.dob))
+    }
+    if (user.gender) {
+      setGender(user.gender)
+    }
+    if (user.phone) {
+      setPhone(user.phone)
+    } else {
+      setPhone({ country_code: '+91', phone_number: '' })
+    }
+  }, [user])
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
@@ -40,13 +78,25 @@ function NameAndLogin() {
     verifyPassword: '',
     newPassword: '',
     currentPassword: '',
-    emailusername: '',
-    phonenumber: '',
-    lastName: '',
-    firstName: '',
+    email: email,
+    phone_number: phone.phone_number,
+    last_name: lastName,
+    first_name: firstName,
   }
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    data.phone = {
+      country_code: '+91',
+      phone_number: String(data.phone_number),
+    }
+    data.phone_number = undefined
+    data.timezone = 'America/Los_Angeles'
+    data.verifyPassword = undefined
+    data.currentPassword = undefined
+    data.newPassword = undefined
     console.log('value', data)
+    const response = await Server.put(studentupdateLoginDetails, data)
+    console.log('response', response)
+    setLocalStorage('user', response.data)
   }
   return (
     <>
@@ -98,14 +148,18 @@ function NameAndLogin() {
             </div>
           </div>
 
-          <Formik initialValues={initialValues} onSubmit={onSubmit}>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={onSubmit}
+            enableReinitialize={true}
+          >
             <Form className="grid grid-cols-9 gap-y-6 px-5 py-6 font-semibold text-[#545454] xl:px-12">
               <label className="col-span-9 whitespace-nowrap md:col-span-2">
                 first name
               </label>
               <Field
                 type="text"
-                name="firstName"
+                name="first_name"
                 className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-7"
               />
               <label className="col-span-9 whitespace-nowrap md:col-span-2">
@@ -113,7 +167,7 @@ function NameAndLogin() {
               </label>
               <Field
                 type="text"
-                name="lastName"
+                name="last_name"
                 className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-7"
               />
               <label className="col-span-9 whitespace-nowrap md:col-span-2">
@@ -121,7 +175,7 @@ function NameAndLogin() {
               </label>
               <Field
                 type="date"
-                name="lastName"
+                name="dob"
                 className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-3"
               />
               <div className="col-span-9 pt-[9px]  md:col-span-3 lg:col-span-4">
@@ -129,11 +183,11 @@ function NameAndLogin() {
                   Gender:
                 </label>
                 <label className="pl-[21px] xl:pl-[34px] ">
-                  <Field type="radio" name="picked" value="Male" />
+                  <Field type="radio" name="gender" value="male" />
                   Male
                 </label>
                 <label className="pl-[10px] xl:pl-[21px]">
-                  <Field type="radio" name="picked" value="Female" />
+                  <Field type="radio" name="gender" value="female" />
                   Female
                 </label>
               </div>
@@ -156,7 +210,7 @@ function NameAndLogin() {
                 </div>
                 <Field
                   type="number"
-                  name="phonenumber"
+                  name="phone_number"
                   className=" my-auto h-10 w-full focus:outline-none"
                 />
               </div>
@@ -165,7 +219,7 @@ function NameAndLogin() {
               </label>
               <Field
                 type="text"
-                name="emailusername"
+                name="email"
                 className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-7"
               />
               <label className="col-span-9 md:col-span-2 ">

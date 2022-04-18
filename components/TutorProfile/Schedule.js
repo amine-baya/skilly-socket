@@ -30,8 +30,14 @@ function Schedule() {
   const [user_data, set_user_data] = useState()
 
   useEffect(() => {
-    getUserData()
+    set_user_data(getLocalStorage('user'))
   }, [])
+  useEffect(() => {
+    let obj = user_data
+    // obj.timezone = 'Asia/Kolkata'
+    console.log(obj)
+    set_user_data(obj)
+  }, [user_data])
 
   const getUserData = () => {
     const user = getLocalStorage('user')

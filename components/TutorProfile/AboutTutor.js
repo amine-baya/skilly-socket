@@ -1,47 +1,45 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { PencilIcon } from "@heroicons/react/solid";
+import Image from 'next/image'
+import Link from 'next/link'
+import { PencilIcon } from '@heroicons/react/solid'
 
-function AboutTutor() {
+function AboutTutor({ tutor, user }) {
   return (
-    <div className="snap-fullPage relative mx-auto flex flex-col sm:items-center items-start lg:justify-center lg:gap-0 gap-4 px-4">
+    <div className="snap-fullPage relative mx-auto flex flex-col items-start gap-4 px-4 sm:items-center lg:justify-center lg:gap-0">
       <TopTitle />
 
       {/* mainContainer For lg deivces */}
-      <main className='hidden lg:flex items-center justify-center flex-wrap-reverse gap-8'>
+      <main className="hidden flex-wrap-reverse items-center justify-center gap-8 lg:flex">
         <Video />
-        <Description />
+        <Description user={user} tutor={tutor} />
       </main>
 
       {/* mainContainer For lg deivces */}
-      <main className='lg:hidden flex flex-col items-start justify-center md:gap-6 gap-3'>
-        <DescriptionPhone />
+      <main className="flex flex-col items-start justify-center gap-3 md:gap-6 lg:hidden">
+        <DescriptionPhone user={user} tutor={tutor} />
         <VideoPhone />
       </main>
 
       {/* skills background */}
-      <p className='absolute lg:block hidden font-poppins font-semibold text-[#F1F1F1] text-center -z-[10] text-[350px] bottom-[-150px] tracking-widest'>
+      <p className="absolute bottom-[-150px] -z-[10] hidden text-center font-poppins text-[350px] font-semibold tracking-widest text-[#F1F1F1] lg:block">
         SKILLS
       </p>
     </div>
   )
 }
 
-export default AboutTutor;
+export default AboutTutor
 
 const TopTitle = () => {
   return (
-    <div className='flex flex-col lg:items-center items-start justify-center lg:gap-4 gap-2 font-poppins capitalize tracking-wide'>
-      <p className='hidden lg:inline-block font-bold text-[#FC4D6D]'>
+    <div className="flex flex-col items-start justify-center gap-2 font-poppins capitalize tracking-wide lg:items-center lg:gap-4">
+      <p className="hidden font-bold text-[#FC4D6D] lg:inline-block">
         About us
       </p>
-      <h2 className="text-2xl font-semibold text-[#5F5F5F]">
-        About the tutor
-      </h2>
-      <span className='hidden lg:inline-block'>
+      <h2 className="text-2xl font-semibold text-[#5F5F5F]">About the tutor</h2>
+      <span className="hidden lg:inline-block">
         <SmallLine />
       </span>
-      <span className='lg:hidden'>
+      <span className="lg:hidden">
         <ThreeLine />
       </span>
     </div>
@@ -70,8 +68,8 @@ function ThreeLine() {
 function Video(props) {
   // overflow-hidden  rounded-xl bg-gradient-to-r from-[#FD4E6D] to-[#FDA02F] p-1
   return (
-    <div className=" mx-auto  flex w-full h-auto  flex-col gap-4 sm:w-[467px] md:w-auto ">
-      <div className="  md:white-linear-gradient rounded-lg bg-gradient-to-r  from-[#FD4E6D] to-[#FDA02F]  p-1.5 sm:h-[302px] sm:w-[467px] h-[302px] md:rounded-xl  ">
+    <div className=" mx-auto  flex h-auto w-full  flex-col gap-4 sm:w-[467px] md:w-auto ">
+      <div className="  md:white-linear-gradient h-[302px] rounded-lg  bg-gradient-to-r from-[#FD4E6D]  to-[#FDA02F] p-1.5 sm:h-[302px] sm:w-[467px] md:rounded-xl  ">
         <div className="relative order-2 flex h-full w-full  items-center justify-center   overflow-hidden   rounded-xl  md:order-1     ">
           {/* <div className="relative order-2 flex items-center justify-center   overflow-hidden   rounded-xl  md:order-1 md:h-[486px] md:w-[430px]    "> */}
           {/* <Image
@@ -88,7 +86,7 @@ function Video(props) {
                 src={'/Images/TutorProfile/svg/video-play-btn.svg'}
                 objectFit="cover"
                 layout="fill"
-                alt=''
+                alt=""
               />
             </a>
           </Link>
@@ -101,7 +99,7 @@ function Video(props) {
                   src={'/Images/TutorProfile/svg/yellow-star.svg'}
                   height={19.38}
                   width={19.03}
-                  alt=''
+                  alt=""
                 />
               ))}
             </div>
@@ -112,8 +110,7 @@ function Video(props) {
         </div>
       </div>
 
-      <button
-        className="rounded-lg border-2 border-[#FC4D6D] py-1.5  text-center text-lg font-semibold capitalize text-[#FC4D6D] md:order-2 md:text-[22px]">
+      <button className="rounded-lg border-2 border-[#FC4D6D] py-1.5  text-center text-lg font-semibold capitalize text-[#FC4D6D] md:order-2 md:text-[22px]">
         send message
       </button>
     </div>
@@ -124,8 +121,8 @@ function Video(props) {
 function VideoPhone(props) {
   // overflow-hidden  rounded-xl bg-gradient-to-r from-[#FD4E6D] to-[#FDA02F] p-1
   return (
-    <div className="mx-auto flex w-full h-auto flex-col gap-4 sm:w-[467px] md:w-auto ">
-      <div className="md:white-linear-gradient rounded-lg bg-gradient-to-r from-[#FD4E6D] to-[#FDA02F]  p-1.5 md:h-[302px] sm:w-[467px] h-[200px] md:rounded-xl  ">
+    <div className="mx-auto flex h-auto w-full flex-col gap-4 sm:w-[467px] md:w-auto ">
+      <div className="md:white-linear-gradient h-[200px] rounded-lg bg-gradient-to-r from-[#FD4E6D]  to-[#FDA02F] p-1.5 sm:w-[467px] md:h-[302px] md:rounded-xl  ">
         <div className="relative order-2 flex h-full w-full  items-center justify-center   overflow-hidden   rounded-xl  md:order-1     ">
           {/* <div className="relative order-2 flex items-center justify-center   overflow-hidden   rounded-xl  md:order-1 md:h-[486px] md:w-[430px]    "> */}
           {/* <Image
@@ -142,7 +139,7 @@ function VideoPhone(props) {
                 src={'/Images/TutorProfile/svg/video-play-btn.svg'}
                 objectFit="cover"
                 layout="fill"
-                alt=''
+                alt=""
               />
             </a>
           </Link>
@@ -155,7 +152,7 @@ function VideoPhone(props) {
                   src={'/Images/TutorProfile/svg/yellow-star.svg'}
                   height={19.38}
                   width={19.03}
-                  alt=''
+                  alt=""
                 />
               ))}
             </div>
@@ -173,71 +170,93 @@ function VideoPhone(props) {
   )
 }
 
-const Description = () => {
+const Description = ({ user, tutor }) => {
   return (
-    <div className='flex flex-col items-end justify-between gap-3 h-full sm:w-[467px] w-full font-roboto'>
+    <div className="flex h-full w-full flex-col items-end justify-between gap-3 font-roboto sm:w-[467px]">
       {/* Edit Button */}
-      <button className='flex items-center justify-center gap-3 font-semibold text-[#FC4D6D]'>
-        <span className='w-5'>
-          <PencilIcon />
-        </span>
-        <p>
-          Edit Description
-        </p>
-      </button>
+      {user._id == tutor._id ? (
+        <button className="flex items-center justify-center gap-3 font-semibold text-[#FC4D6D]">
+          <span className="w-5">
+            <PencilIcon />
+          </span>
+          <p>Edit Description</p>
+        </button>
+      ) : (
+        <div className="h-4"></div>
+      )}
 
       {/* Description */}
-      <article className='flex flex-col items-center justify-between gap-2 font-medium text-[#858585] capitalize tracking-wider'>
+      <article className="flex flex-col items-center justify-between gap-2 font-medium capitalize tracking-wider text-[#858585]">
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dapibus dignissim elit rutrum cras tincidunt. Aliquet quis et, elit ultricies aliquam. Pulvinar sagittis enim, id amet cursus amet. Lectus auctor velit vitae commodo. Tincidunt senectus tincidunt ac et pellentesque turpis nulla morbi.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dapibus
+          dignissim elit rutrum cras tincidunt. Aliquet quis et, elit ultricies
+          aliquam. Pulvinar sagittis enim, id amet cursus amet. Lectus auctor
+          velit vitae commodo. Tincidunt senectus tincidunt ac et pellentesque
+          turpis nulla morbi.
         </p>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dapibus dignissim elit rutrum cras tincidunt. Aliquet quis et, elit ultricies aliquam. Pulvinar sagittis enim, id amet cursus amet. Lectus auctor velit vitae commodo. Tincidunt senectus tincidunt ac et pellentesque turpis nulla morbi.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dapibus
+          dignissim elit rutrum cras tincidunt. Aliquet quis et, elit ultricies
+          aliquam. Pulvinar sagittis enim, id amet cursus amet. Lectus auctor
+          velit vitae commodo. Tincidunt senectus tincidunt ac et pellentesque
+          turpis nulla morbi.
         </p>
       </article>
 
       {/* Buttons */}
-      <div className='flex items-center w-full sm:justify-evenly justify-between font-poppins'>
-        <button className='w-[205px] h-[45px] rounded-full text-center bg-[#FC4D6D] text-white font-bold shadow-xl tracking-wider'>
-          Book Trail Session
-        </button>
-        <p className='font-semibold text-[#565656]'>
-          Rs.999/hr
-        </p>
+      <div className="flex w-full items-center justify-between font-poppins sm:justify-evenly">
+        {user.role !== 'STUDENT' ? (
+          <>
+            <button className="h-[45px] w-[205px] rounded-full bg-[#FC4D6D] text-center font-bold tracking-wider text-white shadow-xl">
+              Book Trail Session
+            </button>
+            <p className="font-semibold text-[#565656]">Rs.999/hr</p>
+          </>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   )
 }
 
 // for md and sm devices
-const DescriptionPhone = () => {
+const DescriptionPhone = ({ user, tutor }) => {
   return (
-    <div className='flex flex-col items-end justify-between md:gap-3 gap-2 h-full sm:w-[467px] w-full font-roboto'>
+    <div className="flex h-full w-full flex-col items-end justify-between gap-2 font-roboto sm:w-[467px] md:gap-3">
       {/* Edit Button */}
-      <button className='flex items-center justify-center gap-3 font-semibold text-[#FC4D6D]'>
-        <span className='w-5'>
-          <PencilIcon />
-        </span>
-        <p>
-          Edit Description
-        </p>
-      </button>
-
+      {user._id == tutor._id ? (
+        <button className="flex items-center justify-center gap-3 font-semibold text-[#FC4D6D]">
+          <span className="w-5">
+            <PencilIcon />
+          </span>
+          <p>Edit Description</p>
+        </button>
+      ) : (
+        <div className="h-4"></div>
+      )}
       {/* Description */}
-      <article className='flex flex-col items-center font-medium text-[#858585] capitalize tracking-wider'>
+      <article className="flex flex-col items-center font-medium capitalize tracking-wider text-[#858585]">
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dapibus dignissim elit rutrum cras tincidunt. Aliquet quis et, elit ultricies aliquam. Pulvinar sagittis enim, id amet cursus amet. Lectus auctor velit vitae commodo. Tincidunt senectus tincidunt ac et pellentesque turpis nulla morbi.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dapibus
+          dignissim elit rutrum cras tincidunt. Aliquet quis et, elit ultricies
+          aliquam. Pulvinar sagittis enim, id amet cursus amet. Lectus auctor
+          velit vitae commodo. Tincidunt senectus tincidunt ac et pellentesque
+          turpis nulla morbi.
         </p>
       </article>
-
       {/* Buttons */}
-      <div className='flex items-center w-full sm:justify-evenly justify-between font-poppins'>
-        <button className='w-[205px] h-[45px] rounded-full text-center bg-[#FC4D6D] text-white font-bold shadow-xl tracking-wider'>
-          Book Trail Session
-        </button>
-        <p className='font-semibold text-[#565656]'>
-          Rs.999/hr
-        </p>
+      <div className="flex w-full items-center justify-between font-poppins sm:justify-evenly">
+        {user.role !== 'STUDENT' ? (
+          <>
+            <button className="h-[45px] w-[205px] rounded-full bg-[#FC4D6D] text-center font-bold tracking-wider text-white shadow-xl">
+              Book Trail Session
+            </button>
+            <p className="font-semibold text-[#565656]">Rs.999/hr</p>
+          </>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   )

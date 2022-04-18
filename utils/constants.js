@@ -7,6 +7,7 @@ export const baseUrlProfilePic =
 // API's
 export const studentRegister = '/student/signup'
 export const studentLogin = '/student/login'
+export const studentupdateLoginDetails = '/student/update/profile/login-details'
 export const tutorRegister = '/tutor/create'
 export const tutorLogin = '/tutor/login'
 export const getTutorProfile = '/tutor/profile'
@@ -22,6 +23,9 @@ export const updateUserEducation =
   '/user/tutor/profile/update/education-certificate'
 export const updateUserCertificate =
   '/user/tutor/profile/update/teaching-certificate'
+
+// bookings
+export const newBooking = '/booking/create'
 
 export const ROLE_NAME = {
   TUTOR: 'TUTOR',

@@ -4,7 +4,11 @@ import AuthButton from '../../Utils/Buttons/AuthButton'
 import NavLink from 'next/link'
 import Server from '../../../utils/Server'
 import { ROLE_NAME } from '../../../utils/constants'
-import { authenticate, removeLocalStorage } from '../../../utils/cookies'
+import {
+  setLocalStorage,
+  authenticate,
+  removeLocalStorage,
+} from '../../../utils/cookies'
 import Router from 'next/router'
 import { useEffect } from 'react'
 
@@ -22,13 +26,13 @@ const Login = (props) => {
       password,
     })
     if (login_response.success) {
-      authenticate(login_response.data, 'STUDENT', () =>
-        setTimeout((window.location = '/studentDashboard'), 2000)
-      )
+      setLocalStorage('user', login_response.data)
+      setLocalStorage('ROLE', 'STUDENT')
+      authenticate(login_response.data, 'STUDENT', async () => {
+        Router.push('/studentDashboard')
+      })
     }
   }
-
-
 
   return (
     <div className="h-full w-full">
@@ -37,13 +41,13 @@ const Login = (props) => {
           src="/Images/auth/bg_mobile.png"
           layout="fill"
           className="sm:hidden"
-          alt='mb'
+          alt="mb"
         />
         <Image
           src="/Images/auth/bg_desktop.png"
           layout="fill"
           className="hidden sm:block"
-          alt='lg'
+          alt="lg"
         />
       </div>
 
@@ -51,13 +55,28 @@ const Login = (props) => {
         <div className="relative min-h-[30vh] text-white sm:basis-[50%]">
           <div className="absolute h-full w-full sm:hidden">
             <div className="absolute -bottom-[40px] z-20 flex h-[80px] w-[80px] items-center justify-center">
-              <Image src="/Images/auth/plant.png" width={80} height={80} alt='plant' />
+              <Image
+                src="/Images/auth/plant.png"
+                width={80}
+                height={80}
+                alt="plant"
+              />
             </div>
             <div className="absolute -bottom-[40px] right-0 z-20 flex h-[80px] w-[80px] items-center justify-center">
-              <Image src="/Images/auth/bowl.png" width={60} height={60} alt='bowl' />
+              <Image
+                src="/Images/auth/bowl.png"
+                width={60}
+                height={60}
+                alt="bowl"
+              />
             </div>
             <div className="absolute z-20 flex h-full w-full items-center justify-center">
-              <Image src="/Images/auth/guitar.png" width={60} height={60} alt='guitar' />
+              <Image
+                src="/Images/auth/guitar.png"
+                width={60}
+                height={60}
+                alt="guitar"
+              />
             </div>
           </div>
 
@@ -81,7 +100,7 @@ const Login = (props) => {
             </div>
 
             <div className="absolute bottom-0 h-[80vh] w-full">
-              <Image src="/Images/auth/girl.png" layout="fill" alt='girl' />
+              <Image src="/Images/auth/girl.png" layout="fill" alt="girl" />
             </div>
           </div>
         </div>
@@ -108,14 +127,19 @@ const Login = (props) => {
               <div className="w-full">
                 <div className="mt-8 flex justify-center">
                   <span className="px-2">
-                    <Image src="/Images/auth/fb.png" width={36} height={36} alt='meta' />
+                    <Image
+                      src="/Images/auth/fb.png"
+                      width={36}
+                      height={36}
+                      alt="meta"
+                    />
                   </span>
                   <span className="px-2">
                     <Image
                       src="/Images/auth/google.png"
                       width={36}
                       height={36}
-                      alt='goo'
+                      alt="goo"
                     />
                   </span>
                 </div>

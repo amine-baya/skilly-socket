@@ -1,36 +1,15 @@
-import AboutTutor from 'components/TutorProfile/AboutTutor'
-import Resume from 'components/TutorProfile/Resume'
-import Reviews from 'components/TutorProfile/Reviews'
-import Schedule from 'components/TutorProfile/Schedule'
-import TutorHeroPage from 'components/TutorProfile/TutorHeroPage'
-import TutorHeroPageMobile from 'components/TutorProfile/TutorHeroPageMobile'
-import TutorFooter from 'components/TutorProfile/TutorFooter'
+import React from 'react'
+import PaymentCheckOutContainer from 'components/PaymentPage/PaymentCheckOutContainer'
 
-import { useState, useEffect } from 'react'
-import { getLocalStorage } from 'utils/cookies'
-
-function TutorProfile({ tutor }) {
-  const [user, setUser] = useState({})
-  useEffect(() => {
-    setUser(getLocalStorage('user'))
-    if (!getLocalStorage('user')) {
-      setUser({ _id: '1111', role: 'STUDENT' })
-    }
-  }, [])
+const Payment = ({ tutor }) => {
+  console.log(tutor)
   return (
-    <div className="full-page-snap-main">
-      <TutorHeroPageMobile tutor={tutor} user={user} />
-      <TutorHeroPage tutor={tutor} user={user} />
-      <Reviews />
-      <AboutTutor tutor={tutor} user={user} />
-      <Schedule />
-      <Resume tutor={tutor} />
-      <TutorFooter />
+    <div>
+      <PaymentCheckOutContainer {...{ tutor }} />
     </div>
   )
 }
-
-TutorProfile.getInitialProps = async function (context) {
+Payment.getInitialProps = async function (context) {
   //   const { user } = context.query
   //   const res = await fetch(`http://localhost:3000/api/tutors/${user}`)
   //   const tutor = await res.json()
@@ -81,4 +60,4 @@ TutorProfile.getInitialProps = async function (context) {
   }
 }
 
-export default TutorProfile
+export default Payment

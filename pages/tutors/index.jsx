@@ -53,6 +53,7 @@ const Tutors = () => {
         ? tutorData.map(function (dd, key) {
             let _obj = countryList.find((o) => o.name === dd.country)
             console.log(_obj)
+            console.log(dd)
             return (
               // <Link href={'/tutors'} passHref key={key}>
               <CourseCart
@@ -66,6 +67,7 @@ const Tutors = () => {
                 tutorImg={`${baseUrlProfilePic}${dd.profile_img}`}
                 tutorData={dd}
               />
+
               // </Link>
             )
           })

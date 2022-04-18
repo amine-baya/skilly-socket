@@ -46,7 +46,7 @@ function CourseCart({
   function CoverSection() {
     return (
       <div className="relative  h-[210px] cursor-pointer overflow-hidden rounded-t-2xl rounded-br-[30px]">
-        <Link href={`/tutors/${tutorData._id}`}>
+        <Link href={`/tutors/${tutorData.id}`}>
           <Image
             placeholder="blur"
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/RQAAuEB4mUJ9Y0AAAAASUVORK5CYII="
