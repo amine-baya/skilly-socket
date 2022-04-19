@@ -43,6 +43,8 @@ function BasicDetails() {
   const [englishFluency, setEnglishFluency] = useState('')
   const [addLanguageData, setAddLanguageData] = useState([])
   const [countryData, setCountryData] = useState('') // continue here
+  const [current, setCurrent] = useState(0)
+  const [flag, setFlag] = useState(false)
 
   useEffect(() => {
     set_user_data(getLocalStorage('user'))
@@ -59,7 +61,15 @@ function BasicDetails() {
       )
       setLanguageData(newInput)
     }
+
+    if (user_data.country) {
+      let _tmp = countryList.findIndex((it) => it.name == user_data.country)
+      setCurrent(_tmp)
+    }
   }, [user_data])
+  useEffect(() => {
+    setFlag(true)
+  }, [current])
 
   // const initialValues = {
   //   Qualification: [
@@ -122,10 +132,6 @@ function BasicDetails() {
             },
           ],
   }
-  let current = 0
-  if (user_data.country) {
-    current = countryList.findIndex((it) => it.name == user_data.country)
-  }
   const onSubmit = async (data) => {
     data['subjects_and_pricing'] = initialValues.subjects_and_pricing
     data['qualifications'] = user_data.qualifications
@@ -187,13 +193,15 @@ function BasicDetails() {
                       <label className="self-center font-semibold ">
                         My Country Of Origin
                       </label>
-                      <SelectWithIcons
-                        people={iconSelect}
-                        current={current}
-                        changestyle="border-2 border-[#C1C1C1] rounded-[10px] "
-                        flag="left"
-                        update={setCountryData}
-                      />
+                      {flag && (
+                        <SelectWithIcons
+                          people={iconSelect}
+                          current={current}
+                          changestyle="border-2 border-[#C1C1C1] rounded-[10px] "
+                          flag="left"
+                          update={setCountryData}
+                        />
+                      )}
                     </div>
                     <div></div>
                     <div className=" col-span-2  grid grid-cols-1 gap-y-2   md:col-span-1 md:grid-cols-2">

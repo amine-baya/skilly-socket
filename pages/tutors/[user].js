@@ -8,73 +8,91 @@ import TutorFooter from 'components/TutorProfile/TutorFooter'
 
 import { useState, useEffect } from 'react'
 import { getLocalStorage } from 'utils/cookies'
-import { baseUrl, getTutorPublicProfile } from '../../utils/constants'
-import Server from '../../utils/Server'
-import axios from 'axios'
-async function TutorProfile({ tutor }) {
-  const [user, setUser] = useState({})
+import { getTutorPublicProfile, baseUrl } from 'utils/constants'
+import fetch from 'isomorphic-fetch'
+import { withRouter } from 'next/router'
 
+function TutorProfile({ router }) {
+  console.log(router.query.user)
+  const [user, setUser] = useState({})
+  const [tutor, setTutor] = useState({})
   useEffect(() => {
+    setUser(getLocalStorage('user'))
     if (!getLocalStorage('user')) {
       setUser({ _id: '1111', role: 'STUDENT' })
-    } else {
-      setUser(getLocalStorage('user'))
     }
+    const res = fetch(
+      `${baseUrl}${getTutorPublicProfile}?user_id=${router.query.user}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.data)
+        setTutor(data.data)
+      })
+    // const tutor = res
+    console.log(tutor)
   }, [])
-  // await axios({
-  //   method: 'GET',
-  //   url: getTutorPublicProfile,
-  //   baseURL: baseUrl,
-  //   params: { user_id: context.query.user },
-  // })
-  //   .then(function (response) {
-  //     // tutor = response
-  //     console.log(response)
-  //     // return { tutor: response }
-  //     // console.log(response)
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error)
-  //     console.log({ tutor: error })
-  //   })
   return (
     <div className="full-page-snap-main">
-      {/* <TutorHeroPageMobile tutor={tutor} user={user} />
+      <TutorHeroPageMobile tutor={tutor} user={user} />
       <TutorHeroPage tutor={tutor} user={user} />
       <Reviews />
       <AboutTutor tutor={tutor} user={user} />
       <Schedule />
-      <Resume tutor={tutor} /> */}
+      <Resume tutor={tutor} />
       <TutorFooter />
     </div>
   )
 }
 
-TutorProfile.getInitialProps = async function (context) {
-  //   const { user } = context.query
-  //   const res = await fetch(`http://localhost:3000/api/tutors/${user}`)
-  //   const tutor = await res.json()
-  //   return { tutor }
-  // const tutor = await Server.get(getTutorPublicProfile, context.query.user)
-  let tutor = 'sfd'
-  // await axios({
-  //   method: 'GET',
-  //   url: getTutorPublicProfile,
-  //   baseURL: baseUrl,
-  //   params: { user_id: context.query.user },
-  // })
-  //   .then(function (response) {
-  //     tutor = response
-  //     console.log(response)
-  //     return { tutor: response.data }
-  //     console.log(response)
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error)
-  //     return { tutor: { _id: 'sdf' } }
-  //   })
-  // console.log(tutor)
-  return { tutor: 'asd' }
-}
+// TutorProfile.getInitialProps = async function (context) {
+//   //   const { user } = context.query
 
-export default TutorProfile
+//   //   return { tutor }
+//   return {
+//     tutor: {
+//       _id: '625812ecd49b556dd4b2d77bXX',
+//       first_name: 'Mohit',
+//       last_name: 'Chahal',
+//       name: 'Mohit Chahal',
+//       // email: 'test@test.com',
+//       other_languages: ['English', 'Danish'],
+//       role: 'TUTOR',
+//       profile_update: false,
+//       is_verified: true,
+//       is_active: false,
+//       subjects_and_pricing: [{ subject: '-', price: 0, currency_format: '-' }],
+//       qualifications: [
+//         {
+//           qualification_type: 'Experience',
+//           qualification_title: 'Teaching Programming',
+//           qualification_duration_from: '1970-01-01T00:00:02.012Z',
+//           qualification_duration_to: '1970-01-01T00:00:02.015Z',
+//         },
+//       ],
+//       availability: [
+//         {
+//           day: 'monday',
+//           slots: [
+//             { slot_id: 'v29X7VhM84vYRntyeTID4', from: '01:30', to: '12:30' },
+//           ],
+//         },
+//         {
+//           day: 'tuesday',
+//           slots: [
+//             { slot_id: 'UxaNEHaRJsfCVJeenVBB3', from: '01:30', to: '07:30' },
+//           ],
+//         },
+//       ],
+//       // createdAt: '2022-04-14T12:26:20.142Z',
+//       // updatedAt: '2022-04-17T12:01:36.964Z',
+//       // __v: 0,
+//       country: 'India',
+//       english_fluency: 'Full Professional Proficiency',
+//       native_language: 'Hindi',
+//       timezone: 'Asia/Kolkata',
+//     },
+//   }
+// }
+
+export default withRouter(TutorProfile)

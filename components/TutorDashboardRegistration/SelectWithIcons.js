@@ -14,23 +14,33 @@ export default function SelectWithIcons({
   flag,
   update,
 }) {
-  const [selected, setSelected] = useState(people[current])
+  const [selected, setSelected] = useState({})
   const [add, setAdd] = useState(0)
 
   useEffect(() => {
+    setSelected(people[current])
+    console.log(selected, people[current])
+  }, [])
+  useEffect(() => {
     update(selected.name)
-    let _tmp = people.findIndex((it) => it.name === selected.name)
-    setAdd(_tmp)
+    // let _tmp = people.findIndex((it) => it.name === selected.name)
+    // setAdd(_tmp)
   }, [selected])
+  console.log(current, people)
   return (
-    <Listbox value={selected} onChange={setSelected}>
+    <Listbox
+      value={selected}
+      defaultValue={people[current].name}
+      onChange={setSelected}
+      enableReinitialize={true}
+    >
       {({ open }) => (
         <>
           <div className={`relative mt-1 whitespace-nowrap ${changestyle}`}>
             <Listbox.Button className="relative flex w-full rounded-[10px] px-3 py-[5px]">
               <span className="flex items-center gap-2">
                 <img
-                  src={people[current].image}
+                  src={selected.image}
                   alt=""
                   className="h-6 w-6 flex-shrink-0 rounded-full"
                 />
@@ -42,9 +52,7 @@ export default function SelectWithIcons({
                     />
                   </div>
                 ) : null}
-                <span className="block whitespace-nowrap">
-                  {people[current].name}
-                </span>
+                <span className="block whitespace-nowrap">{selected.name}</span>
               </span>
               <span className="pointer-events-none absolute right-0  my-auto ml-1 flex items-center pr-1">
                 {flag === 'left' ? (
@@ -67,7 +75,7 @@ export default function SelectWithIcons({
             >
               <Listbox.Options
                 className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-                selected={people[selected]}
+                // selected={selected.name}
               >
                 {people.map((person, i) => (
                   <Listbox.Option
