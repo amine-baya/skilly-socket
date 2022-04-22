@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import CrossIcon from '../../../icons/CrossIcon'
-import WhatsAppTree from '../../../icons/WhatsAppTree.jsx'
-import { openPopUps } from '../../../Atoms/PopUpAtoms'
-import { useRecoilState } from 'recoil'
+import React, { useState, useEffect } from 'react';
+import CrossIcon from "../../../icons/CrossIcon";
+import WhatsAppTree from "../../../icons/WhatsAppTree.jsx";
+import { openPopUps } from "../../../Atoms/PopUpAtoms";
+import { useRecoilState } from "recoil";
 import Dropzone, { useDropzone } from 'react-dropzone'
 
 const CoverPhotoPopUp = () => {
-  const [openPopUp, setOpenPopUp] = useRecoilState(openPopUps)
+    const [openPopUp, setOpenPopUp] = useRecoilState(openPopUps);
 
   const [files, setFiles] = useState([])
 
@@ -79,27 +79,27 @@ const CoverPhotoPopUp = () => {
   )
 }
 
-export default CoverPhotoPopUp
+export default CoverPhotoPopUp;
+
 
 // Top Title
 const TopTitle = ({ setOpenPopUp }) => {
-  return (
-    <div className="flex w-full items-center justify-between pl-2">
-      <p className="text-xl font-bold text-[#3F3F3F]">Upload Cover Photo</p>
-      <span onClick={() => setOpenPopUp({ ...false })}>
-        <CrossIcon />
-      </span>
-    </div>
-  )
+    return (
+        <div className='flex w-full justify-between items-center pl-2'>
+            <p className='font-bold text-xl text-[#3F3F3F]'>Upload Cover Photo</p>
+            <span onClick={() => setOpenPopUp({ ...false })}>
+                <CrossIcon />
+            </span>
+        </div>
+    )
 }
+
 
 // Buttons
 const Buttons = ({ label, styles }) => {
-  return (
-    <button
-      className={`h-[38px] w-[120px] rounded-lg text-center lg:h-[42.59px] lg:w-[156.29px] ${styles}`}
-    >
-      {label}
-    </button>
-  )
+    return (
+        <button className={`lg:w-[156.29px] lg:h-[42.59px] w-[120px] h-[38px] text-center rounded-lg ${styles}`}>
+            {label}
+        </button>
+    )
 }

@@ -22,8 +22,8 @@ function CourseCart({
   const router = useRouter()
 
   return (
-    <div className="flex snap-center rounded-md bg-[#ffffff] transition-all ease-in-out">
-      <div className="w-[350px] overflow-hidden rounded-2xl  pb-[20px] font-poppins shadow-xl ring-2 ring-[#FC4D6D] ring-opacity-10">
+    <div className="flex snap-center rounded-md transition-all ease-in-out">
+      <div className="w-[350px] overflow-hidden bg-[#ffffff] rounded-2xl  pb-[20px] font-poppins shadow-xl ring-2 ring-[#FC4D6D] ring-opacity-10">
         <CoverSection />
         <TutorDetails
           space={'-mt-[1.8rem] ml-[105px] '}
