@@ -75,17 +75,15 @@ function ProfilePhoto() {
         },
       })
 
-      console.log('response')
+      console.log('response', response)
 
-      const user_upload = await Server.put(updateUserProfilePic, {
-        profile_img: response.data.data.file_name,
-      })
-      if (response.success) {
+      if (response.data.success) {
         console.log('profile picture uploaded')
-        if (user_upload) {
-          console.log('user profile picture update')
-          Router.push('/tutorDashboard/myprofile/video')
-        }
+        const user_upload = await Server.put(updateUserProfilePic, {
+          profile_img: response.data.data.file_name,
+        })
+        console.log('user profile picture update')
+        Router.push('/tutorDashboard/myprofile/video')
       }
     }
   }

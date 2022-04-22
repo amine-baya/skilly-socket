@@ -125,11 +125,13 @@ const Qualifications = () => {
                                       id={`qualifications.${index}.qualification_duration_from`}
                                       name={`qualifications.${index}.qualification_duration_from`}
                                       className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
+                                      type="month"
                                     ></Field>
                                     <Field
                                       id={`qualifications.${index}.qualification_duration_to`}
                                       name={`qualifications.${index}.qualification_duration_to`}
                                       className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
+                                      type="month"
                                     ></Field>
                                   </div>
                                 </div>

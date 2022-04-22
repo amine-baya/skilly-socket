@@ -8,6 +8,7 @@ export const baseUrlProfilePic =
 export const studentRegister = '/student/signup'
 export const studentLogin = '/student/login'
 export const studentupdateLoginDetails = '/student/update/profile/login-details'
+export const studentUpdateBasicDetails = '/student/update/profile/basic-details'
 export const tutorRegister = '/tutor/create'
 export const tutorLogin = '/tutor/login'
 export const getTutorPublicProfile = '/tutor/profile/by-id'
@@ -16,7 +17,7 @@ export const uploadUserProfilePic = '/tutor/upload/profile-pic'
 export const uploadUserBackgroundPic = '/user/update/background-pic'
 export const updateBasicDetails = '/tutor/update/basic-details'
 export const updateUserProfilePic = '/tutor/update/profile-pic'
-export const updateUserDescription = '/user/tutor/profile/update/description'
+export const updateUserDescription = '/tutor/update/description'
 export const updateUserVideoDesc = '/tutor/update/video-introduction'
 export const updateUserAvailability = '/user/tutor/profile/update/availability'
 export const updateUserQualification = '/tutor/update/qualifications'
@@ -39,6 +40,23 @@ export const SUBJECTS = {
   3: 'Hindi',
   4: 'Physics',
 }
+
+export const monthNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
+
+export const weekNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 export const LANGUAGES = [
   { code: 'ab', name: 'Abkhaz', nativeName: 'аҧсуа' },
@@ -3089,8 +3107,8 @@ export const countryList = [
 
 export const LanguageLevel = [
   'Native / Bilingual Proficiency',
-  'Limited Working Proficiency',
-  'Full Professional Proficiency',
+  'Conversational Proficiency',
+  'Limited Proficiency',
 ]
 
 export const timeList = [

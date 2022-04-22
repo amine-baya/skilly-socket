@@ -1,58 +1,110 @@
-import React from 'react';
-import CrossIcon from "../../../icons/CrossIcon";
-import { openPopUps } from "../../../Atoms/PopUpAtoms";
-import { useRecoilState } from "recoil";
+import React, { useState, useEffect } from 'react'
+import CrossIcon from '../../../icons/CrossIcon'
+import { openPopUps } from '../../../Atoms/PopUpAtoms'
+import { useRecoilState } from 'recoil'
+import { updateUserDescription, baseUrl } from '../../../utils/constants'
+import Server from '../../../utils/Server'
+import { getCookie } from 'cookies-next'
+import { setLocalStorage } from '../../../utils/cookies'
 
 const DescriptionPopUp = () => {
-    const [openPopUp, setOpenPopUp] = useRecoilState(openPopUps);
+  const [openPopUp, setOpenPopUp] = useRecoilState(openPopUps)
+  const [data, setData] = useState('')
+  const [update, setUpdate] = useState(false)
+  const TOKEN = getCookie('token')
+    ? JSON.parse(getCookie('token')).access_token
+    : false
+  useEffect(() => {
+    if (data) {
+      const res = fetch(`${baseUrl}${updateUserDescription}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${TOKEN}`,
+        },
+        body: JSON.stringify({ description: data }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data.data)
+          setLocalStorage('user', data.data)
+          // setOpenPopUp(false)
+          // setTutor(data.data)
+          setOpenPopUp && setOpenPopUp({ ...false })
+        })
+    }
+  }, [update])
 
+  const handleChange = (e) => {
+    console.log(e)
+    setData(e.target.value)
+  }
+
+  // Top Title
+  const TopTitle = ({ setOpenPopUp }) => {
     return (
-        <div className='flex flex-col p-6 items-center gap-9 bg-[#FFFFFF] lg:w-[590px] lg:h-[500px] sm:w-[500px] w-full h-[400px] font-roboto rounded-xl shadow-2xl z-30'>
-            {/* Title and CrossButton */}
-            <TopTitle setOpenPopUp={setOpenPopUp} />
-
-            {/* Input Box */}
-            <InputBox />
-
-            {/* Bottom Buttons */}
-            <div className='flex items-center justify-between w-full gap-4'>
-                <Buttons setOpenPopUp={setOpenPopUp} label='Cancel Changes' styles='border-[1.2px] border-[#FC4D6D] text-[#545454] font-bold' />
-                <Buttons label='Save Changes' styles='font-medium text-[#FFFFFF] bg-[#FC4D6D]' />
-            </div>
-        </div>
+      <div className="flex w-full items-center justify-between pl-2">
+        <p className="text-xl font-bold text-[#3F3F3F]">Edit Description</p>
+        <span onClick={() => setOpenPopUp({ ...false })}>
+          <CrossIcon />
+        </span>
+      </div>
     )
-}
+  }
 
-export default DescriptionPopUp;
-
-
-// Top Title
-const TopTitle = ({ setOpenPopUp }) => {
+  // Buttons
+  const Buttons = ({ label, styles, setOpenPopUp, action }) => {
     return (
-        <div className='flex w-full justify-between items-center pl-2'>
-            <p className='font-bold text-xl text-[#3F3F3F]'>Edit Description</p>
-            <span onClick={() => setOpenPopUp({ ...false })}>
-                <CrossIcon />
-            </span>
-        </div>
+      <button
+        onClick={() => setOpenPopUp && setOpenPopUp({ ...false })}
+        className={`h-[42.59px] w-[156.29px] rounded-lg text-center ${styles}`}
+      >
+        {label}
+      </button>
     )
-}
-
-
-// input box
-const InputBox = () => {
+  }
+  // input box
+  const InputBox = () => {
     return (
-        <textarea className='flex items-center justify-center w-full h-[300px] relative outline-none p-3 border-[2px] border-[#e5e5e5] bg-[#F7F7F7] rounded-xl resize-none' />
+      <textarea
+        defaultValue={''}
+        value={data}
+        onChange={handleChange}
+        className="relative flex h-[300px] w-full resize-none items-center justify-center rounded-xl border-[2px] border-[#e5e5e5] bg-[#F7F7F7] p-3 outline-none"
+      />
     )
-}
+  }
+  return (
+    <div className="z-30 flex h-[400px] w-full flex-col items-center gap-9 rounded-xl bg-[#FFFFFF] p-6 font-roboto shadow-2xl sm:w-[500px] lg:h-[500px] lg:w-[590px]">
+      {/* Title and CrossButton */}
+      <TopTitle setOpenPopUp={setOpenPopUp} />
 
+      {/* Input Box */}
+      <textarea
+        defaultValue={''}
+        value={data}
+        onChange={handleChange}
+        className="relative flex h-[300px] w-full resize-none items-center justify-center rounded-xl border-[2px] border-[#e5e5e5] bg-[#F7F7F7] p-3 outline-none"
+      />
 
-// Buttons
-const Buttons = ({ label, styles, setOpenPopUp }) => {
-    return (
-        <button onClick={() => (setOpenPopUp && setOpenPopUp({ ...false }))}
-            className={`w-[156.29px] h-[42.59px] text-center rounded-lg ${styles}`}>
-            {label}
+      {/* Bottom Buttons */}
+      <div className="flex w-full items-center justify-between gap-4">
+        <Buttons
+          setOpenPopUp={setOpenPopUp}
+          label="Cancel Changes"
+          styles="border-[1.2px] border-[#FC4D6D] text-[#545454] font-bold"
+        />
+        <button
+          onClick={() => {
+            setUpdate(true)
+          }}
+          className={`h-[42.59px] w-[156.29px] rounded-lg bg-[#FC4D6D] text-center font-medium text-[#FFFFFF]`}
+        >
+          Save Changes
         </button>
-    )
+      </div>
+    </div>
+  )
 }
+
+export default DescriptionPopUp

@@ -6,56 +6,117 @@ import { IoMdAddCircleOutline } from 'react-icons/io'
 import { IoMdClose } from 'react-icons/io'
 import { Form, Formik, Field, FieldArray, ErrorMessage } from 'formik'
 import SelectWithIcons from '../../../components/TutorDashboardRegistration/SelectWithIcons'
+import { getLocalStorage, updateUser } from '../../../utils/cookies'
+import {
+  studentUpdateBasicDetails,
+  getTutorProfile,
+  LANGUAGES,
+  LanguageLevel,
+  countryList,
+} from '../../../utils/constants'
+import Server from '../../../utils/Server'
 
-const languageOptions = [
-  { value: 'Tamil', label: 'Tamil' },
-  { value: 'Gujrati', label: 'Gujrati' },
-  { value: 'Marathi ', label: 'Marathi' },
-]
-const iconSelect = [
-  {
-    id: 1,
-    name: 'India',
-    avatar:
-      'https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png',
-  },
-  {
-    id: 2,
-    name: 'America',
-    avatar:
-      'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg',
-  },
-]
+const iconSelect = countryList.slice()
+
+const languageOptions = LANGUAGES.slice()
 
 function BasicDetails() {
+  const [user_data, set_user_data] = useState({})
+
+  const [nativeLanguage, setNativeLanguage] = useState('')
+  const [englishFluency, setEnglishFluency] = useState('')
   const [languageData, setLanguageData] = useState([])
   const [addLanguageData, setAddLanguageData] = useState([])
+  const [countryData, setCountryData] = useState('') // continue here
+  const [current, setCurrent] = useState(0)
+  const [flag, setFlag] = useState(false)
 
   useEffect(() => {
+    set_user_data(getLocalStorage('user'))
     setLanguageData(languageOptions)
+    setNativeLanguage(user_data.native_language)
+    setEnglishFluency(user_data.english_fluency)
+    setCountryData(user_data.country)
   }, [])
+  useEffect(() => {
+    if (user_data && user_data.other_languages) {
+      setAddLanguageData(user_data.other_languages)
+      const newInput = languageData.filter(
+        (item) => !addLanguageData.includes(item.name)
+      )
+      setLanguageData(newInput)
+    }
+
+    if (user_data.country) {
+      let _tmp = countryList.findIndex((it) => it.name == user_data.country)
+      setCurrent(_tmp)
+    }
+  }, [user_data])
+  useEffect(() => {
+    setFlag(true)
+  }, [current])
   const initialValues = {
-    Qualification: [
-      {
-        durationTo: '',
-        durationFrom: '',
-        title: '',
-        Type: '',
-      },
-    ],
+    country: user_data.country ? user_data.country : '',
+    native_language: user_data.native_language ? user_data.native_language : '',
+    english_fluency: user_data.english_fluency ? user_data.english_fluency : '',
+
+    interested_skills:
+      user_data.interested_skills && user_data.interested_skills
+        ? user_data.interested_skills
+        : [
+            {
+              subject: '-',
+            },
+          ],
+    qualifications:
+      user_data.qualifications && user_data.qualifications[0]
+        ? user_data.qualifications
+        : [
+            {
+              qualification_type: '',
+              qualification_title: '',
+              qualification_duration_from: '',
+              qualification_duration_to: '',
+            },
+          ],
     teachs: [
       {
         fee: '',
         teach: '',
-        Currency: '',
+        Currency: 'USD',
       },
     ],
   }
-  const onSubmit = () => {}
+  const onSubmit = async (data) => {
+    // data['interested_skills'] = initialValues.interested_skills
+    console.log(data)
+    data.teachs = undefined
+    // return
+    data['qualifications'] = user_data.qualifications
+    if (!data.interested_skills) {
+      data.interested_skills = initialValues.interested_skills
+    }
+    if (!data.native_language) {
+      data.native_language = user_data.native_language
+    }
+    if (!data.english_fluency) {
+      data.english_fluency = user_data.english_fluency
+    }
+    if (!data.country) {
+      data.country = user_data.country
+    }
+
+    const user_update = await Server.put(studentUpdateBasicDetails, data)
+    if (user_update.success) {
+      updateUser({ ...data }, () => {
+        Router.push('/tutorDashboard/myprofile/timeAvailability')
+      })
+    }
+  }
 
   const languageDataSelect = (value) => {
     setAddLanguageData([...addLanguageData, value])
-    const newInput = languageData.filter((item) => item.value !== value)
+    const newInput = languageData.filter((item) => item.name !== value)
     setLanguageData(newInput)
   }
 
@@ -74,10 +135,18 @@ function BasicDetails() {
         </div>
         <hr />
         <Formik
+          enableReinitialize={true}
           initialValues={initialValues}
           onSubmit={async (values) => {
             await new Promise((r) => setTimeout(r, 500))
-            alert(JSON.stringify(values, null, 2))
+            let _values = values
+            _values.country = countryData
+            _values.native_language = nativeLanguage
+            _values.english_fluency = englishFluency
+
+            console.log(JSON.stringify(values, null, 2))
+            onSubmit(_values)
+            // alert(JSON.stringify(values, null, 2))
           }}
         >
           {({ values }) => {
@@ -89,50 +158,20 @@ function BasicDetails() {
                       <label className="self-center font-semibold ">
                         My Country Of Origin
                       </label>
-                      <SelectWithIcons
-                        people={iconSelect}
-                        current={0}
-                        changestyle="border-2 border-[#C1C1C1] rounded-[10px] "
-                        flag="left"
-                        uupdate={() => {
-                          return 0
-                        }}
-                      />
+                      {flag && (
+                        <SelectWithIcons
+                          people={iconSelect}
+                          current={current}
+                          changestyle="border-2 border-[#C1C1C1] rounded-[10px] "
+                          flag="left"
+                          update={setCountryData}
+                        />
+                      )}
                     </div>
                     <div></div>
                     <div className=" col-span-2  grid grid-cols-1 gap-y-2   md:col-span-1 md:grid-cols-2">
                       <label className="self-center font-semibold">
                         I Natively Speak
-                      </label>
-                      <Field
-                        as="select"
-                        className="rounded-[10px]  border-2 border-[#C1C1C1] p-2"
-                      >
-                        <option>Hindi</option>
-                        <option>Hindi</option>
-                        <option>Hindi</option>
-                      </Field>
-                    </div>
-                    <div></div>
-
-                    <div className=" col-span-2  grid grid-cols-1 gap-y-2   md:col-span-1  md:grid-cols-2">
-                      <label className="self-center font-semibold">
-                        My English Fluency
-                      </label>
-                      <Field
-                        as="select"
-                        className="rounded-[10px]  border-2 border-[#C1C1C1] p-2"
-                      >
-                        <option>Expert</option>
-                        <option>Expert</option>
-                        <option>Expert</option>
-                      </Field>
-                      <div></div>
-                    </div>
-                    <div></div>
-                    <div className="col-span-2 grid   grid-cols-1 gap-y-2 md:col-span-1  md:grid-cols-2 ">
-                      <label className="self-center font-semibold">
-                        I Am Also Fluent With..
                       </label>
                       <select
                         name="language"
@@ -141,145 +180,166 @@ function BasicDetails() {
                         id="language"
                         onChange={(e) => {
                           // setFormskillValue()
-                          languageDataSelect(e.target.value)
+                          if (e.target.value !== 'Option') {
+                            setNativeLanguage(e.target.value)
+                          }
                           // formik.setFieldValue("skill", e.target.value);
                         }}
                       >
                         <option>Option</option>
                         {languageData?.length &&
                           languageData?.map((item, index) => {
+                            if (
+                              user_data &&
+                              user_data.native_language &&
+                              user_data.native_language === item.name
+                            ) {
+                              return (
+                                <option
+                                  key={index}
+                                  value={item.name}
+                                  selected="selected"
+                                >
+                                  {item.name} | {item.nativeName}
+                                </option>
+                              )
+                            }
                             return (
-                              <option key={index} value={item.value}>
-                                {item.label}
+                              <option key={index} value={item.name}>
+                                {item.name} | {item.nativeName}
                               </option>
                             )
                           })}
                       </select>
                     </div>
-                    <div className=" col-span-2 grid  md:col-span-1 md:grid-cols-7 ">
-                      <div className=" col-span-7 flex  h-11 gap-x-5 self-center text-sm md:col-span-6">
-                        {addLanguageData?.map((item, key) => {
-                          return (
-                            <div type="reset" key={key}>
-                              <span className="flex h-[27px] place-items-center gap-6 rounded bg-[#F6F6F6] px-2.5">
+                    <div></div>
+                    {JSON.stringify(setLanguageData)}
+
+                    <div className=" col-span-2  grid grid-cols-1 gap-y-2   md:col-span-1  md:grid-cols-2">
+                      <label className="self-center font-semibold">
+                        My English Fluency
+                      </label>
+                      <select
+                        name="language"
+                        className="rounded-[10px]  border-2 border-[#C1C1C1] p-2 "
+                        // {...formik.getFieldProps("skill")}
+                        id="language"
+                        onChange={(e) => {
+                          // setFormskillValue()
+                          if (e.target.value !== 'Option') {
+                            setEnglishFluency(e.target.value)
+                          }
+                          // formik.setFieldValue("skill", e.target.value);
+                        }}
+                      >
+                        <option>Option</option>
+
+                        {LanguageLevel.map((item, index) => {
+                          if (
+                            user_data &&
+                            user_data.english_fluency &&
+                            user_data.english_fluency === item
+                          ) {
+                            return (
+                              <option
+                                key={index}
+                                value={item}
+                                selected="selected"
+                              >
                                 {item}
-                                <IoMdClose
-                                  onClick={(e) => handleClose(item, key)}
-                                  className=" my-auto h-auto cursor-pointer stroke-[38px]"
-                                />
-                              </span>
-                            </div>
-                          )
+                              </option>
+                            )
+                          } else {
+                            return (
+                              <option key={index} value={item}>
+                                {item}
+                              </option>
+                            )
+                          }
                         })}
-                      </div>
+                        {/* <option value={LanguageLevel[1]}>
+                          {LanguageLevel[1]}
+                        </option>
+                        <option value={LanguageLevel[2]}>
+                          {LanguageLevel[2]}
+                        </option>
+                        <option value={LanguageLevel[3]}>
+                          {LanguageLevel[3]}
+                        </option> */}
+                      </select>
+                      <div></div>
                     </div>
+                    <div></div>
+
                     <div className=" col-span-2  ">
-                      <FieldArray name="teachs">
+                      <FieldArray name="interested_skills">
                         {({ insert, remove, push }) => (
                           <>
-                            {values.teachs?.map((teachs, index) => (
-                              <div
-                                className=" grid grid-cols-12 gap-y-9  gap-x-4  md:gap-6"
-                                key={index}
-                              >
-                                <div className="grid-col-1 col-span-6  grid   gap-y-2  md:grid-cols-2">
-                                  <label
-                                    className="self-center font-semibold"
-                                    htmlFor={`teachs.${index}.teach`}
-                                  >
-                                    {' '}
-                                    I Will Like To Learn..
-                                  </label>
-                                  <Field
-                                    as="select"
-                                    name={`teachs.${index}.teach`}
-                                    placeholder="Jane Doe"
-                                    className="rounded-[10px] border-2 border-[#C1C1C1] p-2 "
-                                  >
-                                    <option>Math</option>
-                                    <option>sfgsf</option>
-                                    <option>sdfgsd</option>
-                                  </Field>
-                                </div>
+                            {values.interested_skills?.map(
+                              (interested_skills, index) => (
+                                <div
+                                  className="mb-9 grid grid-cols-12 gap-y-9  gap-x-4  md:gap-6"
+                                  key={index}
+                                >
+                                  <div className="grid-col-1 col-span-6  grid   gap-y-2  md:grid-cols-2">
+                                    <label
+                                      className="self-center font-semibold"
+                                      htmlFor={`interested_skills.${index}.subject`}
+                                    >
+                                      {' '}
+                                      I Will Like To Learn..
+                                    </label>
+                                    <Field
+                                      as="select"
+                                      name={`interested_skills.${index}.subject`}
+                                      placeholder="Jane Doe"
+                                      className="rounded-[10px] border-2 border-[#C1C1C1] p-2 "
+                                    >
+                                      <option>Option</option>
+                                      <option value="Music">Music</option>
+                                      <option value="Programming">
+                                        Programming
+                                      </option>
+                                      <option value="Gardening">
+                                        Gardening
+                                      </option>
+                                      <option value="Yoga">Yoga</option>
+                                      <option value="Hindi">Hindi</option>
+                                    </Field>
+                                  </div>
 
-                                <div className=" col-span-3 col-start-10 flex justify-between md:col-span-1 lg:gap-3 xl:gap-8 ">
-                                  <button
-                                    type="button"
-                                    onClick={() => push({ fee: '', teach: '' })}
-                                  >
-                                    <RiAddFill className="text-2xl text-[#7D7D7D]" />
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={
-                                      index <= 0 ? null : () => remove(index)
-                                    }
-                                  >
-                                    <RiDeleteBinLine className="text-xl text-[#7D7D7D]" />
-                                  </button>
+                                  <div className=" col-span-3 col-start-10 flex justify-between md:col-span-1 lg:gap-3 xl:gap-8 ">
+                                    <button
+                                      type="button"
+                                      onClick={() =>
+                                        push({
+                                          subject: '-',
+                                        })
+                                      }
+                                    >
+                                      <RiAddFill className="text-2xl text-[#7D7D7D]" />
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={
+                                        index <= 0 ? null : () => remove(index)
+                                      }
+                                    >
+                                      <RiDeleteBinLine className="text-xl text-[#7D7D7D]" />
+                                    </button>
+                                  </div>
                                 </div>
-                              </div>
-                            ))}
-                          </>
-                        )}
-                      </FieldArray>
-                    </div>
-                    <div className=" col-span-2  ">
-                      <FieldArray name="teachs">
-                        {({ insert, remove, push }) => (
-                          <>
-                            {values.teachs?.map((teachs, index) => (
-                              <div
-                                className=" grid grid-cols-12 gap-y-9  gap-x-4  md:gap-6"
-                                key={index}
-                              >
-                                <div className="grid-col-1 col-span-6  grid   gap-y-2  md:grid-cols-2">
-                                  <label
-                                    className="self-center font-semibold"
-                                    htmlFor={`teachs.${index}.teach`}
-                                  >
-                                    {' '}
-                                    I Will Like To Teach..
-                                  </label>
-                                  <Field
-                                    as="select"
-                                    name={`teachs.${index}.teach`}
-                                    placeholder="Jane Doe"
-                                    className="rounded-[10px] border-2 border-[#C1C1C1] p-2 "
-                                  >
-                                    <option>Math</option>
-                                    <option>sfgsf</option>
-                                    <option>sdfgsd</option>
-                                  </Field>
-                                </div>
-
-                                <div className=" col-span-3 col-start-10 flex justify-between md:col-span-1 lg:gap-3 xl:gap-8 ">
-                                  <button
-                                    type="button"
-                                    onClick={() => push({ fee: '', teach: '' })}
-                                  >
-                                    <RiAddFill className="text-2xl text-[#7D7D7D]" />
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={
-                                      index <= 0 ? null : () => remove(index)
-                                    }
-                                  >
-                                    <RiDeleteBinLine className="text-xl text-[#7D7D7D]" />
-                                  </button>
-                                </div>
-                              </div>
-                            ))}
+                              )
+                            )}
                           </>
                         )}
                       </FieldArray>
                     </div>
                   </div>
 
-                  <div className="my-12 text-left">
+                  <div className="my-12 text-right">
                     <button className="w-full rounded-lg bg-[#FC4D6D] py-2.5 px-4 text-white sm:w-auto ">
-                      Save Settings
+                      Save and Next
                     </button>
                   </div>
                 </div>

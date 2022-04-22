@@ -89,6 +89,73 @@ function TimeAvailability() {
 
   const onSubmit = async (value) => {
     const availability = []
+    // console.log('start')
+    // for (const key in value) {
+    //   const result = value[key].filter((val) => val.from && val.to)
+    //   if (result.length > 0) {
+    //     //
+    //     let _result = []
+    //     console.log('RESULT - ', result)
+    //     for (var i = 0; i < result.length; i++) {
+    //       let _from = parseInt(result[i].from.slice(0, 2))
+    //       let _from_min = result[i].from.slice(3, 5)
+    //       let _to = parseInt(result[i].to.slice(0, 2))
+    //       let _to_min = result[i].to.slice(3, 5)
+    //       if (_to - _from > 1 && _from_min === _to_min) {
+    //         console.log(_from + ' ' + _to)
+    //         let _tmp = []
+    //         for (var j = _from; j < _to; j++) {
+    //           if (j < 10) {
+    //             let from = '0' + String(j) + ':' + _from_min
+    //             let to = ''
+    //             if (j < 9) {
+    //               to = '0' + String(j + 1) + ':' + _from_min
+    //             } else {
+    //               to = String(j + 1) + ':' + _from_min
+    //             }
+    //             _tmp.push({ from, to })
+    //           } else {
+    //             let from = String(j) + ':' + _from_min
+    //             let to = String(j + 1) + ':' + _from_min
+    //             _tmp.push({ from, to })
+    //           }
+    //         }
+    //         _result.concat(_tmp.slice())
+    //         console.log('magic is ', _tmp)
+    //       } else if (_to - _from > 1 && _from_min !== _to_min) {
+    //         if (_to_min === '00') {
+    //           _to -= 1
+    //         }
+    //         console.log(_from + ' ' + _to)
+    //         let _tmp = []
+    //         for (var j = _from; j < _to; j++) {
+    //           if (j < 10) {
+    //             let from = '0' + String(j) + ':' + _from_min
+    //             let to = ''
+    //             if (j < 9) {
+    //               to = '0' + String(j + 1) + ':' + _from_min
+    //             } else {
+    //               to = String(j + 1) + ':' + _from_min
+    //             }
+    //             _tmp.push({ from, to })
+    //           } else {
+    //             let from = String(j) + ':' + _from_min
+    //             let to = String(j + 1) + ':' + _from_min
+    //             _tmp.push({ from, to })
+    //           }
+    //         }
+    //         _result.concat(_tmp.slice())
+    //         console.log('magic is ', _tmp)
+    //       } else {
+    //         _result.concat(result[i])
+    //       }
+    //     }
+    //     availability.push({ day: key, slots: _result })
+    //     // console.log(result)
+    //   }
+    // }
+    // console.log('outptut is - ', availability)
+    // return
     for (const key in value) {
       const result = value[key].filter((val) => val.from && val.to)
       if (result.length > 0) {
@@ -224,11 +291,11 @@ function TimeAvailability() {
                   </div>
                 </div>
                 <div className="col-span-12 my-10 flex gap-x-10 md:col-span-6">
-                  <div>
+                  {/* <div>
                     <button className="  w-auto rounded-lg border border-[#FC4D6D] bg-white px-3 py-1 text-lg font-medium text-[#FC4D6D] md:col-span-2 md:w-full">
                       Skip For Now
                     </button>
-                  </div>
+                  </div> */}
                   <div className="">
                     <button className=" w-auto rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-7 py-1 text-lg font-medium text-white md:col-span-2 md:mt-0 md:w-full ">
                       Next

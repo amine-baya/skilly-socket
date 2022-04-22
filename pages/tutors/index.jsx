@@ -18,8 +18,12 @@ import {
 } from 'utils/constants'
 import Link from 'next/link'
 import Image from 'next/image'
+import { getCookie } from 'cookies-next'
 
 const Tutors = () => {
+  const TOKEN = getCookie('token')
+    ? JSON.parse(getCookie('token')).access_token
+    : false
   const [tutorData, setTutorData] = useState(null)
   const [page, setPage] = useState(1)
   const [count, setCount] = useState(0)
@@ -57,42 +61,42 @@ const Tutors = () => {
             console.log(`${baseUrlProfilePic}${dd.profile_img}`)
             return (
               // <Link href={'/tutors'} passHref key={key}>
-              <CourseCart
-                topRightTitle={'top tutors'}
-                key={key}
-                coverImg={
-                  dd.background_pic
-                    ? `${baseUrlProfilePic}${dd.background_pic}`
-                    : '/Images/CourseCart/girl-using-tablet.png'
-                }
-                tutorName={dd.tutor_name}
-                setOpenPopUp={setOpenPopUp}
-                setSelectedTutor={setSelectedTutor}
-                countryLogo={_obj ? _obj.emoji : ''}
-                tutorImg={
-                  dd.profile_img
-                    ? `${baseUrlProfilePic}${dd.profile_img}`
-                    : '/Images/CourseCart/girl-looking-up.png'
-                }
-                tutorData={dd}
-              />
-
-              // </Link>
+              <>
+                <CourseCart
+                  topRightTitle={'top tutors'}
+                  key={key}
+                  coverImg={
+                    dd.background_pic
+                      ? `${baseUrlProfilePic}${dd.background_pic}`
+                      : '/Images/CourseCart/girl-using-tablet.png'
+                  }
+                  tutorName={dd.tutor_name}
+                  setOpenPopUp={setOpenPopUp}
+                  setSelectedTutor={setSelectedTutor}
+                  countryLogo={_obj ? _obj.emoji : ''}
+                  tutorImg={
+                    dd.profile_img
+                      ? `${baseUrlProfilePic}${dd.profile_img}`
+                      : '/Images/CourseCart/girl-looking-up.png'
+                  }
+                  tutorData={dd}
+                />
+                {/* TimeSlot PopUp */}
+                {openPopUp.calendarPopUp && TOKEN && (
+                  <div className="absolute z-40 flex w-full items-center justify-center bg-gray-50/5">
+                    <CalenderPopUp
+                      tutor={selectedTutorData}
+                      tutorTimezone={dd.timezone}
+                      setOpenPopUp={setOpenPopUp}
+                      setTotalSelectedTimes={setTotalSelectedTimes}
+                      link={'/payment'}
+                    />
+                  </div>
+                )}
+              </>
             )
           })
         : null}
-
-      {/* TimeSlot PopUp */}
-      {openPopUp.calendarPopUp && (
-        <div className="absolute z-40 flex w-full items-center justify-center bg-gray-50/5">
-          <CalenderPopUp
-            tutor={selectedTutorData}
-            setOpenPopUp={setOpenPopUp}
-            setTotalSelectedTimes={setTotalSelectedTimes}
-            link={'/payment'}
-          />
-        </div>
-      )}
     </main>
   )
 }

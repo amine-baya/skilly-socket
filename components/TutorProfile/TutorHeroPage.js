@@ -3,6 +3,7 @@ import ProfilePhotoPopUp from './PopUps/ProfilePhotoPopUp'
 import { openPopUps } from '../../Atoms/PopUpAtoms'
 import { useRecoilState } from 'recoil'
 import CoverPhotoPopUp from './PopUps/CoverPhotoPopUp'
+import { baseUrlProfilePic } from '../../utils/constants'
 
 export default function TutorHeroPage({ tutor, user }) {
   // top open and close popup
@@ -11,7 +12,7 @@ export default function TutorHeroPage({ tutor, user }) {
 
   return (
     <div className="snap-fullPage relative hidden h-[calc(100vh-79px)] items-center justify-start overflow-hidden bg-gradient-to-r from-[#FF7C7CB8] to-[#C4C4C400] md:flex">
-      <BackgroundImg />
+      <BackgroundImg tutor={tutor} user={user} />
       {/* camera  */}
       <div
         onClick={() => setCoverPopUp({ ...false, CoverPhotoPopUp: true })}
@@ -29,17 +30,21 @@ export default function TutorHeroPage({ tutor, user }) {
 
       {/* Profession */}
       <p className="absolute -bottom-6 hidden w-full text-center font-poppins text-[100px] font-semibold uppercase tracking-[25px] text-[#424242] opacity-50 lg:block">
-        <span className="text-[#FFFFFF]">{tutor.first_name}</span>{' '}
-        {' ' + tutor.last_name}
+        <span className="text-[#FFFFFF]">{tutor?.first_name}</span>{' '}
+        {' ' + tutor?.last_name}
       </p>
 
       {/* ProfileChip */}
-      {tutor._id === user._id ? <ProfileChip /> : ''}
+      {tutor?._id === user?._id ? <ProfileChip /> : ''}
 
       {/* main */}
       <div className="flex items-center gap-8 pl-8 lg:pl-16">
-        <UserImage setProfilePopUp={setProfilePopUp} />
-        {user._id === tutor._id ? (
+        <UserImage
+          setProfilePopUp={setProfilePopUp}
+          tutor={tutor}
+          user={user}
+        />
+        {user?._id === tutor?._id ? (
           <>
             {/* profile photo popup */}
             {profilePopUp.ProfilePhotoPopUp && <ProfilePhotoPopUp />}
@@ -54,12 +59,15 @@ export default function TutorHeroPage({ tutor, user }) {
   )
 }
 
-const BackgroundImg = () => {
+const BackgroundImg = ({ tutor, user }) => {
   return (
     <div className="absolute h-full w-full">
       <div className="relative -z-10 h-full w-full">
         <Image
-          src="/Images/TutorProfile/background.png"
+          // src="/"
+          src={
+            tutor?.background_img ? '/' : '/Images/TutorProfile/background.png'
+          }
           alt="background"
           objectFit="cover"
           layout="fill"
@@ -69,7 +77,7 @@ const BackgroundImg = () => {
   )
 }
 
-const UserImage = ({ setProfilePopUp }) => {
+const UserImage = ({ setProfilePopUp, tutor, user }) => {
   return (
     <div className="relative h-[200px] w-[200px] rounded-lg lg:h-[280px] lg:w-[280px]">
       {/* camera */}
@@ -89,7 +97,12 @@ const UserImage = ({ setProfilePopUp }) => {
 
       {/* userImage */}
       <Image
-        src="/Images/TutorProfile/tutor.png"
+        src={
+          tutor?.profile_img
+            ? `${baseUrlProfilePic}${tutor.profile_img}`
+            : '/Images/TutorProfile/tutor.png'
+        }
+        // className="border-4 border-white"
         alt="tutor"
         layout="fill"
         objectFit="contain"

@@ -1,7 +1,12 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-
-function SideBar({ tutor }) {
+import { useEffect, useState } from 'react'
+import { getLocalStorage } from 'utils/cookies'
+function SideBar() {
+  const [tutor, setTutor] = useState({})
+  useEffect(() => {
+    setTutor(getLocalStorage('user'))
+  }, [])
   const router = useRouter()
 
   return (

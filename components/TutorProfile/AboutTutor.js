@@ -1,26 +1,42 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { PencilIcon } from '@heroicons/react/solid';
-import { openPopUps } from "../../Atoms/PopUpAtoms";
-import { useRecoilState } from "recoil";
-import DescriptionPopUp from './PopUps/DescriptionPopUp';
+import Image from 'next/image'
+import Link from 'next/link'
+import { PencilIcon } from '@heroicons/react/solid'
+import { openPopUps, selectedTutor } from '../../Atoms/PopUpAtoms'
+import { useRecoilState } from 'recoil'
+import DescriptionPopUp from './PopUps/DescriptionPopUp'
+import { useEffect, useState } from 'react'
+import CalenderPopUp from 'components/PaymentPage/PopUps/CalenderPopUp'
+import { useRouter } from 'next/router'
+import { getLocalStorage } from '../../utils/cookies'
 
-function AboutTutor({ tutor, user }) {
-  const [openPopUp, setOpenPopUp] = useRecoilState(openPopUps);
+function AboutTutor({ user, tutor }) {
+  const [openPopUp, setOpenPopUp] = useRecoilState(openPopUps)
+
+  const router = useRouter()
+  // const [reload, setReload] = useState(false)
 
   return (
     <div className="snap-fullPage relative mx-auto flex flex-col items-start gap-4 sm:items-center lg:justify-center lg:gap-0">
+      {openPopUp.calendarPopUp && (
+        <div className="absolute z-[99999999999999999999] flex w-full items-center justify-center bg-gray-50/5">
+          <CalenderPopUp tutorTimezone={tutor.timezone} link={'/payment'} />
+        </div>
+      )}
       <TopTitle />
 
       {/* mainContainer For lg deivces */}
-      <main className="hidden flex-wrap-reverse items-center justify-center gap-8 lg:flex">
+      <main className="mt-3 hidden flex-wrap-reverse items-center justify-center gap-8 lg:flex">
         <Video />
         <Description user={user} tutor={tutor} setOpenPopUp={setOpenPopUp} />
       </main>
 
       {/* mainContainer For lg deivces */}
-      <main className="flex flex-col items-start justify-center gap-3 md:gap-6 lg:hidden px-4">
-        <DescriptionPhone user={user} tutor={tutor} setOpenPopUp={setOpenPopUp} />
+      <main className="flex flex-col items-start justify-center gap-3 px-4 md:gap-6 lg:hidden">
+        <DescriptionPhone
+          user={user}
+          tutor={tutor}
+          setOpenPopUp={setOpenPopUp}
+        />
         <VideoPhone />
       </main>
 
@@ -31,8 +47,10 @@ function AboutTutor({ tutor, user }) {
 
       {/* DescriptionPopUp */}
       {openPopUp.DescriptionPopUp && (
-        <div className='absolute flex items-center justify-center w-full h-full bg-gray-500/50'>
-          <DescriptionPopUp />
+        <div className="absolute flex h-full w-full items-center justify-center bg-gray-500/50">
+          <DescriptionPopUp
+          // reload={setReload}
+          />
         </div>
       )}
     </div>
@@ -43,7 +61,7 @@ export default AboutTutor
 
 const TopTitle = () => {
   return (
-    <div className="flex flex-col items-start justify-center gap-2 font-poppins capitalize tracking-wide lg:items-center lg:gap-4 px-4">
+    <div className="flex flex-col items-start justify-center gap-2 px-4 font-poppins capitalize tracking-wide lg:items-center lg:gap-4">
       <p className="hidden font-bold text-[#FC4D6D] lg:inline-block">
         About us
       </p>
@@ -182,13 +200,24 @@ function VideoPhone(props) {
   )
 }
 
-const Description = ({ user, tutor, setOpenPopUp }) => {
+const Description = ({ user, tutor }) => {
+  // const [description, setDescription] = useState(tutor?.description)
+  // if (user._id === tutor._id) {
+  //   setDescription(getLocalStorage('user').description)
+  // }
+  const [openPopUp, setOpenPopUp] = useRecoilState(openPopUps)
+  const [selectedTutorData, setSelectedTutor] = useRecoilState(selectedTutor)
+
   return (
-    <div className="flex h-full w-full flex-col items-end justify-between gap-3 font-roboto sm:w-[467px]">
+    <div className="flex h-full w-full flex-col items-end  gap-3 font-roboto sm:w-[467px]">
+      {/* TimeSlot PopUp */}
+
       {/* Edit Button */}
-      {user._id == tutor._id ? (
-        <button onClick={() => setOpenPopUp({ ...false, DescriptionPopUp: true })}
-          className="flex items-center justify-center gap-3 font-semibold text-[#FC4D6D]">
+      {user?._id == tutor?._id ? (
+        <button
+          onClick={() => setOpenPopUp({ ...false, DescriptionPopUp: true })}
+          className="flex items-center justify-center gap-3 font-semibold text-[#FC4D6D]"
+        >
           <span className="w-5">
             <PencilIcon />
           </span>
@@ -199,29 +228,39 @@ const Description = ({ user, tutor, setOpenPopUp }) => {
       )}
 
       {/* Description */}
-      <article className="flex flex-col items-center justify-between gap-2 font-medium capitalize tracking-wider text-[#858585]">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dapibus
-          dignissim elit rutrum cras tincidunt. Aliquet quis et, elit ultricies
-          aliquam. Pulvinar sagittis enim, id amet cursus amet. Lectus auctor
-          velit vitae commodo. Tincidunt senectus tincidunt ac et pellentesque
-          turpis nulla morbi.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dapibus
-          dignissim elit rutrum cras tincidunt. Aliquet quis et, elit ultricies
-          aliquam. Pulvinar sagittis enim, id amet cursus amet. Lectus auctor
-          velit vitae commodo. Tincidunt senectus tincidunt ac et pellentesque
-          turpis nulla morbi.
-        </p>
+      <article className="flex flex-col items-center justify-between gap-2 self-start font-medium capitalize tracking-wider text-[#858585]">
+        {console.log('tutor is ', tutor)}
+        {tutor?._id === user._id && user?.description ? (
+          <p>{`${user.description}`}</p>
+        ) : tutor?._id !== user._id && tutor?.description ? (
+          <p>{`${tutor.description}`}</p>
+        ) : tutor?._id !== user._id && tutor?.description ? (
+          <p>{`${tutor.description}`}</p>
+        ) : (
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dapibus
+            dignissim elit rutrum cras tincidunt. Aliquet quis et, elit
+            ultricies aliquam. Pulvinar sagittis enim, id amet cursus amet.
+            Lectus auctor velit vitae commodo. Tincidunt senectus tincidunt ac
+            et pellentesque turpis nulla morbi.
+          </p>
+        )}
       </article>
 
       {/* Buttons */}
-      <div className="flex w-full items-center justify-between font-poppins sm:justify-evenly">
+      <div className="mt-auto flex w-full items-center justify-between font-poppins sm:justify-evenly">
         {user.role !== 'STUDENT' ? (
           <>
-            <button className="h-[45px] w-[205px] rounded-full bg-[#FC4D6D] text-center font-bold tracking-wider text-white shadow-xl">
-              Book Trail Session
+            <button
+              // href={`/book/${tutor?._id}`}
+              onClick={() => {
+                setSelectedTutor(tutor?._id)
+                // alert(tutor._id)
+                setOpenPopUp && setOpenPopUp({ ...false, calendarPopUp: true })
+              }}
+              className="flex h-[45px] w-[205px] items-center justify-center rounded-full bg-[#FC4D6D] text-center font-bold tracking-wider text-white shadow-xl"
+            >
+              Book Trial Session
             </button>
             <p className="font-semibold text-[#565656]">Rs.999/hr</p>
           </>
@@ -238,9 +277,11 @@ const DescriptionPhone = ({ user, tutor, setOpenPopUp }) => {
   return (
     <div className="flex h-full w-full flex-col items-end justify-between gap-2 font-roboto sm:w-[467px] md:gap-3">
       {/* Edit Button */}
-      {user._id == tutor._id ? (
-        <button onClick={() => setOpenPopUp({ ...false, DescriptionPopUp: true })}
-          className="flex items-center justify-center gap-3 font-semibold text-[#FC4D6D]">
+      {user?._id == tutor?._id ? (
+        <button
+          onClick={() => setOpenPopUp({ ...false, DescriptionPopUp: true })}
+          className="flex items-center justify-center gap-3 font-semibold text-[#FC4D6D]"
+        >
           <span className="w-5">
             <PencilIcon />
           </span>
@@ -251,13 +292,17 @@ const DescriptionPhone = ({ user, tutor, setOpenPopUp }) => {
       )}
       {/* Description */}
       <article className="flex flex-col items-center font-medium capitalize tracking-wider text-[#858585]">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dapibus
-          dignissim elit rutrum cras tincidunt. Aliquet quis et, elit ultricies
-          aliquam. Pulvinar sagittis enim, id amet cursus amet. Lectus auctor
-          velit vitae commodo. Tincidunt senectus tincidunt ac et pellentesque
-          turpis nulla morbi.
-        </p>
+        {tutor?.description ? (
+          <p>{`${tutor.description}`}</p>
+        ) : (
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dapibus
+            dignissim elit rutrum cras tincidunt. Aliquet quis et, elit
+            ultricies aliquam. Pulvinar sagittis enim, id amet cursus amet.
+            Lectus auctor velit vitae commodo. Tincidunt senectus tincidunt ac
+            et pellentesque turpis nulla morbi.
+          </p>
+        )}
       </article>
       {/* Buttons */}
       <div className="flex w-full items-center justify-between font-poppins sm:justify-evenly">

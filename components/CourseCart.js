@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { getCookie } from 'cookies-next'
 
 import { countryList } from '../utils/constants'
 
@@ -15,6 +16,9 @@ function CourseCart({
   tutorData,
   setSelectedTutor,
 }) {
+  const TOKEN = getCookie('token')
+    ? JSON.parse(getCookie('token')).access_token
+    : false
   const router = useRouter()
 
   return (
@@ -31,12 +35,14 @@ function CourseCart({
           <ActiveFinishedRatingBox />
           <Description />
 
-          <BookTrialBtn
-            space={'my-4'}
-            setOpenPopUp={setOpenPopUp}
-            tutorData={tutorData}
-            setSelectedTutor={setSelectedTutor}
-          />
+          {TOKEN && (
+            <BookTrialBtn
+              space={'my-4'}
+              setOpenPopUp={setOpenPopUp}
+              tutorData={tutorData}
+              setSelectedTutor={setSelectedTutor}
+            />
+          )}
         </div>
         <ViewAndChat space={'px-4'} />
       </div>
@@ -135,7 +141,17 @@ function CourseCart({
             height={18}
             alt="cap"
           />
-          <span>English, Geography, +3</span>
+          <span>
+            {tutorData.subjects && tutorData.subjects.length > 0
+              ? tutorData.subjects[0] +
+                (tutorData.subjects.length > 1
+                  ? ', ' +
+                    (tutorData.subjects.length > 1
+                      ? tutorData.subjects[1]
+                      : tutorData.subjects.length - 1)
+                  : '')
+              : ''}
+          </span>
         </span>
         <span className="flex items-center gap-[15px]">
           <Image

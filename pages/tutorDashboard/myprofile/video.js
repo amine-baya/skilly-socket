@@ -231,12 +231,20 @@ function Video() {
           </div>
           <div className="col-span-12 my-10 flex gap-x-10 md:col-span-6">
             <div>
-              <button className="  w-auto rounded-lg border border-[#FC4D6D] bg-white px-3 py-1 text-lg font-medium text-[#FC4D6D] md:col-span-2 md:w-full">
+              <button
+                onClick={() => {
+                  Router.push('/tutorDashboard/myprofile/qualifications')
+                }}
+                className="  w-auto rounded-lg border border-[#FC4D6D] bg-white px-3 py-1 text-lg font-medium text-[#FC4D6D] md:col-span-2 md:w-full"
+              >
                 Skip For Now
               </button>
             </div>
             <div className="">
-              <button className=" w-auto rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-7 py-1 text-lg font-medium text-white md:col-span-2 md:mt-0 md:w-full ">
+              <button
+                type="submit"
+                className=" w-auto rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-7 py-1 text-lg font-medium text-white md:col-span-2 md:mt-0 md:w-full "
+              >
                 Save
               </button>
             </div>

@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import { monthNames } from 'utils/constants'
 
 function Resume({ tutor }) {
   console.log(tutor)
@@ -9,7 +10,7 @@ function Resume({ tutor }) {
 
       {/* main */}
       <div className="w-full overflow-x-scroll">
-        <MainResume qualifications={tutor.qualifications} />
+        <MainResume qualifications={tutor?.qualifications} />
       </div>
     </div>
   )
@@ -71,8 +72,20 @@ const MainResume = ({ qualifications }) => {
       {qualifications?.map((dex, i) => (
         <tr key={i} className={`h-20  ${i % 2 == 0 ? 'bg-[#FFF7F7]' : ''}`}>
           <td className="w-[50px] whitespace-pre-wrap">
-            {moment(dex?.qualification_duration_from, 'YYYY-MM-DD').year()} -{' '}
-            {moment(dex?.qualification_duration_to, 'YYYY-MM-DD').year()}
+            {monthNames[
+              moment(dex?.qualification_duration_from, 'YYYY-MM-DD').month()
+            ] +
+              ' ' +
+              moment(
+                dex?.qualification_duration_from,
+                'YYYY-MM-DD'
+              ).year()}{' '}
+            -{' '}
+            {monthNames[
+              moment(dex?.qualification_duration_to, 'YYYY-MM-DD').month()
+            ] +
+              ' ' +
+              moment(dex?.qualification_duration_to, 'YYYY-MM-DD').year()}
           </td>
           <td className="w-[50px] whitespace-pre-wrap">
             {dex?.qualification_type}

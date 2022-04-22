@@ -17,20 +17,6 @@ import {
 } from '../../../utils/constants'
 import Server from '../../../utils/Server'
 
-// const iconSelect = [
-//   {
-//     id: 1,
-//     name: 'India',
-//     avatar:
-//       'https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png',
-//   },
-//   {
-//     id: 2,
-//     name: 'America',
-//     avatar:
-//       'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg',
-//   },
-// ]
 const iconSelect = countryList.slice()
 
 const languageOptions = LANGUAGES.slice()
@@ -101,7 +87,7 @@ function BasicDetails() {
     newInput.splice(index, 1)
     setAddLanguageData(newInput)
   }
-
+  console.log('user data - ', user_data)
   const initialValues = {
     country: user_data.country ? user_data.country : '',
     native_language: user_data.native_language ? user_data.native_language : '',
@@ -111,13 +97,14 @@ function BasicDetails() {
         ? user_data.other_languages
         : [],
     subjects_and_pricing:
-      user_data.subjects_and_pricing && user_data.subjects_and_pricing[0]
+      user_data.subjects_and_pricing &&
+      user_data.subjects_and_pricing.length > 0
         ? user_data.subjects_and_pricing
         : [
             {
               subject: '-',
               price: '0',
-              currency_format: '-',
+              currency_format: 'USD',
             },
           ],
     qualifications:
@@ -131,10 +118,23 @@ function BasicDetails() {
               qualification_duration_to: '',
             },
           ],
+    teachs: [
+      {
+        fee: '',
+        teach: '',
+        Currency: 'USD',
+      },
+    ],
   }
   const onSubmit = async (data) => {
-    data['subjects_and_pricing'] = initialValues.subjects_and_pricing
+    // data['subjects_and_pricing'] = initialValues.subjects_and_pricing
+    console.log(data)
+    data.teachs = undefined
+    // return
     data['qualifications'] = user_data.qualifications
+    if (!data.subjects_and_pricing) {
+      data.subjects_and_pricing = initialValues.subjects_and_pricing
+    }
     if (!data.native_language) {
       data.native_language = user_data.native_language
     }
@@ -171,6 +171,7 @@ function BasicDetails() {
         </div>
         <hr />
         <Formik
+          enableReinitialize={true}
           initialValues={initialValues}
           onSubmit={async (values) => {
             await new Promise((r) => setTimeout(r, 500))
@@ -179,6 +180,7 @@ function BasicDetails() {
             _values.native_language = nativeLanguage
             _values.english_fluency = englishFluency
             _values.other_languages = addLanguageData
+
             console.log(JSON.stringify(values, null, 2))
             onSubmit(_values)
             // alert(JSON.stringify(values, null, 2))
@@ -351,87 +353,101 @@ function BasicDetails() {
                       </div>
                     </div>
                     <div className=" col-span-2  ">
-                      <FieldArray name="teachs">
+                      {/* {JSON.stringify(values.subjects_and_pricing)} */}
+                      <FieldArray name="subjects_and_pricing">
                         {({ insert, remove, push }) => (
                           <>
-                            {values.teachs?.map((teachs, index) => (
-                              <div
-                                className="mb-9 grid grid-cols-12 gap-y-9  gap-x-4  md:gap-6"
-                                key={index}
-                              >
-                                <div className="grid-col-1 col-span-6  grid   gap-y-2  md:grid-cols-2">
-                                  <label
-                                    className="self-center font-semibold"
-                                    htmlFor={`teachs.${index}.teach`}
-                                  >
-                                    {' '}
-                                    I Will Like To Teach..
-                                  </label>
-                                  <Field
-                                    as="select"
-                                    name={`teachs.${index}.teach`}
-                                    placeholder="Jane Doe"
-                                    className="rounded-[10px] border-2 border-[#C1C1C1] p-2 "
-                                  >
-                                    <option>Math</option>
-                                    <option>sfgsf</option>
-                                    <option>sdfgsd</option>
-                                  </Field>
-                                </div>
-                                <div className="col-span-6 grid grid-cols-1 gap-y-2 md:col-span-5  md:grid-cols-2">
-                                  <label
-                                    className="self-center font-semibold"
-                                    htmlFor={`teachs.${index}.fee`}
-                                  >
-                                    My Fee Per Hour
-                                  </label>
-
-                                  <div className="relative mt-1 h-full rounded-[10px] border-2 border-[#C1C1C1] p-2 shadow-sm">
+                            {values.subjects_and_pricing?.map(
+                              (subjects_and_pricing, index) => (
+                                <div
+                                  className="mb-9 grid grid-cols-12 gap-y-9  gap-x-4  md:gap-6"
+                                  key={index}
+                                >
+                                  <div className="grid-col-1 col-span-6  grid   gap-y-2  md:grid-cols-2">
+                                    <label
+                                      className="self-center font-semibold"
+                                      htmlFor={`subjects_and_pricing.${index}.subject`}
+                                    >
+                                      {' '}
+                                      I Will Like To Teach..
+                                    </label>
                                     <Field
-                                      type="text"
-                                      name={`teachs.${index}.fee`}
-                                      id={`teachs.${index}.fee`}
-                                      className="block h-full w-full rounded-md border-gray-300  focus:outline-none"
-                                      placeholder="000  "
-                                    />
-                                    <div className="absolute inset-y-0 right-0 flex items-center">
-                                      <label
-                                        htmlFor="currency"
-                                        className="sr-only"
-                                      >
-                                        Currency
-                                      </label>
-                                      <select
-                                        id={`teachs.${index}.Currency`}
-                                        name={`teachs.${index}.Currency`}
-                                        className="h-full rounded-md border-transparent bg-transparent py-0 pl-2 pr-3 font-bold text-gray-500  sm:text-sm"
-                                      >
-                                        <option>INR</option>
-                                        <option>CAD</option>
-                                        <option>EUR</option>
-                                      </select>
+                                      as="select"
+                                      name={`subjects_and_pricing.${index}.subject`}
+                                      placeholder="Jane Doe"
+                                      className="rounded-[10px] border-2 border-[#C1C1C1] p-2 "
+                                    >
+                                      <option>Option</option>
+                                      <option value="Music">Music</option>
+                                      <option value="Programming">
+                                        Programming
+                                      </option>
+                                      <option value="Gardening">
+                                        Gardening
+                                      </option>
+                                      <option value="Yoga">Yoga</option>
+                                      <option value="Hindi">Hindi</option>
+                                    </Field>
+                                  </div>
+                                  <div className="col-span-6 grid grid-cols-1 gap-y-2 md:col-span-5  md:grid-cols-2">
+                                    <label
+                                      className="self-center font-semibold"
+                                      htmlFor={`subjects_and_pricing.${index}.price`}
+                                    >
+                                      My Fee Per Hour
+                                    </label>
+
+                                    <div className="relative mt-1 h-full rounded-[10px] border-2 border-[#C1C1C1] p-2 shadow-sm">
+                                      <Field
+                                        type="text"
+                                        name={`subjects_and_pricing.${index}.price`}
+                                        id={`subjects_and_pricing.${index}.price`}
+                                        className="block h-full w-full rounded-md border-gray-300  focus:outline-none"
+                                        placeholder="000  "
+                                      />
+                                      <div className="absolute inset-y-0 right-0 flex items-center">
+                                        <label
+                                          htmlFor="currency_format"
+                                          className="sr-only"
+                                        >
+                                          Currency
+                                        </label>
+                                        <select
+                                          id={`subjects_and_pricing.${index}.currency_format`}
+                                          name={`subjects_and_pricing.${index}.currency_format`}
+                                          className="h-full rounded-md border-transparent bg-transparent py-0 pl-2 pr-3 font-bold text-gray-500  sm:text-sm"
+                                        >
+                                          <option value="USD">USD</option>
+                                        </select>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
 
-                                <div className=" col-span-3 col-start-10 flex justify-between md:col-span-1 lg:gap-3 xl:gap-8 ">
-                                  <button
-                                    type="button"
-                                    onClick={() => push({ fee: '', teach: '' })}
-                                  >
-                                    <RiAddFill className="text-2xl text-[#7D7D7D]" />
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={
-                                      index <= 0 ? null : () => remove(index)
-                                    }
-                                  >
-                                    <RiDeleteBinLine className="text-xl text-[#7D7D7D]" />
-                                  </button>
+                                  <div className=" col-span-3 col-start-10 flex justify-between md:col-span-1 lg:gap-3 xl:gap-8 ">
+                                    <button
+                                      type="button"
+                                      onClick={() =>
+                                        push({
+                                          subject: '-',
+                                          price: '0',
+                                          currency_format: 'USD',
+                                        })
+                                      }
+                                    >
+                                      <RiAddFill className="text-2xl text-[#7D7D7D]" />
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={
+                                        index <= 0 ? null : () => remove(index)
+                                      }
+                                    >
+                                      <RiDeleteBinLine className="text-xl text-[#7D7D7D]" />
+                                    </button>
+                                  </div>
                                 </div>
-                              </div>
-                            ))}
+                              )
+                            )}
                           </>
                         )}
                       </FieldArray>
