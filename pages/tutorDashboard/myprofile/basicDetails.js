@@ -39,6 +39,7 @@ function BasicDetails() {
     setEnglishFluency(user_data.english_fluency)
     setCountryData(user_data.country)
   }, [])
+
   useEffect(() => {
     if (user_data && user_data.other_languages) {
       setAddLanguageData(user_data.other_languages)
@@ -53,6 +54,7 @@ function BasicDetails() {
       setCurrent(_tmp)
     }
   }, [user_data])
+
   useEffect(() => {
     setFlag(true)
   }, [current])
@@ -87,7 +89,9 @@ function BasicDetails() {
     newInput.splice(index, 1)
     setAddLanguageData(newInput)
   }
+
   console.log('user data - ', user_data)
+
   const initialValues = {
     country: user_data.country ? user_data.country : '',
     native_language: user_data.native_language ? user_data.native_language : '',
@@ -98,26 +102,26 @@ function BasicDetails() {
         : [],
     subjects_and_pricing:
       user_data.subjects_and_pricing &&
-      user_data.subjects_and_pricing.length > 0
+        user_data.subjects_and_pricing.length > 0
         ? user_data.subjects_and_pricing
         : [
-            {
-              subject: '-',
-              price: '0',
-              currency_format: 'USD',
-            },
-          ],
+          {
+            subject: '-',
+            price: '0',
+            currency_format: 'USD',
+          },
+        ],
     qualifications:
       user_data.qualifications && user_data.qualifications[0]
         ? user_data.qualifications
         : [
-            {
-              qualification_type: '',
-              qualification_title: '',
-              qualification_duration_from: '',
-              qualification_duration_to: '',
-            },
-          ],
+          {
+            qualification_type: '',
+            qualification_title: '',
+            qualification_duration_from: '',
+            qualification_duration_to: '',
+          },
+        ],
     teachs: [
       {
         fee: '',
@@ -126,12 +130,13 @@ function BasicDetails() {
       },
     ],
   }
+
   const onSubmit = async (data) => {
-    // data['subjects_and_pricing'] = initialValues.subjects_and_pricing
     console.log(data)
+    console.log(user_data)
     data.teachs = undefined
     // return
-    data['qualifications'] = user_data.qualifications
+    // data['qualifications'] = initialValues.qualifications
     if (!data.subjects_and_pricing) {
       data.subjects_and_pricing = initialValues.subjects_and_pricing
     }
@@ -453,10 +458,10 @@ function BasicDetails() {
                       </FieldArray>
                     </div>
                   </div>
-                  <FieldArray name="Qualification">
+                  <FieldArray name="qualifications">
                     {({ insert, remove, push }) => (
                       <>
-                        {values.Qualification?.map((Qualification, index) => (
+                        {values.qualifications?.map((qualifications, index) => (
                           <div
                             className="mt-9 grid grid-cols-12 gap-3 bg-[#F2F2F2] p-4 md:p-[26px] xl:gap-x-8"
                             key={index}
@@ -464,13 +469,13 @@ function BasicDetails() {
                             <div className="col-span-5 md:col-span-3">
                               <p
                                 className="mb-5 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold "
-                                name={`Qualification.${index}.Type`}
+                                name={`qualifications.${index}.qualification_type`}
                               >
                                 Qualification Type
                               </p>
                               <Field
                                 as="select"
-                                name={`Qualification.${index}.Type`}
+                                name={`qualifications.${index}.qualification_type`}
                                 className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
                               >
                                 <option>Experience</option>
@@ -478,42 +483,34 @@ function BasicDetails() {
                                 <option>Degree</option>
                               </Field>
                             </div>
-                            <div className="order-2 col-span-10 md:order-none md:col-span-5">
+                            <div className="order-2 col-span-10 md:order-none md:col-span-4">
                               <p
                                 className="mb-5 font-semibold  "
-                                name={`Qualification.${index}.title`}
+                                name={`qualifications.${index}.qualification_title`}
                               >
                                 Qualification Title
                               </p>
                               <Field
                                 type="text"
-                                name={`Qualification.${index}.title`}
+                                name={`qualifications.${index}.qualification_title`}
                                 className=" w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
                               />
                             </div>
-                            <div className="col-span-7 md:col-span-3">
+                            <div className="col-span-7 md:col-span-4">
                               <p className="mb-5 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold">
                                 Qualification Duration
                               </p>
                               <div className="flex gap-1.5">
                                 <Field
-                                  as="select"
-                                  name={`Qualification.${index}.durationFrom`}
+                                  name={`qualifications.${index}.qualification_duration_from`}
                                   className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
-                                >
-                                  <option>From</option>
-                                  <option>2002</option>
-                                  <option>2001</option>
-                                </Field>
+                                  type="month"
+                                ></Field>
                                 <Field
-                                  as="select"
-                                  name={`Qualification.${index}.durationTo`}
+                                  name={`qualifications.${index}.qualification_duration_to`}
                                   className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
-                                >
-                                  <option>To</option>
-                                  <option>2005</option>
-                                  <option>2006</option>
-                                </Field>
+                                  type="month"
+                                ></Field>
                               </div>
                             </div>
                             <div className="order-last col-span-1 mt-11 self-center justify-self-center md:order-none">
@@ -528,21 +525,21 @@ function BasicDetails() {
                             </div>
                           </div>
                         ))}
-                        {/* <button
+                        <button
                           type="button"
                           onClick={() =>
                             push({
-                              durationTo: '',
-                              durationFrom: '',
-                              title: '',
-                              Type: '',
+                              qualification_type: '',
+                              qualification_title: '',
+                              qualification_duration_from: '',
+                              qualification_duration_to: '',
                             })
                           }
                           className="mx-auto flex gap-x-2 p-4 font-bold text-[#2294CD]  "
                         >
                           <IoMdAddCircleOutline className="self-center text-[#2294CD]" />
                           Add Additional Qualification
-                        </button> */}
+                        </button>
                       </>
                     )}
                   </FieldArray>
