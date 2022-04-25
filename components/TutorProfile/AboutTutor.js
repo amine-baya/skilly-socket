@@ -4,7 +4,7 @@ import { PencilIcon } from '@heroicons/react/solid'
 import { openPopUps, selectedTutor } from '../../Atoms/PopUpAtoms'
 import { useRecoilState } from 'recoil'
 import DescriptionPopUp from './PopUps/DescriptionPopUp'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import CalenderPopUp from 'components/PaymentPage/PopUps/CalenderPopUp'
 import { useRouter } from 'next/router'
 import { getLocalStorage } from '../../utils/cookies'
@@ -26,7 +26,7 @@ function AboutTutor({ user, tutor }) {
 
       {/* mainContainer For lg deivces */}
       <main className="mt-3 hidden flex-wrap-reverse items-center justify-center gap-8 lg:flex">
-        <Video />
+        <Video videoURL={tutor?.video_url} />
         <Description user={user} tutor={tutor} setOpenPopUp={setOpenPopUp} />
       </main>
 
@@ -95,8 +95,19 @@ function ThreeLine() {
 }
 
 // for lg devices
-function Video(props) {
-  // overflow-hidden  rounded-xl bg-gradient-to-r from-[#FD4E6D] to-[#FDA02F] p-1
+function Video({ videoURL }) {
+  // const [isPlaying, setIsPlaying] = useState(videoURL ? true : false);
+
+  // not for here it is for the tutors cards
+  // useEffect(() => {
+  //   if (videoURL) {
+  //     const video = document.getElementById("vt").contentWindow.document.body.getElementsByTagName('video')[0];
+  //     if (!isPlaying && videoURL) {
+  //       video?.pause();
+  //     }
+  //   }
+  // }, [isPlaying, videoURL])
+
   return (
     <div className=" mx-auto  flex h-auto w-full  flex-col gap-4 sm:w-[467px] md:w-auto ">
       <div className="  md:white-linear-gradient h-[302px] rounded-lg  bg-gradient-to-r from-[#FD4E6D]  to-[#FDA02F] p-1.5 sm:h-[302px] sm:w-[467px] md:rounded-xl  ">
@@ -109,34 +120,53 @@ function Video(props) {
             objectFit="cover"
           /> */}
 
-          <div className="white-linear-gradient absolute  bottom-0" />
-          <Link href={'#'}>
-            <a className=" relative z-10 h-16 w-16 transition-all delay-150  ease-in-out hover:scale-[1.2] md:h-[76.67px] md:w-[76.67px]">
-              <Image
-                src={'/Images/TutorProfile/svg/video-play-btn.svg'}
-                objectFit="cover"
-                layout="fill"
-                alt=""
-              />
-            </a>
-          </Link>
+          {videoURL && (
+            <iframe
+              id='vt'
+              src={videoURL}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              className='w-full h-full rounded-lg'
+              allowFullScreen
+            />
+          )}
 
-          <div className="absolute  bottom-[15px] hidden flex-col  justify-center gap-[14px] md:flex">
-            <div className=" flex justify-center gap-2 ">
-              {Array.from(Array(5), (index) => index + 1).map((index) => (
-                <Image
-                  key={index}
-                  src={'/Images/TutorProfile/svg/yellow-star.svg'}
-                  height={19.38}
-                  width={19.03}
-                  alt=""
-                />
-              ))}
-            </div>
-            <div className=" text-center font-poppins text-[14px] font-[600] text-[#5F5F5F]  ">
-              ( 36 reviews )
-            </div>
-          </div>
+          {!videoURL && (
+            <>
+              <div className="white-linear-gradient absolute  bottom-0" />
+              <div className='absolute'
+              // onClick={() => setIsPlaying(true)}
+              >
+                <div className=" relative z-10 h-16 w-16 transition-all delay-150  ease-in-out hover:scale-[1.2] md:h-[76.67px] md:w-[76.67px]">
+                  <Image
+                    src={'/Images/TutorProfile/svg/video-play-btn.svg'}
+                    objectFit="cover"
+                    layout="fill"
+                    alt=""
+                  />
+                </div>
+              </div>
+
+              <div className="absolute  bottom-[15px] hidden flex-col  justify-center gap-[14px] md:flex">
+                <div className=" flex justify-center gap-2 ">
+                  {Array.from(Array(5), (index) => index + 1).map((index) => (
+                    <Image
+                      key={index}
+                      src={'/Images/TutorProfile/svg/yellow-star.svg'}
+                      height={19.38}
+                      width={19.03}
+                      alt=""
+                    />
+                  ))}
+                </div>
+                <div className=" text-center font-poppins text-[14px] font-[600] text-[#5F5F5F]  ">
+                  ( 36 reviews )
+                </div>
+              </div>
+            </>
+          )}
+
+
         </div>
       </div>
 

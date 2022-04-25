@@ -52,6 +52,7 @@ function TutorProfile({ router }) {
     // const tutor = res
     console.log(tutor)
   }, [router])
+
   return (
     <div className="full-page-snap-main">
       <TutorHeroPageMobile tutor={tutor} user={user} />
