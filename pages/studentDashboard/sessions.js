@@ -12,7 +12,7 @@ import {
 } from 'date-fns'
 import { withRouter } from 'next/router'
 import { getLocalStorage, setLocalStorage } from 'utils/cookies'
-import { baseUrl } from 'utils/constants'
+import { baseUrl, monthNames } from 'utils/constants'
 import Server from 'utils/Server'
 import { weekNames, baseUrlProfilePic } from 'utils/constants'
 import { getCookie, setCookies, removeCookies } from 'cookies-next'
@@ -128,31 +128,58 @@ export default withRouter(MySessions)
 const Card = ({ data }) => {
   const [date, setDate] = useState(new Date())
   const [isToday, setIsToday] = useState(false)
+  const [timer, setTimer] = useState('asdf')
+
+  // useEffect(() => {
+  //   console.log('data is ', date)
+  //   if (
+  //     parseInt(data?.student_time.day_raw.slice(0, 4)) === date.getFullYear() &&
+  //     parseInt(data?.student_time.day_raw.slice(5, 7)) ===
+  //       date.getMonth() + 1 &&
+  //     parseInt(data?.student_time.day_raw.slice(8, 10)) === date.getDate()
+  //   ) {
+  //     setIsToday(true)
+  //   }
+  // }, [date])
 
   useEffect(() => {
-    console.log('data is ', date)
-    if (
-      parseInt(data?.student_time.day_raw.slice(0, 4)) === date.getFullYear() &&
-      parseInt(data?.student_time.day_raw.slice(5, 7)) ===
-        date.getMonth() + 1 &&
-      parseInt(data?.student_time.day_raw.slice(8, 10)) === date.getDate()
-    ) {
-      setIsToday(true)
-    }
+    const _timer = setInterval(() => {
+      const diff =
+        new Date(
+          `${data.student_time.day_raw} ${data.student_time.from}`
+        ).getTime() - new Date().getTime()
+      console.log(diff)
+      let seconds = parseInt((diff / 1000) % 60)
+      let minutes = parseInt((diff / (1000 * 60)) % 60)
+      let hours = parseInt(diff / (1000 * 60 * 60))
+      let _ans = String(hours) + ':' + String(minutes) + ':' + String(seconds)
+      setTimer(_ans)
+    }, 1000)
+
+    return () => clearInterval(_timer)
   }, [date])
   return (
     <div className="h-[475px] w-full rounded-2xl bg-white p-4 shadow-lg sm:w-[380px]">
       <div className="mb-2 flex flex-col gap-[11px]">
         <p className="text-base font-medium">
-          {isToday ? (
+          {new Date(
+            `${data.student_time.day_raw} ${data.student_time.from}`
+          ).getTime() -
+            new Date().getTime() <
+            1000 * 60 * 60 * 6 &&
+          new Date(
+            `${data.student_time.day_raw} ${data.student_time.from}`
+          ).getTime() -
+            new Date().getTime() >
+            0 ? (
             <>
-              Today, At{' '}
+              Today, In{' '}
               <span className="font-bold text-[#FC4D6D]">
                 {' '}
-                {data?.student_time.from}{' '}
+                {timer}{' '}
                 {/* {timerComponents.length ? timerComponents : <>Oops</>} */}
               </span>{' '}
-              (24 hour clock)
+              Minutes (Upcoming Session)
             </>
           ) : (
             <>
@@ -162,7 +189,6 @@ const Card = ({ data }) => {
                 {data?.student_time.from}{' '}
                 {/* {timerComponents.length ? timerComponents : <>Oops</>} */}
               </span>{' '}
-              (Upcoming Session)
             </>
           )}
           {/* {JSON.stringify(new Date(
@@ -227,7 +253,7 @@ const Card = ({ data }) => {
         </div>
 
         <div className="mt-[40px]">
-          {isToday ? (
+          {/* {isToday ? (
             <button
               className=" w-full rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-white "
               onClick={() => {
@@ -241,6 +267,45 @@ const Card = ({ data }) => {
             <button className=" w-full rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-white ">
               {}
               Reschedule
+            </button>
+          )} */}
+          {new Date(
+            `${data.student_time.day_raw} ${data.student_time.from}`
+          ).getTime() -
+            new Date().getTime() >
+          1000 * 60 * 60 * 6 ? (
+            <button className=" w-full rounded-2xl bg-[#FC4D6D]  py-5 text-2xl font-bold capitalize text-white">
+              Reschedule
+            </button>
+          ) : new Date(
+              `${data.student_time.day_raw} ${data.student_time.from}`
+            ).getTime() -
+              new Date().getTime() <
+              1000 * 60 * 5 &&
+            new Date(
+              `${data.student_time.day_raw} ${data.student_time.from}`
+            ).getTime() -
+              new Date().getTime() >
+              0 ? (
+            <button
+              className=" w-full cursor-not-allowed rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-gray-300	"
+              onClick={() => {
+                Router.push(`/session/${data?.meeting_id}`)
+              }}
+            >
+              Join Meeting
+            </button>
+          ) : new Date(
+              `${data.student_time.day_raw} ${data.student_time.from}`
+            ).getTime() -
+              new Date().getTime() >
+            0 ? (
+            <button className=" w-full cursor-not-allowed rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-gray-300	">
+              Upcoming Class
+            </button>
+          ) : (
+            <button className=" w-full cursor-not-allowed rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-gray-300	">
+              Class Over
             </button>
           )}
         </div>
