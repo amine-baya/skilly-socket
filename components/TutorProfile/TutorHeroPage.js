@@ -79,7 +79,7 @@ const BackgroundImg = ({ tutor, user }) => {
 
 const UserImage = ({ setProfilePopUp, tutor, user }) => {
   return (
-    <div className="relative h-[200px] w-[200px] rounded-lg lg:h-[280px] lg:w-[280px]">
+    <div className="relative h-[200px] w-[200px] rounded-lg lg:h-[280px] lg:w-[280px] border-[6px] border-white overflow-hidden">
       {/* camera */}
       <div
         onClick={() => setProfilePopUp({ ...false, ProfilePhotoPopUp: true })}
@@ -102,7 +102,6 @@ const UserImage = ({ setProfilePopUp, tutor, user }) => {
             ? `${baseUrlProfilePic}${tutor.profile_img}`
             : '/Images/TutorProfile/tutor.png'
         }
-        // className="border-4 border-white"
         alt="tutor"
         layout="fill"
         objectFit="contain"

@@ -20,10 +20,12 @@ function Video() {
   useEffect(() => {
     getUserData()
   }, [])
+
   const getUserData = () => {
     const user = getLocalStorage('user')
     set_user_data(user)
   }
+
   const videoHandleChange = (e) => {
     if (e.target.files.length) {
       console.log('e', e.target.files[0])
@@ -33,13 +35,24 @@ function Video() {
         raw: e.target.files[0],
       })
     }
-    console.log(image.preview)
-
+    console.log(image)
     // setStartVideo(false)
   }
-  setTimeout(() => {
-    setVideoLink(image.preview)
-  }, 1000)
+
+  useEffect(() => {
+    if (image.preview) {
+      setTimeout(() => {
+        setVideoLink(image.preview)
+      }, 1000)
+    }
+  })
+
+  useEffect(() => {
+    console.log(image);
+    set_video_url(image.preview);
+  }, [image])
+
+
   const WebcamCapture = () => {
     setStartVideo(!startVideo)
 
@@ -57,16 +70,32 @@ function Video() {
       (err) => console.error(err)
     )
   }
+
+  // play video using youtube link
   const urlHandler = (value) => {
-    setStartVideo(false)
-    setVideoLink(value)
+    // resetting it so that youtube video can show
+    setImage({ preview: '', raw: '' });
+
+    // setStartVideo(false);
+    setVideoLink(value);
+    set_video_url(value);
   }
+
+
+  useEffect(() => {
+    if (videoLink) {
+      setTimeout(() => {
+        set_video_url(videoLink);
+      }, 1000)
+    }
+  })
 
   const onSubmit = async (data) => {
     console.log(video_url)
     const user_update = await Server.put(updateUserVideoDesc, {
       video_url: video_url,
     })
+    console.log(user_update);
     if (user_update.success) {
       updateUser({ video_url: video_url }, () => {
         Router.push('qualifications')
@@ -102,7 +131,7 @@ function Video() {
                   muted
                   autoPlay
                   className="app__videoFeed"
-                ></video>
+                />
               ) : videoLink === '' ? (
                 <div className="h-[244px] w-full bg-gray-200"></div>
               ) : (

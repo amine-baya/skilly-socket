@@ -4,9 +4,11 @@ import { useRouter } from 'next/router'
 import { getCookie } from 'cookies-next'
 
 import { countryList } from '../utils/constants'
+import { useEffect, useRef } from 'react'
 
 function CourseCart({
   coverImg,
+  videoURL,
   topRightTitle,
   tutorName,
   tutorImg,
@@ -50,20 +52,26 @@ function CourseCart({
   )
 
   function CoverSection() {
+    const videoRef = useRef();
+
     return (
       <div className="relative  h-[210px] cursor-pointer overflow-hidden rounded-t-2xl rounded-br-[30px]">
-        <Link href={`/tutors/${tutorData.id}`}>
-          <Image
-            placeholder="blur"
-            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/RQAAuEB4mUJ9Y0AAAAASUVORK5CYII="
-            // priority
-            src={
-              coverImg ? coverImg : 'Images/CourseCart/girl-using-tablet.png'
-            }
-            height={191}
-            width={383}
-            alt="user"
-          />
+        <Link href={`/tutors/${tutorData.id}`} passHref>
+          {videoURL ? (
+            <video ref={videoRef} src={videoURL} className='' poster={coverImg} preload='true' loop onMouseEnter={() => videoRef.current.play()} onMouseOut={() => videoRef.current.pause()} />
+          ) : (
+            <Image
+              placeholder="blur"
+              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/RQAAuEB4mUJ9Y0AAAAASUVORK5CYII="
+              // priority
+              src={
+                coverImg ? coverImg : 'Images/CourseCart/girl-using-tablet.png'
+              }
+              height={191}
+              width={383}
+              alt="user"
+            />
+          )}
         </Link>
         <div className="transparent-box absolute top-0 rounded-br-3xl px-[23px] py-[10px] text-center font-poppins text-[12px] font-bold uppercase text-white ">
           {topRightTitle}
@@ -144,12 +152,12 @@ function CourseCart({
           <span>
             {tutorData.subjects && tutorData.subjects.length > 0
               ? tutorData.subjects[0] +
+              (tutorData.subjects.length > 1
+                ? ', ' +
                 (tutorData.subjects.length > 1
-                  ? ', ' +
-                    (tutorData.subjects.length > 1
-                      ? tutorData.subjects[1]
-                      : tutorData.subjects.length - 1)
-                  : '')
+                  ? tutorData.subjects[1]
+                  : tutorData.subjects.length - 1)
+                : '')
               : ''}
           </span>
         </span>
@@ -166,9 +174,9 @@ function CourseCart({
               : ''}
             {tutorData.other_languages && tutorData.other_languages.length > 0
               ? tutorData.other_languages[0] +
-                (tutorData.other_languages.length > 1
-                  ? ' + ' + (tutorData.other_languages.length - 1)
-                  : '')
+              (tutorData.other_languages.length > 1
+                ? ' + ' + (tutorData.other_languages.length - 1)
+                : '')
               : ''}
             {tutorData.other_languages
               ? tutorData.other_languages.length === 0

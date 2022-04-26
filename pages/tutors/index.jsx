@@ -42,7 +42,7 @@ const Tutors = () => {
       })
 
       if (res && res.data && res.data.success) {
-        console.log(res.data.data.hits, 'res.data.data.hits')
+        // console.log(res.data.data.hits, 'res.data.data.hits')
         setTutorData(res.data.data.hits)
         setTotalCount(res.data.data.out_of)
         setCount(res.data.data.found)
@@ -51,51 +51,54 @@ const Tutors = () => {
     defaultFunc()
   }, [searchText, page])
 
+  console.log(tutorData);
+
   return (
     <main className="mx-auto flex h-[calc(100vh-79px)] w-full max-w-[calc(1440px-160px)] snap-y snap-mandatory flex-wrap items-center justify-evenly gap-y-[6rem] gap-x-2 overflow-scroll overflow-x-hidden scroll-smooth py-11 transition  delay-150 duration-1000 ease-in-out lg:justify-around">
       {tutorData
         ? tutorData.map(function (dd, key) {
-            let _obj = countryList.find((o) => o.name === dd.country)
-            console.log(_obj)
-            console.log(dd)
-            console.log(`${baseUrlProfilePic}${dd.profile_img}`)
-            return (
-              // <Link href={'/tutors'} passHref key={key}>
-              <>
-                <CourseCart
-                  topRightTitle={'top tutors'}
-                  key={key}
-                  coverImg={
-                    dd.background_pic
-                      ? `${baseUrlProfilePic}${dd.background_pic}`
-                      : '/Images/CourseCart/girl-using-tablet.png'
-                  }
-                  tutorName={dd.tutor_name}
-                  setOpenPopUp={setOpenPopUp}
-                  setSelectedTutor={setSelectedTutor}
-                  countryLogo={_obj ? _obj.emoji : ''}
-                  tutorImg={
-                    dd.profile_img
-                      ? `${baseUrlProfilePic}${dd.profile_img}`
-                      : '/Images/CourseCart/girl-looking-up.png'
-                  }
-                  tutorData={dd}
-                />
-                {/* TimeSlot PopUp */}
-                {openPopUp.calendarPopUp && TOKEN && (
-                  <div className="absolute z-40 flex w-full items-center justify-center bg-gray-50/5">
-                    <CalenderPopUp
-                      tutor={selectedTutorData}
-                      tutorTimezone={dd.timezone}
-                      setOpenPopUp={setOpenPopUp}
-                      setTotalSelectedTimes={setTotalSelectedTimes}
-                      link={'/payment'}
-                    />
-                  </div>
-                )}
-              </>
-            )
-          })
+          let _obj = countryList.find((o) => o.name === dd.country)
+          // console.log(_obj)
+          // console.log(dd)
+          // console.log(`${baseUrlProfilePic}${dd.profile_img}`)
+          return (
+            // <Link href={'/tutors'} passHref key={key}>
+            <>
+              <CourseCart
+                topRightTitle={'top tutors'}
+                key={key}
+                coverImg={
+                  dd.background_pic
+                    ? `${baseUrlProfilePic}${dd.background_pic}`
+                    : '/Images/CourseCart/girl-using-tablet.png'
+                }
+                videoURL={dd?.video_url}
+                tutorName={dd.tutor_name}
+                setOpenPopUp={setOpenPopUp}
+                setSelectedTutor={setSelectedTutor}
+                countryLogo={_obj ? _obj.emoji : ''}
+                tutorImg={
+                  dd.profile_img
+                    ? `${baseUrlProfilePic}${dd.profile_img}`
+                    : '/Images/CourseCart/girl-looking-up.png'
+                }
+                tutorData={dd}
+              />
+              {/* TimeSlot PopUp */}
+              {openPopUp.calendarPopUp && TOKEN && (
+                <div className="absolute z-40 flex w-full items-center justify-center bg-gray-50/5">
+                  <CalenderPopUp
+                    tutor={selectedTutorData}
+                    tutorTimezone={dd.timezone}
+                    setOpenPopUp={setOpenPopUp}
+                    setTotalSelectedTimes={setTotalSelectedTimes}
+                    link={'/payment'}
+                  />
+                </div>
+              )}
+            </>
+          )
+        })
         : null}
     </main>
   )

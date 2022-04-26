@@ -53,7 +53,6 @@ function ProfilePhoto() {
       })
       profile_img.set('profile_pic', e.target.files[0])
       set_profile_img(profile_img)
-      console.log(profile_img)
     }
   }
   const handleSubmit = async () => {
@@ -61,7 +60,6 @@ function ProfilePhoto() {
       console.log('Could not find profile picture')
       Router.push('/tutorDashboard/myprofile/video')
     } else {
-      console.log('uploading profile picture')
       console.log(profile_img.profile_pic)
       const response = await axios({
         method: 'post',
@@ -69,9 +67,8 @@ function ProfilePhoto() {
         data: profile_img,
         headers: {
           'Content-Type': `multipart/form-data`,
-          Authorization: `BEARER ${
-            JSON.parse(getCookie('token')).access_token
-          }`,
+          Authorization: `BEARER ${JSON.parse(getCookie('token')).access_token
+            }`,
         },
       })
 
@@ -155,13 +152,13 @@ function ProfilePhoto() {
             <div className="flex gap-3 ">
               {files.length !== 0
                 ? files.length &&
-                  files?.map((file) => (
-                    <div className="  h-auto bg-blue-300" key={file.name}>
-                      <div>
-                        <img src={file?.preview} />
-                      </div>
+                files?.map((file) => (
+                  <div className="  h-auto bg-blue-300" key={file.name}>
+                    <div>
+                      <img src={file?.preview} />
                     </div>
-                  ))
+                  </div>
+                ))
                 : null}
             </div>
 
