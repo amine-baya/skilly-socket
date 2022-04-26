@@ -23,7 +23,7 @@ function CourseCart({
 
   return (
     <div className="flex snap-center rounded-md transition-all ease-in-out">
-      <div className="w-[350px] overflow-hidden bg-[#ffffff] rounded-2xl  pb-[20px] font-poppins shadow-xl ring-2 ring-[#FC4D6D] ring-opacity-10">
+      <div className="w-[350px] overflow-hidden rounded-2xl bg-[#ffffff]  pb-[20px] font-poppins shadow-xl ring-2 ring-[#FC4D6D] ring-opacity-10">
         <CoverSection />
         <TutorDetails
           space={'-mt-[1.8rem] ml-[105px] '}
@@ -222,10 +222,16 @@ function CourseCart({
       <div
         className={` whitespace-normal px-4 font-monts text-xs font-semibold capitalize text-[#606060]`}
       >
-        <span className="font-extrabold">Brief :</span> dolor sit amet,
-        consectetur elit. Fringilla enim, at rhoncus nisl, condimentum,Fringilla
-        enim,
-        <span>.....</span>
+        <span className="font-extrabold">Brief :</span>{' '}
+        {tutorData?.description?.length > 0 ? (
+          <>{tutorData.description}</>
+        ) : (
+          <>
+            dolor sit amet, consectetur elit. Fringilla enim, at rhoncus nisl,
+            condimentum,Fringilla enim,
+            <span>.....</span>
+          </>
+        )}
       </div>
     )
   }

@@ -64,7 +64,7 @@ function TutorProfile({ router }) {
           <CalenderPopUp link={'/payment'} />
         </div>
       )}
-      <Schedule />
+      <Schedule tutor={tutor} />
       <Resume tutor={tutor} />
       <TutorFooter />
     </div>

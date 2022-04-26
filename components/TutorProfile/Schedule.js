@@ -25,16 +25,19 @@ function getCurrentWeek(add = 0, timezone = 'asia/kolkata') {
 
 import { BiTimeFive } from 'react-icons/bi'
 import { getLocalStorage } from '../../utils/cookies'
-function Schedule() {
+function Schedule({ tutor }) {
   const [addDays, setAddDays] = useState(0)
-  const [user_data, set_user_data] = useState()
-
+  const [user_data, set_user_data] = useState({})
+  // const [availability, setAvailability] = useState([])
   useEffect(() => {
-    set_user_data(getLocalStorage('user'))
-  }, [])
+    set_user_data(tutor)
+    console.log('tutor is ', tutor)
+  }, [tutor])
   useEffect(() => {
     let obj = user_data
-    // obj.timezone = 'Asia/Kolkata'
+    if (obj) {
+      obj['timezone'] = 'Asia/Kolkata'
+    }
     console.log(obj)
     set_user_data(obj)
   }, [user_data])
@@ -44,7 +47,7 @@ function Schedule() {
     set_user_data(user)
   }
   return (
-    <div className="mx-auto  w-full md:bg-[#fafafa]">
+    <div className="snap-fullPage mx-auto  w-full md:bg-[#fafafa]">
       {user_data ? (
         <div className="border- m-2 mt-6 flex max-w-[863px]  flex-col gap-4 rounded-xl  px-2 py-6  font-poppins md:mx-auto md:border-none">
           <section className="mx-0 space-y-2 md:mx-auto ">
@@ -121,7 +124,7 @@ function DateAndButtons(props) {
 function TimeZone({ user_data }) {
   return (
     <select className="mx-auto  w-full rounded-lg bg-[#fff1f3] px-4 py-2 text-sm text-[#9A9A9A] md:hidden">
-      <option>{momentTz().tz(user_data.timezone).format()} [refresh]</option>
+      <option>{momentTz().tz(user_data.timezone)?.format()} [refresh]</option>
     </select>
   )
 }
@@ -134,7 +137,7 @@ function DesktopTimeZone({ user_data }) {
           <option>{user_data.timezone}</option>
         </select>
         <div className="ml-6">
-          {momentTz().tz(user_data.timezone).format()} [refresh]
+          {momentTz().tz(user_data.timezone)?.format()} [refresh]
         </div>
       </div>
     </div>
@@ -149,21 +152,22 @@ function Calender(props) {
         val,
         index
       ) {
-        return (
-          <DayComponent
-            user_data={props.user_data}
-            day={val}
-            key={index}
-            data={
-              props.user_data.availability[
-                momentTz(val)
-                  .tz(props.user_data.timezone)
-                  .format('ddd')
-                  .toLowerCase()
-              ]
-            }
-          />
-        )
+        // return (
+        //   <DayComponent
+        //     user_data={props.user_data}
+        //     day={val}
+        //     key={index}
+        //     data={
+        //       props.user_data.availability[
+        //         momentTz(val)
+        //           ?.tz(props.user_data.timezone)
+        //           ?.format('ddd')
+        //           ?.toLowerCase()
+        //       ]
+        //     }
+        //   />
+        // )
+        return <></>
       })}
     </div>
   )

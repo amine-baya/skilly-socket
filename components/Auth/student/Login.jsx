@@ -29,7 +29,7 @@ const Login = (props) => {
       setLocalStorage('user', login_response.data)
       setLocalStorage('ROLE', 'STUDENT')
       authenticate(login_response.data, 'STUDENT', async () => {
-        Router.push('/studentDashboard')
+        Router.push('/tutors')
       })
     }
   }
