@@ -71,13 +71,17 @@ function TimeAvailability() {
         // console.log(day, user.availability[i].slots)
         // console.log(initialValues['sunday'])
       }
+
       setInitialValues(_in)
-      console.log(initialValues)
+      console.log('initial values are ', initialValues)
+      setFlag(true)
+    } else {
       setFlag(true)
     }
     if (user.timezone) {
       setCurrentTimezone(user.timezone)
     }
+    console.log('availability is ', initialValues)
   }, [user])
 
   const [timezone, setTimezone] = useState('America/Los_Angeles')

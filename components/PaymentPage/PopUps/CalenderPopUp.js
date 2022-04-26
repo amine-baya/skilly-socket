@@ -299,6 +299,7 @@ const CalenderPopUp = ({ link, tutorTimezone }) => {
             let sessions = response.data
             setLocalStorage('sessions', response.data)
           }
+          setLocalStorage('booked_success', true)
           Router.push('/studentDashboard/sessions')
         }
       })

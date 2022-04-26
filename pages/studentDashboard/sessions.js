@@ -17,6 +17,7 @@ import Server from 'utils/Server'
 import { weekNames, baseUrlProfilePic } from 'utils/constants'
 import { getCookie, setCookies, removeCookies } from 'cookies-next'
 import Link from 'next/link'
+import Router from 'next/router'
 
 const MySessions = ({ router }) => {
   const [year] = useState(new Date().getFullYear())
@@ -64,6 +65,11 @@ const MySessions = ({ router }) => {
   })
 
   useEffect(() => {
+    if (getLocalStorage('booked_success')) {
+      alert('Thank you for booking a session!')
+      setLocalStorage('booked_success', false)
+    }
+
     Server.get(`${baseUrl}/session/student`, {
       headers: {
         Authorization: `Bearer ${JSON.parse(getCookie('token')).access_token}`,
@@ -84,7 +90,16 @@ const MySessions = ({ router }) => {
       //   })
       // })
       console.log('response is ', response)
-      setAllSessions(response.data.upcoming_sessions)
+      let _lst = []
+      _lst = _lst.concat(
+        response.data.ongoing_sessions,
+        response.data.active_sessions,
+        response.data.upcoming_sessions,
+        response.data.booked_sessions
+      )
+      console.log(_lst)
+      console.log('lst is ', _lst)
+      setAllSessions(_lst)
       // console.log(abcdefg)
       // setRandomTimes(abcdefg)
     })
@@ -111,22 +126,25 @@ const MySessions = ({ router }) => {
 export default withRouter(MySessions)
 
 const Card = ({ data }) => {
-  const [date, setDate] = useState(new Date(data?.student_time.date_raw))
+  const [date, setDate] = useState(new Date())
+  const [isToday, setIsToday] = useState(false)
+
   useEffect(() => {
-    setDate(new Date(data?.student_time.day_raw))
-  }, [data])
+    console.log('data is ', date)
+    if (
+      parseInt(data?.student_time.day_raw.slice(0, 4)) === date.getFullYear() &&
+      parseInt(data?.student_time.day_raw.slice(5, 7)) ===
+        date.getMonth() + 1 &&
+      parseInt(data?.student_time.day_raw.slice(8, 10)) === date.getDate()
+    ) {
+      setIsToday(true)
+    }
+  }, [date])
   return (
-    // TODO: change height of below div back to 475px
-    <div className="h-[355px] w-full rounded-2xl bg-white p-4 shadow-lg sm:w-[380px]">
+    <div className="h-[475px] w-full rounded-2xl bg-white p-4 shadow-lg sm:w-[380px]">
       <div className="mb-2 flex flex-col gap-[11px]">
         <p className="text-base font-medium">
-          {new Date(
-            data?.student_time.day_raw.slice(0, 4) ===
-              new Date().getFullYear() &&
-              data?.student_time.day_raw.slice(5, 7) ===
-                Date.now().getMonth() &&
-              data?.student_time.day_raw.slice(8, 10) === Date.now().getDay()
-          ) ? (
+          {isToday ? (
             <>
               Today, At{' '}
               <span className="font-bold text-[#FC4D6D]">
@@ -137,7 +155,15 @@ const Card = ({ data }) => {
               (24 hour clock)
             </>
           ) : (
-            <>At {data?.student_time.day_raw}</>
+            <>
+              On {data?.student_time.day_raw} At
+              <span className="font-bold text-[#FC4D6D]">
+                {' '}
+                {data?.student_time.from}{' '}
+                {/* {timerComponents.length ? timerComponents : <>Oops</>} */}
+              </span>{' '}
+              (Upcoming Session)
+            </>
           )}
           {/* {JSON.stringify(new Date(
             data?.student_time.day_raw.slice(0, 4),
@@ -193,19 +219,31 @@ const Card = ({ data }) => {
 
           {/* session */}
           {/* TODO uncomment session count and populate */}
-          {/* <label className="font-bold">session no.</label>
+          <label className="font-bold">session no.</label>
           <p className=" justify-self-end font-medium">
-            1{' '}
-            <p className="inline cursor-pointer text-[#3F97FF]">(see agenda)</p>
-          </p> */}
+            {/* 1{' '}
+            <p className="inline cursor-pointer text-[#3F97FF]">(see agenda)</p> */}
+          </p>
         </div>
 
-        {/* <div className="mt-[40px]">
-          <button className=" w-full rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-white ">
-            {}
-            enter classroom
-          </button>
-        </div> */}
+        <div className="mt-[40px]">
+          {isToday ? (
+            <button
+              className=" w-full rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-white "
+              onClick={() => {
+                Router.push(`/session/${data?.meeting_id}`)
+              }}
+            >
+              {}
+              enter classroom
+            </button>
+          ) : (
+            <button className=" w-full rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-white ">
+              {}
+              Reschedule
+            </button>
+          )}
+        </div>
       </div>
     </div>
   )
