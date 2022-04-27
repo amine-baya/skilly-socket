@@ -28,7 +28,7 @@ function Video() {
 
   const videoHandleChange = (e) => {
     if (e.target.files.length) {
-      console.log('e', e.target.files[0])
+      console.log('e', e.target.files[0]);
 
       setImage({
         preview: URL.createObjectURL(e.target.files[0]),
@@ -76,9 +76,13 @@ function Video() {
     // resetting it so that youtube video can show
     setImage({ preview: '', raw: '' });
 
+    // changing youtube url format to embed url
+    let url = value?.replace('watch?v=', 'embed/');
+    console.log(url);
+
     // setStartVideo(false);
-    setVideoLink(value);
-    set_video_url(value);
+    setVideoLink(url);
+    set_video_url(url);
   }
 
 
@@ -95,7 +99,9 @@ function Video() {
     const user_update = await Server.put(updateUserVideoDesc, {
       video_url: video_url,
     })
+
     console.log(user_update);
+
     if (user_update.success) {
       updateUser({ video_url: video_url }, () => {
         Router.push('qualifications')
