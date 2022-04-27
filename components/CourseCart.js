@@ -174,12 +174,12 @@ function CourseCart({
           <span>
             {tutorData.subjects && tutorData.subjects.length > 0
               ? tutorData.subjects[0] +
+              (tutorData.subjects.length > 1
+                ? ', ' +
                 (tutorData.subjects.length > 1
-                  ? ', ' +
-                    (tutorData.subjects.length > 1
-                      ? tutorData.subjects[1]
-                      : tutorData.subjects.length - 1)
-                  : '')
+                  ? tutorData.subjects[1]
+                  : tutorData.subjects.length - 1)
+                : '')
               : ''}
           </span>
         </span>
@@ -196,9 +196,9 @@ function CourseCart({
               : ''}
             {tutorData.other_languages && tutorData.other_languages.length > 0
               ? tutorData.other_languages[0] +
-                (tutorData.other_languages.length > 1
-                  ? ' + ' + (tutorData.other_languages.length - 1)
-                  : '')
+              (tutorData.other_languages.length > 1
+                ? ' + ' + (tutorData.other_languages.length - 1)
+                : '')
               : ''}
             {tutorData.other_languages
               ? tutorData.other_languages.length === 0
