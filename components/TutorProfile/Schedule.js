@@ -100,7 +100,7 @@ function DateAndButtons(props) {
         {getCurrentWeek(props.add, props.user_data.timezone)[0]} -{' '}
         {getCurrentWeek(props.add, props.user_data.timezone)[6]}
       </div>
-      <div className="flex gap-8">
+      {/* <div className="flex gap-8">
         <button
           className="rounded-xl bg-[#FC4D6D] px-4  text-lg text-white md:rounded-2xl md:px-6  "
           onClick={() => (props.add > 0 ? props.removeAddDays(7) : null)}
@@ -117,7 +117,7 @@ function DateAndButtons(props) {
             <AiOutlineArrowRight />
           </div>
         </button>
-      </div>
+      </div> */}
     </section>
   )
 }
@@ -146,28 +146,54 @@ function DesktopTimeZone({ user_data }) {
 //
 
 function Calender(props) {
+  const [todayData, setTodayData] = useState([])
+
+  useEffect(() => {
+    let _lst = props?.user_data?.availability
+    let _final = [[], [], [], [], [], [], []]
+    for (let i = 0; i < _lst?.length; i++) {
+      switch (_lst[i].day) {
+        case 'monday':
+          _final[0] = _lst[i].slots
+          break
+        case 'tuesday':
+          _final[1] = _lst[i].slots
+          break
+        case 'wednesday':
+          _final[2] = _lst[i].slots
+          break
+        case 'thursday':
+          _final[3] = _lst[i].slots
+          break
+        case 'friday':
+          _final[4] = _lst[i].slots
+          break
+        case 'saturday':
+          _final[5] = _lst[i].slots
+          break
+        case 'sunday':
+          _final[6] = _lst[i].slots
+          break
+      }
+    }
+    // console.log('it was ', _lst)
+    // console.log('final is ', _final)
+    setTodayData(_final)
+  }, [props.user_data])
   return (
     <div className=" flex justify-between px-1 text-center text-sm">
       {getCurrentWeek(props.add, props.user_data.timezone).map(function (
         val,
         index
       ) {
-        // return (
-        //   <DayComponent
-        //     user_data={props.user_data}
-        //     day={val}
-        //     key={index}
-        //     data={
-        //       props.user_data.availability[
-        //         momentTz(val)
-        //           ?.tz(props.user_data.timezone)
-        //           ?.format('ddd')
-        //           ?.toLowerCase()
-        //       ]
-        //     }
-        //   />
-        // )
-        return <></>
+        return (
+          <DayComponent
+            user_data={props.user_data}
+            day={val}
+            key={index}
+            data={todayData[index]}
+          />
+        )
       })}
     </div>
   )
@@ -175,7 +201,7 @@ function Calender(props) {
 function DayComponent(props) {
   let className = 'p-1.5 font-semibold md:p-3 md:text-[22px]'
   if (
-    momentTz(props.day).tz(props.user_data.timezone).format('DD') ===
+    momentTz(props?.day).tz(props?.user_data?.timezone)?.format('DD') ===
     moment().format('DD')
   )
     className +=
@@ -184,18 +210,21 @@ function DayComponent(props) {
     <div className="space-y-6">
       <div className="space-y-3 text-center">
         <div className="font-bold uppercase text-[#565656]  md:text-2xl">
-          {momentTz(props.day).tz(props.user_data.timezone).format('dd')}
+          {momentTz(props.day).tz(props.user_data.timezone)?.format('dd')}
         </div>
         <div className={className}>
-          {momentTz(props.day).tz(props.user_data.timezone).format('DD')}
+          {momentTz(props.day).tz(props.user_data.timezone)?.format('DD')}
         </div>
       </div>
-      <div className="space-y-3 text-[#848484] md:text-lg">
-        {props.data && props.data.length > 0
-          ? props.data.map(function (time, index) {
-              return <div key={index}>{time.from}</div>
-            })
-          : null}
+      <div className="text-[#] space-y-3 md:text-lg">
+        {console.log('avail - ', props.data)}
+        {props.data && props.data.length > 0 ? (
+          props.data.map(function (time, index) {
+            return <div key={index}>{time.from}</div>
+          })
+        ) : (
+          <div>NA</div>
+        )}
       </div>
     </div>
   )
