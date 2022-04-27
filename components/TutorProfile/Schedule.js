@@ -223,7 +223,7 @@ function DayComponent(props) {
             return <div key={index}>{time.from}</div>
           })
         ) : (
-          <div>NA</div>
+          <div className="text-[#848484]">NA</div>
         )}
       </div>
     </div>
