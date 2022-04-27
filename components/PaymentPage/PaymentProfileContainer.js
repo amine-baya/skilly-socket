@@ -1,28 +1,84 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import { getCookie } from 'cookies-next'
+import Router from 'next/router'
+
 import Image from 'next/image'
 import userImage from '../../public/Images/userImage.png'
 import hat from '../../public/Images/hat.svg'
 import ukFlag from '../../public/Images/ukFlag.svg'
+import { getLocalStorage, setLocalStorage } from 'utils/cookies'
+import {
+  getTutorPublicProfile,
+  baseUrl,
+  baseUrlProfilePic,
+  countryList,
+} from 'utils/constants'
+import Server from 'utils/Server'
+import fetch from 'isomorphic-fetch'
 
 const PaymentProfileContainer = ({
   openPopUp,
   setOpenPopUp,
   totalSelectedTimes,
+  stage,
 }) => {
-  let baseTotal = totalSelectedTimes * 10
+  const [subject, setSubject] = useState('')
+  const [fees, setFees] = useState(0)
+
+  const [tutor, setTutor] = useState('')
+  const [tutorTimezone, setTutorTimezone] = useState('')
+  const [tutorData, setTutorData] = useState({})
+
+  useEffect(() => {
+    if (tutorData?.subjects_and_pricing) {
+      setFees(tutorData?.subjects_and_pricing[0].price)
+    }
+  }, [tutorData])
+  useEffect(() => {
+    if (tutorData?.subjects_and_pricing) {
+      for (let i = 0; i < tutorData?.subjects_and_pricing.length; i++) {
+        if (subject === tutorData?.subjects_and_pricing[i].subject) {
+          console.log(tutorData?.subjects_and_pricing[i].price)
+          setFees(tutorData?.subjects_and_pricing[i].price)
+        }
+      }
+    }
+  }, [subject])
+  useEffect(() => {
+    setTutor(getLocalStorage('book_tutor')?._id)
+    setTutorTimezone(getLocalStorage('book_tutor')?.tutor_timezone)
+  }, [])
+  useEffect(() => {
+    const res = fetch(`${baseUrl}${getTutorPublicProfile}?user_id=${tutor}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.data)
+        setTutorData(data.data)
+      })
+  }, [tutor])
+  let baseTotal = totalSelectedTimes * fees
   let transactionFee = baseTotal / 10 // 10% of BT
   let subTotal = baseTotal + transactionFee
-  let couponDiscount = subTotal / 10 // 10% of ST
-  let karmaPoints = Math.round(5 * subTotal) / 100 // 5% of ST
+  let couponDiscount = 0
+  let karmaPoints = 0
+  // let couponDiscount = subTotal / 10 // 10% of ST
+  // let karmaPoints = Math.round(5 * subTotal) / 100 // 5% of ST
   let discountedTotal = Math.round(subTotal - couponDiscount) - karmaPoints
-  let tax1 = Math.round(9 * discountedTotal) / 100 // 9% of DT
-  let tax2 = Math.round(9 * discountedTotal) / 100
+  // let tax1 = Math.round(9 * discountedTotal) / 100 // 9% of DT
+  // let tax2 = Math.round(9 * discountedTotal) / 100
+  let tax1 = 0
+  let tax2 = 0
   let finalPayableTotal = Math.round(discountedTotal + tax1) + tax2 // 9% of DT
 
   return (
     <div className="flex h-[594px] w-[406px] flex-col gap-4 sm:h-[683px] sm:w-[490px]">
       {/* Profile */}
-      <Profile setOpenPopUp={setOpenPopUp} />
+      <Profile
+        setOpenPopUp={setOpenPopUp}
+        data={tutorData}
+        subject={subject}
+        setSubject={setSubject}
+      />
 
       {/* Time and Money */}
       <TimeAndMoney
@@ -30,6 +86,7 @@ const PaymentProfileContainer = ({
         setOpenPopUp={setOpenPopUp}
         totalSelectedTimes={totalSelectedTimes}
         baseTotal={baseTotal}
+        fees={fees}
       />
 
       {/* Payment Details */}
@@ -47,7 +104,15 @@ const PaymentProfileContainer = ({
       />
 
       {/* Button */}
-      <PayNow setOpenPopUp={setOpenPopUp} />
+      {stage > 1 ? (
+        <PayNow
+          tutor={tutor}
+          tutorTimezone={tutorTimezone}
+          setOpenPopUp={setOpenPopUp}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   )
 }
@@ -55,18 +120,41 @@ const PaymentProfileContainer = ({
 export default PaymentProfileContainer
 
 // Profile
-const Profile = ({ setOpenPopUp }) => {
+const Profile = ({ setOpenPopUp, data, subject, setSubject }) => {
+  let _obj = countryList.find((o) => o.name === data?.country)
+
+  // useEffect(() => {
+  //   if (data?.subjects_and_pricing) {
+  //     setSubject(data?.subjects_and_pricing[0]?.subject)
+  //   }
+  // }, [data])
+
   return (
     <div className="flex h-[82px] w-[406px] items-center justify-between rounded-lg bg-[#FBFBFB] px-[9px] py-[10px] sm:h-[109px] sm:w-[491px] sm:px-[23px] sm:py-[13px]">
       {/* Image and details */}
       <div className="flex items-center gap-3 sm:gap-5">
-        <div className="relative h-[60.41px] w-[61.95px] rounded-lg border-2 border-[#FC4D6D] sm:h-[80px] sm:w-[79px]">
-          <Image src={userImage} alt="user" layout="fill" objectFit="contain" />
+        <div
+          className={
+            `relative h-[60.41px] w-[61.95px] rounded-lg` +
+            // `{/*border-2 border-[#FC4D6D]*/} ` +
+            `sm:h-[80px] sm:w-[79px]`
+          }
+        >
+          <Image
+            src={
+              data?.profile_img
+                ? `${baseUrlProfilePic}${data.profile_img}`
+                : '/Images/CourseCart/girl-looking-up.png'
+            }
+            alt="user"
+            layout="fill"
+            objectFit="contain"
+          />
         </div>
         <div className="flex flex-col gap-2 sm:gap-5">
           <div className="flex items-center gap-2 sm:gap-4">
             <p className="text-[16px] font-bold text-[#665F60] sm:text-lg">
-              ELLA . H
+              {data?.name}
             </p>
             {/* greenTick */}
             <svg
@@ -91,31 +179,51 @@ const Profile = ({ setOpenPopUp }) => {
               />
             </svg>
             <div className="relative  h-[15.86px] w-[14.9px] rounded-full sm:h-[21px] sm:w-[21px]">
-              <Image
+              {/* <Image
                 src={ukFlag}
                 alt="flag"
                 layout="fill"
                 objectFit="contain"
-              />
+              /> */}
+              {_obj ? _obj.emoji : ''}
             </div>
           </div>
           <div className="flex items-center gap-2">
             <div className="relative h-[15.1px] w-[17.25px] sm:h-[20px] sm:w-[22px]">
               <Image src={hat} alt="hat" layout="fill" objectFit="contain" />
             </div>
-            <p className="text-[12px] text-[#474747] sm:text-[15px]">English</p>
+            <select
+              className=" bg-[#FFF1F3] p-1 text-[12px] text-[#474747] sm:text-[15px]"
+              value={subject}
+              onChange={(e) => {
+                setSubject(e.target.value)
+              }}
+            >
+              {data?.subjects_and_pricing &&
+                data.subjects_and_pricing.map((d, i) => {
+                  return (
+                    <option
+                      className="text-[12px] text-[#474747] sm:text-[15px]"
+                      key={i}
+                      value={d.subject}
+                    >
+                      {d.subject}
+                    </option>
+                  )
+                })}
+            </select>
           </div>
         </div>
       </div>
 
       {/* Button to review times */}
-      <button
+      {/* <button
         onClick={() => setOpenPopUp({ ...false, calendarPopUp: true })}
         className="h-[55.53px] w-[150.1px] rounded-md border border-[#FC4D6D] font-poppins text-[12px] font-semibold text-[#434343] transition-all duration-300 focus:border-2 sm:h-[64px] sm:w-[173px] sm:text-sm"
       >
         <p>Click to Review</p>
         <p>Selected TimeSlots</p>
-      </button>
+      </button> */}
     </div>
   )
 }
@@ -126,6 +234,7 @@ const TimeAndMoney = ({
   openPopUp,
   totalSelectedTimes,
   baseTotal,
+  fees,
 }) => {
   return (
     <div className="flex h-[97px] w-[406px] justify-between rounded-lg bg-[#FBFBFB] px-[15px] py-[12px] font-roboto text-[18px] font-bold sm:h-[109px] sm:w-[491px] sm:px-[23px] sm:py-[13px] sm:text-lg">
@@ -133,7 +242,7 @@ const TimeAndMoney = ({
         <p className=" text-[#9D9898] ">Total Sessions</p>
         <p className="text-[#2D2D2D]">
           {totalSelectedTimes} Hrs{' '}
-          <small
+          {/* <small
             onClick={() =>
               setOpenPopUp({
                 ...false,
@@ -143,12 +252,12 @@ const TimeAndMoney = ({
             className="ml-2 cursor-pointer border-b border-b-[#FC4D6D] pb-[0.5px] font-poppins font-medium text-[#FC4D6D] sm:pb-[1px]"
           >
             Edit
-          </small>
+          </small> */}
         </p>
       </div>
       <div className="flex flex-col justify-between">
         <p className="text-[#9D9898]">Fee/Hr</p>
-        <p className="text-[#2D2D2D]">$10</p>
+        <p className="text-[#2D2D2D]">${fees}</p>
       </div>
       <div className="flex flex-col items-center justify-between sm:items-end">
         <p className="text-[#9D9898]">Base Total</p>
@@ -172,6 +281,7 @@ const PaymentDetails = ({
   finalPayableTotal,
 }) => {
   return (
+    //TODO  Change height back to h-[346px] (After uncommenting discounts)
     <div className="flex h-[346px] w-[406px] flex-col rounded-lg bg-[#FBFBFB] px-[9px] py-[10px] font-poppins text-[15px] font-medium text-[#8C8C8C] sm:h-[349px] sm:w-[491px] sm:px-[23px] sm:py-[13px]">
       <div className="flex h-[85%] flex-col justify-between border-b border-b-[#565656] pb-4">
         <div className="flex items-center justify-between">
@@ -190,7 +300,8 @@ const PaymentDetails = ({
           <p className="border-b-[1.5px] border-b-[#A9A9A9]">
             Apply Coupon Discount
           </p>
-          <div className="flex items-center gap-3">
+          <p>-</p>
+          {/* <div className="flex items-center gap-3">
             <button
               onClick={() => setOpenPopUp({ ...false, couponPopUp: true })}
               className="sm:text[14px] h-[21.9px] w-[127px] rounded-md border border-[#A9A9A9] text-[13px] font-semibold text-[#A9A9A9] sm:h-[25px] sm:w-[145px]"
@@ -198,13 +309,14 @@ const PaymentDetails = ({
               XMASTEN
             </button>
             <p className="text-[#FC4D6D]">-${couponDiscount}</p>
-          </div>
+          </div> */}
         </div>
         <div className="flex items-center justify-between">
           <p className="border-b-[1.5px] border-b-[#A9A9A9]">
             Apply Karma Points
           </p>
-          <div className="flex items-center gap-3">
+          <p>-</p>
+          {/* <div className="flex items-center gap-3">
             <button
               onClick={() => setOpenPopUp({ ...false, karmaPopUp: true })}
               className="sm:text[14px] h-[21.9px] w-[127px] rounded-md border border-[#A9A9A9] text-[13px] font-semibold text-[#A9A9A9] sm:h-[25px] sm:w-[145px]"
@@ -212,19 +324,22 @@ const PaymentDetails = ({
               11.5 Points
             </button>
             <p className="text-[#FC4D6D]">-${karmaPoints}</p>
-          </div>
+          </div> */}
         </div>
         <div className="flex items-center justify-between">
           <p>Discounted Total</p>
-          <p className="text-[#15C11C]">${discountedTotal}</p>
+          <p>-</p>
+          {/* <p className="text-[#15C11C]">${discountedTotal}</p> */}
         </div>
         <div className="flex items-center justify-between">
           <p>Tax 1</p>
-          <p>${tax1}</p>
+          <p>-</p>
+          {/* <p>${tax1}</p> */}
         </div>
         <div className="flex items-center justify-between">
           <p>Tax 2</p>
-          <p>${tax2}</p>
+          <p>-</p>
+          {/* <p>${tax2}</p> */}
         </div>
       </div>
 
@@ -238,11 +353,56 @@ const PaymentDetails = ({
 }
 
 // Bottom pay Now
-const PayNow = ({ setOpenPopUp }) => {
+const PayNow = ({ setOpenPopUp, tutor, tutorTimezone }) => {
+  const TOKEN = getCookie('token')
+    ? JSON.parse(getCookie('token')).access_token
+    : false
+  const handleSessionBook = () => {
+    const studentTimezone = getLocalStorage('user').timezone || 'Asia/Kolkata'
+
+    console.log('tutor id is - ', tutor)
+    Server.post(
+      `${baseUrl}/session/book`,
+      {
+        tutor_id: tutor,
+        tutor_timezone: tutorTimezone,
+        student_timezone: studentTimezone,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: 'Bearer ' + TOKEN,
+        },
+      }
+    )
+      .then((response) => {
+        console.log('-------------------', response.data)
+        if (response.success) {
+          // console.log(session)
+          // setLocalStorage('session', response.data.data)
+          // setStage(2)
+          if (getLocalStorage('sessions')?.length > 0) {
+            let sessions = getLocalStorage('sessions')
+            sessions.concat(response.data.slice())
+            setLocalStorage('sessions', sessions)
+          } else {
+            let sessions = response.data
+            setLocalStorage('sessions', response.data)
+          }
+          setLocalStorage('booked_success', true)
+          Router.push('/studentDashboard/sessions')
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
   return (
     <div className="flex justify-end pt-2">
       <button
-        onClick={() => setOpenPopUp({ ...false, walletPopUp: true })}
+        // onClick={() => setOpenPopUp({ ...false, walletPopUp: true })}
+        onClick={handleSessionBook}
         className="h-[37px] w-full rounded-full bg-gradient-to-r from-pink to-gradient_yellow px-4 text-center text-lg font-bold text-white sm:h-[37px] sm:w-[133px]"
       >
         Pay Now

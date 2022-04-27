@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PaymentProfileContainer from './PaymentProfileContainer'
 import PopUpContainer from './PopUpContainer'
 import { useRecoilState } from 'recoil'
 import { openPopUps, totalSelectedSlots } from '../../Atoms/PopUpAtoms'
+import { getLocalStorage } from 'utils/cookies'
 
-const PaymentCheckOutContainer = ({ tutor }) => {
+const PaymentCheckOutContainer = () => {
   const [openPopUp, setOpenPopUp] = useRecoilState(openPopUps)
   const [totalSelectedTimes, setTotalSelectedTimes] =
     useRecoilState(totalSelectedSlots)
+
+  const [stage, setStage] = useState(0)
 
   console.log(totalSelectedTimes)
 
@@ -18,13 +21,15 @@ const PaymentCheckOutContainer = ({ tutor }) => {
         totalSelectedTimes={totalSelectedTimes}
         openPopUp={openPopUp}
         setTotalSelectedTimes={setTotalSelectedTimes}
-        {...{ tutor }}
+        stage={stage}
+        setStage={setStage}
       />
-      {/* <PaymentProfileContainer
+      <PaymentProfileContainer
         setOpenPopUp={setOpenPopUp}
         totalSelectedTimes={totalSelectedTimes}
         openPopUp={openPopUp}
-      /> */}
+        stage={stage}
+      />
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import Router from 'next/router'
 import { PencilIcon } from '@heroicons/react/solid'
 import { openPopUps, selectedTutor } from '../../Atoms/PopUpAtoms'
 import { useRecoilState } from 'recoil'
@@ -7,7 +8,7 @@ import DescriptionPopUp from './PopUps/DescriptionPopUp'
 import { useEffect, useRef, useState } from 'react'
 import CalenderPopUp from 'components/PaymentPage/PopUps/CalenderPopUp'
 import { useRouter } from 'next/router'
-import { getLocalStorage } from '../../utils/cookies'
+import { getLocalStorage, setLocalStorage } from '../../utils/cookies'
 
 function AboutTutor({ user, tutor }) {
   const [openPopUp, setOpenPopUp] = useRecoilState(openPopUps)
@@ -316,10 +317,18 @@ const Description = ({ user, tutor }) => {
           <>
             <button
               // href={`/book/${tutor?._id}`}
+              // onClick={() => {
+              //   setSelectedTutor(tutor?._id)
+              //   // alert(tutor._id)
+              //   setOpenPopUp && setOpenPopUp({ ...false, calendarPopUp: true })
+              // }}
               onClick={() => {
-                setSelectedTutor(tutor?._id)
-                // alert(tutor._id)
-                setOpenPopUp && setOpenPopUp({ ...false, calendarPopUp: true })
+                let obj = {
+                  _id: tutor?._id,
+                  tutor_timezone: tutor?.timezone,
+                }
+                setLocalStorage('book_tutor', obj)
+                Router.push('/book')
               }}
               className="flex h-[45px] w-[205px] items-center justify-center rounded-full bg-[#FC4D6D] text-center font-bold tracking-wider text-white shadow-xl"
             >

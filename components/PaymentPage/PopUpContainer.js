@@ -10,14 +10,17 @@ const PopUpContainer = ({
   setTotalSelectedTimes,
   totalSelectedTimes,
   tutor,
+  stage,
+  setStage,
 }) => {
   return (
     <div className="h-[594px] w-[406px] rounded-3xl bg-[#FFFFFF] shadow-md sm:h-[683px] sm:w-[521px]">
       {true && (
         <CalenderPopUp
+          stage={stage}
+          setStage={setStage}
           setOpenPopUp={setOpenPopUp}
           setTotalSelectedTimes={setTotalSelectedTimes}
-          {...{ tutor }}
         />
       )}
 
