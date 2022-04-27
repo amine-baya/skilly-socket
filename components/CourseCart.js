@@ -1,9 +1,12 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import Router from 'next/router'
+
 import { useRouter } from 'next/router'
 import { getCookie } from 'cookies-next'
 
 import { countryList } from '../utils/constants'
+import { setLocalStorage } from '../utils/cookies'
 import { useEffect, useRef } from 'react'
 
 function CourseCart({
@@ -52,13 +55,22 @@ function CourseCart({
   )
 
   function CoverSection() {
-    const videoRef = useRef();
+    const videoRef = useRef()
 
     return (
       <div className="relative  h-[210px] cursor-pointer overflow-hidden rounded-t-2xl rounded-br-[30px]">
         <Link href={`/tutors/${tutorData.id}`} passHref>
           {videoURL ? (
-            <video ref={videoRef} src={videoURL} className='' poster={coverImg} preload='true' loop onMouseEnter={() => videoRef.current.play()} onMouseOut={() => videoRef.current.pause()} />
+            <video
+              ref={videoRef}
+              src={videoURL}
+              className=""
+              poster={coverImg}
+              preload="true"
+              loop
+              onMouseEnter={() => videoRef.current.play()}
+              onMouseOut={() => videoRef.current.pause()}
+            />
           ) : (
             <Image
               placeholder="blur"
@@ -152,12 +164,12 @@ function CourseCart({
           <span>
             {tutorData.subjects && tutorData.subjects.length > 0
               ? tutorData.subjects[0] +
-              (tutorData.subjects.length > 1
-                ? ', ' +
                 (tutorData.subjects.length > 1
-                  ? tutorData.subjects[1]
-                  : tutorData.subjects.length - 1)
-                : '')
+                  ? ', ' +
+                    (tutorData.subjects.length > 1
+                      ? tutorData.subjects[1]
+                      : tutorData.subjects.length - 1)
+                  : '')
               : ''}
           </span>
         </span>
@@ -174,9 +186,9 @@ function CourseCart({
               : ''}
             {tutorData.other_languages && tutorData.other_languages.length > 0
               ? tutorData.other_languages[0] +
-              (tutorData.other_languages.length > 1
-                ? ' + ' + (tutorData.other_languages.length - 1)
-                : '')
+                (tutorData.other_languages.length > 1
+                  ? ' + ' + (tutorData.other_languages.length - 1)
+                  : '')
               : ''}
             {tutorData.other_languages
               ? tutorData.other_languages.length === 0
@@ -269,9 +281,17 @@ function CourseCart({
       >
         <>
           <button
+            // onClick={() => {
+            //   setOpenPopUp && setOpenPopUp({ ...false, calendarPopUp: true })
+            //   setSelectedTutor(tutorData?.id)
+            // }}
             onClick={() => {
-              setOpenPopUp && setOpenPopUp({ ...false, calendarPopUp: true })
-              setSelectedTutor(tutorData?.id)
+              let obj = {
+                _id: tutorData?.id,
+                tutor_timezone: tutorData?.tutor_timezone,
+              }
+              setLocalStorage('book_tutor', obj)
+              Router.push('/book')
             }}
             className="inline-block w-[220px] rounded-full px-6 py-2 text-center text-[14px] font-[600] text-[#FC4D6D] shadow-lg drop-shadow-lg backdrop-blur-md transition duration-150 ease-in-out hover:bg-[#FC4D6D] hover:text-white "
           >

@@ -28,16 +28,20 @@ import { baseUrl } from 'utils/constants'
 import Server from 'utils/Server'
 import { getLocalStorage, setLocalStorage } from 'utils/cookies'
 
-const CalenderPopUp = ({ link, tutorTimezone }) => {
+const CalenderPopUp = ({ link, stage, setStage }) => {
   const TOKEN = getCookie('token')
     ? JSON.parse(getCookie('token')).access_token
     : false
+  const [tutor, setTutor] = useState('')
+  const [tutorTimezone, setTutorTimezone] = useState('')
+  useEffect(() => {
+    setTutor(getLocalStorage('book_tutor')?._id)
+    setTutorTimezone(getLocalStorage('book_tutor')?.tutor_timezone)
+  }, [])
 
   const [selectedTutorData, setSelectedTutor] = useRecoilState(selectedTutor)
   console.log({ selectedTutorData })
-  const tutor = selectedTutorData
   const [openPopUp, setOpenPopUp] = useRecoilState(openPopUps)
-  const [stage, setStage] = useState(0)
   const [totalSelectedTimes, setTotalSelectedTimes] =
     useRecoilState(totalSelectedSlots)
   const [selectedTimes, setSelectedTimes] = useRecoilState(selectedSlots)
@@ -82,10 +86,7 @@ const CalenderPopUp = ({ link, tutorTimezone }) => {
       return
     }
     Server.get(
-      `${baseUrl}/slot?student_timezone=${studentTimezone}&tutor_timezone=${tutorTimezone}&tutor_id=${selectedTutorData}&start_date=${initialDate}&end_date=${lastDate}`,
-      {
-        params: { tutorId: selectedTutorData?.id },
-      }
+      `${baseUrl}/slot?student_timezone=${studentTimezone}&tutor_timezone=${tutorTimezone}&tutor_id=${tutor}&start_date=${initialDate}&end_date=${lastDate}`
     ).then((response) => {
       const resp = response.data
       setLocalStorage('temp_slots', resp)
@@ -104,7 +105,7 @@ const CalenderPopUp = ({ link, tutorTimezone }) => {
       console.log(abcdefg)
       setRandomTimes(abcdefg)
     })
-  }, [weekDates, selectedTutorData?.id, tutor?._id])
+  }, [weekDates, tutor, tutorTimezone])
 
   // function to take week dates
   function takeWeek(start = new Date()) {
@@ -172,7 +173,7 @@ const CalenderPopUp = ({ link, tutorTimezone }) => {
       `${baseUrl}/slot/cancel`,
       {
         slots: selectedTimes,
-        tutor_id: selectedTutorData,
+        tutor_id: tutor,
       },
       {
         headers: {
@@ -198,12 +199,12 @@ const CalenderPopUp = ({ link, tutorTimezone }) => {
 
   const handleCheck = () => {
     console.log('so far selected timings are - ', selectedTimes)
-    console.log('tutor id is - ', selectedTutorData)
+    console.log('tutor id is - ', tutor)
     Server.post(
       `${baseUrl}/slot/check`,
       {
         slots: selectedTimes,
-        tutor_id: selectedTutorData,
+        tutor_id: tutor,
       },
       {
         headers: {
@@ -232,11 +233,11 @@ const CalenderPopUp = ({ link, tutorTimezone }) => {
   }
   const handleConfirm = () => {
     console.log('so far selected timings are - ', selectedTimes)
-    console.log('tutor id is - ', selectedTutorData)
+    console.log('tutor id is - ', tutor)
     Server.post(
       `${baseUrl}/slot/confirm`,
       {
-        tutor_id: selectedTutorData,
+        tutor_id: tutor,
       },
       {
         headers: {
@@ -264,56 +265,12 @@ const CalenderPopUp = ({ link, tutorTimezone }) => {
       })
   }
 
-  const handleSessionBook = () => {
-    console.log('so far selected timings are - ', selectedTimes)
-
-    const studentTimezone = getLocalStorage('user').timezone || 'Asia/Kolkata'
-
-    console.log('tutor id is - ', selectedTutorData)
-    Server.post(
-      `${baseUrl}/session/book`,
-      {
-        tutor_id: selectedTutorData,
-        tutor_timezone: tutorTimezone,
-        student_timezone: studentTimezone,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          Authorization: 'Bearer ' + TOKEN,
-        },
-      }
-    )
-      .then((response) => {
-        console.log('-------------------', response.data)
-        if (response.success) {
-          // console.log(session)
-          // setLocalStorage('session', response.data.data)
-          setStage(2)
-          if (getLocalStorage('sessions')?.length > 0) {
-            let sessions = getLocalStorage('sessions')
-            sessions.concat(response.data.slice())
-            setLocalStorage('sessions', sessions)
-          } else {
-            let sessions = response.data
-            setLocalStorage('sessions', response.data)
-          }
-          setLocalStorage('booked_success', true)
-          Router.push('/studentDashboard/sessions')
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-
   const createMeetings = () => {
     //TODO Update the tutor and student id here
-    // console.log({ selectedTutorData })
+    // console.log({ tutor })
     Server.post(`${baseUrl}/booking/create`, {
       selectedTimes,
-      tutor: selectedTutorData,
+      tutor: tutor,
     })
       .then((res) => {
         console.log(res.data)
@@ -358,7 +315,7 @@ const CalenderPopUp = ({ link, tutorTimezone }) => {
             setOpenPopUp={setOpenPopUp}
             onClick={handleCheck}
           >
-            Check
+            Proceed
           </button>
         ) : stage === 1 ? (
           <div className="flex gap-4">
@@ -374,7 +331,7 @@ const CalenderPopUp = ({ link, tutorTimezone }) => {
               setOpenPopUp={setOpenPopUp}
               onClick={handleConfirm}
             >
-              Confirm
+              Confirm Slots
             </button>
           </div>
         ) : stage === 2 ? (
@@ -386,13 +343,13 @@ const CalenderPopUp = ({ link, tutorTimezone }) => {
             >
               Cancel
             </button>
-            <button
+            {/* <button
               data={{ selectedTimes }}
               setOpenPopUp={setOpenPopUp}
               onClick={handleSessionBook}
             >
               Pay now
-            </button>
+            </button> */}
           </div>
         ) : (
           'a'

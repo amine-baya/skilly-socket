@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import Router from 'next/router'
 import { PencilIcon } from '@heroicons/react/solid'
 import { openPopUps, selectedTutor } from '../../Atoms/PopUpAtoms'
 import { useRecoilState } from 'recoil'
@@ -7,7 +8,7 @@ import DescriptionPopUp from './PopUps/DescriptionPopUp'
 import { useEffect, useRef, useState } from 'react'
 import CalenderPopUp from 'components/PaymentPage/PopUps/CalenderPopUp'
 import { useRouter } from 'next/router'
-import { getLocalStorage } from '../../utils/cookies'
+import { getLocalStorage, setLocalStorage } from '../../utils/cookies'
 
 function AboutTutor({ user, tutor }) {
   const [openPopUp, setOpenPopUp] = useRecoilState(openPopUps)
@@ -122,11 +123,11 @@ function Video({ videoURL }) {
 
           {videoURL && (
             <iframe
-              id='vt'
+              id="vt"
               src={videoURL}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              className='w-full h-full rounded-lg'
+              className="h-full w-full rounded-lg"
               allowFullScreen
             />
           )}
@@ -134,8 +135,9 @@ function Video({ videoURL }) {
           {!videoURL && (
             <>
               <div className="white-linear-gradient absolute  bottom-0" />
-              <div className='absolute'
-              // onClick={() => setIsPlaying(true)}
+              <div
+                className="absolute"
+                // onClick={() => setIsPlaying(true)}
               >
                 <div className=" relative z-10 h-16 w-16 transition-all delay-150  ease-in-out hover:scale-[1.2] md:h-[76.67px] md:w-[76.67px]">
                   <Image
@@ -165,8 +167,6 @@ function Video({ videoURL }) {
               </div>
             </>
           )}
-
-
         </div>
       </div>
 
@@ -283,10 +283,18 @@ const Description = ({ user, tutor }) => {
           <>
             <button
               // href={`/book/${tutor?._id}`}
+              // onClick={() => {
+              //   setSelectedTutor(tutor?._id)
+              //   // alert(tutor._id)
+              //   setOpenPopUp && setOpenPopUp({ ...false, calendarPopUp: true })
+              // }}
               onClick={() => {
-                setSelectedTutor(tutor?._id)
-                // alert(tutor._id)
-                setOpenPopUp && setOpenPopUp({ ...false, calendarPopUp: true })
+                let obj = {
+                  _id: tutor?._id,
+                  tutor_timezone: tutor?.timezone,
+                }
+                setLocalStorage('book_tutor', obj)
+                Router.push('/book')
               }}
               className="flex h-[45px] w-[205px] items-center justify-center rounded-full bg-[#FC4D6D] text-center font-bold tracking-wider text-white shadow-xl"
             >
