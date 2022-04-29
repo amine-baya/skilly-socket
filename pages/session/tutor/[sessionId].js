@@ -2,6 +2,9 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
 import Server from 'utils/Server'
 import { baseUrl } from 'utils/constants'
+import { getCookie } from 'cookies-next'
+import { getLocalStorage } from '../../../utils/cookies'
+
 export default function Session(props) {
   const router = useRouter()
   const { sessionId } = router.query
@@ -10,22 +13,36 @@ export default function Session(props) {
 
   const [error, showError] = useState('')
   const wherebyRef = useRef()
+  const [userType, setUserType] = useState('')
+
+  // useEffect(() => {
+  //   setUserType(getLocalStorage('ROLE'))
+  // }, [])
 
   //Meeting Id has to be the booking id, not the session id
   // sample meeting id: 624814e0126a1bfc2671ec7a
   useEffect(() => {
-    Server.get(`${baseUrl}/session/${sessionId}/start`)
-      .then((res) => {
-        setRoomUrl(`${res.data.data.session_link}?roomIntegrations=on`)
-        setLoading(false)
-      })
-      .catch((err) => {
-        const errorMessage = err.response.data.message
-        showError(errorMessage)
-        setLoading(false)
-      })
+    console.log('session id --- ', sessionId)
+    console.log({ router })
+
+    let _url = `${baseUrl}/session/tutor/${sessionId}`
+    sessionId &&
+      Server.get(_url)
+        .then((res) => {
+          setRoomUrl(`${res.data.tutor_link}?roomIntegrations=on`)
+          setLoading(false)
+        })
+        .catch((err) => {
+          const errorMessage = err.response?.data.message
+          showError(errorMessage)
+
+          // setLoading(false)
+        })
+    // setRoomUrl(
+    //   'https://skillytree.whereby.com/f2325aa5-122b-49c6-bf17-16627312cb04'
+    // )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [baseUrl, sessionId])
+  }, [sessionId])
 
   useEffect(() => {
     const wherebyDiv = document.getElementById('whereby')

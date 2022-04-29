@@ -15,16 +15,24 @@ import {
 } from 'utils/constants'
 import Server from 'utils/Server'
 import fetch from 'isomorphic-fetch'
+import { useRecoilState } from 'recoil'
+import {
+  selectedSlots,
+  selectedTutor,
+  openPopUps,
+  totalSelectedSlots,
+} from 'Atoms/PopUpAtoms'
 
 const PaymentProfileContainer = ({
   openPopUp,
   setOpenPopUp,
   totalSelectedTimes,
   stage,
+  setEdit,
 }) => {
   const [subject, setSubject] = useState('')
   const [fees, setFees] = useState(0)
-
+  const [selectedTimes, setSelectedTimes] = useRecoilState(selectedSlots)
   const [tutor, setTutor] = useState('')
   const [tutorTimezone, setTutorTimezone] = useState('')
   const [tutorData, setTutorData] = useState({})
@@ -87,6 +95,7 @@ const PaymentProfileContainer = ({
         totalSelectedTimes={totalSelectedTimes}
         baseTotal={baseTotal}
         fees={fees}
+        setEdit={setEdit}
       />
 
       {/* Payment Details */}
@@ -109,6 +118,7 @@ const PaymentProfileContainer = ({
           tutor={tutor}
           tutorTimezone={tutorTimezone}
           setOpenPopUp={setOpenPopUp}
+          selectedTimes={selectedTimes}
         />
       ) : (
         <></>
@@ -235,6 +245,7 @@ const TimeAndMoney = ({
   totalSelectedTimes,
   baseTotal,
   fees,
+  setEdit,
 }) => {
   return (
     <div className="flex h-[97px] w-[406px] justify-between rounded-lg bg-[#FBFBFB] px-[15px] py-[12px] font-roboto text-[18px] font-bold sm:h-[109px] sm:w-[491px] sm:px-[23px] sm:py-[13px] sm:text-lg">
@@ -242,17 +253,14 @@ const TimeAndMoney = ({
         <p className=" text-[#9D9898] ">Total Sessions</p>
         <p className="text-[#2D2D2D]">
           {totalSelectedTimes} Hrs{' '}
-          {/* <small
-            onClick={() =>
-              setOpenPopUp({
-                ...false,
-                calendarPopUp: openPopUp.calendarPopUp ? false : true,
-              })
-            }
+          <small
+            onClick={() => {
+              setEdit(true)
+            }}
             className="ml-2 cursor-pointer border-b border-b-[#FC4D6D] pb-[0.5px] font-poppins font-medium text-[#FC4D6D] sm:pb-[1px]"
           >
             Edit
-          </small> */}
+          </small>
         </p>
       </div>
       <div className="flex flex-col justify-between">
@@ -353,11 +361,13 @@ const PaymentDetails = ({
 }
 
 // Bottom pay Now
-const PayNow = ({ setOpenPopUp, tutor, tutorTimezone }) => {
+const PayNow = ({ setOpenPopUp, tutor, tutorTimezone, selectedTimes }) => {
   const TOKEN = getCookie('token')
     ? JSON.parse(getCookie('token')).access_token
     : false
   const handleSessionBook = () => {
+    // console.log(selectedTimes)
+    // return
     const studentTimezone = getLocalStorage('user').timezone || 'Asia/Kolkata'
 
     console.log('tutor id is - ', tutor)

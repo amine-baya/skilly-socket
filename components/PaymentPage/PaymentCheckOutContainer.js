@@ -11,6 +11,7 @@ const PaymentCheckOutContainer = () => {
     useRecoilState(totalSelectedSlots)
 
   const [stage, setStage] = useState(0)
+  const [edit, setEdit] = useState(false)
 
   console.log(totalSelectedTimes)
 
@@ -23,13 +24,18 @@ const PaymentCheckOutContainer = () => {
         setTotalSelectedTimes={setTotalSelectedTimes}
         stage={stage}
         setStage={setStage}
+        edit={edit}
+        setEdit={setEdit}
       />
-      <PaymentProfileContainer
-        setOpenPopUp={setOpenPopUp}
-        totalSelectedTimes={totalSelectedTimes}
-        openPopUp={openPopUp}
-        stage={stage}
-      />
+      {stage === 2 && (
+        <PaymentProfileContainer
+          setOpenPopUp={setOpenPopUp}
+          totalSelectedTimes={totalSelectedTimes}
+          openPopUp={openPopUp}
+          stage={stage}
+          setEdit={setEdit}
+        />
+      )}
     </div>
   )
 }

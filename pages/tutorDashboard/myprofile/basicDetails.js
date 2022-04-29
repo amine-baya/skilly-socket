@@ -516,7 +516,7 @@ function BasicDetails() {
                                   type="month"
                                   value={
                                     values.qualifications[index]
-                                      .qualification_duration_from
+                                      .qualification_duration_to
                                   }
                                 ></Field>
                               </div>

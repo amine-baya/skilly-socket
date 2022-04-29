@@ -28,7 +28,7 @@ import { baseUrl } from 'utils/constants'
 import Server from 'utils/Server'
 import { getLocalStorage, setLocalStorage } from 'utils/cookies'
 
-const CalenderPopUp = ({ link, stage, setStage }) => {
+const CalenderPopUp = ({ link, stage, setStage, edit, setEdit }) => {
   const TOKEN = getCookie('token')
     ? JSON.parse(getCookie('token')).access_token
     : false

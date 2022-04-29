@@ -39,20 +39,6 @@ const MySessions = ({ router }) => {
 
     return timeLeft
   }
-
-  // const timerComponents = []
-
-  // Object.keys(timeLeft).forEach((interval) => {
-  //   if (!timeLeft[interval]) {
-  //     return
-  //   }
-
-  //   timerComponents.push(
-  //     <span>
-  //       {timeLeft[interval]} {interval}{' '}
-  //     </span>
-  //   )
-  // })
   const [allSessions, setAllSessions] = useState([])
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft())
 
@@ -302,6 +288,19 @@ const Card = ({ data }) => {
             0 ? (
             <button className=" w-full cursor-not-allowed rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-gray-300	">
               Upcoming Class
+            </button>
+          ) : new Date(
+              `${data.student_time.day_raw} ${data.student_time.to}`
+            ).getTime() -
+              new Date().getTime() >
+            0 ? (
+            <button
+              className=" w-full rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-gray-300	"
+              onClick={() => {
+                Router.push(`/session/student/${data?.meeting_id}`)
+              }}
+            >
+              Join Meeting
             </button>
           ) : (
             <button className=" w-full cursor-not-allowed rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-gray-300	">

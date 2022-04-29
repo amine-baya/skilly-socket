@@ -12,6 +12,8 @@ const PopUpContainer = ({
   tutor,
   stage,
   setStage,
+  edit,
+  setEdit,
 }) => {
   return (
     <div className="h-[594px] w-[406px] rounded-3xl bg-[#FFFFFF] shadow-md sm:h-[683px] sm:w-[521px]">
@@ -21,6 +23,8 @@ const PopUpContainer = ({
           setStage={setStage}
           setOpenPopUp={setOpenPopUp}
           setTotalSelectedTimes={setTotalSelectedTimes}
+          edit={edit}
+          setEdit={setEdit}
         />
       )}
 

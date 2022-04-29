@@ -1,171 +1,288 @@
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
+
 import axios from 'axios'
-import Link from "next/link"
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Server from 'utils/Server'
-import { baseUrl } from 'utils/constants'
+import { getCookie, setCookies, removeCookies } from 'cookies-next'
 
+import { weekNames, baseUrlProfilePic, baseUrl } from 'utils/constants'
+import {
+  addDays,
+  startOfDay,
+  startOfWeek,
+  format,
+  nextDay,
+  previousDay,
+  isToday,
+  isPast,
+} from 'date-fns'
 function MySession() {
   const router = useRouter()
+  const [year] = useState(new Date().getFullYear())
+
+  const calculateTimeLeft = () => {
+    let year = new Date().getFullYear()
+    let difference = +new Date(`10/01/${year}`) - +new Date()
+
+    let timeLeft = {}
+
+    if (difference > 0) {
+      timeLeft = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      }
+    }
+
+    return timeLeft
+  }
+  const [allSessions, setAllSessions] = useState([])
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft())
+
   useEffect(() => {
-    Server.get(`${baseUrl}/booking/all`).then((response) => {
-      const bookingsList = response.data
-      // sort bookings by start_date
-      const sortedBookings = bookingsList.sort((a, b) => {
-        return parseInt(a.start_date) - parseInt(b.start_date)
-      })
-      setBookings(sortedBookings)
+    Server.get(`${baseUrl}/session/tutor`, {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(getCookie('token')).access_token}`,
+      },
+    }).then((response) => {
+      const resp = response.data.upcoming
+      console.log('response is ', response)
+      let _lst = []
+      _lst = _lst.concat(
+        response.data.ongoing_sessions,
+        response.data.active_sessions,
+        response.data.upcoming_sessions,
+        response.data.booked_sessions
+      )
+      console.log(_lst)
+      console.log('lst is ', _lst)
+      setAllSessions(_lst)
+      // console.log(abcdefg)
+      // setRandomTimes(abcdefg)
     })
   }, [])
+
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setTimeLeft(calculateTimeLeft())
+  //   }, 1000)
+
+  //   return () => clearTimeout(timer)
+  // })
   const [bookings, setBookings] = useState([])
   return (
-    <>
-      <div className=" h-full whitespace-nowrap p-5 font-roboto capitalize lg:p-2 xl:p-9">
-        <div className="mb-9 flex justify-between ">
-          <h1 className="text-2xl font-semibold text-[#5E5252]">
-            Active Sessions
-          </h1>
-          <Link href="/tutorDashboard/mySession/archivedSessions" className="font-bold text-[#FC4D6D]">archived Sessions </Link>
-        </div>
-
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-3 xl:gap-9 ">
-          {bookings.map(function (booking, i) {
-            const startDate = new Date(booking.start_date * 1000)
-            const endDate = new Date(booking.start_date * 1000 + 3600 * 1000)
-
-            // start date's week in human readable format
-            const weekday = startDate.toLocaleString('default', {
-              weekday: 'short',
-            })
-
-            // start date time in human readable format
-            const startTime = startDate.toLocaleString('default', {
-              hour: 'numeric',
-              minute: 'numeric',
-            })
-
-            // end date time in human readable format
-            const endTime = endDate.toLocaleString('default', {
-              hour: 'numeric',
-              minute: 'numeric',
-            })
-
-            const currentTime = parseInt(new Date() / 1000)
-            const startTimeB = parseInt(booking.start_date)
-            const endTimeB = startTimeB + 3600
-
-            console.log({ currentTime, startTimeB, endTimeB })
-
-            const diff = startTimeB - currentTime
-
-            const diffHours = Math.floor(diff / 3600)
-            const diffMinutes = Math.floor((diff % 3600) / 60)
-            const diffSeconds = Math.floor((diff % 3600) % 60)
-
-            let status, style, text, in6Hours, onClick
-
-            onClick = () => { }
-            if (currentTime < startTimeB) {
-              if (diff < 3600 * 6) {
-                in6Hours = true
-                text = 'Session is starting soon'
-                // text = `Session is starting in ${diffHours} hours  ${diffMinutes} minutes`
-              } else {
-                in6Hours = false
-
-                text = 'Session has not started yet'
-              }
-              style = 'bg-blue-200'
-              status = 'pending'
-            } else if (currentTime > endTimeB) {
-              text = 'Session has ended'
-              style = 'bg-green-200'
-              status = 'ended'
-            } else {
-              text = 'Session is active'
-              style = 'bg-red-200'
-              status = 'active'
-
-              onClick = () => {
-                console.log({ booking })
-                router.push('/session/' + booking.booking_id)
-              }
-            }
-            //TODO Add the preferred color scheme here for the button
-            //temp override button style
-            style = 'bg-[#FC4D6D]'
-
-            return (
-              <div className="rounded-2xl bg-white" key={i}>
-                <div className="flex flex-col gap-2.5 p-4 lg:px-2 lg:py-4 xl:p-4   ">
-                  {in6Hours && (
-                    // TODO Add this
-                    <h3 className="font-medium">
-                      today, within{' '}
-                      <span className="text-[#FC4D6D]">
-                        {/* {diffHours}:{diffMinutes} */}
-                        {diffHours} hrs {diffMinutes} mins
-                      </span>
-                    </h3>
-                  )}
-                  <p className="text-2xl font-semibold">
-                    {weekday}, {startTime}-{endTime}
-                  </p>
-                </div>
-                <hr className="bg-[#CECECE]" />
-                <div className="p-4 lg:px-2 lg:py-4 xl:p-4 ">
-                  <div className="mb-9 flex justify-between">
-                    <div className="flex gap-3 lg:gap-1 xl:gap-3">
-                      <div className="h-11 w-11 rounded-full bg-gray-500"></div>
-                      <label className="my-auto text-lg font-semibold">
-                        abhayanshu s.
-                      </label>
-                    </div>
-                    <button className="text-[#42ADE2]">Message</button>
-                  </div>
-                  <div className="grid grid-cols-2 gap-y-4 text-lg">
-                    <label className="font-bold">duration</label>
-                    <p className=" justify-self-end font-medium ">60min</p>
-                    <label className="font-bold">fees</label>
-                    <p className=" justify-self-end font-medium ">$10</p>
-                    <label className="font-bold">skill</label>
-                    <p className=" justify-self-end font-medium ">gardening</p>
-                    <label className="font-bold">session no.</label>
-                    <p className=" justify-self-end font-medium ">
-                      5 ( <span className="text-[#42ADE2]">see agenda</span>)
-                    </p>
-                  </div>
-                  <div className="mt-[75px]  mb-5">
-                    <button
-                      onClick={onClick}
-                      className={`w-full rounded-2xl  py-5 text-2xl font-bold capitalize text-white ${style}`}
-                    >
-                      {text}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
-        </div>
+    <div className="mx-auto block h-full w-full whitespace-nowrap p-9 px-4 font-roboto capitalize sm:px-9">
+      <div className="mb-9 flex justify-between">
+        <h1 className="text-2xl font-semibold text-[#5E5252]">
+          Active Sessions
+        </h1>
+        <h1 className="font-bold text-[#FC4D6D]">archived Sessions</h1>
       </div>
-    </>
+
+      <main className="flex flex-wrap items-center justify-center gap-[2rem] md:justify-between">
+        {/* card Session */}
+        {allSessions?.map((d, i) => {
+          return <Card key={i} data={d} />
+        })}
+      </main>
+    </div>
   )
 }
 
 export default MySession
+const Card = ({ data }) => {
+  const [date, setDate] = useState(new Date())
+  const [isToday, setIsToday] = useState(false)
+  const [timer, setTimer] = useState('asdf')
 
-{
-  /* <div className="mt-[75px]  mb-5">
-<button className=" w-full rounded-2xl bg-[#C1C1C1] py-5 font-bold capitalize text-white text-2xl">
-reschedule session
-</button>
-</div> */
-}
-{
-  /* <div className="mt-[75px]  mb-5">
-                <button className=" w-full rounded-2xl bg-[#FF7A92] py-5 font-bold capitalize text-white text-2xl ">
-                enter in 00:30:29
-                </button>
-              </div> */
+  // useEffect(() => {
+  //   console.log('data is ', date)
+  //   if (
+  //     parseInt(data?.tutor_time.day_raw.slice(0, 4)) === date.getFullYear() &&
+  //     parseInt(data?.tutor_time.day_raw.slice(5, 7)) ===
+  //       date.getMonth() + 1 &&
+  //     parseInt(data?.tutor_time.day_raw.slice(8, 10)) === date.getDate()
+  //   ) {
+  //     setIsToday(true)
+  //   }
+  // }, [date])
+
+  useEffect(() => {
+    const _timer = setInterval(() => {
+      const diff =
+        new Date(
+          `${data.tutor_time.day_raw} ${data.tutor_time.from}`
+        ).getTime() - new Date().getTime()
+      console.log(diff)
+      let seconds = parseInt((diff / 1000) % 60)
+      let minutes = parseInt((diff / (1000 * 60)) % 60)
+      let hours = parseInt(diff / (1000 * 60 * 60))
+      let _ans = String(hours) + ':' + String(minutes) + ':' + String(seconds)
+      setTimer(_ans)
+    }, 1000)
+
+    return () => clearInterval(_timer)
+  }, [date])
+  return (
+    <div className="h-[475px] w-full rounded-2xl bg-white p-4 shadow-lg sm:w-[380px]">
+      <div className="mb-2 flex flex-col gap-[11px]">
+        <p className="text-base font-medium">
+          {new Date(
+            `${data.tutor_time.day_raw} ${data.tutor_time.from}`
+          ).getTime() -
+            new Date().getTime() <
+            1000 * 60 * 60 * 6 &&
+          new Date(
+            `${data.tutor_time.day_raw} ${data.tutor_time.from}`
+          ).getTime() -
+            new Date().getTime() >
+            0 ? (
+            <>
+              Today, In{' '}
+              <span className="font-bold text-[#FC4D6D]">
+                {' '}
+                {timer}{' '}
+                {/* {timerComponents.length ? timerComponents : <>Oops</>} */}
+              </span>{' '}
+              Minutes (Upcoming Session)
+            </>
+          ) : (
+            <>
+              On {data?.tutor_time.day_raw} At
+              <span className="font-bold text-[#FC4D6D]">
+                {' '}
+                {data?.tutor_time.from}{' '}
+                {/* {timerComponents.length ? timerComponents : <>Oops</>} */}
+              </span>{' '}
+            </>
+          )}
+          {/* {JSON.stringify(new Date(
+            data?.tutor_time.day_raw.slice(0, 4),
+            data?.tutor_time.day_raw.slice(5, 7),
+            data?.tutor_time.day_raw.slice(8, 10)
+          ))} */}
+          {console.log(startOfDay(Date.now()))}
+        </p>
+        <h3 className="text-2xl font-semibold tracking-wide">
+          {weekNames[date.getDay()]},{' '}
+          {data?.tutor_time.from + '-' + data?.tutor_time.to}
+          {/* {JSON.stringify(date)} */}
+        </h3>
+      </div>
+
+      <hr className="h-[3px] w-full bg-gray-300" />
+
+      <div className="p-4 lg:px-2 lg:py-4 xl:p-4 ">
+        <div className="grid grid-cols-2 gap-y-4 text-lg">
+          {/* tutor */}
+          <Link href={`/tutors/${data?.tutor_id}`}>
+            <div className="relative mb-5 flex cursor-pointer items-center justify-start gap-2">
+              <div className="relative h-10 w-10 rounded-full">
+                <Image
+                  src={`${baseUrlProfilePic}${data?.student_details.profile_img}`}
+                  alt="tutor"
+                  objectFit="contain"
+                  layout="fill"
+                />
+              </div>
+              <label className="cursor-pointer font-bold">
+                {data?.student_details.name}
+              </label>
+            </div>
+          </Link>
+          <p className="cursor-pointer justify-self-end font-medium text-[#3F97FF]">
+            Message
+          </p>
+
+          {/* duration */}
+          <label className="font-bold">duration</label>
+          <p className=" justify-self-end font-medium">60min</p>
+
+          {/* fees */}
+          {/* TODO get fees from sessions API */}
+          <label className="font-bold">fees</label>
+          <p className=" justify-self-end font-medium">$10</p>
+
+          {/* skill */}
+          {/* TODO get subject/skill from sessions API */}
+          <label className="font-bold">skill</label>
+          <p className=" justify-self-end font-medium">gardening</p>
+
+          {/* session */}
+          {/* TODO uncomment session count and populate */}
+          <label className="font-bold">session no.</label>
+          <p className=" justify-self-end font-medium">
+            {/* 1{' '}
+            <p className="inline cursor-pointer text-[#3F97FF]">(see agenda)</p> */}
+          </p>
+        </div>
+
+        <div className="mt-[40px]">
+          {/* {isToday ? (
+            <button
+              className=" w-full rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-white "
+              onClick={() => {
+                Router.push(`/session/${data?.meeting_id}`)
+              }}
+            >
+              {}
+              enter classroom
+            </button>
+          ) : (
+            <button className=" w-full rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-white ">
+              {}
+              Reschedule
+            </button>
+          )} */}
+          {new Date(
+            `${data.tutor_time.day_raw} ${data.tutor_time.from}`
+          ).getTime() -
+            new Date().getTime() >
+          1000 * 60 * 60 * 6 ? (
+            <button className=" w-full rounded-2xl bg-[#FC4D6D]  py-5 text-2xl font-bold capitalize text-white">
+              Reschedule
+            </button>
+          ) : new Date(
+              `${data.tutor_time.day_raw} ${data.tutor_time.from}`
+            ).getTime() -
+              new Date().getTime() <
+              1000 * 60 * 5 &&
+            new Date(
+              `${data.tutor_time.day_raw} ${data.tutor_time.from}`
+            ).getTime() -
+              new Date().getTime() >
+              0 ? (
+            <button
+              className=" w-full cursor-not-allowed rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-gray-300	"
+              onClick={() => {
+                Router.push(`/session/tutor/${data?.meeting_id}`)
+              }}
+            >
+              Join Meeting
+            </button>
+          ) : new Date(
+              `${data.student_time.day_raw} ${data.student_time.to}`
+            ).getTime() -
+              new Date().getTime() >
+            0 ? (
+            <button
+              className=" w-full rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-gray-300	"
+              onClick={() => {
+                Router.push(`/session/student/${data?.meeting_id}`)
+              }}
+            >
+              Join Meeting
+            </button>
+          ) : (
+            <button className=" w-full cursor-not-allowed rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-gray-300	">
+              Class Over
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  )
 }
