@@ -55,26 +55,22 @@ function CourseCart({
   )
 
   function CoverSection() {
-    const videoRef = useRef();
-    let videoURL = 'https://www.youtube.com/embed/8PNukAAZnK0';
+    const videoRef = useRef()
+    let videoURL = 'https://www.youtube.com/embed/8PNukAAZnK0'
 
     return (
       <div className="relative  h-[210px] cursor-pointer overflow-hidden rounded-t-2xl rounded-br-[30px]">
         <Link href={`/tutors/${tutorData.id}`} passHref>
           {videoURL ? (
-
-            // for youtube videos 
-            videoURL?.includes("youtube") ? (
-              <iframe
-                src={videoURL}
-                className='w-full h-[80%]'
-              />
+            // for youtube videos
+            videoURL?.includes('youtube') ? (
+              <iframe src={videoURL} className="h-[80%] w-full" />
             ) : (
               // for simple videos
               <video
                 ref={videoRef}
                 src={videoURL}
-                className='w-full h-[80%] scale-x-[1.2]'
+                className="h-[80%] w-full scale-x-[1.2]"
                 poster={coverImg}
                 // preload='true'
                 loop
@@ -82,13 +78,14 @@ function CourseCart({
                 onMouseOut={() => videoRef.current.pause()}
               />
             )
-
           ) : (
             <Image
               placeholder="blur"
               blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/RQAAuEB4mUJ9Y0AAAAASUVORK5CYII="
               // priority
-              src={coverImg ? coverImg : 'Images/CourseCart/girl-using-tablet.png'}
+              src={
+                coverImg ? coverImg : 'Images/CourseCart/girl-using-tablet.png'
+              }
               height={191}
               width={383}
               alt="user"
@@ -174,12 +171,12 @@ function CourseCart({
           <span>
             {tutorData.subjects && tutorData.subjects.length > 0
               ? tutorData.subjects[0] +
-              (tutorData.subjects.length > 1
-                ? ', ' +
                 (tutorData.subjects.length > 1
-                  ? tutorData.subjects[1]
-                  : tutorData.subjects.length - 1)
-                : '')
+                  ? ', ' +
+                    (tutorData.subjects.length > 1
+                      ? tutorData.subjects[1]
+                      : tutorData.subjects.length - 1)
+                  : '')
               : ''}
           </span>
         </span>
@@ -196,9 +193,9 @@ function CourseCart({
               : ''}
             {tutorData.other_languages && tutorData.other_languages.length > 0
               ? tutorData.other_languages[0] +
-              (tutorData.other_languages.length > 1
-                ? ' + ' + (tutorData.other_languages.length - 1)
-                : '')
+                (tutorData.other_languages.length > 1
+                  ? ' + ' + (tutorData.other_languages.length - 1)
+                  : '')
               : ''}
             {tutorData.other_languages
               ? tutorData.other_languages.length === 0
@@ -280,8 +277,9 @@ function CourseCart({
             onClick={() => {
               let obj = {
                 _id: tutorData?.id,
-                tutor_timezone: tutorData?.tutor_timezone,
+                tutor_timezone: tutorData.tutor_timezone,
               }
+              console.log(tutorData)
               setLocalStorage('book_tutor', obj)
               Router.push('/book')
             }}

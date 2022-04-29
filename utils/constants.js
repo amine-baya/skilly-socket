@@ -59,6 +59,8 @@ export const monthNames = [
 export const weekNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 export const LANGUAGES = [
+  { code: 'en', name: 'English', nativeName: 'English' },
+  { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी, हिंदी' },
   { code: 'ab', name: 'Abkhaz', nativeName: 'аҧсуа' },
   { code: 'aa', name: 'Afar', nativeName: 'Afaraf' },
   { code: 'af', name: 'Afrikaans', nativeName: 'Afrikaans' },
@@ -102,7 +104,6 @@ export const LANGUAGES = [
   { code: 'da', name: 'Danish', nativeName: 'dansk' },
   { code: 'dv', name: 'Divehi; Dhivehi; Maldivian;', nativeName: 'ދިވެހި' },
   { code: 'nl', name: 'Dutch', nativeName: 'Nederlands, Vlaams' },
-  { code: 'en', name: 'English', nativeName: 'English' },
   { code: 'eo', name: 'Esperanto', nativeName: 'Esperanto' },
   { code: 'et', name: 'Estonian', nativeName: 'eesti, eesti keel' },
   { code: 'ee', name: 'Ewe', nativeName: 'Eʋegbe' },
@@ -125,7 +126,6 @@ export const LANGUAGES = [
   { code: 'ha', name: 'Hausa', nativeName: 'Hausa, هَوُسَ' },
   { code: 'he', name: 'Hebrew (modern)', nativeName: 'עברית' },
   { code: 'hz', name: 'Herero', nativeName: 'Otjiherero' },
-  { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी, हिंदी' },
   { code: 'ho', name: 'Hiri Motu', nativeName: 'Hiri Motu' },
   { code: 'hu', name: 'Hungarian', nativeName: 'Magyar' },
   { code: 'ia', name: 'Interlingua', nativeName: 'Interlingua' },
@@ -280,6 +280,10 @@ export const LANGUAGES = [
 ]
 
 export const languageDictionary = {
+  en: {
+    name: 'English',
+    nativeName: 'English',
+  },
   ab: {
     name: 'Abkhaz',
     nativeName: 'аҧсуа',
@@ -436,10 +440,7 @@ export const languageDictionary = {
     name: 'Dutch',
     nativeName: 'Nederlands, Vlaams',
   },
-  en: {
-    name: 'English',
-    nativeName: 'English',
-  },
+
   eo: {
     name: 'Esperanto',
     nativeName: 'Esperanto',
@@ -1015,6 +1016,14 @@ export const languageDictionary = {
 }
 
 export const countryList = [
+  {
+    name: 'United States',
+    code: 'US',
+    emoji: '🇺🇸',
+    unicode: 'U+1F1FA U+1F1F8',
+    image:
+      'https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/US.svg',
+  },
   {
     name: 'Ascension Island',
     code: 'AC',
@@ -2934,14 +2943,6 @@ export const countryList = [
     unicode: 'U+1F1FA U+1F1F3',
     image:
       'https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/UN.svg',
-  },
-  {
-    name: 'United States',
-    code: 'US',
-    emoji: '🇺🇸',
-    unicode: 'U+1F1FA U+1F1F8',
-    image:
-      'https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/US.svg',
   },
   {
     name: 'Uruguay',
