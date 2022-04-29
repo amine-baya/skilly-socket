@@ -33,27 +33,27 @@ const Qualifications = () => {
     qualifications: user_data.qualifications
       ? user_data.qualifications
       : [
-          {
-            qualification_duration_to: '',
-            qualification_duration_from: '',
-            qualification_title: '',
-            qualification_type: '',
-          },
-        ],
+        {
+          qualification_duration_to: '',
+          qualification_duration_from: '',
+          qualification_title: '',
+          qualification_type: '',
+        },
+      ],
   }
 
   const onSubmit = async (values) => {
+    if (values?.qualifications.length <= 0) {
+      alert('Please provide atleast one qualification');
+      return;
+    }
+
     const user_update = await Server.put(updateUserQualification, values)
     if (user_update.success) {
       updateUser({ ...values }, () => {
         Router.push(`/tutors/${user_data._id}`)
       })
     }
-  }
-
-  const changeFormat = (date) => {
-    let dateArr = date?.split('-')
-    return dateArr[0] + '-' + dateArr[1]
   }
 
   return (
@@ -81,15 +81,15 @@ const Qualifications = () => {
                           {values.qualifications?.map(
                             (qualification, index) => (
                               <div
-                                className="mt-9 grid grid-cols-12 gap-3 rounded-[15px] bg-[#F2F2F2] p-4 md:p-[26px] xl:gap-x-8"
+                                className="mt-9 grid grid-cols-12 gap-3 rounded-[15px] bg-[#F2F2F2] p-4 md:py-[26px] md:px-[15px] xl:gap-x-4"
                                 key={index}
                               >
-                                <div className="col-span-5 md:col-span-3">
+                                <div className="col-span-12 md:col-span-3">
                                   <p
                                     className="mb-5 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold "
                                     name={`qualifications.${index}.qualification_type`}
                                   >
-                                    Qualification Type
+                                    Qualification Type <span className='text-red-500'>*</span>
                                   </p>
                                   <Field
                                     as="select"
@@ -107,12 +107,12 @@ const Qualifications = () => {
                                     <option value="Degree">Degree</option>
                                   </Field>
                                 </div>
-                                <div className="order-2 col-span-12 md:order-none md:col-span-4">
+                                <div className="order-2 col-span-10 md:order-none md:col-span-3">
                                   <p
                                     className="mb-5 font-semibold  "
                                     name={`qualifications.${index}.qualification_title`}
                                   >
-                                    Qualification Title
+                                    Qualification Title <span className='text-red-500'>*</span>
                                   </p>
                                   <Field
                                     type="text"
@@ -120,9 +120,9 @@ const Qualifications = () => {
                                     className=" w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
                                   />
                                 </div>
-                                <div className="col-span-7 md:col-span-4">
+                                <div className="col-span-12 md:col-span-5">
                                   <p className="mb-5 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold">
-                                    Qualification Duration
+                                    Qualification Duration <span className='text-red-500'>*</span>
                                   </p>
 
                                   <div className="flex gap-1.5">
@@ -171,9 +171,7 @@ const Qualifications = () => {
                                 <div className="order-6 col-span-1 mt-11 self-center justify-self-center md:order-none">
                                   <button
                                     type="button"
-                                    onClick={
-                                      index <= 0 ? null : () => remove(index)
-                                    }
+                                    onClick={() => remove(index)}
                                   >
                                     <RiDeleteBinLine className="text-xl text-[#7D7D7D]" />
                                   </button>
