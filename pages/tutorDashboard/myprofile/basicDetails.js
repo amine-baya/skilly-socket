@@ -111,26 +111,26 @@ function BasicDetails() {
         : [],
     subjects_and_pricing:
       user_data.subjects_and_pricing &&
-      user_data.subjects_and_pricing.length > 0
+        user_data.subjects_and_pricing.length > 0
         ? user_data.subjects_and_pricing
         : [
-            {
-              subject: '-',
-              price: '0',
-              currency_format: 'USD',
-            },
-          ],
+          {
+            subject: '-',
+            price: '',
+            currency_format: 'USD',
+          },
+        ],
     qualifications:
       user_data.qualifications && user_data.qualifications[0]
         ? user_data.qualifications
         : [
-            {
-              qualification_type: 'Experience',
-              qualification_title: '',
-              qualification_duration_from: '',
-              qualification_duration_to: '',
-            },
-          ],
+          {
+            qualification_type: 'Experience',
+            qualification_title: '',
+            qualification_duration_from: '',
+            qualification_duration_to: '',
+          },
+        ],
     teachs: [
       {
         fee: '',
@@ -172,7 +172,7 @@ function BasicDetails() {
 
   return (
     <>
-      <div className=" md-[1px] h1wi ml-[1px] mb-[1px] bg-white  lg:ml-[30px] lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl">
+      <div className=" md-[1px] ml-[1px] mb-[1px] bg-white  lg:ml-[30px] lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl">
         <div className="  p-5  xl:px-12">
           <h1 className="text-3xl font-semibold">
             Welcome {user_data.first_name + ' ' + user_data.last_name}{' '}
@@ -207,7 +207,7 @@ function BasicDetails() {
                   <div className=" grid grid-cols-2  gap-4 md:gap-9 ">
                     <div className=" col-span-2 grid  grid-cols-1  gap-y-2   md:col-span-1  md:grid-cols-2">
                       <label className="self-center font-semibold ">
-                        My Country Of Origin
+                        My Country Of Origin <span className='text-red-500'>*</span>
                       </label>
                       {flag && (
                         <SelectWithIcons
@@ -223,7 +223,7 @@ function BasicDetails() {
                     <div></div>
                     <div className=" col-span-2  grid grid-cols-1 gap-y-2   md:col-span-1 md:grid-cols-2">
                       <label className="self-center font-semibold">
-                        I Natively Speak
+                        I Natively Speak <span className='text-red-500'>*</span>
                       </label>
                       <select
                         name="language"
@@ -272,7 +272,7 @@ function BasicDetails() {
 
                     <div className=" col-span-2  grid grid-cols-1 gap-y-2   md:col-span-1  md:grid-cols-2">
                       <label className="self-center font-semibold">
-                        My English Fluency
+                        My English Fluency <span className='text-red-500'>*</span>
                       </label>
                       <select
                         name="language"
@@ -327,7 +327,7 @@ function BasicDetails() {
                     <div></div>
                     <div className="col-span-2 grid   grid-cols-1 gap-y-2 md:col-span-1  md:grid-cols-2 ">
                       <label className="self-center font-semibold">
-                        I Am Also Fluent With..
+                        I Am Also Fluent With.. <span className='text-red-500'>*</span>
                       </label>
                       <select
                         name="language"
@@ -387,7 +387,7 @@ function BasicDetails() {
                                       htmlFor={`subjects_and_pricing.${index}.subject`}
                                     >
                                       {' '}
-                                      I Will Like To Teach..
+                                      I Will Like To Teach.. <span className='text-red-500'>*</span>
                                     </label>
                                     <Field
                                       as="select"
@@ -412,7 +412,7 @@ function BasicDetails() {
                                       className="self-center font-semibold"
                                       htmlFor={`subjects_and_pricing.${index}.price`}
                                     >
-                                      My Fee Per Hour
+                                      My Fee Per Hour <span className='text-red-500'>*</span>
                                     </label>
 
                                     <div className="relative mt-1 h-full rounded-[10px] border-2 border-[#C1C1C1] p-2 shadow-sm">
@@ -476,15 +476,15 @@ function BasicDetails() {
                       <>
                         {values.qualifications?.map((qualifications, index) => (
                           <div
-                            className="mt-9 grid grid-cols-12 gap-3 bg-[#F2F2F2] p-4 md:p-[26px] xl:gap-x-8"
+                            className="mt-9 grid grid-cols-12 gap-3 bg-[#F2F2F2] p-4 md:py-[26px] md:px-[15px] xl:gap-x-4"
                             key={index}
                           >
-                            <div className="col-span-5 md:col-span-3">
+                            <div className="col-span-12 md:col-span-3">
                               <p
                                 className="mb-5 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold "
                                 name={`qualifications.${index}.qualification_type`}
                               >
-                                Qualification Type
+                                Qualification Type <span className='text-red-500'>*</span>
                               </p>
                               <Field
                                 as="select"
@@ -496,12 +496,12 @@ function BasicDetails() {
                                 <option>Degree</option>
                               </Field>
                             </div>
-                            <div className="order-2 col-span-10 md:order-none md:col-span-4">
+                            <div className="order-2 col-span-10 md:order-none md:col-span-3">
                               <p
                                 className="mb-5 font-semibold  "
                                 name={`qualifications.${index}.qualification_title`}
                               >
-                                Qualification Title
+                                Qualification Title <span className='text-red-500'>*</span>
                               </p>
                               <Field
                                 type="text"
@@ -509,9 +509,9 @@ function BasicDetails() {
                                 className=" w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
                               />
                             </div>
-                            <div className="col-span-7 md:col-span-4">
+                            <div className="col-span-12 md:col-span-5">
                               <p className="mb-5 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold">
-                                Qualification Duration
+                                Qualification Duration <span className='text-red-500'>*</span>
                               </p>
                               <div className="flex gap-1.5">
                                 <Field
