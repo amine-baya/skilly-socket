@@ -34,6 +34,7 @@ function CourseCart({
           space={'-mt-[1.8rem] ml-[105px] '}
           imgPosition={'-top-[3rem] left-[-5.5rem]'}
           router={router}
+          tutorData={tutorData?.video_url}
         />
         <div className="flex flex-col items-center gap-3 py-4 px-2">
           <Language />
@@ -54,9 +55,10 @@ function CourseCart({
     </div>
   )
 
-  function CoverSection() {
+  function CoverSection({ link }) {
     const videoRef = useRef()
-    let videoURL = 'https://www.youtube.com/embed/8PNukAAZnK0'
+    // let videoURL = 'https://www.youtube.com/embed/8PNukAAZnK0'
+    let videoURL = tutorData?.video_url
 
     return (
       <div className="relative  h-[210px] cursor-pointer overflow-hidden rounded-t-2xl rounded-br-[30px]">

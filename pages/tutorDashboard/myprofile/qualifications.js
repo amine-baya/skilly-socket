@@ -33,27 +33,27 @@ const Qualifications = () => {
     qualifications: user_data.qualifications
       ? user_data.qualifications
       : [
-        {
-          qualification_duration_to: '',
-          qualification_duration_from: '',
-          qualification_title: '',
-          qualification_type: '',
-        },
-      ],
+          {
+            qualification_duration_to: '',
+            qualification_duration_from: '',
+            qualification_title: '',
+            qualification_type: '',
+          },
+        ],
   }
 
   const onSubmit = async (values) => {
     const user_update = await Server.put(updateUserQualification, values)
     if (user_update.success) {
       updateUser({ ...values }, () => {
-        Router.push('/tutorDashboard')
+        Router.push(`/tutors/${user_data._id}`)
       })
     }
   }
 
   const changeFormat = (date) => {
-    let dateArr = date?.split("-");
-    return dateArr[0] + "-" + dateArr[1];
+    let dateArr = date?.split('-')
+    return dateArr[0] + '-' + dateArr[1]
   }
 
   return (
@@ -132,14 +132,38 @@ const Qualifications = () => {
                                       className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
                                       type="month"
                                       // value={values.qualifications[index].qualification_duration_from}
-                                      value={values.qualifications[index].qualification_duration_from.split('-')[0] + "-" + values.qualifications[index].qualification_duration_from.split('-')[1]}
+                                      value={
+                                        values.qualifications[
+                                          index
+                                        ].qualification_duration_from.split(
+                                          '-'
+                                        )[0] +
+                                        '-' +
+                                        values.qualifications[
+                                          index
+                                        ].qualification_duration_from.split(
+                                          '-'
+                                        )[1]
+                                      }
                                     ></Field>
                                     <Field
                                       id={`qualifications.${index}.qualification_duration_to`}
                                       name={`qualifications.${index}.qualification_duration_to`}
                                       className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
                                       type="month"
-                                      value={values.qualifications[index].qualification_duration_to.split('-')[0] + "-" + values.qualifications[index].qualification_duration_to.split('-')[1]}
+                                      value={
+                                        values.qualifications[
+                                          index
+                                        ].qualification_duration_to.split(
+                                          '-'
+                                        )[0] +
+                                        '-' +
+                                        values.qualifications[
+                                          index
+                                        ].qualification_duration_to.split(
+                                          '-'
+                                        )[1]
+                                      }
                                     ></Field>
                                   </div>
                                 </div>
