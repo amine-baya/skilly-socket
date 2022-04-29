@@ -25,7 +25,7 @@ function BasicDetails() {
   const [user_data, set_user_data] = useState({})
 
   const [languageData, setLanguageData] = useState([])
-  const [nativeLanguage, setNativeLanguage] = useState('')
+  const [nativeLanguage, setNativeLanguage] = useState('English')
   const [englishFluency, setEnglishFluency] = useState('')
   const [addLanguageData, setAddLanguageData] = useState([])
   const [countryData, setCountryData] = useState('') // continue here
@@ -35,10 +35,12 @@ function BasicDetails() {
   useEffect(() => {
     set_user_data(getLocalStorage('user'))
     setLanguageData(languageOptions)
-    setNativeLanguage(user_data.native_language)
-    setEnglishFluency(user_data.english_fluency)
-    setCountryData(user_data.country)
   }, [])
+  useEffect(() => {
+    user_data.native_language && setNativeLanguage(user_data.native_language)
+    user_data.english_fluency && setEnglishFluency(user_data.english_fluency)
+    user_data.country && setCountryData(user_data.country)
+  }, [user_data])
 
   useEffect(() => {
     if (user_data && user_data.other_languages) {
@@ -56,9 +58,8 @@ function BasicDetails() {
 
     if (!user_data.country) {
       let _tmp = countryList.findIndex((it) => it.name == 'United States')
-      setCurrent(_tmp);
+      setCurrent(_tmp)
     }
-
   }, [user_data])
 
   useEffect(() => {
@@ -100,7 +101,9 @@ function BasicDetails() {
 
   const initialValues = {
     country: user_data.country ? user_data.country : 'United States',
-    native_language: user_data.native_language ? user_data.native_language : '',
+    native_language: user_data.native_language
+      ? user_data.native_language
+      : 'English',
     english_fluency: user_data.english_fluency ? user_data.english_fluency : '',
     other_languages:
       user_data.other_languages && user_data.other_languages[0]
@@ -122,7 +125,7 @@ function BasicDetails() {
         ? user_data.qualifications
         : [
             {
-              qualification_type: '',
+              qualification_type: 'Experience',
               qualification_title: '',
               qualification_duration_from: '',
               qualification_duration_to: '',
@@ -239,9 +242,12 @@ function BasicDetails() {
                         {languageData?.length &&
                           languageData?.map((item, index) => {
                             if (
-                              user_data &&
-                              user_data.native_language &&
-                              user_data.native_language === item.name
+                              (user_data &&
+                                user_data.native_language &&
+                                user_data.native_language === item.name) ||
+                              (user_data &&
+                                !user_data.native_language &&
+                                item.name === 'English')
                             ) {
                               return (
                                 <option

@@ -6,8 +6,8 @@ import { useRouter } from 'next/router'
 import { getCookie } from 'cookies-next'
 
 import { countryList } from '../utils/constants'
-import { setLocalStorage } from '../utils/cookies'
-import { useEffect, useRef } from 'react'
+import { getLocalStorage, setLocalStorage } from '../utils/cookies'
+import { useState, useEffect, useRef } from 'react'
 
 function CourseCart({
   coverImg,
@@ -41,16 +41,16 @@ function CourseCart({
           <ActiveFinishedRatingBox />
           <Description />
 
-          {TOKEN && (
+          {
             <BookTrialBtn
               space={'my-4'}
               setOpenPopUp={setOpenPopUp}
               tutorData={tutorData}
               setSelectedTutor={setSelectedTutor}
             />
-          )}
+          }
         </div>
-        <ViewAndChat space={'px-4'} />
+        <ViewAndChat tutorData={tutorData} space={'px-4'} />
       </div>
     </div>
   )
@@ -106,7 +106,7 @@ function CourseCart({
               objectFit="contain"
               alt="bookmark"
             /> */}
-            <span>{countryLogo}</span>
+            {/* <span>{countryLogo}</span> */}
           </div>
         </div>
       </div>
@@ -253,7 +253,11 @@ function CourseCart({
       >
         <span className="font-extrabold">Brief :</span>{' '}
         {tutorData?.description?.length > 0 ? (
-          <>{tutorData.description}</>
+          <>
+            {tutorData.description.length > 100
+              ? tutorData.description.slice(0, 100) + '...'
+              : tutorData.description}
+          </>
         ) : (
           <>
             dolor sit amet, consectetur elit. Fringilla enim, at rhoncus nisl,
@@ -282,12 +286,20 @@ function CourseCart({
                 tutor_timezone: tutorData.tutor_timezone,
               }
               console.log(tutorData)
-              setLocalStorage('book_tutor', obj)
-              Router.push('/book')
+              const TOKEN = getCookie('token')
+                ? JSON.parse(getCookie('token')).access_token
+                : false
+              if (TOKEN) {
+                setLocalStorage('book_tutor', obj)
+                Router.push('/book')
+              } else {
+                Router.push('/auth/student/login')
+              }
             }}
             className="inline-block w-[220px] rounded-full px-6 py-2 text-center text-[14px] font-[600] text-[#FC4D6D] shadow-lg drop-shadow-lg backdrop-blur-md transition duration-150 ease-in-out hover:bg-[#FC4D6D] hover:text-white "
           >
-            Book Trial | $20/hr
+            Book Trial
+            {/* | $20/hr */}
           </button>
           <div className="-z-20">
             <div className="gradientCircle left-[75px] top-[-4px] h-[15px] w-[15px] " />
@@ -300,11 +312,16 @@ function CourseCart({
   }
 
   function ViewAndChat({ space }) {
+    const [role, setRole] = useState('')
+    useEffect(() => {
+      setRole(getLocalStorage('user'))
+    }, [])
+
     return (
       <div
         className={`${space} flex items-center justify-between font-monts text-[12px] font-semibold text-[#474747]`}
       >
-        <Link href={'/'}>
+        <Link href={`/tutors/${tutorData?.id}`}>
           <a className="flex items-center">
             <span>
               <Image
@@ -317,19 +334,21 @@ function CourseCart({
             <span className="ml-[6px]">QuickView Details</span>
           </a>
         </Link>
-        <Link href={'/'}>
-          <a className="flex items-center">
-            <span>
-              <Image
-                src="/Images/CourseCart/inbox.svg"
-                width={17}
-                height={17}
-                alt="inbox"
-              />
-            </span>
-            <span className="ml-[6px]">Chat with Tutor</span>
-          </a>
-        </Link>
+        {role && role === 'STUDENT' && (
+          <Link href={'/studentDashboard/messages'}>
+            <a className="flex items-center">
+              <span>
+                <Image
+                  src="/Images/CourseCart/inbox.svg"
+                  width={17}
+                  height={17}
+                  alt="inbox"
+                />
+              </span>
+              <span className="ml-[6px]">Chat with Tutor</span>
+            </a>
+          </Link>
+        )}
       </div>
     )
   }

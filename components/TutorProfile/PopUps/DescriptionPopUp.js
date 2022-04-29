@@ -7,7 +7,7 @@ import Server from '../../../utils/Server'
 import { getCookie } from 'cookies-next'
 import { setLocalStorage } from '../../../utils/cookies'
 
-const DescriptionPopUp = () => {
+const DescriptionPopUp = ({ setChangeFlag }) => {
   const [openPopUp, setOpenPopUp] = useRecoilState(openPopUps)
   const [data, setData] = useState('')
   const [update, setUpdate] = useState(false)
@@ -31,6 +31,7 @@ const DescriptionPopUp = () => {
           // setOpenPopUp(false)
           // setTutor(data.data)
           setOpenPopUp && setOpenPopUp({ ...false })
+          setChangeFlag(true)
         })
     }
   }, [update])

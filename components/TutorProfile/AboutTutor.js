@@ -12,9 +12,23 @@ import { getLocalStorage, setLocalStorage } from '../../utils/cookies'
 
 function AboutTutor({ user, tutor }) {
   const [openPopUp, setOpenPopUp] = useRecoilState(openPopUps)
+  const [changeFlag, setChangeFlag] = useState(false)
 
   const router = useRouter()
   // const [reload, setReload] = useState(false)
+
+  const [selectedTutorData, setSelectedTutor] = useRecoilState(selectedTutor)
+  const [saveFlag, setSaveFlag] = useState(false)
+  const [metaFlag, setMetaFlag] = useState(false)
+  const [description, setDescription] = useState('')
+
+  useEffect(() => {
+    setDescription(user?.description)
+  }, [changeFlag])
+  useEffect(() => {
+    setDescription(getLocalStorage('user').description)
+    setMetaFlag(true)
+  }, [saveFlag])
 
   return (
     <div className="snap-fullPage relative mx-auto flex flex-col items-start gap-4 sm:items-center lg:justify-center lg:gap-0">
@@ -28,7 +42,86 @@ function AboutTutor({ user, tutor }) {
       {/* mainContainer For lg deivces */}
       <main className="mt-3 hidden flex-wrap-reverse items-center justify-center gap-8 lg:flex">
         <Video videoURL={tutor?.video_url} />
-        <Description user={user} tutor={tutor} setOpenPopUp={setOpenPopUp} />
+        {/* <Description
+          changeFlag={changeFlag}
+          setChangeFlag={setChangeFlag}
+          user={user}
+          tutor={tutor}
+          setOpenPopUp={setOpenPopUp}
+        /> */}
+        <div className="flex h-full w-full flex-col items-end  gap-3 font-roboto sm:w-[467px]">
+          {/* TimeSlot PopUp */}
+
+          {/* Edit Button */}
+          {user?._id == tutor?._id ? (
+            <button
+              onClick={() => {
+                setSaveFlag(true)
+                setOpenPopUp({ ...false, DescriptionPopUp: true })
+              }}
+              className="flex items-center justify-center gap-3 font-semibold text-[#FC4D6D]"
+            >
+              <span className="w-5">
+                <PencilIcon />
+              </span>
+              <p>Edit Description</p>
+            </button>
+          ) : (
+            <div className="h-4"></div>
+          )}
+
+          {/* Description */}
+          <article className="flex flex-col items-center justify-between gap-2 self-start font-medium capitalize tracking-wider text-[#858585]">
+            {console.log('tutor is ', tutor)}
+            {saveFlag ? (
+              description
+            ) : tutor?._id === user._id && user?.description ? (
+              <p>{`${description}`}</p>
+            ) : tutor?._id !== user._id && tutor?.description ? (
+              <p>{`${description}`}</p>
+            ) : tutor?._id !== user._id && tutor?.description ? (
+              <p>{`${description}`}</p>
+            ) : (
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dapibus
+                dignissim elit rutrum cras tincidunt. Aliquet quis et, elit
+                ultricies aliquam. Pulvinar sagittis enim, id amet cursus amet.
+                Lectus auctor velit vitae commodo. Tincidunt senectus tincidunt
+                ac et pellentesque turpis nulla morbi.
+              </p>
+            )}
+          </article>
+
+          {/* Buttons */}
+          <div className="mt-auto flex w-full items-center justify-between font-poppins sm:justify-evenly">
+            {user.role !== 'STUDENT' ? (
+              <>
+                <button
+                  // href={`/book/${tutor?._id}`}
+                  // onClick={() => {
+                  //   setSelectedTutor(tutor?._id)
+                  //   // alert(tutor._id)
+                  //   setOpenPopUp && setOpenPopUp({ ...false, calendarPopUp: true })
+                  // }}
+                  onClick={() => {
+                    let obj = {
+                      _id: tutor?._id,
+                      tutor_timezone: tutor?.timezone,
+                    }
+                    setLocalStorage('book_tutor', obj)
+                    Router.push('/book')
+                  }}
+                  className="flex h-[45px] w-[205px] items-center justify-center rounded-full bg-[#FC4D6D] text-center font-bold tracking-wider text-white shadow-xl"
+                >
+                  Book Trial Session
+                </button>
+                <p className="font-semibold text-[#565656]">Rs.999/hr</p>
+              </>
+            ) : (
+              ''
+            )}
+          </div>
+        </div>
       </main>
 
       {/* mainContainer For lg deivces */}
@@ -50,7 +143,8 @@ function AboutTutor({ user, tutor }) {
       {openPopUp.DescriptionPopUp && (
         <div className="absolute flex h-full w-full items-center justify-center bg-gray-500/50">
           <DescriptionPopUp
-          // reload={setReload}
+            setChangeFlag={setChangeFlag}
+            // reload={setReload}
           />
         </div>
       )}
@@ -97,27 +191,27 @@ function ThreeLine() {
 
 // for lg devices
 function Video({ videoURL }) {
-  const [isPlaying, setIsPlaying] = useState(videoURL ? true : false);
-  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(videoURL ? true : false)
+  const videoRef = useRef(null)
   // const videoURL = '/video.mp4';
   // const videoURL = 'https://www.youtube.com/embed/8PNukAAZnK0';
 
   useEffect(() => {
-    if (isPlaying) videoRef?.current?.play();
+    if (isPlaying) videoRef?.current?.play()
   }, [isPlaying])
 
   return (
     <div className=" mx-auto  flex h-auto w-full  flex-col gap-4 sm:w-[467px] md:w-auto ">
       <div className="  md:white-linear-gradient h-[302px] rounded-lg  bg-gradient-to-r from-[#FD4E6D]  to-[#FDA02F] p-1.5 sm:h-[302px] sm:w-[467px] md:rounded-xl  ">
         <div className="relative order-2 flex h-full w-full  items-center justify-center   overflow-hidden   rounded-xl  md:order-1     ">
-          {videoURL && (
-            // for youtube videos 
-            videoURL?.includes("youtube") ? (
+          {videoURL &&
+            // for youtube videos
+            (videoURL?.includes('youtube') ? (
               <iframe
                 src={videoURL}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                className='w-full h-full rounded-lg'
+                className="h-full w-full rounded-lg"
                 allowFullScreen
               />
             ) : (
@@ -127,8 +221,8 @@ function Video({ videoURL }) {
                   ref={videoRef}
                   src={videoURL}
                   // src='/video.mp4'
-                  className='w-full h-full bg-transparent'
-                  preload='true'
+                  className="h-full w-full bg-transparent"
+                  preload="true"
                   loop
                   controls
                 />
@@ -136,7 +230,8 @@ function Video({ videoURL }) {
                 {!isPlaying && (
                   <>
                     <div className="white-linear-gradient absolute  bottom-0" />
-                    <div className='absolute'
+                    <div
+                      className="absolute"
                       onClick={() => setIsPlaying(true)}
                     >
                       <div className=" relative z-10 h-16 w-16 transition-all delay-150  ease-in-out hover:scale-[1.2] md:h-[76.67px] md:w-[76.67px]">
@@ -151,15 +246,17 @@ function Video({ videoURL }) {
 
                     <div className="absolute  bottom-[15px] hidden flex-col  justify-center gap-[14px] md:flex">
                       <div className=" flex justify-center gap-2 ">
-                        {Array.from(Array(5), (index) => index + 1).map((index) => (
-                          <Image
-                            key={index}
-                            src={'/Images/TutorProfile/svg/yellow-star.svg'}
-                            height={19.38}
-                            width={19.03}
-                            alt=""
-                          />
-                        ))}
+                        {Array.from(Array(5), (index) => index + 1).map(
+                          (index) => (
+                            <Image
+                              key={index}
+                              src={'/Images/TutorProfile/svg/yellow-star.svg'}
+                              height={19.38}
+                              width={19.03}
+                              alt=""
+                            />
+                          )
+                        )}
                       </div>
                       <div className=" text-center font-poppins text-[14px] font-[600] text-[#5F5F5F]  ">
                         ( 36 reviews )
@@ -169,8 +266,6 @@ function Video({ videoURL }) {
                 )}
               </>
             ))}
-
-
         </div>
       </div>
 
@@ -183,26 +278,25 @@ function Video({ videoURL }) {
 
 // for md and sm devices
 function VideoPhone({ videoURL }) {
-  const [isPlaying, setIsPlaying] = useState(videoURL ? true : false);
-  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(videoURL ? true : false)
+  const videoRef = useRef(null)
 
   useEffect(() => {
-    if (isPlaying) videoRef?.current?.play();
+    if (isPlaying) videoRef?.current?.play()
   }, [isPlaying])
 
   return (
     <div className="mx-auto flex h-auto w-full flex-col gap-4 sm:w-[467px] md:w-auto ">
       <div className="md:white-linear-gradient h-[250px] rounded-lg bg-gradient-to-r from-[#FD4E6D]  to-[#FDA02F] p-1.5 sm:w-[467px] md:h-[302px] md:rounded-xl  ">
         <div className="relative order-2 flex h-full w-full  items-center justify-center   overflow-hidden   rounded-xl  md:order-1">
-
-          {videoURL && (
-            // for youtube videos 
-            videoURL?.includes("youtube") ? (
+          {videoURL &&
+            // for youtube videos
+            (videoURL?.includes('youtube') ? (
               <iframe
                 src={videoURL}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                className='w-full h-full rounded-lg'
+                className="h-full w-full rounded-lg"
                 allowFullScreen
               />
             ) : (
@@ -212,8 +306,8 @@ function VideoPhone({ videoURL }) {
                   ref={videoRef}
                   src={videoURL}
                   // src='/video.mp4'
-                  className='w-full h-full bg-transparent'
-                  preload='true'
+                  className="h-full w-full bg-transparent"
+                  preload="true"
                   loop
                   controls
                 />
@@ -221,7 +315,8 @@ function VideoPhone({ videoURL }) {
                 {!isPlaying && (
                   <>
                     <div className="white-linear-gradient absolute  bottom-0" />
-                    <div className='absolute'
+                    <div
+                      className="absolute"
                       onClick={() => setIsPlaying(true)}
                     >
                       <div className=" relative z-10 h-16 w-16 transition-all delay-150  ease-in-out hover:scale-[1.2] md:h-[76.67px] md:w-[76.67px]">
@@ -236,15 +331,17 @@ function VideoPhone({ videoURL }) {
 
                     <div className="absolute  bottom-[15px] hidden flex-col  justify-center gap-[14px] md:flex">
                       <div className=" flex justify-center gap-2 ">
-                        {Array.from(Array(5), (index) => index + 1).map((index) => (
-                          <Image
-                            key={index}
-                            src={'/Images/TutorProfile/svg/yellow-star.svg'}
-                            height={19.38}
-                            width={19.03}
-                            alt=""
-                          />
-                        ))}
+                        {Array.from(Array(5), (index) => index + 1).map(
+                          (index) => (
+                            <Image
+                              key={index}
+                              src={'/Images/TutorProfile/svg/yellow-star.svg'}
+                              height={19.38}
+                              width={19.03}
+                              alt=""
+                            />
+                          )
+                        )}
                       </div>
                       <div className=" text-center font-poppins text-[14px] font-[600] text-[#5F5F5F]  ">
                         ( 36 reviews )
@@ -264,13 +361,24 @@ function VideoPhone({ videoURL }) {
   )
 }
 
-const Description = ({ user, tutor }) => {
+const Description = ({ user, tutor, changeFlag, setChangeFlag }) => {
   // const [description, setDescription] = useState(tutor?.description)
   // if (user._id === tutor._id) {
   //   setDescription(getLocalStorage('user').description)
   // }
   const [openPopUp, setOpenPopUp] = useRecoilState(openPopUps)
   const [selectedTutorData, setSelectedTutor] = useRecoilState(selectedTutor)
+  const [saveFlag, setSaveFlag] = useState(false)
+  const [metaFlag, setMetaFlag] = useState(false)
+  const [description, setDescription] = useState('')
+
+  useEffect(() => {
+    setDescription(user?.description)
+  }, [changeFlag])
+  useEffect(() => {
+    setDescription(getLocalStorage('user').description)
+    setMetaFlag(true)
+  }, [saveFlag])
 
   return (
     <div className="flex h-full w-full flex-col items-end  gap-3 font-roboto sm:w-[467px]">
@@ -279,7 +387,10 @@ const Description = ({ user, tutor }) => {
       {/* Edit Button */}
       {user?._id == tutor?._id ? (
         <button
-          onClick={() => setOpenPopUp({ ...false, DescriptionPopUp: true })}
+          onClick={() => {
+            setSaveFlag(true)
+            setOpenPopUp({ ...false, DescriptionPopUp: true })
+          }}
           className="flex items-center justify-center gap-3 font-semibold text-[#FC4D6D]"
         >
           <span className="w-5">
@@ -294,12 +405,14 @@ const Description = ({ user, tutor }) => {
       {/* Description */}
       <article className="flex flex-col items-center justify-between gap-2 self-start font-medium capitalize tracking-wider text-[#858585]">
         {console.log('tutor is ', tutor)}
-        {tutor?._id === user._id && user?.description ? (
-          <p>{`${user.description}`}</p>
+        {saveFlag ? (
+          description
+        ) : tutor?._id === user._id && user?.description ? (
+          <p>{`${description}`}</p>
         ) : tutor?._id !== user._id && tutor?.description ? (
-          <p>{`${tutor.description}`}</p>
+          <p>{`${description}`}</p>
         ) : tutor?._id !== user._id && tutor?.description ? (
-          <p>{`${tutor.description}`}</p>
+          <p>{`${description}`}</p>
         ) : (
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dapibus
