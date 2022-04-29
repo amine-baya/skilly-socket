@@ -190,7 +190,6 @@ function TimeAvailability() {
     )
     if (user_update.success) {
       console.log(payload)
-      set
       updateUser({ ...payload }, () => {
         Router.push('/tutorDashboard/myprofile/photo')
       })
