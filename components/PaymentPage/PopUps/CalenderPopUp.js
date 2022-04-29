@@ -80,13 +80,16 @@ const CalenderPopUp = ({ link, stage, setStage, edit, setEdit }) => {
     console.log(initialDate, ' - ', lastDate)
 
     // /slot?student_timezone=Asia/Kolkata&tutor_timezone=Pacific/Fiji&tutor_id=625812ecd49b556dd4b2d77b&start_date=2022-04-19&end_date=2022-04-22
-    const studentTimezone = getLocalStorage('user').timezone
+    let studentTimezone = getLocalStorage('user').timezone
     // console.log('student timezone is - ', studentTimezone)
-    if (!tutorTimezone || !studentTimezone) {
+    if (!tutorTimezone) {
+      console.log('NO tutor timezone')
+      console.log('CALENDER WILL NOT LOAD')
       return
     }
+    // if(!stu)
     Server.get(
-      `${baseUrl}/slot?student_timezone=${studentTimezone}&tutor_timezone=${tutorTimezone}&tutor_id=${tutor}&start_date=${initialDate}&end_date=${lastDate}`
+      `${baseUrl}/slot?student_timezone=${'America/Los_Angeles'}&tutor_timezone=${tutorTimezone}&tutor_id=${tutor}&start_date=${initialDate}&end_date=${lastDate}`
     ).then((response) => {
       const resp = response.data
       setLocalStorage('temp_slots', resp)
