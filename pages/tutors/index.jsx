@@ -42,7 +42,7 @@ const Tutors = () => {
       })
 
       if (res && res.data && res.data.success) {
-        // console.log(res.data.data.hits, 'res.data.data.hits')
+        // console.log(res.data.data, 'res.data.data.hits')
         setTutorData(res.data.data.hits)
         setTotalCount(res.data.data.out_of)
         setCount(res.data.data.found)
@@ -58,9 +58,6 @@ const Tutors = () => {
       {tutorData
         ? tutorData.map(function (dd, key) {
             let _obj = countryList.find((o) => o.name === dd.country)
-            // console.log(_obj)
-            // console.log(dd)
-            // console.log(`${baseUrlProfilePic}${dd.profile_img}`)
             return (
               // <Link href={'/tutors'} passHref key={key}>
               <>
