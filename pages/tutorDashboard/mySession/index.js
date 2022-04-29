@@ -82,7 +82,7 @@ function MySession() {
         <h1 className="font-bold text-[#FC4D6D]">archived Sessions</h1>
       </div>
 
-      <main className="flex flex-wrap items-center justify-center gap-[2rem] md:justify-between">
+      <main className="flex flex-wrap items-center justify-center gap-[2rem] lg:justify-evenly">
         {/* card Session */}
         {allSessions?.map((d, i) => {
           return <Card key={i} data={d} />
@@ -92,7 +92,9 @@ function MySession() {
   )
 }
 
-export default MySession
+export default MySession;
+
+
 const Card = ({ data }) => {
   const [date, setDate] = useState(new Date())
   const [isToday, setIsToday] = useState(false)
@@ -126,6 +128,7 @@ const Card = ({ data }) => {
 
     return () => clearInterval(_timer)
   }, [date])
+
   return (
     <div className="h-[475px] w-full rounded-2xl bg-white p-4 shadow-lg sm:w-[380px]">
       <div className="mb-2 flex flex-col gap-[11px]">
@@ -135,9 +138,9 @@ const Card = ({ data }) => {
           ).getTime() -
             new Date().getTime() <
             1000 * 60 * 60 * 6 &&
-          new Date(
-            `${data.tutor_time.day_raw} ${data.tutor_time.from}`
-          ).getTime() -
+            new Date(
+              `${data.tutor_time.day_raw} ${data.tutor_time.from}`
+            ).getTime() -
             new Date().getTime() >
             0 ? (
             <>
@@ -180,7 +183,7 @@ const Card = ({ data }) => {
           {/* tutor */}
           <Link href={`/tutors/${data?.tutor_id}`}>
             <div className="relative mb-5 flex cursor-pointer items-center justify-start gap-2">
-              <div className="relative h-10 w-10 rounded-full">
+              <div className="relative h-12 w-12 rounded-full overflow-hidden">
                 <Image
                   src={`${baseUrlProfilePic}${data?.student_details.profile_img}`}
                   alt="tutor"
@@ -193,7 +196,7 @@ const Card = ({ data }) => {
               </label>
             </div>
           </Link>
-          <p className="cursor-pointer justify-self-end font-medium text-[#3F97FF]">
+          <p className="cursor-pointer justify-self-end font-medium text-[#3F97FF] pt-3">
             Message
           </p>
 
@@ -241,20 +244,20 @@ const Card = ({ data }) => {
             `${data.tutor_time.day_raw} ${data.tutor_time.from}`
           ).getTime() -
             new Date().getTime() >
-          1000 * 60 * 60 * 6 ? (
+            1000 * 60 * 60 * 6 ? (
             <button className=" w-full rounded-2xl bg-[#FC4D6D]  py-5 text-2xl font-bold capitalize text-white">
               Reschedule
             </button>
           ) : new Date(
-              `${data.tutor_time.day_raw} ${data.tutor_time.from}`
-            ).getTime() -
-              new Date().getTime() <
-              1000 * 60 * 5 &&
+            `${data.tutor_time.day_raw} ${data.tutor_time.from}`
+          ).getTime() -
+            new Date().getTime() <
+            1000 * 60 * 5 &&
             new Date(
               `${data.tutor_time.day_raw} ${data.tutor_time.from}`
             ).getTime() -
-              new Date().getTime() >
-              0 ? (
+            new Date().getTime() >
+            0 ? (
             <button
               className=" w-full cursor-not-allowed rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-gray-300	"
               onClick={() => {
@@ -264,9 +267,9 @@ const Card = ({ data }) => {
               Join Meeting
             </button>
           ) : new Date(
-              `${data.student_time.day_raw} ${data.student_time.to}`
-            ).getTime() -
-              new Date().getTime() >
+            `${data.student_time.day_raw} ${data.student_time.to}`
+          ).getTime() -
+            new Date().getTime() >
             0 ? (
             <button
               className=" w-full rounded-2xl bg-[#FC4D6D] py-5 text-2xl font-bold capitalize text-gray-300	"
