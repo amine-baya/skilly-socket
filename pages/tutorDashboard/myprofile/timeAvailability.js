@@ -67,6 +67,7 @@ function TimeAvailability() {
         console.log(err)
       })
   }, [])
+
   useEffect(() => {
     if (user.availability) {
       let _in = {}
@@ -84,6 +85,7 @@ function TimeAvailability() {
     } else {
       setFlag(true)
     }
+
     if (user.timezone) {
       setCurrentTimezone(user.timezone)
     }
@@ -91,11 +93,6 @@ function TimeAvailability() {
   }, [user])
 
   const [timezone, setTimezone] = useState('America/Los_Angeles')
-
-  // useEffect(() => {
-  //   axios.put('http://65.0.176.119:5087/tutor/update/time-availability', JSON.stringify(availability), { headers: { 'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjUzZGNjM2Q1YTVkNTFmMGEyOWU4ZjEiLCJyb2xlIjoiVFVUT1IiLCJpYXQiOjE2NDk2NjQ4NzUsImV4cCI6MTY0OTgzNzY3NX0.MV0gw0EWZQmLk2tGl97lCCwakbrcZSgK0Jfq9mSoxpA' } })
-  //     .then(response => console.log(response)).catch((e) => console.log(e));
-  // }, [availability])
 
   const onSubmit = async (value) => {
     const availability = []
@@ -221,7 +218,7 @@ function TimeAvailability() {
 
                   <p className="mt-9 mb-6 font-semibold">
                     {' '}
-                    Choose Your Timezone{' '}
+                    Choose Your Timezone{' '}<span className='text-red-500'>*</span>
                   </p>
 
                   <Field
@@ -306,8 +303,8 @@ function TimeAvailability() {
                       Skip For Now
                     </button>
                   </div> */}
-                  <div className="">
-                    <button className=" w-auto rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-7 py-1 text-lg font-medium text-white md:col-span-2 md:mt-0 md:w-full ">
+                  <div className='flex w-full items-end justify-end sm:pr-12 pb-6 pr-6'>
+                    <button className="rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-7 py-1 text-lg font-medium text-white md:col-span-2 md:mt-0">
                       Next
                     </button>
                   </div>
