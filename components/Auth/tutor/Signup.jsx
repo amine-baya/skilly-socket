@@ -69,7 +69,7 @@ const SignUp = (props) => {
             </div>
           </div>
 
-          <div className="absolute z-20 hidden h-full w-[65vw] sm:block">
+          <div className="absolute hidden h-full w-[65vw] sm:block">
             <div className="m-[80px]">
               <div>
                 <span className="bg-gradient-to-r from-[#feae78] to-[#f94161] bg-clip-text text-5xl font-bold tracking-widest text-transparent">
@@ -173,7 +173,7 @@ const SignUp = (props) => {
                   <span>Forgot Password ?</span>
                   <NavLink href="/auth/tutor/login" passHref>
                     <span className="cursor-pointer hover:text-pink">
-                      Already Have an account? Log In
+                      Already have an account? Log In
                     </span>
                   </NavLink>
                 </div>

@@ -53,6 +53,12 @@ function BasicDetails() {
       let _tmp = countryList.findIndex((it) => it.name == user_data.country)
       setCurrent(_tmp)
     }
+
+    if (!user_data.country) {
+      let _tmp = countryList.findIndex((it) => it.name == 'United States')
+      setCurrent(_tmp);
+    }
+
   }, [user_data])
 
   useEffect(() => {
