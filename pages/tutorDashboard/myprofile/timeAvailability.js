@@ -11,7 +11,6 @@ import Server from '../../../utils/Server'
 function TimeAvailability() {
   const [user, setUser] = useState({})
   const [flag, setFlag] = useState(false) // turns true when all data is loaded from localstorage
-  const [currentTimezone, setCurrentTimezone] = useState('')
   const [initialValues, setInitialValues] = useState({
     monday: [
       {
@@ -56,6 +55,8 @@ function TimeAvailability() {
       },
     ],
   })
+  const [timezone, setTimezone] = useState('America/Los_Angeles')
+
   // console.log(initialValues)
   useEffect(() => {
     Server.get(`${baseUrl}/tutor/profile`)
@@ -87,12 +88,11 @@ function TimeAvailability() {
     }
 
     if (user.timezone) {
-      setCurrentTimezone(user.timezone)
+      setTimezone(user.timezone)
     }
     console.log('availability is ', initialValues)
   }, [user])
 
-  const [timezone, setTimezone] = useState('America/Los_Angeles')
 
   const onSubmit = async (value) => {
     const availability = []
@@ -224,7 +224,7 @@ function TimeAvailability() {
                   <Field
                     as="select"
                     name="timezone"
-                    className="w-7/12 rounded-[10px] border border-[#C1C1C1] px-5 py-3 text-[#9E9E9E]"
+                    className="w-7/12 rounded-[10px] border border-[#C1C1C1] px-5 py-3 text-[#383838] font-medium"
                     onChange={(e) => setTimezone(e.target.value)}
                   >
                     {timezoneList.map((val, index) => {
