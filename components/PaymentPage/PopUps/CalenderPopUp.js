@@ -80,7 +80,7 @@ const CalenderPopUp = ({ link, stage, setStage, edit, setEdit }) => {
     console.log(initialDate, ' - ', lastDate)
 
     // /slot?student_timezone=Asia/Kolkata&tutor_timezone=Pacific/Fiji&tutor_id=625812ecd49b556dd4b2d77b&start_date=2022-04-19&end_date=2022-04-22
-    const studentTimezone = getLocalStorage('user').timezone || 'Asia/Kolkata'
+    const studentTimezone = getLocalStorage('user').timezone
     // console.log('student timezone is - ', studentTimezone)
     if (!tutorTimezone || !studentTimezone) {
       return

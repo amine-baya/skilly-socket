@@ -39,7 +39,7 @@ const PaymentProfileContainer = ({
 
   useEffect(() => {
     if (tutorData?.subjects_and_pricing) {
-      setFees(tutorData?.subjects_and_pricing[0].price)
+      setFees(tutorData?.subjects_and_pricing[0]?.price)
     }
   }, [tutorData])
   useEffect(() => {

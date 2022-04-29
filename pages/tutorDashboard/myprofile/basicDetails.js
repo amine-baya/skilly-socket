@@ -99,7 +99,7 @@ function BasicDetails() {
   console.log('user data - ', user_data)
 
   const initialValues = {
-    country: user_data.country ? user_data.country : '',
+    country: user_data.country ? user_data.country : 'United States',
     native_language: user_data.native_language ? user_data.native_language : '',
     english_fluency: user_data.english_fluency ? user_data.english_fluency : '',
     other_languages:
@@ -108,26 +108,26 @@ function BasicDetails() {
         : [],
     subjects_and_pricing:
       user_data.subjects_and_pricing &&
-        user_data.subjects_and_pricing.length > 0
+      user_data.subjects_and_pricing.length > 0
         ? user_data.subjects_and_pricing
         : [
-          {
-            subject: '-',
-            price: '0',
-            currency_format: 'USD',
-          },
-        ],
+            {
+              subject: '-',
+              price: '0',
+              currency_format: 'USD',
+            },
+          ],
     qualifications:
       user_data.qualifications && user_data.qualifications[0]
         ? user_data.qualifications
         : [
-          {
-            qualification_type: '',
-            qualification_title: '',
-            qualification_duration_from: '',
-            qualification_duration_to: '',
-          },
-        ],
+            {
+              qualification_type: '',
+              qualification_title: '',
+              qualification_duration_from: '',
+              qualification_duration_to: '',
+            },
+          ],
     teachs: [
       {
         fee: '',
@@ -213,6 +213,7 @@ function BasicDetails() {
                           changestyle="border-2 border-[#C1C1C1] rounded-[10px] "
                           flag="left"
                           update={setCountryData}
+                          _value={countryData}
                         />
                       )}
                     </div>
@@ -511,13 +512,31 @@ function BasicDetails() {
                                   name={`qualifications.${index}.qualification_duration_from`}
                                   className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
                                   type="month"
-                                  value={values.qualifications[index].qualification_duration_from.split('-')[0] + "-" + values.qualifications[index].qualification_duration_from.split('-')[1]}
+                                  value={
+                                    values.qualifications[
+                                      index
+                                    ].qualification_duration_from.split(
+                                      '-'
+                                    )[0] +
+                                    '-' +
+                                    values.qualifications[
+                                      index
+                                    ].qualification_duration_from.split('-')[1]
+                                  }
                                 ></Field>
                                 <Field
                                   name={`qualifications.${index}.qualification_duration_to`}
                                   className="w-full rounded-[10px] border-2 border-[#C1C1C1] p-2"
                                   type="month"
-                                  value={values.qualifications[index].qualification_duration_to.split('-')[0] + "-" + values.qualifications[index].qualification_duration_to.split('-')[1]}
+                                  value={
+                                    values.qualifications[
+                                      index
+                                    ].qualification_duration_to.split('-')[0] +
+                                    '-' +
+                                    values.qualifications[
+                                      index
+                                    ].qualification_duration_to.split('-')[1]
+                                  }
                                 ></Field>
                               </div>
                             </div>
