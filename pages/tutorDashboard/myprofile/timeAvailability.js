@@ -4,7 +4,7 @@ import { Field, FieldArray, Form, Formik } from 'formik'
 import FormikControl from '../../../components/Utils/FormikComponents/FormikControl'
 import { getLocalStorage, updateUser } from '../../../utils/cookies'
 // import TimeAvailabilityCard from '../../../components/Utils/FormikComponents/TimeAvailabilityCard'
-import { timezoneList } from '../../../utils/constants'
+import { timezoneList, baseUrl } from '../../../utils/constants'
 import axios from 'axios'
 import Server from '../../../utils/Server'
 
@@ -58,8 +58,14 @@ function TimeAvailability() {
   })
   // console.log(initialValues)
   useEffect(() => {
-    const user = getLocalStorage('user')
-    setUser(user)
+    Server.get(`${baseUrl}/tutor/profile`)
+      .then((res) => {
+        const user = res.data
+        setUser(user)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }, [])
   useEffect(() => {
     if (user.availability) {
@@ -184,6 +190,7 @@ function TimeAvailability() {
     )
     if (user_update.success) {
       console.log(payload)
+      set
       updateUser({ ...payload }, () => {
         Router.push('/tutorDashboard/myprofile/photo')
       })
@@ -225,7 +232,7 @@ function TimeAvailability() {
                     onChange={(e) => setTimezone(e.target.value)}
                   >
                     {timezoneList.map((val, index) => {
-                      if (currentTimezone === val) {
+                      if (timezone === val) {
                         return (
                           <option key={index} value={val} selected="selected">
                             {val}
