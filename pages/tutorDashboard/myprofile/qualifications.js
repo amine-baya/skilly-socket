@@ -57,8 +57,8 @@ const Qualifications = () => {
   }
 
   return (
-    <div className=" h1wi h1wi bg-white sm:rounded-2xl lg:ml-[30px] lg:mt-[34px] lg:mb-[30px]">
-      <h1 className=" p-5  text-3xl font-semibold text-[#3d3d3d]  xl:px-12  ">
+    <div className="bg-white sm:rounded-2xl lg:ml-[30px] lg:mt-[34px] lg:mb-[30px]">
+      <h1 className=" p-5 text-3xl font-semibold text-[#3d3d3d] xl:px-12">
         Qualifications
       </h1>
       <hr className="text-[#E2E2E2]  " />
