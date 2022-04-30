@@ -31,7 +31,8 @@ const DescriptionPopUp = ({ setChangeFlag }) => {
           // setOpenPopUp(false)
           // setTutor(data.data)
           setOpenPopUp && setOpenPopUp({ ...false })
-          setChangeFlag(true)
+          // setChangeFlag(true)
+          window.location.reload()
         })
     }
   }, [update])

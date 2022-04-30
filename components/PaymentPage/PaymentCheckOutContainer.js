@@ -12,6 +12,7 @@ const PaymentCheckOutContainer = () => {
 
   const [stage, setStage] = useState(0)
   const [edit, setEdit] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   console.log(totalSelectedTimes)
 
@@ -26,16 +27,18 @@ const PaymentCheckOutContainer = () => {
         setStage={setStage}
         edit={edit}
         setEdit={setEdit}
+        loading={loading}
+        setLoading={setLoading}
       />
-      {stage === 2 && (
-        <PaymentProfileContainer
-          setOpenPopUp={setOpenPopUp}
-          totalSelectedTimes={totalSelectedTimes}
-          openPopUp={openPopUp}
-          stage={stage}
-          setEdit={setEdit}
-        />
-      )}
+      <PaymentProfileContainer
+        setOpenPopUp={setOpenPopUp}
+        totalSelectedTimes={totalSelectedTimes}
+        openPopUp={openPopUp}
+        stage={stage}
+        setEdit={setEdit}
+        setLoading={setLoading}
+        loading={loading}
+      />
     </div>
   )
 }

@@ -28,7 +28,15 @@ import { baseUrl } from 'utils/constants'
 import Server from 'utils/Server'
 import { getLocalStorage, setLocalStorage } from 'utils/cookies'
 
-const CalenderPopUp = ({ link, stage, setStage, edit, setEdit }) => {
+const CalenderPopUp = ({
+  link,
+  stage,
+  setStage,
+  edit,
+  setEdit,
+  loading,
+  setLoading,
+}) => {
   const TOKEN = getCookie('token')
     ? JSON.parse(getCookie('token')).access_token
     : false
@@ -203,6 +211,7 @@ const CalenderPopUp = ({ link, stage, setStage, edit, setEdit }) => {
   const handleCheck = () => {
     console.log('so far selected timings are - ', selectedTimes)
     console.log('tutor id is - ', tutor)
+    setLoading(true)
     Server.post(
       `${baseUrl}/slot/check`,
       {
@@ -219,6 +228,7 @@ const CalenderPopUp = ({ link, stage, setStage, edit, setEdit }) => {
     )
       .then((response) => {
         console.log(response)
+        setLoading(false)
         if (response.success) {
           setStage(1)
         }
@@ -237,6 +247,7 @@ const CalenderPopUp = ({ link, stage, setStage, edit, setEdit }) => {
   const handleConfirm = () => {
     console.log('so far selected timings are - ', selectedTimes)
     console.log('tutor id is - ', tutor)
+    setLoading(true)
     Server.post(
       `${baseUrl}/slot/confirm`,
       {
@@ -252,11 +263,13 @@ const CalenderPopUp = ({ link, stage, setStage, edit, setEdit }) => {
     )
       .then((response) => {
         console.log(response)
+        setLoading(false)
         if (response.success) {
           setStage(2)
         }
       })
       .catch((err) => {
+        setLoading(false)
         console.log(err)
         const clashed = err.data.data.unavailable_slots.map((item) => {
           return item.id
@@ -271,17 +284,20 @@ const CalenderPopUp = ({ link, stage, setStage, edit, setEdit }) => {
   const createMeetings = () => {
     //TODO Update the tutor and student id here
     // console.log({ tutor })
+    setLoading(true)
     Server.post(`${baseUrl}/booking/create`, {
       selectedTimes,
       tutor: tutor,
     })
       .then((res) => {
         console.log(res.data)
+        setLoading(false)
         // alert('submitted')
         Router.push('/studentDashboard/mySession')
       })
       .catch((err) => {
         console.log({ err })
+        setLoading(false)
         const clashed = err.response.data.message.clashedTimings.map((item) => {
           return item.id
         })

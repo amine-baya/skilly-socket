@@ -14,6 +14,8 @@ const PopUpContainer = ({
   setStage,
   edit,
   setEdit,
+  loading,
+  setLoading,
 }) => {
   return (
     <div className="h-[594px] w-[406px] rounded-3xl bg-[#FFFFFF] shadow-md sm:h-[683px] sm:w-[521px]">
@@ -25,6 +27,8 @@ const PopUpContainer = ({
           setTotalSelectedTimes={setTotalSelectedTimes}
           edit={edit}
           setEdit={setEdit}
+          loading={loading}
+          setLoading={setLoading}
         />
       )}
 

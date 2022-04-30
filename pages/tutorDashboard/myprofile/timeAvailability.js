@@ -99,79 +99,134 @@ function TimeAvailability() {
 
   const onSubmit = async (value) => {
     const availability = []
-    // console.log('start')
-    // for (const key in value) {
-    //   const result = value[key].filter((val) => val.from && val.to)
-    //   if (result.length > 0) {
-    //     //
-    //     let _result = []
-    //     console.log('RESULT - ', result)
-    //     for (var i = 0; i < result.length; i++) {
-    //       let _from = parseInt(result[i].from.slice(0, 2))
-    //       let _from_min = result[i].from.slice(3, 5)
-    //       let _to = parseInt(result[i].to.slice(0, 2))
-    //       let _to_min = result[i].to.slice(3, 5)
-    //       if (_to - _from > 1 && _from_min === _to_min) {
-    //         console.log(_from + ' ' + _to)
-    //         let _tmp = []
-    //         for (var j = _from; j < _to; j++) {
-    //           if (j < 10) {
-    //             let from = '0' + String(j) + ':' + _from_min
-    //             let to = ''
-    //             if (j < 9) {
-    //               to = '0' + String(j + 1) + ':' + _from_min
-    //             } else {
-    //               to = String(j + 1) + ':' + _from_min
-    //             }
-    //             _tmp.push({ from, to })
-    //           } else {
-    //             let from = String(j) + ':' + _from_min
-    //             let to = String(j + 1) + ':' + _from_min
-    //             _tmp.push({ from, to })
-    //           }
-    //         }
-    //         _result.concat(_tmp.slice())
-    //         console.log('magic is ', _tmp)
-    //       } else if (_to - _from > 1 && _from_min !== _to_min) {
-    //         if (_to_min === '00') {
-    //           _to -= 1
-    //         }
-    //         console.log(_from + ' ' + _to)
-    //         let _tmp = []
-    //         for (var j = _from; j < _to; j++) {
-    //           if (j < 10) {
-    //             let from = '0' + String(j) + ':' + _from_min
-    //             let to = ''
-    //             if (j < 9) {
-    //               to = '0' + String(j + 1) + ':' + _from_min
-    //             } else {
-    //               to = String(j + 1) + ':' + _from_min
-    //             }
-    //             _tmp.push({ from, to })
-    //           } else {
-    //             let from = String(j) + ':' + _from_min
-    //             let to = String(j + 1) + ':' + _from_min
-    //             _tmp.push({ from, to })
-    //           }
-    //         }
-    //         _result.concat(_tmp.slice())
-    //         console.log('magic is ', _tmp)
-    //       } else {
-    //         _result.concat(result[i])
-    //       }
-    //     }
-    //     availability.push({ day: key, slots: _result })
-    //     // console.log(result)
-    //   }
-    // }
-    // console.log('outptut is - ', availability)
-    // return
+    console.log('start')
     for (const key in value) {
       const result = value[key].filter((val) => val.from && val.to)
       if (result.length > 0) {
-        availability.push({ day: key, slots: result })
+        //
+        let _result = []
+        console.log('RESULT - ', result)
+        for (var i = 0; i < result.length; i++) {
+          let _from = parseInt(result[i].from.slice(0, 2))
+          let _from_min = result[i].from.slice(3, 5)
+          let _to = parseInt(result[i].to.slice(0, 2))
+          let _to_min = result[i].to.slice(3, 5)
+          if (_to - _from > 1 && _from_min === _to_min) {
+            console.log(_from + ' ' + _to)
+            let _tmp = []
+            for (var j = _from; j < _to; j++) {
+              if (j < 10) {
+                let from = '0' + String(j) + ':' + _from_min
+                let to = ''
+                if (j < 9) {
+                  to = '0' + String(j + 1) + ':' + _from_min
+                } else {
+                  to = String(j + 1) + ':' + _from_min
+                }
+                _tmp.push({ from, to })
+              } else {
+                let from = String(j) + ':' + _from_min
+                let to = String(j + 1) + ':' + _from_min
+                _tmp.push({ from, to })
+              }
+            }
+            _result = [..._result, ..._tmp]
+            // _result.push(_tmp.slice())
+            console.log('magic is ', _tmp)
+          } else if (_to - _from > 1 && _from_min !== _to_min) {
+            if (_to_min === '00') {
+              _to -= 1
+            }
+            console.log(_from + ' ' + _to)
+            let _tmp = []
+            for (var j = _from; j < _to; j++) {
+              if (j < 10) {
+                let from = '0' + String(j) + ':' + _from_min
+                let to = ''
+                if (j < 9) {
+                  to = '0' + String(j + 1) + ':' + _from_min
+                } else {
+                  to = String(j + 1) + ':' + _from_min
+                }
+                _tmp.push({ from, to })
+              } else {
+                let from = String(j) + ':' + _from_min
+                let to = String(j + 1) + ':' + _from_min
+                _tmp.push({ from, to })
+              }
+            }
+            _result = [..._result, ..._tmp]
+            // _result.concat(_tmp.slice())
+            console.log('magic is ', _tmp)
+          } else {
+            if (
+              (_from === _to && _from_min === '00' && _to_min === '30') ||
+              (_from === _to - 1 && _from_min === '30' && _to_min === '00')
+            ) {
+              console.log('cannot book slots of less than an hour', result[i])
+            } else {
+              console.log('else - ', result[i])
+              _result.push(result[i])
+            }
+          }
+        }
+        // sorting array now
+        _result.sort((a, b) => {
+          if (a.from < b.from) {
+            return -1
+          } else {
+            return 1
+          }
+        })
+        // validating (removing conflicting timings)
+        if (_result.length === 0) {
+          console.log('empty array')
+          return alert(
+            'You need to fill at least one slot. Receiving zero slots right now'
+          )
+        } else {
+          let current = _result[0]
+          for (let i = 1; i < _result.length; i++) {
+            console.log('current ', current, 'next ', _result[i])
+            if (current.from.slice(0, 2) === _result[i].from.slice(0, 2)) {
+              console.log(
+                'Conflicting timing removed - ',
+                _result[i],
+                'because of',
+                current
+              )
+              _result.splice(i, 1)
+              i -= 1
+            } else if (
+              current.from.slice(3, 5) === '30' &&
+              current.to.slice(0, 2) === _result[i].from.slice(0, 2) &&
+              _result[i].from.slice(3, 5) === '00'
+            ) {
+              console.log(
+                '2.0 Conflicting timing removed - ',
+                _result[i],
+                'because of',
+                current
+              )
+              _result.splice(i, 1)
+              i -= 1
+            } else {
+              current = _result[i]
+            }
+          }
+          availability.push({ day: key, slots: _result })
+          // console.log(result)
+        }
       }
     }
+    console.log('outptut is - ', availability)
+    // return
+    // for (const key in value) {
+    //   const result = value[key].filter((val) => val.from && val.to)
+    //   if (result.length > 0) {
+    //     availability.push({ day: key, slots: result })
+    //   }
+    // }
 
     if (availability.length === 0) {
       return alert('Please Select Atleast One Slot')

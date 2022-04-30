@@ -119,12 +119,12 @@ function TimeAvailabilityCard({ weekName, name, formik }) {
           {weekName}
         </p>
         <div className="order-2 col-span-2 flex justify-between gap-x-5 md:order-none md:col-span-1 md:justify-end">
-          <p className="self-center font-medium">Copy Below Timings For</p>
+          {/* <p className="self-center font-medium">Copy Below Timings For</p> */}
 
-          <CheckboxComponent
+          {/* <CheckboxComponent
             options={options}
             setCheckBoxValue={setCheckBoxValue}
-          />
+          /> */}
         </div>
 
         <FieldArray name={name} className="col-span-2">
