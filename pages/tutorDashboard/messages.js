@@ -53,15 +53,17 @@ let data = [
     },
   },
 ]
+
 function Messages() {
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
   const [showReview, setshowReview] = useState(
     isTabletOrMobile ? null : data[0]
   )
+
   function review(item) {
     setshowReview(item)
   }
-  console.log('showReview', showReview)
+
   return (
     <>
       <div className="grid h-full   grid-cols-12  bg-white sm:bg-[#FFF2E3]">
@@ -69,11 +71,10 @@ function Messages() {
           <h1>My Reviews</h1>
         </div>
         <div
-          className={`${
-            showReview === null ? '' : 'hidden'
-          } col-span-12 w-full overflow-auto  border-[#FF9515]  sm:block md:col-span-4 md:border-r `}
+          className={`${showReview === null ? '' : 'hidden'
+            } col-span-12 w-full h-[calc(100vh-79px)] overflow-y-scroll  border-[#FF9515]  sm:block md:col-span-4 md:border-r `}
         >
-          <div className="boder-[#DFDFDF] sticky top-1 border-b md:border-[#FF9515]">
+          <div className="boder-[#DFDFDF] sticky top-0 z-[1] border-b md:border-[#FF9515] sm:bg-[#FFF2E3]">
             <ul className="ml-7  flex font-semibold">
               <li className="border-b-4 border-pink p-4 text-pink">All</li>
               <li className="p-4 text-[#9A9A9A] ">Unread</li>
@@ -86,9 +87,8 @@ function Messages() {
                   <div
                     key={index}
                     onClick={() => review(item)}
-                    className={`flex items-center gap-2 border-b p-5  sm:border-b-0 lg:gap-4   ${
-                      showReview?.id === item.id ? 'bg-white' : ''
-                    }`}
+                    className={`flex items-center gap-2 border-b p-5  sm:border-b-0 lg:gap-4   ${showReview?.id === item.id ? 'bg-white' : ''
+                      }`}
                   >
                     <div className="whitespace-nowrap">
                       <Image
@@ -114,11 +114,10 @@ function Messages() {
         </div>
 
         <div
-          className={`${
-            showReview === null ? 'hidden' : 'block'
-          } col-span-12 w-full overflow-hidden  sm:block  md:col-span-8 `}
+          className={`${showReview === null ? 'hidden' : 'block'
+            } col-span-12 w-full h-[calc(100vh-79px)] overflow-y-scroll  sm:block  md:col-span-8 `}
         >
-          <div className="sticky top-1  border-b border-[#FF9515] bg-white  text-center     md:bg-[#FFF2E3]">
+          <div className="sticky top-0 z-[1]  border-b border-[#FF9515] bg-white  text-center     md:bg-[#FFF2E3]">
             <ul className="mt-1.5 flex p-[7px] text-center sm:justify-center md:px-6">
               <li className="self-center">
                 <button
@@ -146,73 +145,9 @@ function Messages() {
           </div>
 
           <div className="h-full">
-            <div className=" h-[657px] overflow-y-auto p-4 ">
+            <div className=" h-[657px] overflow-y-scroll p-4 ">
               {showReview !== null && (
                 <>
-                  {/* <div className=" overflow-scroll break-all rounded-xl bg-[#FFF2E3] px-8 py-5 md:bg-white">
-                    <div className="flex gap-6 text-[#515151] ">
-                      <h1 className="text-xl font-semibold">
-                        {showReview.reviews.title}
-                      </h1>
-
-                      <Rating
-                        initialRating={3}
-                        readonly
-                        emptySymbol={
-                          <svg
-                            width={20}
-                            height={20}
-                            viewBox="0 0 20 20"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M10 0L13.09 6.26L20 7.27L15 12.14L16.18 19.02L10 15.77L3.82 19.02L5 12.14L0 7.27L6.91 6.26L10 0Z"
-                              fill="#FFC700"
-                            />
-                          </svg>
-                        }
-                        fullSymbol={
-                          <svg
-                            width={20}
-                            height={20}
-                            viewBox="0 0 20 20"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M10 0L13.09 6.26L20 7.27L15 12.14L16.18 19.02L10 15.77L3.82 19.02L5 12.14L0 7.27L6.91 6.26L10 0Z"
-                              fill="#FFC700"
-                            />
-                          </svg>
-                        }
-                        className="my-auto flex justify-between"
-                      />
-                    </div>
-                    <div>
-                      <p className="my-7 text-base font-medium">
-                        {showReview.reviews.description}
-                      </p>
-                    </div>
-                    <div className="flex justify-between font-semibold">
-                      <div className="flex gap-8 ">
-                        <label>1 day ago</label>
-                        <div className="  ">
-                          <Image
-                            src={counrtyIcon}
-                            alt="Country Flag"
-                            //   width={18}
-                            //   height={18}
-                          />
-                          <label className="ml-2.5">Great Britain</label>
-                        </div>
-                      </div>
-                      <div className="flex gap-8">
-                      <label>reply</label>
-                      <label className="ml-8">share</label>
-                    </div>
-                    </div>
-                  </div> */}
                   <div className="flex flex-col gap-5">
                     <div className="flex">
                       <div className="mx-auto rounded-[26px] bg-[#F0F0F0] px-2.5 py-1 text-sm text-[#7A7979]">

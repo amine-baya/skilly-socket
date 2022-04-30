@@ -2,7 +2,7 @@ import React from 'react';
 
 const Autoconfirmation = () => {
     return (
-        <div className="md-[1px] h1wi ml-[1px] mb-[1px] bg-white  capitalize lg:ml-[30px] lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl font-poppins">
+        <div className="md-[1px] ml-[1px] mb-[1px] bg-white  capitalize lg:ml-[30px] lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl font-poppins">
             <div
                 id="heading"
                 className="col-span-12  p-5 text-2xl font-semibold text-[#3d3d3d] xl:px-12"
@@ -17,7 +17,7 @@ const Autoconfirmation = () => {
                     <p className='md:w-[45%] w-full'>
                         All sessions will be confirmed automatically 72 hours after the scheduled end time unless you report an issue. Choose automatic confirmation if you trust your tutors and there are no issues with scheduling sessions through the skillyTree Calendar.
                     </p>
-                    <p className='md:w-[45%] w-full'>
+                    <p className='md:w-[50%] w-full'>
                         <p className='font-semibold'>
                             Autoconfirmation for sessions in the
                         </p>

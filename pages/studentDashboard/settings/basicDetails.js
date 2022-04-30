@@ -64,21 +64,21 @@ function BasicDetails() {
       user_data.interested_skills && user_data.interested_skills
         ? user_data.interested_skills
         : [
-            {
-              subject: '-',
-            },
-          ],
+          {
+            subject: '-',
+          },
+        ],
     qualifications:
       user_data.qualifications && user_data.qualifications[0]
         ? user_data.qualifications
         : [
-            {
-              qualification_type: '',
-              qualification_title: '',
-              qualification_duration_from: '',
-              qualification_duration_to: '',
-            },
-          ],
+          {
+            qualification_type: '',
+            qualification_title: '',
+            qualification_duration_from: '',
+            qualification_duration_to: '',
+          },
+        ],
     teachs: [
       {
         fee: '',
@@ -129,7 +129,7 @@ function BasicDetails() {
 
   return (
     <>
-      <div className=" md-[1px] h1wi ml-[1px] mb-[1px] bg-white  lg:ml-[30px] lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl">
+      <div className=" md-[1px] ml-[1px] mb-[1px] bg-white  lg:ml-[30px] lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl">
         <div className="pl-[41px] pt-[20px] pb-[15px] font-poppins text-2xl font-semibold text-[#5E5252]">
           <h1>Basic Details</h1>
         </div>

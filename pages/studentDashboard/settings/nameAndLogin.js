@@ -8,7 +8,7 @@ import axios from 'axios'
 
 import SelectWithIcons from '../../../components/TutorDashboardRegistration/SelectWithIcons'
 import { useDropzone } from 'react-dropzone'
-import { getLocalStorage } from '../../../utils/cookies'
+import { getLocalStorage, setLocalStorage } from '../../../utils/cookies'
 
 const data = [
   {
@@ -98,10 +98,11 @@ function NameAndLogin() {
     console.log('response', response)
     setLocalStorage('user', response.data)
   }
+
   return (
     <>
       <div>
-        <div className="md-[1px] h1wi ml-[1px] mb-[1px] bg-white  capitalize lg:ml-[30px] lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl ">
+        <div className="md-[1px] ml-[1px] mb-[1px] bg-white  capitalize lg:ml-[30px] lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl ">
           <div
             id="heading"
             className="col-span-12  p-5 text-3xl font-semibold text-[#3d3d3d] xl:px-12"
@@ -116,21 +117,21 @@ function NameAndLogin() {
               </h1>
               {files.length !== 0
                 ? files.length &&
-                  files?.map((file) => (
-                    <div key={file.name}>
-                      <div className="relative ">
-                        <img
-                          className="h-[141px] w-[149px] rounded-[18px]"
-                          src={file?.preview}
-                        />
-                        <div className="absolute top-[95px]">
-                          <button className="rounded-b-[18px] bg-[#C4C4C4] py-[11px] px-[60px] text-[#FFFFFF] opacity-[0.8]">
-                            Edit
-                          </button>
-                        </div>
+                files?.map((file) => (
+                  <div key={file.name}>
+                    <div className="relative ">
+                      <img
+                        className="h-[141px] w-[149px] rounded-[18px]"
+                        src={file?.preview}
+                      />
+                      <div className="absolute top-[95px]">
+                        <button className="rounded-b-[18px] bg-[#C4C4C4] py-[11px] px-[60px] text-[#FFFFFF] opacity-[0.8]">
+                          Edit
+                        </button>
                       </div>
                     </div>
-                  ))
+                  </div>
+                ))
                 : null}
             </div>
             <div
@@ -160,7 +161,7 @@ function NameAndLogin() {
               <Field
                 type="text"
                 name="first_name"
-                className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-7"
+                className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-7 px-3"
               />
               <label className="col-span-9 whitespace-nowrap md:col-span-2">
                 Last name
@@ -168,7 +169,7 @@ function NameAndLogin() {
               <Field
                 type="text"
                 name="last_name"
-                className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-7"
+                className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-7 px-3"
               />
               <label className="col-span-9 whitespace-nowrap md:col-span-2">
                 Date of Birth
@@ -176,19 +177,23 @@ function NameAndLogin() {
               <Field
                 type="date"
                 name="dob"
-                className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-3"
+                className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-3 px-3"
               />
               <div className="col-span-9 pt-[9px]  md:col-span-3 lg:col-span-4">
                 <label className="col-span-9 whitespace-nowrap md:col-span-1 md:pl-[20px]">
                   Gender:
                 </label>
-                <label className="pl-[21px] xl:pl-[34px] ">
+                <label className="pl-[21px] xl:pl-[34px]">
                   <Field type="radio" name="gender" value="male" />
-                  Male
+                  <span className='pl-1'>
+                    Male
+                  </span>
                 </label>
                 <label className="pl-[10px] xl:pl-[21px]">
                   <Field type="radio" name="gender" value="female" />
-                  Female
+                  <span className='pl-1'>
+                    Female
+                  </span>
                 </label>
               </div>
 
@@ -220,23 +225,23 @@ function NameAndLogin() {
               <Field
                 type="text"
                 name="email"
-                className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-7"
+                className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-7 px-3"
               />
               <label className="col-span-9 md:col-span-2 ">
                 Current password
               </label>
               <Field
-                type="text"
+                type="password"
                 name="currentPassword"
-                className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-7"
+                className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-7 px-3"
               />
               <label className="col-span-9 whitespace-nowrap md:col-span-2">
                 New password
               </label>
               <Field
-                type="text"
+                type="password"
                 name="newPassword"
-                className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-7"
+                className="col-span-9 h-11 w-full rounded-lg border border-[#C1C1C1] focus:outline-none md:col-span-7 px-3"
               />
 
               <div className="col-span-9 md:col-span-2"></div>

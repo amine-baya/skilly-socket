@@ -11,7 +11,6 @@ import Server from '../../../utils/Server'
 function TimeAvailability() {
   const [user, setUser] = useState({})
   const [flag, setFlag] = useState(false) // turns true when all data is loaded from localstorage
-  const [currentTimezone, setCurrentTimezone] = useState('')
   const [initialValues, setInitialValues] = useState({
     monday: [
       {
@@ -56,6 +55,8 @@ function TimeAvailability() {
       },
     ],
   })
+  const [timezone, setTimezone] = useState('America/Los_Angeles')
+
   // console.log(initialValues)
   useEffect(() => {
     Server.get(`${baseUrl}/tutor/profile`)
@@ -67,6 +68,7 @@ function TimeAvailability() {
         console.log(err)
       })
   }, [])
+
   useEffect(() => {
     if (user.availability) {
       let _in = {}
@@ -84,18 +86,13 @@ function TimeAvailability() {
     } else {
       setFlag(true)
     }
+
     if (user.timezone) {
-      setCurrentTimezone(user.timezone)
+      setTimezone(user.timezone)
     }
     console.log('availability is ', initialValues)
   }, [user])
 
-  const [timezone, setTimezone] = useState('America/Los_Angeles')
-
-  // useEffect(() => {
-  //   axios.put('http://65.0.176.119:5087/tutor/update/time-availability', JSON.stringify(availability), { headers: { 'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjUzZGNjM2Q1YTVkNTFmMGEyOWU4ZjEiLCJyb2xlIjoiVFVUT1IiLCJpYXQiOjE2NDk2NjQ4NzUsImV4cCI6MTY0OTgzNzY3NX0.MV0gw0EWZQmLk2tGl97lCCwakbrcZSgK0Jfq9mSoxpA' } })
-  //     .then(response => console.log(response)).catch((e) => console.log(e));
-  // }, [availability])
 
   const onSubmit = async (value) => {
     const availability = []
@@ -252,7 +249,7 @@ function TimeAvailability() {
   }
 
   return (
-    <div className="md-[1px] h1wi ml-[1px] mb-[1px] bg-white  lg:ml-[30px] lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl">
+    <div className="md-[1px] ml-[1px] mb-[1px] bg-white lg:ml-[30px] lg:mt-[34px] lg:mb-[30px] lg:rounded-2xl">
       <div className=" p-5  xl:px-12">
         <h1 className="text-3xl font-semibold">Time Availability</h1>
       </div>
@@ -276,13 +273,13 @@ function TimeAvailability() {
 
                   <p className="mt-9 mb-6 font-semibold">
                     {' '}
-                    Choose Your Timezone{' '}
+                    Choose Your Timezone{' '}<span className='text-red-500'>*</span>
                   </p>
 
                   <Field
                     as="select"
                     name="timezone"
-                    className="w-7/12 rounded-[10px] border border-[#C1C1C1] px-5 py-3 text-[#9E9E9E]"
+                    className="w-7/12 rounded-[10px] border border-[#C1C1C1] px-5 py-3 text-[#383838] font-medium"
                     onChange={(e) => setTimezone(e.target.value)}
                   >
                     {timezoneList.map((val, index) => {
@@ -361,8 +358,8 @@ function TimeAvailability() {
                       Skip For Now
                     </button>
                   </div> */}
-                  <div className="">
-                    <button className=" w-auto rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-7 py-1 text-lg font-medium text-white md:col-span-2 md:mt-0 md:w-full ">
+                  <div className='flex w-full items-end justify-end sm:pr-12 pb-6 pr-6'>
+                    <button className="rounded-lg border border-[#FC4D6D] bg-[#FC4D6D] px-7 py-1 text-lg font-medium text-white md:col-span-2 md:mt-0">
                       Next
                     </button>
                   </div>
