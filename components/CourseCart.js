@@ -314,7 +314,7 @@ function CourseCart({
   function ViewAndChat({ space }) {
     const [role, setRole] = useState('')
     useEffect(() => {
-      setRole(getLocalStorage('user'))
+      setRole(getLocalStorage('ROLE'))
     }, [])
 
     return (
