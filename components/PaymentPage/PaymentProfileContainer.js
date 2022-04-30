@@ -368,7 +368,8 @@ const PayNow = ({ setOpenPopUp, tutor, tutorTimezone, selectedTimes }) => {
   const handleSessionBook = () => {
     // console.log(selectedTimes)
     // return
-    const studentTimezone = getLocalStorage('user').timezone || 'Asia/Kolkata'
+    const studentTimezone =
+      getLocalStorage('user').timezone || 'America/Los_Angeles'
 
     console.log('tutor id is - ', tutor)
     Server.post(

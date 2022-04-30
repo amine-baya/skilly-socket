@@ -7,7 +7,7 @@ import {
 import moment from 'moment'
 import momentTz from 'moment-timezone'
 
-function getCurrentWeek(add = 0, timezone = 'asia/kolkata') {
+function getCurrentWeek(add = 0, timezone = 'America/Los_Angeles') {
   var currentDate = momentTz().tz(timezone).add(add, 'days')
 
   var weekStart = currentDate.clone().startOf('isoWeek')
@@ -36,7 +36,7 @@ function Schedule({ tutor }) {
   useEffect(() => {
     let obj = user_data
     if (obj) {
-      obj['timezone'] = 'Asia/Kolkata'
+      obj['timezone'] = 'America/Los_Angeles'
     }
     console.log(obj)
     set_user_data(obj)
