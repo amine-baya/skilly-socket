@@ -74,9 +74,9 @@ function Messages() {
                 </div>
                 <div
                     className={`${showReview === null ? '' : 'hidden'
-                        } col-span-12 w-full overflow-auto  border-[#FF9515]  sm:block md:col-span-4 md:border-r `}
+                        } col-span-12 w-full h-[calc(100vh-79px)]  overflow-y-scroll  border-[#FF9515]  sm:block md:col-span-4 md:border-r `}
                 >
-                    <div className="boder-[#DFDFDF] sticky top-1 border-b md:border-[#FF9515]">
+                    <div className="boder-[#DFDFDF] sticky top-0 z-[1] border-b md:border-[#FF9515] sm:bg-[#FFF2E3]">
                         <ul className="ml-7  flex font-semibold">
                             <li className="border-b-4 border-pink p-4 text-pink">All</li>
                             <li className="p-4 text-[#9A9A9A] ">Unread</li>
@@ -117,9 +117,9 @@ function Messages() {
 
                 <div
                     className={`${showReview === null ? 'hidden' : 'block'
-                        } col-span-12 w-full overflow-hidden  sm:block  md:col-span-8 `}
+                        } col-span-12 w-full h-[calc(100vh-79px)]  overflow-y-scroll  sm:block  md:col-span-8 `}
                 >
-                    <div className="sticky top-1  border-b border-[#FF9515] bg-white  text-center     md:bg-[#FFF2E3]">
+                    <div className="sticky top-0 z-[1]  border-b border-[#FF9515] bg-white  text-center md:bg-[#FFF2E3]">
                         <ul className="mt-1.5 flex p-[7px] text-center sm:justify-center md:px-6">
                             <li className="self-center">
                                 <button
