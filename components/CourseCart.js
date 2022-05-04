@@ -8,6 +8,7 @@ import { getCookie } from 'cookies-next'
 import { countryList } from '../utils/constants'
 import { getLocalStorage, setLocalStorage } from '../utils/cookies'
 import { useState, useEffect, useRef } from 'react'
+import axios from 'axios'
 
 function CourseCart({
   coverImg,
@@ -25,6 +26,27 @@ function CourseCart({
     ? JSON.parse(getCookie('token')).access_token
     : false
   const router = useRouter()
+
+  const userId = tutorData?.id
+  const accessChat = async () => {
+    console.log(TOKEN, "hello");
+
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      };
+      const { data } = await axios.post(`http://localhost:5087/chat`, { userId }, config);
+
+      //if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      console.log(data);
+    } catch (error) {
+     throw new Error(error.message);
+      
+    }
+  };
 
   return (
     <div className="flex snap-center rounded-md transition-all ease-in-out">
@@ -336,7 +358,7 @@ function CourseCart({
         </Link>
         {role && role === 'STUDENT' && (
           <Link href={'/studentDashboard/messages'}>
-            <a className="flex items-center">
+            <a onClick={() => accessChat()} className="flex items-center">
               <span>
                 <Image
                   src="/Images/CourseCart/inbox.svg"

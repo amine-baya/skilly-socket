@@ -18,7 +18,7 @@ import {
 } from 'utils/constants'
 import Link from 'next/link'
 import Image from 'next/image'
-import { getCookie } from 'cookies-next'
+import { getCookie } from 'cookies-next' 
 
 const Tutors = () => {
   const TOKEN = getCookie('token')

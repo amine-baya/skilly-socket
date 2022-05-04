@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
+import axios from "axios";
 import { BsEmojiSmile } from 'react-icons/bs';
 import { FiPaperclip, FiSend } from 'react-icons/fi';
 import counrtyIcon from '../../public/Images/ukIcon.png';
 import { GoChevronLeft } from 'react-icons/go';
 import Image from 'next/image';
 import Rating from 'react-rating';
+import { getCookie } from 'cookies-next'
 import { useMediaQuery } from 'react-responsive';
+import io from "socket.io-client"
 
 let data = [
     {
@@ -54,17 +57,167 @@ let data = [
     },
 ]
 
+let socket, selectedChatCompare;
+
 function Messages() {
+    const [Chats, setChats] = useState([])
+    const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
-    const [showReview, setshowReview] = useState(
-        isTabletOrMobile ? null : data[0]
-    )
+    const [socketConnected, setSocketConnected] = useState(false);
+    const [latestmessage, setlatestmessage] = useState("")
+    const [NewChat, setNewChat] = useState(true)
+
+    const [showReview, setshowReview] = useState({_id: "626f17eaa1d26505f4813837"})
 
     function review(item) {
         setshowReview(item)
     }
 
-    console.log('showReview', showReview)
+    console.log('showReview', showReview?._id)
+
+    const TOKEN = getCookie('token')
+? JSON.parse(getCookie('token')).access_token
+: false
+
+const user = typeof window !== 'undefined' ? localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {} : null
+
+    const fetchChats = async () => {
+        try {
+          const config = {
+            headers: {
+              Authorization: `Bearer ${TOKEN}`,
+            },
+          };
+    
+          const { data } = await axios.get("http://localhost:5087/chat", config);
+          setChats(data);
+          setshowReview(data[0])
+          console.log(data);
+        } catch (error) {
+            throw new Error(error.message);
+
+        }
+      };
+
+      const fetchMessages = async () => {
+       // if (!selectedChat) return;
+    
+        try {
+          const config = {
+            headers: {
+              Authorization: `Bearer ${TOKEN}`,
+            },
+          };
+    
+          const { data } = await axios.get(
+            `http://localhost:5087/message/${showReview?._id}`,
+            config
+          );
+          setMessages(data);
+          console.log(data);
+    
+          socket.emit("join chat", showReview?._id);
+        } catch (error) {
+            throw new Error(error.message);
+
+        }
+      };
+    
+      useEffect(() => {
+          socket = io("http://localhost:5087")
+          socket.emit("setup", user);
+          socket.on("connected", () => setSocketConnected(true));
+          //socket.on("typing", () => setIsTyping(true));
+          //socket.on("stop typing", () => setIsTyping(false));
+        
+        
+      }, []);
+
+      useEffect(() => {
+      console.log("hello");
+      fetchChats();
+      
+    }, [NewChat]);
+
+      useEffect(() => {
+    socket.on("message recieved", (newMessageRecieved) => {
+      if (
+        !selectedChatCompare || // if chat is not selected or doesn't match current chat
+        selectedChatCompare._id !== newMessageRecieved.chat._id
+      ) {
+        //if (!notification.includes(newMessageRecieved)) {
+        //  setNotification([newMessageRecieved, ...notification]);
+        //  setFetchAgain(!fetchAgain);
+        //}
+      } else { 
+        setlatestmessage(newMessageRecieved.content)
+
+        setMessages([...messages, newMessageRecieved]);
+      }
+    });
+    
+  });
+
+  useEffect(() => {
+    socket.on("add chat", (newMessageRecieved) => {
+
+        setNewChat(!newMessageRecieved)
+    })
+  }, [socket])
+  
+
+      useEffect(() => {
+
+            fetchMessages()
+
+            selectedChatCompare = showReview
+     
+      }, [showReview]);
+       
+      const sendMessage = async (event) => {
+       
+          //socket.emit("stop typing", selectedChat._id);
+          try {
+            const config = {
+              headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${TOKEN}`,
+              },
+            };
+            setNewMessage("");
+            const { data } = await axios.post("http://localhost:5087/message",{ content: newMessage, chatId: showReview?._id}, config);
+            socket.emit("new message", data);
+            socket.emit("new chat", NewChat);
+
+            setMessages([...messages, data]);
+            console.log(data);
+          } catch (error) {
+            throw new Error(error.message);
+          }
+        
+      };
+
+      const typingHandler = (e) => {
+        setNewMessage(e.target.value);
+    
+      //if (!socketConnected) return;
+    
+      //if (!typing) {
+      //  setTyping(true);
+      //  socket.emit("typing", selectedChat._id);
+      //}
+      //let lastTypingTime = new Date().getTime();
+      //var timerLength = 3000;
+      //setTimeout(() => {
+      //  var timeNow = new Date().getTime();
+      //  var timeDiff = timeNow - lastTypingTime;
+      //  if (timeDiff >= timerLength && typing) {
+      //    socket.emit("stop typing", selectedChat._id);
+      //    setTyping(false);
+      //  }
+      //}, timerLength);
+      };
 
     return (
         <>
@@ -84,29 +237,29 @@ function Messages() {
                     </div>
                     <div>
                         <ul className="cursor-pointer text-center md:mt-1">
-                            {data.length > 0 &&
-                                data.map((item, index) => (
+                            {Chats.length > 0 &&
+                                Chats.map((item, index) => (
                                     <div
                                         key={index}
                                         onClick={() => review(item)}
-                                        className={`flex items-center gap-2 border-b p-5  sm:border-b-0 lg:gap-4   ${showReview?.id === item.id ? 'bg-white' : ''
+                                        className={`flex items-center gap-2 border-b p-5  sm:border-b-0 lg:gap-4   ${showReview?._id === item._id ? 'bg-white' : ''
                                             }`}
                                     >
-                                        <div className="whitespace-nowrap">
+                                        {/* <div className="whitespace-nowrap">
                                             <Image
                                                 src={item.image}
                                                 alt="Picture of the author"
                                                 width={58}
                                                 height={58}
                                             />
-                                        </div>
+                                        </div> */}
                                         <div className="w-full">
                                             <div className="mb-3 flex justify-between">
-                                                <div className="font-medium"> {item.username}</div>
+                                                 <div className="font-medium"> {item.tutor.name}</div>
                                                 <div className="mt-auto text-[12px] ">{item.date}</div>
                                             </div>
                                             <div className=" w-[254px] overflow-hidden text-ellipsis whitespace-nowrap ">
-                                                {item.messages.receive}
+                                            { item.latestMessage?.content || "say somthing"}
                                             </div>
                                         </div>
                                     </div>
@@ -130,7 +283,7 @@ function Messages() {
                                     <GoChevronLeft className="mr-2 text-xl font-extrabold text-[#9A9A9A]" />{' '}
                                 </button>
                             </li>
-                            <div className="my-auto whitespace-nowrap">
+                            {/* <div className="my-auto whitespace-nowrap">
                                 {showReview?.image && (
                                     <Image
                                         src={showReview?.image || null}
@@ -139,7 +292,7 @@ function Messages() {
                                         height={38}
                                     />
                                 )}
-                            </div>
+                            </div> */}
                             <li className="ml-3 mt-2 text-xl font-semibold text-[#515151]">
                                 {showReview?.username || ''}
                             </li>
@@ -215,44 +368,40 @@ function Messages() {
                     </div>
                   </div> */}
                                     <div className="flex flex-col gap-5">
+
+                                        {messages?.map((el, index) => (
+
                                         <div className="flex">
-                                            <div className="mx-auto rounded-[26px] bg-[#F0F0F0] px-2.5 py-1 text-sm text-[#7A7979]">
-                                                Wed, 29 Dec
-                                            </div>
-                                        </div>
-                                        <div className="flex">
-                                            <div className="ml-auto flex max-w-[410px] gap-1 rounded-xl bg-[#FFE5EA] py-[14px] px-5 sm:gap-5">
-                                                {showReview.messages.send}
+                                            <div className={el.sender === null ? "ml-auto flex max-w-[410px] gap-1 rounded-xl bg-[#FFE5EA] py-[14px] px-5 sm:gap-5" : "flex  gap-3 rounded-xl bg-[#ECECEC]  py-[14px] px-5 sm:gap-5"}>
+                                                {el.content}
                                                 <label className="mt-auto text-xs text-[#686868]">
-                                                    11:42
+                                                    {el.createdAt.slice(11,16)} 
                                                 </label>
                                             </div>
                                         </div>
-                                        <div className="flex">
-                                            <div className="mx-auto rounded-[26px] bg-[#F0F0F0] px-2.5 py-1 text-sm text-[#7A7979]">
-                                                Fri, 31 Dec
-                                            </div>
-                                        </div>
-                                        <div className="inline-flex gap-[13px]">
+                                        ))}
+                                        
+                                       
+                                        {/* <div className="inline-flex gap-[13px]">
                                             <div className="my-auto whitespace-nowrap">
-                                                {showReview?.image && (
+                                                 {showReview?.image && (
                                                     <Image
                                                         src={showReview?.image || null}
                                                         alt="Picture of the author"
                                                         width={38}
                                                         height={38}
                                                     />
-                                                )}
+                                                )} 
                                             </div>
                                             <div className="flex  gap-3 rounded-xl bg-[#ECECEC]  py-[14px] px-5 sm:gap-5">
                                                 <p className="max-w-[410px]">
-                                                    {showReview.messages.receive}
+                                                    {showReview?.latestMessage?.content}
                                                 </p>
                                                 <label className="mt-auto text-xs text-[#686868]">
                                                     11:42
                                                 </label>
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </>
                             )}
@@ -262,6 +411,8 @@ function Messages() {
                                 type="text"
                                 placeholder="Reply"
                                 className=" h-[55px] w-11/12 rounded-2xl px-4 focus:outline-none"
+                                onChange={(e) => typingHandler(e)}
+                                value={newMessage}
                             />
                             <button className="ml-[-80px] text-xl">
                                 <BsEmojiSmile />
@@ -269,7 +420,7 @@ function Messages() {
                             <button className="ml-6 text-xl">
                                 <FiPaperclip />
                             </button>
-                            <button className="ml-10 ">
+                            <button className="ml-10 " onClick={() => sendMessage()}>
                                 <FiSend className="rotate-45 text-3xl text-pink " />
                             </button>
                         </div>

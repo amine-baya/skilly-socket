@@ -11,7 +11,7 @@ export default function TutorHeroPage({ tutor, user }) {
   const [CoverPopUp, setCoverPopUp] = useRecoilState(openPopUps)
 
   return (
-    <div className="snap-fullPage relative hidden h-[calc(100vh-79px)] items-center justify-start overflow-hidden bg-gradient-to-r from-[#FF7C7CB8] to-[#C4C4C400] md:flex">
+    <div className="snap-fullPage relative hidden h-[calc(100vh-79px)] items-center justify-start overflow-hidden bg-gradient-to-r from-[#FF7C7CB8] to-[#C4C4C400] md:flex" onClick={console.log(tutor)}>
       <BackgroundImg tutor={tutor} user={user} />
       {/* camera  */}
       <div
@@ -23,7 +23,7 @@ export default function TutorHeroPage({ tutor, user }) {
             src="/Images/TutorProfile/camera.png"
             alt="background"
             objectFit="cover"
-            layout="fill"
+            layout="fill" 
           />
         </div>
       </div>
