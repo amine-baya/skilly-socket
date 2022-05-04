@@ -155,7 +155,7 @@ function ProfilePhoto() {
                 files?.map((file) => (
                   <div className="  h-auto bg-blue-300" key={file.name}>
                     <div>
-                      <img src={file?.preview} />
+                      <Image src={file?.preview} />
                     </div>
                   </div>
                 ))

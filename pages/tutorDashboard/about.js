@@ -451,10 +451,10 @@ const BackgroundImage = (props) => (
           />
         </div>
         {/* <div className="h-[106px] w-[106px] bg-blue-300">
-                    <img src="" alt="img" />
+                    <Image src="" alt="img" />
                   </div>
                   <div className="h-[106px] w-[106px] bg-blue-300">
-                    <img src="" alt="img" />
+                    <Image src="" alt="img" />
                   </div> */}
       </section>
     ) : null}
